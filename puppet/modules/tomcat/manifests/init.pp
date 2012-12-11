@@ -54,7 +54,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         onlyif      => "chkconfig --list tomcat; [ $? -eq 1 ]"
     }
 
-    service { "tomcat$" :
+    service { "tomcat" :
         ensure      => running,
         enable      => true,
         hasstatus   => false,
