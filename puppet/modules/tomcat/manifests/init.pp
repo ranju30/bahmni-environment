@@ -2,9 +2,23 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
 
     $tomcatInstallationDirectory = "/home/${userName}/apache-tomcat-${version}"
 
-    exec { "install-tomcat" :
-     command => "yum install tomcat6"
-     }
+    exec {"gettomcattarfile" :
+        command     => "/usr/bin/wget -O /tmp/apache-tomcat-${version}.tar.gz http://archive.apache.org/dist/tomcat/tomcat-7/v${version}/bin/apache-tomcat-${version}.tar.gz",
+        require     => [User["${userName}"]],
+        timeout     => 0,
+        provider    => "shell",
+        onlyif      => "test ! -f /tmp/apache-tomcat-${version}.tar.gz"
+    }
+
+    exec { "tomcat_untar":
+        command     => "tar xfz /tmp/apache-tomcat-${version}.tar.gz; $moveAfterExtractCommand",
+        user        => "${userName}",
+        cwd         => "/home/${userName}",
+        creates     => "$tomcatInstallationDirectory",
+        path        => ["/bin"],
+        require     => [Exec["$userName homedir"], Exec["gettomcattarfile"]],
+        provider    => "shell",
+    }
 
     file { "/etc/init.d/tomcat" :
         ensure      => present,
@@ -12,10 +26,10 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         mode        => 777,
         group       => "root",
         owner       => "root",
-        require     => Exec["install-tomcat"],
+        require     => Exec["tomcat-untar"],
     }
 
-    file { "usr/bin/tomcat/conf/server.xml" :
+    file { "$tomcatInstallationDirectory/conf/server.xml" :
         ensure      => present,
         content     => template("tomcat/server.xml.erb"),
         group       => "${userName}",
@@ -24,7 +38,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         require     => File["/etc/init.d/tomcat"],
     }
 
-    file { "usr/bin/tomcat/conf/tomcat-users.xml" :
+    file { "$tomcatInstallationDirectory/conf/tomcat-users.xml" :
         ensure      => present,
         content     => template("tomcat/tomcat-users.xml.erb"),
         group       => "${userName}",
