@@ -26,14 +26,13 @@
  $tomcatRedirectPort="8443"
  $tomcatShutdownPort="8005"
  $tomcatAjpPort="8009"
- $tomcatInstance = "primary" # [primary / secondary] This suffix will be discriminator for tomcat installations
 
 
  #--------------------------------RESOURCES--------------------------------------------
  # comment out resources not required to be installed
 
  # class {users : userName => "${jssUser}", password => "${jssPassword}" }
- # class {tomcat : version => "7.0.22", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}", tomcatManagerPassword => "${tomcatManagerPassword}", tomcatInstance => "${tomcatInstance}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}", tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}"}
+ # class {tomcat : version => "7.0.22", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}", tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}", tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}"}
  # include mysql
  # include mysqlserver
  # include tomcat
