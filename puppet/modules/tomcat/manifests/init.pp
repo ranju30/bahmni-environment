@@ -3,7 +3,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
     $tomcatInstallationDirectory = "/home/${userName}/apache-tomcat-${version}"
 
     exec { "install-tomcat" :
-     command => "yum install tomcat --installroot ${tomcatInstallationDirectory}"
+     command => "yum install tomcat6"
      }
 
     file { "/etc/init.d/tomcat" :
@@ -15,7 +15,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         require     => Exec["install-tomcat"],
     }
 
-    file { "$tomcatInstallationDirectory/conf/server.xml" :
+    file { "usr/bin/tomcat/conf/server.xml" :
         ensure      => present,
         content     => template("tomcat/server.xml.erb"),
         group       => "${userName}",
@@ -24,7 +24,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         require     => File["/etc/init.d/tomcat"],
     }
 
-    file { "$tomcatInstallationDirectory/conf/tomcat-users.xml" :
+    file { "usr/bin/tomcat/conf/tomcat-users.xml" :
         ensure      => present,
         content     => template("tomcat/tomcat-users.xml.erb"),
         group       => "${userName}",
