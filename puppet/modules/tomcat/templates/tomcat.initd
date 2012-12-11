@@ -18,7 +18,7 @@ source /etc/environment
 source /etc/init.d/functions
 
 INSTALLATION_DIRECTORY=<%= tomcatInstallationDirectory %>
-RUN_AS_USER=<%= motechUser %> # Adjust run user here
+RUN_AS_USER=<%= jssUser %> # Adjust run user here
 
 start() {
         echo "Starting Tomcat: "
