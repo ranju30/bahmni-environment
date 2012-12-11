@@ -32,6 +32,7 @@ usage() {
 }
 
 ensurePuppetInstallation(){
+    echo "ensurinf puppet installation"
   if ! type puppet > /dev/null 2>&1
   then
     arch=`uname -m`
@@ -47,6 +48,7 @@ ensurePuppetInstallation(){
 }
 
 setConfigFileAbsolutePath() {
+echo "setting file path"
   locationPathFromRoot=`echo $CONFIG_FILE | cut -c 1 | grep / | wc -l`
   if [ $locationPathFromRoot -eq 0 ]; then
     CONFIG_FILE=`pwd`/$CONFIG_FILE
@@ -55,6 +57,7 @@ setConfigFileAbsolutePath() {
 
 
 installGit() {
+echo " installing git"
   yum -y install git
 }
 
@@ -66,6 +69,7 @@ getJssSCM() {
       git clone git://github.com/jss-emr/jss-scm.git
   else
       cd /tmp/jss-scm/ && git reset --hard && git pull --rebase && cd /tmp/
+      echo "checkout out bootstrap"
   fi
 }
 
@@ -81,6 +85,7 @@ setupPuppetConfiguration() {
 
 puppetApply() {
   cd /tmp/jss-scm/puppet
+  echo "running puppet apply now!!!!"
 
   if [ "$DEBUG" = "true" ]; then
       puppet apply manifests/site.pp --debug --modulepath=modules/ && echo "Completed"
