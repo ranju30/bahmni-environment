@@ -63,7 +63,7 @@ getJssSCM() {
   cd /tmp/
 
   if [ ! -d /tmp/jss-scm/ ]; then
-      git clone git@github.com:jss-emr/jss-scm.git
+      git clone git://github.com/jss-emr/jss-scm.git
   else
       cd /tmp/jss-scm/ && git reset --hard && git pull --rebase && cd /tmp/
   fi
