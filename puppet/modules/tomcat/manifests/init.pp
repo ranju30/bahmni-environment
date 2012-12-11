@@ -26,7 +26,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         mode        => 777,
         group       => "root",
         owner       => "root",
-        require     => Exec["tomcat-untar"],
+        require     => Exec["tomcat_untar"],
     }
 
     file { "$tomcatInstallationDirectory/conf/server.xml" :
