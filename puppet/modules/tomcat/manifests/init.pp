@@ -1,6 +1,4 @@
-class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatManagerPassword, $tomcatHttpPort = "8080", $tomcatRedirectPort = "8443", $tomcatShutdownPort = "8005", $tomcatAjpPort = "8009") {
-
-    $tomcatInstallationDirectory = "/home/${userName}/apache-tomcat-${version}"
+class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatManagerPassword, $tomcatHttpPort = "8080", $tomcatRedirectPort = "8443", $tomcatShutdownPort = "8005", $tomcatAjpPort = "8009", $tomcatInstallationDirectory) {
 
     exec {"gettomcattarfile" :
         command     => "/usr/bin/wget -O /tmp/apache-tomcat-${version}.tar.gz http://archive.apache.org/dist/tomcat/tomcat-7/v${version}/bin/apache-tomcat-${version}.tar.gz",
@@ -16,7 +14,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         cwd         => "/home/${userName}",
         creates     => "$tomcatInstallationDirectory",
         path        => ["/bin"],
-        require     => [Exec["$userName homedir"], Exec["gettomcattarfile"]],
+        require     => Exec["gettomcattarfile"],
         provider    => "shell",
     }
 

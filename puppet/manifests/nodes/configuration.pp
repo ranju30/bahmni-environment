@@ -19,6 +19,7 @@
  #Tomcat 7.0.22 configuration
 
  $tomcatManagerPassword = "p@ssw0rd"
+ $tomcatVersion = "7.0.22"
 
  ## optional
  $tomcatManagerUserName = "tomcat"
@@ -26,13 +27,15 @@
  $tomcatRedirectPort="8443"
  $tomcatShutdownPort="8005"
  $tomcatAjpPort="8009"
+ $tomcatInstallationDirectory = "/home/${jssUser}/apache-tomcat-${tomcatVersion}"
 
 
  #--------------------------------RESOURCES--------------------------------------------
  # comment out resources not required to be installed
 
  # class {users : userName => "${jssUser}", password => "${jssPassword}" }
- # class {tomcat : version => "7.0.22", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}", tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}", tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}"}
+ # class {tomcat : version => "${tomcatVersion}", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}", tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}", tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}", tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
+ # class {openmrs : tomcatInstallationDirectory = "${tomcatInstallationDirectory}"
  # include mysql
  # include mysqlserver
- # include tomcat
+ # include java
