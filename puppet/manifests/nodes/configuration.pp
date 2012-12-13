@@ -14,7 +14,7 @@
  $jssPassword = '$1$IW4OvlrH$Kui/55oif8W3VZIrnX6jL1'
 
  # mysql
- $mysqlPassword = "password"
+ $mysqlRootPassword = "password"
 
  #Tomcat 7.0.22 configuration
 
@@ -34,8 +34,10 @@
  # comment out resources not required to be installed
 
  # class {users : userName => "${jssUser}", password => "${jssPassword}" }
- # class {tomcat : version => "${tomcatVersion}", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}", tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}", tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}", tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
- # class {openmrs : tomcatInstallationDirectory = "${tomcatInstallationDirectory}"
+ # class {tomcat : version => "${tomcatVersion}", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}",
+ tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}",
+ tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}", tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
+ # class {openmrs : tomcatInstallationDirectory => "${tomcatInstallationDirectory}"
  # include mysql
  # include mysqlserver
  # include java

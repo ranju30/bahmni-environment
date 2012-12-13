@@ -12,7 +12,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         command     => "tar xfz /tmp/apache-tomcat-${version}.tar.gz; $moveAfterExtractCommand",
         user        => "${userName}",
         cwd         => "/home/${userName}",
-        creates     => "$tomcatInstallationDirectory",
+        creates     => "${tomcatInstallationDirectory}",
         path        => ["/bin"],
         require     => Exec["gettomcattarfile"],
         provider    => "shell",
@@ -27,7 +27,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         require     => Exec["tomcat_untar"],
     }
 
-    file { "$tomcatInstallationDirectory/conf/server.xml" :
+    file { "${tomcatInstallationDirectory}/conf/server.xml" :
         ensure      => present,
         content     => template("tomcat/server.xml.erb"),
         group       => "${userName}",
@@ -36,7 +36,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         require     => File["/etc/init.d/tomcat"],
     }
 
-    file { "$tomcatInstallationDirectory/conf/tomcat-users.xml" :
+    file { "${tomcatInstallationDirectory}/conf/tomcat-users.xml" :
         ensure      => present,
         content     => template("tomcat/tomcat-users.xml.erb"),
         group       => "${userName}",
