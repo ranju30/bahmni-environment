@@ -6,11 +6,23 @@ class openmrs ( $tomcatInstallationDirectory, $openmrsDbBackupLocation = "/tmp/o
             onlyif      => "test -d ${tomcatInstallationDirectory}"
         }
 
+    exec {"delete-openmrs-files"
+            command => rm -rf ${openmrsDbBackupLocation},
+            require  => Exec["download-openmrs-war"]
+    }
+
+    exec {"download-openmrs-database-backup"
+            command     => "/usr/bin/wget -O ${openmrsDbBackupLocation}/openmrs.sql.zip https://www.dropbox.com/s/91490s8ofkbwy49/openmrs.sql.zip",
+            timeout     => 0,
+            provider    => "shell",
+            require     => Exec["delete-openmrs-files"]
+         }
+
     exec { "openmrs_db_backup_unzip":
-            command     => "unzip /tmp/jss-scm/puppet/modules/openmrs/templates/openmrs.sql.zip -d $openmrsDbBackupLocation",
+            command     => "unzip ${openmrsDbBackupLocation}/openmrs.sql.zip -d $openmrsDbBackupLocation",
             user        => "${userName}",
             path        => ["/bin"],
-            require     => Exec["download-openmrs-war"],
+            require     => Exec["download-openmrs-database-backup"],
             provider    => "shell",
         }
 
