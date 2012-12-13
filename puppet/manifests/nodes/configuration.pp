@@ -34,10 +34,8 @@
  # comment out resources not required to be installed
 
  # class {users : userName => "${jssUser}", password => "${jssPassword}" }
- # class {tomcat : version => "${tomcatVersion}", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}",
- tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}",
- tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}", tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
- # class {openmrs : tomcatInstallationDirectory => "${tomcatInstallationDirectory}"
+ # class {tomcat : version => "${tomcatVersion}", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}",tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}",tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}", tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
+ # class {openmrs : tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
  # include mysql
  # include mysqlserver
  # include java
