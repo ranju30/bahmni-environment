@@ -18,7 +18,7 @@ class openmrs ( $tomcatInstallationDirectory, $openmrsDbBackupLocation = "/tmp/o
             command     => "/usr/bin/wget -O ${openmrsDbBackupLocation}/openmrs.sql.zip https://dl.dropbox.com/sh/n4rxhk1pj0vi66h/J9CpTgvopG/openmrs.sql.zip?dl=1",
             timeout     => 0,
             provider    => "shell",
-            require     => Exec["ensure_openmrsdb_directory"]
+            require     => File["ensure_openmrsdb_directory"]
          }
 
     exec { "openmrs_db_backup_unzip":
