@@ -15,18 +15,16 @@ class openmrs ( $tomcatInstallationDirectory, $openmrsDbBackupLocation = "/tmp/o
          }
 
     exec {"download-openmrs-database-backup" :
-            command     => "/usr/bin/wget -O ${openmrsDbBackupLocation}/openmrs.sql.zip https://www.dropbox.com/s/91490s8ofkbwy49/openmrs.sql.zip",
+            command     => "/usr/bin/wget -O ${openmrsDbBackupLocation}/openmrs.sql.zip https://dl.dropbox.com/sh/n4rxhk1pj0vi66h/J9CpTgvopG/openmrs.sql.zip?dl=1",
             timeout     => 0,
             provider    => "shell",
-            require     => Exec["delete-openmrs-files"]
+            require     => Exec["ensure_openmrsdb_directory"]
          }
 
     exec { "openmrs_db_backup_unzip":
             command     => "unzip ${openmrsDbBackupLocation}/openmrs.sql.zip -d $openmrsDbBackupLocation",
-            user        => "${userName}",
-            path        => ["/bin"],
+            path        => ["/usr/bin"],
             require     => Exec["download-openmrs-database-backup"],
-            provider    => "shell",
         }
 
     exec { "openmrs_update_db":
@@ -37,5 +35,15 @@ class openmrs ( $tomcatInstallationDirectory, $openmrsDbBackupLocation = "/tmp/o
             provider    => "shell",
         }
 
+    exec { "get_openMRS_folder" :
+            command     => "/usr/bin/wget -O /home/jss/.OpenMRS.zip https://dl.dropbox.com/s/wd1900mwue3nu8n/.OpenMRS.zip?dl=1",
+            timeout     => 0,
+            provider    => "shell",
+         }
 
+    exec { "openMRS_folder_unzip":
+            command     => "unzip /home/jss/.OpenMRS.zip",
+            path        => ["/usr/bin"],
+            require     => Exec["get_openMRS_folder"],
+         }
 }
