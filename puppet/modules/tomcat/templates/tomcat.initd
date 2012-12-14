@@ -23,7 +23,7 @@ RUN_AS_USER=<%= jssUser %> # Adjust run user here
 start() {
         echo "Starting Tomcat: "
         if [ "x$USER" != "x$RUN_AS_USER" ]; then
-          su - $RUN_AS_USER -c "export JAVA_OPTS='-XX:MaxPermSize=256M';$INSTALLATION_DIRECTORY/bin/startup.sh"
+          su - $RUN_AS_USER -c "export JAVA_OPTS='-XX:MaxPermSize=512M';$INSTALLATION_DIRECTORY/bin/startup.sh"
         else
           $INSTALLATION_DIRECTORY/bin/startup.sh
         fi
