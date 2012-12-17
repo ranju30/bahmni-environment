@@ -34,7 +34,7 @@ class openmrs ( $tomcatInstallationDirectory, $openmrsDbBackupLocation = "/tmp/o
         }
 
     exec { "openmrs_update_db":
-            command     => "mysql -uroot -p${mysqlRootPassword} < ${openmrsDbBackupLocation}/openmrs.sql",
+            command     => "mysql -uroot -p${mysqlRootPassword} openmrs < ${openmrsDbBackupLocation}/openmrs.sql",
             path        => ["/usr/bin"],
             require     => Exec["openmrs_db_backup_unzip"],
         }
@@ -43,6 +43,11 @@ class openmrs ( $tomcatInstallationDirectory, $openmrsDbBackupLocation = "/tmp/o
             command     => "/usr/bin/wget -O /home/${jssUser}/.OpenMRS.zip https://dl.dropbox.com/s/wd1900mwue3nu8n/.OpenMRS.zip?dl=1",
             timeout     => 0,
             provider    => "shell",
+         }
+
+    exec { "change_openMRS_folder_ownership" :
+            command     => "/bin/chown -R jss:jss /home/${jssUser}/.OpenMRS.zip",
+            require     => Exec["get_openMRS_folder"],
          }
 
     exec { "openMRS_folder_unzip":
