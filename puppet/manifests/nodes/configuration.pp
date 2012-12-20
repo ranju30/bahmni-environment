@@ -28,6 +28,18 @@
  $tomcatShutdownPort="8005"
  $tomcatAjpPort="8009"
  $tomcatInstallationDirectory = "/home/${jssUser}/apache-tomcat-${tomcatVersion}"
+ 
+
+ ######################## JASPER CONFIG START##############################################
+ $jasperTomcatHome = "/home/jss/apache-tomcat-7.0.22-secondary"
+ $jasperHome = "/home/jss/jasperserver-4.7.0-bin"
+ $jasperDbType = "mysql"
+ $jasperDbHost = "localhost"
+ $jasperDbUsername = "root"
+ $jasperDbPassword = "password"
+ $jasperDbName = "jasperserver"
+ $jasperResetDb = "y" ## Provide "y" or "n"
+ ######################## JASPER CONFIG END################################################
 
 
  #--------------------------------RESOURCES--------------------------------------------
