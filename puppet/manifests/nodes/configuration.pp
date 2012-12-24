@@ -51,4 +51,3 @@
  # class { jasperserver : }
  # include mysql
  # include mysqlserver
- # include java
