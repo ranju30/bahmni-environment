@@ -31,7 +31,7 @@
  
 
  ######################## JASPER CONFIG START##############################################
- $jasperTomcatHome = "/home/jss/apache-tomcat-7.0.22-secondary"
+ $jasperTomcatHome = "/home/jss/apache-tomcat-7.0.22"
  $jasperHome = "/home/jss/jasperserver-4.7.0-bin"
  $jasperDbType = "mysql"
  $jasperDbHost = "localhost"
