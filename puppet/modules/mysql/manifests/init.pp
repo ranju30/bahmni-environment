@@ -18,7 +18,7 @@ class mysqlserver {
 		require => [Package["mysql-server"], Package["mysql"] , Service["mysqld"]],
 	}
 	
-	package { "mysql-connector-java.x86_64" :
+	package { "mysql-connector-java" :
 		ensure  =>  "present",	
 	}
 }
