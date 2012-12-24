@@ -13,7 +13,7 @@ class jasperserver () {
         purge       => true,
     }
 	
-	file { "java_home_path") {
+	file { "java_home_path": 
         path 		=> "/etc/profile.d/java.sh",
         ensure 		=> "present",
         content 	=> template ("jasperserver/java.sh"),
