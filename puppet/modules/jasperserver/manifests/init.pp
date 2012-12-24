@@ -9,7 +9,7 @@ class jasperserver () {
 	
     file { "remove_temp_jasperserver_dir":
         ensure      => "absent",
-		path		=> "/tmp/jasperserver"
+		path		=> "/tmp/jasperserver",
         purge       => true,
     }
 	
