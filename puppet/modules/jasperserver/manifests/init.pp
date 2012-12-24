@@ -1,11 +1,31 @@
 class jasperserver () {
 
     exec {"get_jasperserver":
-        command     => "/usr/bin/wget /tmp/jasperserver-4.7.0.zip http://nchc.dl.sourceforge.net/project/jasperserver/JasperServer/JasperReports%20Server%204.7.0/jasperreports-server-cp-4.7.0-bin.zip",
+        command     => "/usr/bin/wget -O /tmp/jasperserver-4.7.0.zip http://nchc.dl.sourceforge.net/project/jasperserver/JasperServer/JasperReports%20Server%204.7.0/jasperreports-server-cp-4.7.0-bin.zip",
         timeout     => 0,
         provider    => "shell",
         onlyif      => "test ! -f /tmp/jasperserver-4.7.0.zip"
     }
+	
+    file { "remove_temp_jasperserver_dir":
+        ensure      => "absent",
+		path		=> "/tmp/jasperserver"
+        purge       => true,
+    }
+	
+	file { "java_home_path") {
+        path 		=> "/etc/profile.d/java.sh",
+        ensure 		=> "present",
+        content 	=> template ("jasperserver/java.sh"),
+        owner 		=> 'root',
+        group 		=> 'root',
+        mode 		=> '644',		
+	}	
+	
+    exec {"copy_mysql_jar" : 
+       command         => "cp /usr/share/java/mysql-connector-java.jar ${jasperHome}/buildomatic/conf_source/db/mysql/jdbc",
+       user            => "${jssUser}",
+       }
 
     file { "${jasperHome}":
         ensure      => "directory",
@@ -39,13 +59,13 @@ class jasperserver () {
     exec { "set_jasperserver_scripts_permission":
         command     => "find . -name '*.sh' | xargs chmod u+x",
         user        => "${jssUser}",
-        require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"]],
+        require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"], File["remove_temp_jasperserver_dir"]],
         cwd         => "${jasperHome}"
     }
 
     exec { "make_jasperserver":
         command     => "echo '$jasperResetDb' | /bin/sh ${jasperHome}/buildomatic/js-install-ce.sh minimal",
-        require     => Exec["set_jasperserver_scripts_permission"],
+        require     => [Exec["set_jasperserver_scripts_permission"],File["java_home_path"], Exec["copy_mysql_jar",
         cwd         => "${jasperHome}/buildomatic",
         user        => "${jssUser}"
     }

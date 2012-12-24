@@ -17,5 +17,8 @@ class mysqlserver {
 		command => "mysqladmin -u root PASSWORD ${mysqlRootPassword}; /bin/true",
 		require => [Package["mysql-server"], Package["mysql"] , Service["mysqld"]]
 	}
-}
+	
+	package { "mysql-connector-java.x86_64" :
+		ensure  =>  "present",	
+	}
 
