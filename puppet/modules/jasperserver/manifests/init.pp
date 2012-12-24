@@ -62,6 +62,7 @@ class jasperserver () {
         require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"], File["remove_temp_jasperserver_dir"]],
         cwd         => "${jasperHome}"
     }
+	
 
     exec { "make_jasperserver":
         command     => "echo '$jasperResetDb' | /bin/sh ${jasperHome}/buildomatic/js-install-ce.sh minimal",
@@ -83,4 +84,10 @@ class jasperserver () {
         command => "sh /tmp/configure_jasper_home.sh ${jasperHome} ${jssUser}",
         user        => "${jssUser}"
     }
+	
+	exec {"restart_tomcat" :
+	        command     => "/home/${jssUser}/apache-tomcat-7.0.22/bin/shutdown.sh && /home/jss/apache-tomcat-7.0.22/bin/startup.sh"
+	        user        => "${jssUser}",
+			require		=> Exec["make_jasperserver],
+	}
 }
