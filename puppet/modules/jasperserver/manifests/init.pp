@@ -11,7 +11,6 @@ class jasperserver () {
     file { "remove_temp_jasperserver_dir":
         ensure      => "absent",
 		path		=> "/tmp/jasperserver",
-        user        => "${jssUser}",
         purge       => true,
     }
 	
