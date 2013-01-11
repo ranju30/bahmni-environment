@@ -4,12 +4,14 @@ class jasperserver () {
         command     => "/usr/bin/wget -O /tmp/jasperserver-4.7.0.zip http://nchc.dl.sourceforge.net/project/jasperserver/JasperServer/JasperReports%20Server%204.7.0/jasperreports-server-cp-4.7.0-bin.zip",
         timeout     => 0,
         provider    => "shell",
+        user        => "${jssUser}",
         onlyif      => "test ! -f /tmp/jasperserver-4.7.0.zip"
     }
 	
     file { "remove_temp_jasperserver_dir":
         ensure      => "absent",
 		path		=> "/tmp/jasperserver",
+        user        => "${jssUser}"
         purge       => true,
     }
 	
