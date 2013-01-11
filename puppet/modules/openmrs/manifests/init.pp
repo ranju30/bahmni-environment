@@ -3,6 +3,7 @@ class openmrs ( $tomcatInstallationDirectory, $openmrsDbBackupLocation = "/tmp/o
             command     => "/usr/bin/wget -O ${tomcatInstallationDirectory}/webapps/openmrs.war http://sourceforge.net/projects/openmrs/files/releases/OpenMRS_1.9.2/openmrs.war",
             timeout     => 0,
             provider    => "shell",
+			user        => "${jssUser}",
             onlyif      => "test -d ${tomcatInstallationDirectory}"
         }
 
@@ -24,30 +25,35 @@ class openmrs ( $tomcatInstallationDirectory, $openmrsDbBackupLocation = "/tmp/o
             command     => "/usr/bin/wget -O ${openmrsDbBackupLocation}/openmrs.sql.zip https://dl.dropbox.com/s/ne6ph52js2gx3n9/openmrs_withconcepts.sql.zip?dl=1",
             timeout     => 0,
             provider    => "shell",
+			user        => "${jssUser}",
             require     => File["ensure_openmrsdb_directory"]
          }
 
     exec { "openmrs_db_backup_unzip":
             command     => "unzip ${openmrsDbBackupLocation}/openmrs.sql.zip -d $openmrsDbBackupLocation",
             path        => ["/usr/bin"],
+			user        => "${jssUser}",
             require     => Exec["download-openmrs-database-backup"],
         }
 
     exec { "openmrs_update_db":
             command     => "mysql -uroot -p${mysqlRootPassword} openmrs < ${openmrsDbBackupLocation}/openmrs.sql",
             path        => ["/usr/bin"],
+			user        => "${jssUser}",
             require     => Exec["openmrs_db_backup_unzip"],
         }
 
     exec { "get_openMRS_folder" :
             command     => "/usr/bin/wget -O /home/${jssUser}/.OpenMRS.zip https://dl.dropbox.com/s/wd1900mwue3nu8n/.OpenMRS.zip?dl=1",
             timeout     => 0,
+			user        => "${jssUser}",
             provider    => "shell",
          }
 
     exec { "openMRS_folder_unzip":
             command     => "unzip /home/${jssUser}/.OpenMRS.zip -d /home/${jssUser}",
             path        => ["/usr/bin"],
+			user        => "${jssUser}",
             require     => [Exec["get_openMRS_folder"], File["delete_openmrs_dir"]],
          }
 
