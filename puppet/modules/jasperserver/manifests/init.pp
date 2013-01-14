@@ -72,7 +72,7 @@ class jasperserver () {
     }
 
     exec { "make_jasperserver":
-        command     => "echo '$jasperResetDb' | /bin/sh ${jasperHome}/buildomatic/js-install-ce.sh minimal",
+        command     => "echo '$jasperResetDb' | /bin/sh js-install-ce.sh minimal",
         require     => [Exec["set_jasperserver_scripts_permission"],File["java_home_path"], Exec["copy_mysql_jar"],Exec["set_jasperserver_ant_permission"]],
         cwd         => "${jasperHome}/buildomatic",
         user        => "${jssUser}"
