@@ -64,10 +64,16 @@ class jasperserver () {
         cwd         => "${jasperHome}"
     }
 	
+    exec { "set_jasperserver_ant_permission":
+        command     => "chmod u+x ${jasperHome}/apache-ant/bin/ant",
+        user        => "${jssUser}",
+        require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"], File["remove_temp_jasperserver_dir"]],
+        cwd         => "${jasperHome}"
+    }
 
     exec { "make_jasperserver":
         command     => "echo '$jasperResetDb' | /bin/sh ${jasperHome}/buildomatic/js-install-ce.sh minimal",
-        require     => [Exec["set_jasperserver_scripts_permission"],File["java_home_path"], Exec["copy_mysql_jar"]],
+        require     => [Exec["set_jasperserver_scripts_permission"],File["java_home_path"], Exec["copy_mysql_jar"],Exec["set_jasperserver_ant_permission"]],
         cwd         => "${jasperHome}/buildomatic",
         user        => "${jssUser}"
     }
