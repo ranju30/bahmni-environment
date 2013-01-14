@@ -49,14 +49,13 @@ class jasperserver () {
         owner       => "${jssUser}",
         group       => "${jssUser}"
     }
-
-    file { "${jasperHome}/buildomatic/bin/do-js-setup.sh":
-        content     => template("jasperserver/do-js-setup.sh"),
-        require     => Exec['unzip_jasperserver'],
-        owner       => "${jssUser}",
-        group       => "${jssUser}"
+    
+	exec { "set_jasperserver_ant_permission":
+        command     => "chmod u+x ${jasperHome}/apache-ant/bin/ant",
+        user        => "${jssUser}",
+        require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"], File["remove_temp_jasperserver_dir"]],
     }
-
+	
     exec { "set_jasperserver_scripts_permission":
         command     => "find . -name '*.sh' | xargs chmod u+x",
         user        => "${jssUser}",
@@ -64,10 +63,17 @@ class jasperserver () {
         cwd         => "${jasperHome}"
     }
 	
+    file { "${jasperHome}/apache-ant/bin/ant":
+        command     => "find . -name 'ant' | xargs chmod u+x",
+        user        => "${jssUser}",
+        require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"], File["remove_temp_jasperserver_dir"]],
+        cwd         => "${jasperHome}",
+    }
+	
 
     exec { "make_jasperserver":
         command     => "echo '$jasperResetDb' | /bin/sh ${jasperHome}/buildomatic/js-install-ce.sh minimal",
-        require     => [Exec["set_jasperserver_scripts_permission"],File["java_home_path"], Exec["copy_mysql_jar"]],
+        require     => [Exec["set_jasperserver_scripts_permission"],File["java_home_path"], Exec["copy_mysql_jar"], Exec["set_jasperserver_ant_permission"]],
         cwd         => "${jasperHome}/buildomatic",
         user        => "${jssUser}"
     }
