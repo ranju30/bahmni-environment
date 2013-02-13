@@ -51,4 +51,4 @@
  # class { jasperserver : }
  # include mysql
  # include mysqlserver
- # include python-jasmine
+ # include phantom-jasmine
