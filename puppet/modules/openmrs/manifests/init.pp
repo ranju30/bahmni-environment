@@ -40,6 +40,7 @@ class openmrs ( $tomcatInstallationDirectory, $openmrsDbBackupLocation = "/tmp/o
             command     => "mysql -uroot -p${mysqlRootPassword} openmrs < ${openmrsDbBackupLocation}/openmrs.sql",
             path        => ["/usr/bin"],
 			user        => "${jssUser}",
+			timeout     => 0,
             require     => Exec["openmrs_db_backup_unzip"],
         }
 

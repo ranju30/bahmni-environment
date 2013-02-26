@@ -17,9 +17,7 @@ class jasperserver ($userName) {
 
     exec { "unzip_jasperserver":
         command     => "unzip /tmp/jasperreports-server-cp-5.0.0-bin.zip && cp -r /tmp/jasperreports-server-cp-5.0.0-bin ./ && rm -rf /tmp/jasperreports-server-cp-5.0.0-bin",
-        cwd         => "${jasperHome}",
         provider    => "shell",
-        user        => "${jssUser}",
         require     => [File["${jasperHome}"], Exec["get_jasperserver"]],
     }
 
@@ -76,22 +74,22 @@ class jasperserver ($userName) {
     }
 
     file { "/tmp/configure_jasper_home.sh" :
-         require => Exec["make_jasperserver"],
-         content => template("jasperserver/configure_jasper_home.sh"),
-         owner => "${jssUser}",
-         group => "${jssUser}",
-         mode   =>  764
+         require    => Exec["make_jasperserver"],
+         content    => template("jasperserver/configure_jasper_home.sh"),
+         owner      => "${jssUser}",
+         group      => "${jssUser}",
+         mode       =>  764
     }
 
     exec { "config-jasper-home" :
-        require => File["/tmp/configure_jasper_home.sh"],
-        command => "sh /tmp/configure_jasper_home.sh ${jasperHome} ${jssUser}",
+        require     => File["/tmp/configure_jasper_home.sh"],
+        command     => "sh /tmp/configure_jasper_home.sh ${jasperHome} ${jssUser}",
         user        => "${jssUser}"
     }
 	
 	exec {"restart_tomcat" :
-	        command     => "/home/${jssUser}/apache-tomcat-7.0.22/bin/shutdown.sh && /home/jss/apache-tomcat-7.0.22/bin/startup.sh",
-	        user        => "${jssUser}",
-			require		=> Exec["make_jasperserver"],
+        command     => "/home/${jssUser}/apache-tomcat-7.0.22/bin/shutdown.sh && /home/jss/apache-tomcat-7.0.22/bin/startup.sh",
+        user        => "${jssUser}",
+        require		=> Exec["make_jasperserver"],
 	}
 }
