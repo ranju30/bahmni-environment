@@ -45,11 +45,16 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         require     => File["/etc/init.d/tomcat"],
     }
 
+    exec{ "change_tomcat_owner"
+        command     => "chown -R ${tomcatInstallationDirectory} ${userName}",
+        require     => [File["${tomcatInstallationDirectory}/conf/server.xml"], File["${tomcatInstallationDirectory}/conf/tomcat-users.xml"]]
+    }
+
     exec { "installtomcatservice" :
         provider    => "shell",
         user        => "root",
         command     => "/sbin/chkconfig --add tomcat",
-        require     => File["/etc/init.d/tomcat"],
+        require     => Exec["change_tomcat_owner"],
         onlyif      => "chkconfig --list tomcat; [ $? -eq 1 ]"
     }
 

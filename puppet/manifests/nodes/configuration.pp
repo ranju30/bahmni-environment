@@ -27,12 +27,12 @@
  $tomcatRedirectPort="8443"
  $tomcatShutdownPort="8005"
  $tomcatAjpPort="8009"
- $tomcatInstallationDirectory = "/home/${jssUser}/apache-tomcat-${tomcatVersion}"
+ $tomcatInstallationDirectory = "/usr/local/apache-tomcat-${tomcatVersion}"
  
 
  ######################## JASPER CONFIG START##############################################
- $jasperTomcatHome = "/home/jss/apache-tomcat-7.0.22"
- $jasperHome = "/home/jss/jasperserver-4.7.0-bin"
+ $jasperTomcatHome = "/usr/local/apache-tomcat-7.0.22"
+ $jasperHome = "usr/local/jasperreports-server-cp-5.0.0-bin"
  $jasperDbType = "mysql"
  $jasperDbHost = "localhost"
  $jasperDbUsername = "root"
@@ -48,7 +48,7 @@
  # class {users : userName => "${jssUser}", password => "${jssPassword}" }
  # class {tomcat : version => "${tomcatVersion}", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}",tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}",tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}", tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
  # class {openmrs : tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
- # class { jasperserver : }
+ # class { jasperserver : userName => "${jssUser}"}
  # include mysql
  # include mysqlserver
  # include phantom-jasmine
