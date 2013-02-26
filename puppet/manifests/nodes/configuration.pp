@@ -32,7 +32,7 @@
 
  ######################## JASPER CONFIG START##############################################
  $jasperTomcatHome = "/usr/local/apache-tomcat-7.0.22"
- $jasperHome = "usr/local/jasperreports-server-cp-5.0.0-bin"
+ $jasperHome = "/usr/local/jasperreports-server-cp-5.0.0-bin"
  $jasperDbType = "mysql"
  $jasperDbHost = "localhost"
  $jasperDbUsername = "root"

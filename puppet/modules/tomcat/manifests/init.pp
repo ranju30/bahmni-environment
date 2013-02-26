@@ -2,15 +2,14 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
 
     exec {"gettomcattarfile" :
         command     => "/usr/bin/wget -O /tmp/apache-tomcat-${version}.tar.gz http://archive.apache.org/dist/tomcat/tomcat-7/v${version}/bin/apache-tomcat-${version}.tar.gz",
-        require     => [User["${userName}"]],
-        user        => "${userName}",		
+        user        => "${userName}",
         timeout     => 0,
         provider    => "shell",
         onlyif      => "test ! -f /tmp/apache-tomcat-${version}.tar.gz"
     }
 
     exec { "tomcat_untar":
-        command     => "tar xfz /tmp/apache-tomcat-${version}.tar.gz; $moveAfterExtractCommand",
+        command     => "tar -xfz /tmp/apache-tomcat-${version}.tar.gz; $moveAfterExtractCommand",
         user        => "${userName}",
         cwd         => "/home/${userName}",
         creates     => "${tomcatInstallationDirectory}",
@@ -45,8 +44,8 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         require     => File["/etc/init.d/tomcat"],
     }
 
-    exec{ "change_tomcat_owner"
-        command     => "chown -R ${tomcatInstallationDirectory} ${userName}",
+    exec{ "change_tomcat_owner" :
+        command     => "chown -R ${userName}:${userName} ${tomcatInstallationDirectory}",
         require     => [File["${tomcatInstallationDirectory}/conf/server.xml"], File["${tomcatInstallationDirectory}/conf/tomcat-users.xml"]]
     }
 

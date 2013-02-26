@@ -16,7 +16,7 @@ class jasperserver ($userName) {
     }
 
     exec { "unzip_jasperserver":
-        command     => "jar xvf /tmp/jasperreports-server-cp-5.0.0-bin.zip && cp -r /tmp/jasperreports-server-cp-5.0.0-bin ./ && rm -rf /tmp/jasperreports-server-cp-5.0.0-bin",
+        command     => "unzip /tmp/jasperreports-server-cp-5.0.0-bin.zip && cp -r /tmp/jasperreports-server-cp-5.0.0-bin ./ && rm -rf /tmp/jasperreports-server-cp-5.0.0-bin",
         cwd         => "${jasperHome}",
         provider    => "shell",
         user        => "${jssUser}",
@@ -28,8 +28,8 @@ class jasperserver ($userName) {
        require      => Exec["unzip_jasperserver"]
     }
 
-    exec{ "change_jasperserver_owner"
-            command     => "chown -R ${jasperHome} ${userName}:${userName}",
+    exec{ "change_jasperserver_owner" :
+            command     => "chown -R ${userName}:${userName} ${jasperHome}",
             require     => Exec["unzip_jasperserver"],
     }
 
@@ -37,8 +37,6 @@ class jasperserver ($userName) {
         path 		=> "/etc/profile.d/java.sh",
         ensure 		=> "present",
         content 	=> template ("jasperserver/java.sh"),
-        owner 		=> 'root',
-        group 		=> 'root',
         mode 		=> '644',
 	}
 
@@ -59,14 +57,14 @@ class jasperserver ($userName) {
     exec { "set_jasperserver_scripts_permission":
         command     => "find . -name '*.sh' | xargs chmod u+x",
         user        => "${jssUser}",
-        require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"], File["remove_temp_jasperserver_dir"]],
+        require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"]],
         cwd         => "${jasperHome}"
     }
 	
     exec { "set_jasperserver_ant_permission":
         command     => "chmod u+x ${jasperHome}/apache-ant/bin/ant",
         user        => "${jssUser}",
-        require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"], File["remove_temp_jasperserver_dir"]],
+        require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"]],
         cwd         => "${jasperHome}"
     }
 

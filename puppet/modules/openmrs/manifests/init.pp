@@ -58,7 +58,7 @@ class openmrs ( $tomcatInstallationDirectory, $openmrsDbBackupLocation = "/tmp/o
          }
 
     exec { "change_openMRS_folder_ownership" :
-             command     => "/bin/chown -R jss:jss /home/${jssUser}/.OpenMRS",
+             command     => "/bin/chown -R ${jssUser}:${jssUser} /home/${jssUser}/.OpenMRS",
              require     => Exec["openMRS_folder_unzip"],
          }
 
