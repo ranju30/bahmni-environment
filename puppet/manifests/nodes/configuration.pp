@@ -52,3 +52,4 @@
  # include mysql
  # include mysqlserver
  # include phantom-jasmine
+ # include openerp
