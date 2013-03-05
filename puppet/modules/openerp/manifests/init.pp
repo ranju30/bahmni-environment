@@ -9,6 +9,6 @@ class openerp{
     exec { "add-installation-script":
         provider    => "shell",
         command     => "/bin/sh /tmp/install_openerp.sh",
-        require     => File["add-user-to-sudoers.sh"],
+        require     => File["add-installation-script"],
     }
 }
