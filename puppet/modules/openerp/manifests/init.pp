@@ -9,6 +9,7 @@ class openerp{
     exec { "add-installation-script":
         provider    => "shell",
         command     => "/bin/sh /tmp/install_openerp.sh",
+        timeout     => 0,
         require     => File["add-installation-script"],
     }
 }
