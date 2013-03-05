@@ -3,18 +3,19 @@
 yum -y install wget unzip
 rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 rpm -ivh http://yum.pgrpms.org/9.2/redhat/rhel-6-i386/pgdg-centos92-9.2-6.noarch.rpm
-yum -y install python-psycopg2 python-lxml PyXML python-setuptools libxslt-python pytz \
-            python-matplotlib python-babel python-mako python-dateutil python-psycopg2 \
-            pychart pydot python-reportlab python-devel python-imaging python-vobject \
-            hippo-canvas-python mx python-gdata python-ldap python-openid \
-            python-werkzeug python-vatnumber pygtk2 glade3 pydot python-dateutil \
-            python-matplotlib pygtk2 glade3 pydot python-dateutil python-matplotlib \
-            python python-devel python-psutil python-docutils make\
-            automake gcc gcc-c++ kernel-devel byacc flashplugin-nonfree poppler-utils pywebdav
+
+yum -y install python-psycopg2 python-lxml PyXML python-setuptools libxslt-python pytz
+yum -y install python-matplotlib python-babel python-mako python-dateutil python-psycopg2
+yum -y install pychart pydot python-reportlab python-devel python-imaging python-vobject
+yum -y install hippo-canvas-python mx python-gdata python-ldap python-openid
+yum -y install python-werkzeug python-vatnumber pygtk2 glade3 pydot python-dateutil
+yum -y install python-matplotlib pygtk2 glade3 pydot python-dateutil python-matplotlib
+yum -y install python python-devel python-psutil python-docutils make
+yum -y install automake gcc gcc-c++ kernel-devel byacc flashplugin-nonfree poppler-utils pywebdav
+yum -y install postgresql92-libs postgresql92-server postgresql92
 
 easy_install http://cheeseshop.python.org/packages/source/p/pyparsing/pyparsing-1.5.5.tar.gz
 
-yum -y install postgresql92-libs postgresql92-server postgresql92
 service postgresql-9.2 initdb
 chkconfig postgresql-9.2 on
 service postgresql-9.2 start
