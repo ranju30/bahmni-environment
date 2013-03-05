@@ -1,18 +1,18 @@
 #!/bin/sh
 # Modified script from Carlos E. Fonseca Zorrilla
-yum -y install wget unzip
+yum -vy install wget unzip
 rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 rpm -ivh http://yum.pgrpms.org/9.2/redhat/rhel-6-i386/pgdg-centos92-9.2-6.noarch.rpm
 
-yum -y install python-psycopg2 python-lxml PyXML python-setuptools libxslt-python pytz
-yum -y install python-matplotlib python-babel python-mako python-dateutil python-psycopg2
-yum -y install pychart pydot python-reportlab python-devel python-imaging python-vobject
-yum -y install hippo-canvas-python mx python-gdata python-ldap python-openid
-yum -y install python-werkzeug python-vatnumber pygtk2 glade3 pydot python-dateutil
-yum -y install python-matplotlib pygtk2 glade3 pydot python-dateutil python-matplotlib
-yum -y install python python-devel python-psutil python-docutils make
-yum -y install automake gcc gcc-c++ kernel-devel byacc flashplugin-nonfree poppler-utils pywebdav
-yum -y install postgresql92-libs postgresql92-server postgresql92
+yum -vy install python-psycopg2 python-lxml PyXML python-setuptools libxslt-python pytz
+yum -vy install python-matplotlib python-babel python-mako python-dateutil python-psycopg2
+yum -vy install pychart pydot python-reportlab python-devel python-imaging python-vobject
+yum -vy install hippo-canvas-python mx python-gdata python-ldap python-openid
+yum -vy install python-werkzeug python-vatnumber pygtk2 glade3 pydot python-dateutil
+yum -vy install python-matplotlib pygtk2 glade3 pydot python-dateutil python-matplotlib
+yum -vy install python python-devel python-psutil python-docutils make
+yum -vy install automake gcc gcc-c++ kernel-devel byacc flashplugin-nonfree poppler-utils pywebdav
+yum -vy install postgresql92-libs postgresql92-server postgresql92
 
 easy_install http://cheeseshop.python.org/packages/source/p/pyparsing/pyparsing-1.5.5.tar.gz
 
