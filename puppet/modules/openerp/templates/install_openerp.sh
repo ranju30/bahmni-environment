@@ -10,8 +10,10 @@ yum -y install python-psycopg2 python-lxml PyXML python-setuptools libxslt-pytho
             python-werkzeug python-vatnumber pygtk2 glade3 pydot python-dateutil \
             python-matplotlib pygtk2 glade3 pydot python-dateutil python-matplotlib \
             python python-devel python-psutil python-docutils make\
-            automake gcc gcc-c++ kernel-devel byacc flashplugin-nonfree poppler-utils pywebdav\
-sudo easy_install http://cheeseshop.python.org/packages/source/p/pyparsing/pyparsing-1.5.5.tar.gz
+            automake gcc gcc-c++ kernel-devel byacc flashplugin-nonfree poppler-utils pywebdav
+
+easy_install http://cheeseshop.python.org/packages/source/p/pyparsing/pyparsing-1.5.5.tar.gz
+
 yum -y install postgresql92-libs postgresql92-server postgresql92
 service postgresql-9.2 initdb
 chkconfig postgresql-9.2 on
