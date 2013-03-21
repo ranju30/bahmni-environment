@@ -48,7 +48,7 @@ rm -rf openerp*
 echo "##################################################"
 echo "Installing OpenERP"
 echo "##################################################"
-wget http://nightly.openerp.com/7.0/nightly/src/openerp-7.0-latest.tar.gz
+wget http://nightly.openerp.com/7.0/nightly/src/openerp-7.0-20130301-002301.tar.gz
 tar -zxvf openerp-7.0-latest.tar.gz  --transform 's!^[^/]\+\($\|/\)!openerp\1!'
 cd openerp
 python setup.py install
