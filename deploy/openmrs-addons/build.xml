@@ -1,0 +1,33 @@
+<project name="openmrs-addons" default="install.all" basedir=".">
+    <target name="install.all" depends="info, install.openmrs.modules, install.openmrs.data , install.registration"/>
+	
+	<property name="property.file.absoulute.path" location="${user.dir}/${property.file}"/>
+	<property file="${property.file.absoulute.path}"/>
+
+	<target name="info">
+		<echo>Reading property file ${property.file.absoulute.path}</echo>
+	</target>
+	
+    <target name="install.openmrs.modules">
+		<exec executable="${basedir}/openmrs-modules/scripts/upload-modules.sh" failonerror="true">
+		  <arg value="${openmrs.password}"/>
+		  <arg value="${openmrs.rest.module}"/>
+		  <arg value="http://modules.openmrs.org/modules/download/webservices.rest19ext/webservices.rest19ext-1.0.29298.omod"/>
+		  <arg value="http://modules.openmrs.org/modules/download/idgen/idgen-2.4.1.omod"/>
+		  <arg value="${bhamni.core.module}"/>
+		</exec>
+    </target>
+
+    <target name="install.openmrs.data">
+		<exec executable="${basedir}/openmrs-data/scripts/deploy.sh" failonerror="true">
+		  <arg line="${property.file.absoulute.path} ${deployables.dir}/openmrs-data-jars.zip"/>
+		</exec>
+    </target>
+
+    <target name="install.registration">
+		<exec executable="${basedir}/registration/scripts/deploy.sh" failonerror="true">
+		  <arg value="${deployables.dir}/registration.zip"/>
+		  <arg value="${tomcat.webapps.dir}"/>
+		</exec>
+    </target>
+</project>

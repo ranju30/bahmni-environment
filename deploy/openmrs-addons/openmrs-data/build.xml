@@ -15,10 +15,9 @@
              resource="com/googlecode/flyway/ant/antlib.xml"
              classpathref="flyway.lib.path"/>
 
-    <property file="${basedir}/conf/flyway.properties"></property>
 
     <target name="db.migrate">
-        <echo message="${flyway.url}"></echo>
+        <echo>${flyway.url}</echo>
         <flyway:migrate>
             <locations>
                 <location path="db.migration"/>

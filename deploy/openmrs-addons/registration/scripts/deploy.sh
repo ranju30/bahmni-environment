@@ -7,4 +7,4 @@ if [ $# -ne 2 ]; then
    exit 1
 fi
 
-unzip -o ${1} -d ${2}/registration
+unzip -q -o ${1} -d ${2}/registration

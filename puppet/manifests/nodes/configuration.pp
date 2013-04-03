@@ -53,6 +53,7 @@
  # include mysqlserver
  # include phantom-jasmine
  # include openerp
+ # class {openmrs-demo-data : tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
 
 
 #------------------------------------ Registration ------------------------------------------
