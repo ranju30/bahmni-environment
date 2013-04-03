@@ -16,6 +16,10 @@
  # mysql
  $mysqlRootPassword = "password"
 
+ # Java
+ $javaHome="/usr/java/default"
+ #$javaHome="/usr/lib/jvm/jre-1.6.0-openjdk.x86_64"
+
  #Tomcat 7.0.22 configuration
 
  $tomcatManagerPassword = "p@ssw0rd"
@@ -27,11 +31,11 @@
  $tomcatRedirectPort="8443"
  $tomcatShutdownPort="8005"
  $tomcatAjpPort="8009"
- $tomcatInstallationDirectory = "/usr/local/apache-tomcat-${tomcatVersion}"
+ $tomcatInstallationDirectory = "/home/${jssUser}/apache-tomcat-${tomcatVersion}"
  
 
  ######################## JASPER CONFIG START##############################################
- $jasperTomcatHome = "/usr/local/apache-tomcat-7.0.22"
+ $jasperTomcatHome = $tomcatInstallationDirectory
  $jasperHome = "/usr/local/jasperreports-server-cp-5.0.0-bin"
  $jasperDbType = "mysql"
  $jasperDbHost = "localhost"

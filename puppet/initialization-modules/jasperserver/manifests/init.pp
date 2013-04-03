@@ -16,7 +16,7 @@ class jasperserver ($userName) {
     }
 
     exec { "unzip_jasperserver":
-        command     => "unzip -o -q /tmp/jasperreports-server-cp-5.0.0-bin.zip -d .",
+        command     => "unzip -o -q /tmp/jasperreports-server-cp-5.0.0-bin.zip -d ${jasperHome}/..",
         provider    => "shell",
         require     => [File["${jasperHome}"], Exec["get_jasperserver"]],
     }
