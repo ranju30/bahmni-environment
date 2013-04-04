@@ -88,7 +88,7 @@ class jasperserver ($userName) {
     }
 	
 	exec {"restart_tomcat" :
-        command     => "/home/${jssUser}/apache-tomcat-7.0.22/bin/shutdown.sh && /home/jss/apache-tomcat-7.0.22/bin/startup.sh",
+        command     => "/etc/init.d/tomcat restart",
         user        => "${jssUser}",
         require		=> Exec["make_jasperserver"],
 	}

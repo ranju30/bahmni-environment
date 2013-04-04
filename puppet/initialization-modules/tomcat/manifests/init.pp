@@ -18,6 +18,15 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         provider    => "shell",
     }
 
+    file { "${tomcatInstallationDirectory}/bin/setenv.sh" :
+        ensure      => present,
+        content     => template("tomcat/setenv.sh"),
+        mode        => 777,
+        group       => "${userName}",
+        owner       => "${userName}",
+        require     => Exec["tomcat_untar"],
+    }
+
     file { "/etc/init.d/tomcat" :
         ensure      => present,
         content     => template("tomcat/tomcat.initd"),

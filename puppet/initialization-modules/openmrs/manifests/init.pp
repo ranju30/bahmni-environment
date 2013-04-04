@@ -3,7 +3,13 @@ class openmrs ( $tomcatInstallationDirectory) {
             command     => "/usr/bin/wget -O ${tomcatInstallationDirectory}/webapps/openmrs.war http://sourceforge.net/projects/openmrs/files/releases/OpenMRS_1.9.2/openmrs.war",
             timeout     => 0,
             provider    => "shell",
-			user        => "${jssUser}",
+			      user        => "${jssUser}",
             onlyif      => "test -d ${tomcatInstallationDirectory}"
     }
+    
+    exec {"restart_tomcat" :
+          command     => "/etc/init.d/tomcat restart",
+          user        => "${jssUser}",
+          require		=> Exec["download-openmrs-war"],
+  	}  	
 }

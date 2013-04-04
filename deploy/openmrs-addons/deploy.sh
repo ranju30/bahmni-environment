@@ -7,4 +7,6 @@ fi
 
 BASE_DIR=`dirname $0`
 
+export PATH=$PATH:/home/jss/apache-ant-1.9.0/bin
+
 ant -Dproperty.file=$1 -f $BASE_DIR/build.xml
