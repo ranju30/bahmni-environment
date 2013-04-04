@@ -30,7 +30,8 @@
  $tomcatRedirectPort="8443"
  $tomcatShutdownPort="8005"
  $tomcatAjpPort="8009"
- $tomcatInstallationDirectory = "/home/${jssUser}/apache-tomcat-${tomcatVersion}"
+ $tomcatParentDirectory="/home/${jssUser}"
+ $tomcatInstallationDirectory = "${tomcatParentDirectory}/apache-tomcat-${tomcatVersion}"
  
 
  ######################## JASPER CONFIG START##############################################
@@ -49,9 +50,9 @@
  # comment out resources not required to be installed
 
  # class {users : userName => "${jssUser}", password => "${jssPassword}" }
- # class {tomcat : version => "${tomcatVersion}", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}",tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}",tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}", tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
+ # class {tomcat : require => Class["users"], version => "${tomcatVersion}", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}",tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}",tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}", tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
  # class {openmrs : tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
- # include ant
+ # class { ant: require => Class["users"]}
  # class { jasperserver : userName => "${jssUser}"}
  # include mysql
  # include mysqlserver

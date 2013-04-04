@@ -9,7 +9,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
     }
 
     exec { "tomcat_untar":
-        command     => "tar --overwrite -zxf /tmp/apache-tomcat-${version}.tar.gz -C ${tomcatInstallationDirectory}/..",
+        command     => "tar --overwrite -zxf /tmp/apache-tomcat-${version}.tar.gz -C ${tomcatParentDirectory}",
         user        => "${userName}",
         cwd         => "/home/${userName}",
         creates     => "${tomcatInstallationDirectory}",
