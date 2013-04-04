@@ -17,7 +17,7 @@
  $mysqlRootPassword = "password"
 
  # Java
- $javaHome="/home/${jssUser}/jre1.7.0"
+ $javaHome="/usr/lib/jvm/jre1.7.0"
 
  #Tomcat 7.0.22 configuration
 

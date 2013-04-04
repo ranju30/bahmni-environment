@@ -1,6 +1,9 @@
 #!/bin/sh
 
-# to setup vm : wget https://raw.github.com/jss-emr/jss-scm/master/bootstrap.sh && sh ./bootstrap.sh
+# to setup vm : 
+# $ wget https://raw.github.com/jss-emr/jss-scm/master/bootstrap.sh
+# $ chmod +x bootstrap.sh
+# $ sudo ./bootstrap.sh
 
 #parameters:
 # config=path/to/config/file
@@ -89,6 +92,8 @@ puppetApply() {
       puppet apply manifests/site.pp --modulepath=initialization-modules/ && echo "Completed"
   fi
 }
+
+set -x
 
 _main_() {
   ensurePuppetInstallation
