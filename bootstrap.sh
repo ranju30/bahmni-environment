@@ -16,7 +16,7 @@ usage() {
   echo "Two main options: -c & -d"
   echo ""
   echo "./bootstrap.sh -c path/to/configuration.pp"
-  echo "          This will run bootstrap the box with motech software according to configuration.pp"
+  echo "          This will run bootstrap the box with jss software according to configuration.pp"
   echo ""
   echo "./bootstrap.sh -d"
   echo "          This will run apply configuration via puppet in debug mode"
