@@ -51,6 +51,7 @@
  # class {users : userName => "${jssUser}", password => "${jssPassword}" }
  # class {tomcat : version => "${tomcatVersion}", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}",tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}",tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}", tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
  # class {openmrs : tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
+ # include ant
  # class { jasperserver : userName => "${jssUser}"}
  # include mysql
  # include mysqlserver
