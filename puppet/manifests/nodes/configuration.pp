@@ -16,6 +16,9 @@
  # mysql
  $mysqlRootPassword = "password"
 
+ # Openmrs
+ $openMRSVersion = "1.9.2"
+
  # Java
  $javaHome="/usr/lib/jvm/jre1.7.0"
 
