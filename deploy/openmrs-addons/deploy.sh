@@ -9,4 +9,11 @@ BASE_DIR=`dirname $0`
 
 export PATH=$PATH:/home/jss/apache-ant-1.9.0/bin
 
+JAVA_VER=$(java -version 2>&1 | sed 's/java version "\(.*\)\.\(.*\)\..*"/\1\2/; 1q')
+if [ "$JAVA_VER" -le 17 ]; then
+	echo "Please make sure java version is 1.7"
+	exit 1
+fi
+	
+
 ant -Dproperty.file=$1 -f $BASE_DIR/build.xml
