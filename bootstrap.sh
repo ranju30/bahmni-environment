@@ -87,9 +87,9 @@ puppetApply() {
   cd /tmp/jss-scm/puppet
 
   if [ "$DEBUG" = "true" ]; then
-      puppet apply manifests/site.pp --debug --modulepath=initialization-modules/ && echo "Completed"
+      puppet apply manifests/site.pp --debug --modulepath=modules/ && echo "Completed"
   else
-      puppet apply manifests/site.pp --modulepath=initialization-modules/ && echo "Completed"
+      puppet apply manifests/site.pp --modulepath=modules/ && echo "Completed"
   fi
 }
 

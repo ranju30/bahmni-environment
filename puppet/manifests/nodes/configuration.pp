@@ -63,10 +63,3 @@
  # include openerp
  # class {openmrs-demo-data : tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
 
-
-#------------------------------------ Registration ------------------------------------------
-$registrationZipFilePath = "/deploy/registration.zip"
-$tomcatWebappDir = "/usr/local/Cellar/tomcat/7.0.37/libexec/webapps"
-
-# include registration:deploy
-
