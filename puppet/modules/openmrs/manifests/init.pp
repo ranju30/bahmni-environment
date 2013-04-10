@@ -18,5 +18,12 @@ class openmrs ( $tomcatInstallationDirectory) {
           command     => "/etc/init.d/tomcat restart",
           user        => "${jssUser}",
           require		=> Exec["install-openmrs"],
-  	}  	
+  	}
+
+    file { "$tomcatInstallationDirectory/webapps/openmrs/WEB_INF/classes/log4j.xml" :
+        ensure      => present,
+        content     => template("openmrs/log4j.xml.erb"),
+        user       => "${jssUser}",
+        require     => Exec["restart_tomcat"],
+    }
 }
