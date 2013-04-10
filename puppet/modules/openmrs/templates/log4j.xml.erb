@@ -18,7 +18,7 @@
     </appender>
 
     <appender name="OPENERP_APPENDER" class="org.apache.log4j.FileAppender">
-        <param name="File" value="<%= tomcatInstallationDirectory %>"/logs/openmrs-openerp-integration.log />
+        <param name="File" value="<%= tomcatInstallationDirectory %>/logs/openmrs-openerp-integration.log" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
                    value="%p - %C{1}.%M(%L) |%d{ISO8601}| %m%n" />
