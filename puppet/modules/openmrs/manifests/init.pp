@@ -14,16 +14,25 @@ class openmrs ( $tomcatInstallationDirectory) {
             require		=> Exec["download-openmrs-war"],            
     }
     
+    file { "/home/${jssUser}/.OpenMRS/openerp.properties" :
+        ensure      => present,
+        content     => template("openmrs/openerp.properties.erb"),
+        owner       => "${jssUser}",
+        group       => "${jssUser}",
+        require    => Exec["install-openmrs"],
+    }
+
     exec {"restart_tomcat" :
           command     => "/etc/init.d/tomcat restart",
           user        => "${jssUser}",
           require		=> Exec["install-openmrs"],
   	}
 
-    file { "$tomcatInstallationDirectory/webapps/openmrs/WEB_INF/classes/log4j.xml" :
+    file { "$tomcatInstallationDirectory/webapps/openmrs/WEB-INF/classes/log4j.xml" :
         ensure      => present,
         content     => template("openmrs/log4j.xml.erb"),
-        user       => "${jssUser}",
-        require     => Exec["restart_tomcat"],
+        owner       => "${jssUser}",
+        group       => "${jssUser}",
+        require    => Exec["restart_tomcat"],
     }
 }

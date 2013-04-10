@@ -37,6 +37,14 @@
  $tomcatInstallationDirectory = "${tomcatParentDirectory}/apache-tomcat-${tomcatVersion}"
  
 
+# OpenERP properties used by OpenMRS
+$openERPPort=8069
+$openERPHost=localhost
+$openERPDatabase=openerp
+$openERPUser=admin
+$openERPPassword=password
+
+
  ######################## JASPER CONFIG START##############################################
  $jasperTomcatHome = $tomcatInstallationDirectory
  $jasperHome = "/usr/local/jasperreports-server-cp-5.0.0-bin"
