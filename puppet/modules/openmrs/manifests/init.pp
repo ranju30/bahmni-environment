@@ -35,12 +35,19 @@ class openmrs ( $tomcatInstallationDirectory) {
         require		=> Exec["install-openmrs"],
   	}
 
-    file { "$tomcatInstallationDirectory/webapps/openmrs/WEB-INF/classes/log4j.xml" :
+    file {"$tomcatInstallationDirectory/webapps/openmrs" :
+        ensure      => "directory",
+        owner       => "${jssUser}",
+        group       => "${jssUser}",
+        require    => Exec["restart_tomcat"],
+    }
+
+    file { "${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/classes/log4j.xml" :
         ensure      => present,
         content     => template("openmrs/log4j.xml.erb"),
         owner       => "${jssUser}",
         group       => "${jssUser}",
-        require    => Exec["restart_tomcat"],
+        require    => File["${tomcatInstallationDirectory}/webapps/openmrs"],
     }
 
     file { "$tomcatInstallationDirectory/webapps/openmrs/WEB-INF/web.xml" :
@@ -48,6 +55,6 @@ class openmrs ( $tomcatInstallationDirectory) {
         content     => template("openmrs/web.xml"),
         owner       => "${jssUser}",
         group       => "${jssUser}",
-        require    => File["$tomcatInstallationDirectory/webapps/openmrs/WEB-INF/classes/log4j.xml"],
+        require    => File["${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/classes/log4j.xml"],
     }
 }
