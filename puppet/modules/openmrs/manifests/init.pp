@@ -14,6 +14,24 @@ class openmrs ( $tomcatInstallationDirectory) {
         require		=> Exec["download-openmrs-war"],
     }
 
+    file { "${imagesDirectory}" :
+        ensure      => directory,
+        owner       => "${jssUser}",
+        group       => "${jssUser}",
+    }
+
+	file { "$tomcatInstallationDirectory/webapps/patient_images":
+       ensure => "link",
+       target => "${imagesDirectory}",
+       require => File["${imagesDirectory}"],
+    }
+
+    file { "/home/${jssUser}/patient_images" :
+        ensure      => directory,
+        owner       => "${jssUser}",
+        group       => "${jssUser}",
+    }
+
     file { "/home/${jssUser}/.OpenMRS" :
         ensure      => directory,
         owner       => "${jssUser}",
@@ -21,9 +39,9 @@ class openmrs ( $tomcatInstallationDirectory) {
         require    => Exec["install-openmrs"],
     }
 
-    file { "/home/${jssUser}/.OpenMRS/openerp.properties" :
+    file { "/home/${jssUser}/.OpenMRS/bahmnicore.properties" :
         ensure      => present,
-        content     => template("openmrs/openerp.properties.erb"),
+        content     => template("openmrs/bahmnicore.properties.erb"),
         owner       => "${jssUser}",
         group       => "${jssUser}",
         require    => File["/home/${jssUser}/.OpenMRS"],
