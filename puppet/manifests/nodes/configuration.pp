@@ -43,6 +43,7 @@ $openERPHost=localhost
 $openERPDatabase=openerp
 $openERPUser=admin
 $openERPPassword=password
+$imagesDirectory=/home/${jssUser}/patient_images
 
 
  ######################## JASPER CONFIG START##############################################
