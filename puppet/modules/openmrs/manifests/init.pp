@@ -20,16 +20,10 @@ class openmrs ( $tomcatInstallationDirectory) {
         group       => "${jssUser}",
     }
 
-	file { "$tomcatInstallationDirectory/webapps/patient_images":
+	 file { "$tomcatInstallationDirectory/webapps/patient_images":
        ensure => "link",
        target => "${imagesDirectory}",
        require => File["${imagesDirectory}"],
-    }
-
-    file { "/home/${jssUser}/patient_images" :
-        ensure      => directory,
-        owner       => "${jssUser}",
-        group       => "${jssUser}",
     }
 
     file { "/home/${jssUser}/.OpenMRS" :
