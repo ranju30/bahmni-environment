@@ -1,6 +1,5 @@
 #!/bin/sh
 # Modified script from Carlos E. Fonseca Zorrilla
-yum -v -y install wget unzip
 rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 rpm -ivh http://yum.pgrpms.org/9.2/redhat/rhel-6-i386/pgdg-centos92-9.2-6.noarch.rpm
 

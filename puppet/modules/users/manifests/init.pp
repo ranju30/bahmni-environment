@@ -1,10 +1,9 @@
 class users ( $userName, $password ) {
-
     user { "${userName}":
-        ensure      => present,
+        ensure      => "present",
         shell       => "/bin/bash",
         home        => "/home/${userName}",
-        password    => $password,
+        password    => "$password",
     }
 
     exec { "$userName homedir":
