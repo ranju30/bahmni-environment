@@ -11,23 +11,15 @@ $mysqlRootPassword = "password"
 # Openmrs
 $openMRSVersion = "1.9.2"
 
-# Java
-$javaHome="/usr/lib/jvm/jre1.7.0"
-
-#Tomcat 7.0.22 configuration
-
-$tomcatManagerPassword = "p@ssw0rd"
-$tomcatVersion = "7.0.22"
-
-## optional
+#Tomcat 7
 $tomcatManagerUserName = "tomcat"
+$tomcatManagerPassword = "p@ssw0rd"
 $tomcatHttpPort="8080"
 $tomcatRedirectPort="8443"
 $tomcatShutdownPort="8005"
 $tomcatAjpPort="8009"
 $tomcatParentDirectory="/home/${bahmni_user}"
-$tomcatInstallationDirectory = "${tomcatParentDirectory}/apache-tomcat-${tomcatVersion}"
-
+$tomcatInstallationDirectory = "${tomcatParentDirectory}/apache-tomcat-${tomcat_version}"
 
 # OpenERP properties used by OpenMRS
 $openERPPort=8069

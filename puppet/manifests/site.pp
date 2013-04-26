@@ -1,8 +1,8 @@
-node default {
-  import "configurations/stack-installers-configuration"
-  import "configurations/stack-runtime-configuration"
-  import "configurations/node-configuration"
+import "configurations/node-configuration"
+import "configurations/stack-installers-configuration"
+import "configurations/stack-runtime-configuration"
 
+node default {
 	Exec {
   	path => "${os_path}"
 	}

@@ -22,6 +22,6 @@ class mysqlserver {
 	}
 	
 	package { "mysql-connector-java" :
-		ensure => "present",	
+		ensure => "present"
 	}
 }
