@@ -8,17 +8,20 @@ class mysqlserver {
 	package { "mysql-server" :
 		ensure  =>  "present"
 	}
+
 	service { "mysqld" :
-		ensure => running,
+		ensure => "running",
 		enable => true,
 		require => Package["mysql-server"]
 	}
- 	exec {"setmysqlpassword":
+
+ 	exec { "setmysqlpassword" :
 		command => "mysqladmin -u root PASSWORD ${mysqlRootPassword}; /bin/true",
 		require => [Package["mysql-server"], Package["mysql"] , Service["mysqld"]],
+		path => "${os_path}"
 	}
 	
 	package { "mysql-connector-java" :
-		ensure  =>  "present",	
+		ensure => "present",	
 	}
 }

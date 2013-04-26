@@ -8,7 +8,7 @@ class phantom-jasmine{
     exec { "phantomjs-archive-extract":
                 command     => "tar --use-compress-program bzip2 -xvf /usr/local/phantomjs.tar.bz2",
                 path        => ["/usr/local"],
-                user        => "${jssUser}",
+                user        => "${bahmni_user}",
                 require     => Exec["phantomjs-download-archive"],
     }
 

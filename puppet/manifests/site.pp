@@ -10,4 +10,6 @@ node default {
 	include host
 	include tools
 	include java
+
+  import "subsystems/openmrs"
 }

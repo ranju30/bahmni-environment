@@ -8,7 +8,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         onlyif      => "test ! -f /tmp/apache-tomcat-${version}.tar.gz"
     }
 
-    exec { "tomcat_untar":
+    exec { "tomcat_untar" :
         command     => "tar --overwrite -zxf /tmp/apache-tomcat-${version}.tar.gz -C ${tomcatParentDirectory}",
         user        => "${userName}",
         cwd         => "/home/${userName}",

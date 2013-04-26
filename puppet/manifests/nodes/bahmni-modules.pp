@@ -1,5 +1,3 @@
-class {users : userName => "${jssUser}", password => "${jssPassword}" }
+class { users : userName => "${bahmni_user}", password => "${bahmni_user_password}" }
 class { ant: require => Class["users"]}
-class { jasperserver : require => Class["tomcat"], userName => "${jssUser}"}
-include phantom-jasmine
-include openerp
+include openmrs

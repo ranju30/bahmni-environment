@@ -2,8 +2,8 @@
 
 # user
 # to generate password hash use 'echo "password" | openssl passwd -1 -stdin'
-$jssUser = "jss"
-$jssPassword = '$1$IW4OvlrH$Kui/55oif8W3VZIrnX6jL1'
+$bahmni_user = "jss"
+$bahmni_user_password_hash = '$1$IW4OvlrH$Kui/55oif8W3VZIrnX6jL1' #p@ssw0rd
 
 # mysql
 $mysqlRootPassword = "password"
@@ -25,7 +25,7 @@ $tomcatHttpPort="8080"
 $tomcatRedirectPort="8443"
 $tomcatShutdownPort="8005"
 $tomcatAjpPort="8009"
-$tomcatParentDirectory="/home/${jssUser}"
+$tomcatParentDirectory="/home/${bahmni_user}"
 $tomcatInstallationDirectory = "${tomcatParentDirectory}/apache-tomcat-${tomcatVersion}"
 
 
@@ -36,7 +36,7 @@ $openERPDatabase=openerp
 $openERPUser=admin
 $openERPPassword=password
 
-$imagesDirectory="/home/${jssUser}/patient_images"
+$imagesDirectory="/home/${bahmni_user}/patient_images"
 
 
 ######################## JASPER CONFIG START##############################################

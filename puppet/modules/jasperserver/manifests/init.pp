@@ -4,15 +4,15 @@ class jasperserver ($userName) {
         command     => "/usr/bin/wget -O /tmp/jasperreports-server-cp-5.0.0-bin.zip https://dl.dropbox.com/s/1p0jtt1hjfnrkp6/jasperreports-server-cp-5.0.0-bin.zip",
         timeout     => 0,
         provider    => "shell",
-        user        => "${jssUser}",
+        user        => "${bahmni_user}",
         onlyif      => "test ! -f /tmp/jasperreports-server-cp-5.0.0-bin.zip"
     }
 
 	file { "${jasperHome}":
             ensure      => "directory",
             purge       => true,
-            owner       => "${jssUser}",
-            group       => "${jssUser}"
+            owner       => "${bahmni_user}",
+            group       => "${bahmni_user}"
     }
 
     exec { "unzip_jasperserver":
@@ -41,27 +41,27 @@ class jasperserver ($userName) {
     file { "${jasperHome}/buildomatic/default_master.properties":
         content     => template("jasperserver/default_master.properties.erb"),
         require     => Exec['change_jasperserver_owner'],
-        owner       => "${jssUser}",
-        group       => "${jssUser}"
+        owner       => "${bahmni_user}",
+        group       => "${bahmni_user}"
     }
 
     file { "${jasperHome}/buildomatic/bin/do-js-setup.sh":
         content     => template("jasperserver/do-js-setup.sh"),
         require     => Exec['change_jasperserver_owner'],
-        owner       => "${jssUser}",
-        group       => "${jssUser}"
+        owner       => "${bahmni_user}",
+        group       => "${bahmni_user}"
     }
 
     exec { "set_jasperserver_scripts_permission":
         command     => "find . -name '*.sh' | xargs chmod u+x",
-        user        => "${jssUser}",
+        user        => "${bahmni_user}",
         require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"]],
         cwd         => "${jasperHome}"
     }
 	
     exec { "set_jasperserver_ant_permission":
         command     => "chmod u+x ${jasperHome}/apache-ant/bin/ant",
-        user        => "${jssUser}",
+        user        => "${bahmni_user}",
         require     => [File["${jasperHome}/buildomatic/bin/do-js-setup.sh"], File["${jasperHome}/buildomatic/default_master.properties"]],
         cwd         => "${jasperHome}"
     }
@@ -70,26 +70,26 @@ class jasperserver ($userName) {
         command     => "echo '$jasperResetDb' | /bin/sh js-install-ce.sh minimal",
         require     => [Exec["set_jasperserver_scripts_permission"],File["java_home_path"], Exec["copy_mysql_jar"],Exec["set_jasperserver_ant_permission"]],
         cwd         => "${jasperHome}/buildomatic",
-        user        => "${jssUser}"
+        user        => "${bahmni_user}"
     }
 
     file { "/tmp/configure_jasper_home.sh" :
          require    => Exec["make_jasperserver"],
          content    => template("jasperserver/configure_jasper_home.sh"),
-         owner      => "${jssUser}",
-         group      => "${jssUser}",
+         owner      => "${bahmni_user}",
+         group      => "${bahmni_user}",
          mode       =>  764
     }
 
     exec { "config-jasper-home" :
         require     => File["/tmp/configure_jasper_home.sh"],
-        command     => "sh /tmp/configure_jasper_home.sh ${jasperHome} ${jssUser}",
-        user        => "${jssUser}"
+        command     => "sh /tmp/configure_jasper_home.sh ${jasperHome} ${bahmni_user}",
+        user        => "${bahmni_user}"
     }
 	
 	exec {"restart_tomcat" :
         command     => "/etc/init.d/tomcat restart",
-        user        => "${jssUser}",
+        user        => "${bahmni_user}",
         require		=> Exec["make_jasperserver"],
 	}
 }

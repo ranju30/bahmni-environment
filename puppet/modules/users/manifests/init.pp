@@ -1,12 +1,12 @@
-class users ( $userName, $password ) {
-    user { "${userName}":
+class users ( $userName, $password_hash ) {
+    user { "${userName}" :
         ensure      => "present",
         shell       => "/bin/bash",
         home        => "/home/${userName}",
-        password    => "$password",
+        password    => "${password_hash}",
     }
 
-    exec { "$userName homedir":
+    exec { "$userName homedir" :
         provider    => "shell",
         command     => "/bin/cp -R /etc/skel /home/$userName; /bin/chown -R $userName:$userName /home/$userName",
         creates     => "/home/$userName",
@@ -15,7 +15,7 @@ class users ( $userName, $password ) {
     }
 
     file { "add-user-to-sudoers.sh" :
-        ensure      => present,
+        ensure      => "present",
         path        => "/home/${userName}/add-user-to-sudoers.sh",
         content     => template("users/add-user-to-sudoers.sh"),
         owner       => "${userName}",
@@ -24,7 +24,7 @@ class users ( $userName, $password ) {
         require     => Exec["$userName homedir"],
     }
 
-    exec { "add-user-to-sudoers":
+    exec { "add-user-to-sudoers" :
         provider    => "shell",
         command     => "/bin/sh /home/${userName}/add-user-to-sudoers.sh ${userName}",
         onlyif      => "test `grep -i ${userName} /etc/sudoers  | wc -l` -eq 0",
