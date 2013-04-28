@@ -8,9 +8,6 @@ $bahmni_user_password_hash = '$1$IW4OvlrH$Kui/55oif8W3VZIrnX6jL1' #p@ssw0rd
 # mysql
 $mysqlRootPassword = "password"
 
-# Openmrs
-$openMRSVersion = "1.9.2"
-
 #Tomcat 7
 $tomcatManagerUserName = "tomcat"
 $tomcatManagerPassword = "p@ssw0rd"

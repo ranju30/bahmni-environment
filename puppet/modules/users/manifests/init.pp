@@ -1,7 +1,7 @@
 class users ( $userName, $password_hash ) {
     user { "${userName}" :
-        ensure      => "present",
-        shell       => "bash",
+        ensure      => present,
+        shell       => "/bin/bash",
         home        => "/home/${userName}",
         password    => "${password_hash}",
     }

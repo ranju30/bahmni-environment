@@ -1,0 +1,12 @@
+Convention
+----------
+variable_name
+file-name.pp
+
+No wget. Provisioning should work in low resource scenarios.
+Make sure the resource definitions have checks so that when run again they are fast and leave the system in correct state
+Class with arguments only if we would declare more than one of those resources.
+Use the order of definition to express the order of execution, "require" is really not required.
+
+Read puppet documentation. Good one here. http://docs.puppetlabs.com/learning/
+Discuss with the team if you disagree.
