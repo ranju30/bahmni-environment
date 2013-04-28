@@ -1,1 +1,1 @@
-class { jasperserver : require => Class["tomcat"], userName => "${bahmni_user}"}
+class { jasperserver :}
