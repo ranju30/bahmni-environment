@@ -9,4 +9,6 @@ node default {
 
   import "subsystems/openmrs"
   import "subsystems/jasperreports"
+
+  include tomcat-runtime
 }

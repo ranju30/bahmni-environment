@@ -26,7 +26,7 @@ upload_from_local_file() {
 	   exit 1
 	fi
 
-	curl -isS -b /tmp/cookie.txt -F action=upload -F update=true -F moduleFile=\@$OMOD_FILE $OPENMRS_URL/admin/modules/module.list > /tmp/upload_response.txt	
+	curl -isS -b /tmp/cookie.txt -F action=upload -F update=true -F moduleFile=\@$OMOD_FILE $OPENMRS_URL/admin/modules/module.list > /tmp/upload_response.txt
 }
 
 check_if_upload_success_full() {
@@ -43,29 +43,14 @@ check_if_login_success_full() {
 	fi	
 }
 
-upload_from_http_url(){
-	curl -isS -b /tmp/cookie.txt -F action=upload -F download=true -F downloadURL=$1 $OPENMRS_URL/admin/modules/module.list > /tmp/upload_response.txt	
-}
-
 upload_module() {	
 	echo "Uploading module $1"
-	if [[ $1 =~ http:.* ]];	then
-	   upload_from_http_url $1
-	else
-	   upload_from_local_file $1		
-	fi
+	upload_from_local_file $1		
 	check_if_upload_success_full $1
 }
 
 cleanup() {
 	rm -rf /tmp/cookie.txt /tmp/login_response.txt /tmp/upload_response.txt > /dev/null 2>&1	
-}
-
-upload_modules() {
-	for module in $@
-	do
-		upload_module $module
-	done
 }
 
 _main_() {
@@ -75,7 +60,8 @@ _main_() {
 	assign_defaults
 	login $1
 	shift
-	upload_modules $@
+	cleanup
+	upload_module $@
 	# cleanup
 }
 

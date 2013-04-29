@@ -10,3 +10,9 @@ Use the order of definition to express the order of execution, "require" is real
 
 Read puppet documentation. Good one here. http://docs.puppetlabs.com/learning/
 Discuss with the team if you disagree.
+http://www.ibm.com/developerworks/linux/library/l-lpic1-v3-102-5/
+
+Technical debt
+--------------
+1. We have a pattern - create a shell script using a template file and then execute the same script. Can this be done via a single custom resource type
+2. Make all the actions idempotent, i.e. do nothing if already in the state required

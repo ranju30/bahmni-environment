@@ -24,7 +24,7 @@ class jasperserver {
 
   file { "java_home_path" :
     path        => "/etc/profile.d/java.sh",
-    ensure      => "present",
+    ensure      => present,
     content     => template ("jasperserver/java.sh"),
     mode        => '644',
   }
