@@ -22,7 +22,7 @@ class java {
     require => Exec["untar"]
  	}
 
-  exec { "set Java env variable" :
+  exec { "JAVA_HOME env variable" :
     command   => "export JAVA_HOME=${java_home}",
     path      => "${os_path}",
     provider  => "shell"

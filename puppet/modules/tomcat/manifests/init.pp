@@ -2,42 +2,32 @@ class tomcat {
   require java
 
   exec { "tomcat_untar" :
-    command   => "tar --overwrite -zxf ${package_dir}/apache-tomcat-${tomcat_version}.tar.gz -C ${tomcatParentDirectory}",
+    command   => "tar -zxf ${package_dir}/apache-tomcat-${tomcat_version}.tar.gz -C ${tomcatParentDirectory}",
     user      => "${bahmni_user}",
     creates   => "${tomcatInstallationDirectory}",
-    provider  => "shell"
+    provider  => shell
   }
 
-  file { "${tomcatInstallationDirectory}/bin/setenv.sh" :
-    ensure    => present,
-    content   => template("tomcat/setenv.sh"),
-    mode      => 777,
-    group     => "${bahmni_user}",
-    owner     => "${bahmni_user}",
-  }
-
-  file { "/etc/init.d/tomcat" :
-    ensure    => present,
-    content   => template("tomcat/tomcat.initd"),
-    mode      => 777,
-    group     => "root",
-    owner     => "root",
+  exec { "CATALINA_OPTS Env Variable" :
+    command   => 'export CATALINA_OPTS="-XX:MaxPermSize=512m -Xms128m -Xmx512m"',
+    path      => "${os_path}",
+    provider  => shell
   }
 
   file { "${tomcatInstallationDirectory}/conf/server.xml" :
     ensure    => present,
     content   => template("tomcat/server.xml.erb"),
-    group     => "${bahmni_user}",
     owner     => "${bahmni_user}",
     replace   => true,
+    mode      => 644,
     require   => Exec["tomcat_untar"]
   }
 
   file { "${tomcatInstallationDirectory}/conf/tomcat-users.xml" :
     ensure    => present,
     content   => template("tomcat/tomcat-users.xml.erb"),
-    group     => "${bahmni_user}",
     owner     => "${bahmni_user}",
+    mode      => 644,
     require   => Exec["tomcat_untar"]
   }
 

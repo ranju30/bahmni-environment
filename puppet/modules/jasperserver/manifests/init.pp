@@ -29,6 +29,14 @@ class jasperserver {
     loglevel    => "warning"
   }
 
+  # exec { "jasperserver_scripts_permission" :
+  #   command     => "find . -name '*.sh' | xargs chmod u+x ${log_expression}",
+  #   user        => "${jssUser}",
+  #   require     => [Exec["extracted_jasperserver"], File["${do_js_setup_script}"]],
+  #   cwd         => "${jasperHome}",
+  #   path        => "${os_path}"
+  # } 
+
   exec {"${jasper_mysql_connector}" :
     command      => "cp /usr/share/java/mysql-connector-java.jar ${jasper_mysql_connector}",
     path        => "${os_path}",
@@ -39,13 +47,13 @@ class jasperserver {
   file { "${default_master_properties}" :
     content     => template("jasperserver/default_master.properties.erb"),
     owner       => "${bahmni_user}",
-    mode        => 744,
+    mode        => 544,
     require     => Exec["extracted_jasperserver"]
   }
 
   file { "${do_js_setup_script}" :
     content     => template("jasperserver/do-js-setup.sh"),
-    mode        => 744,
+    mode        => 544,
     owner       => "${bahmni_user}",
     require     => Exec["extracted_jasperserver"]
   }
@@ -59,7 +67,9 @@ class jasperserver {
   }
 
   file { "${temp_dir}/configure_jasper_home.sh" :
-    content    => template("jasperserver/configure_jasper_home.sh")
+    content    => template("jasperserver/configure_jasper_home.sh"),
+    owner      => "${bahmni_user}",
+    mode       => 544
   }
 
   exec { "config_jasper_home" :

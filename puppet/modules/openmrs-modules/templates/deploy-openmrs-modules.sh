@@ -8,7 +8,7 @@ check_args() {
 }
 
 login() {
-	curl -isS -c /tmp/cookie.txt -d uname=admin -d pw=${1} $OPENMRS_URL/loginServlet > /tmp/login_response.txt
+	curl -isS -c cookie.txt -d uname=admin -d pw=${1} $OPENMRS_URL/loginServlet > login_response.txt
 	check_if_login_success_full	
 }
 
@@ -19,25 +19,25 @@ upload_from_local_file() {
 	   exit 1
 	fi
 
-	curl -isS -b /tmp/cookie.txt -F action=upload -F update=true -F moduleFile=\@$OMOD_FILE $OPENMRS_URL/admin/modules/module.list > /tmp/upload_response.txt	
+	curl -isS -b cookie.txt -F action=upload -F update=true -F moduleFile=\@$OMOD_FILE $OPENMRS_URL/admin/modules/module.list > upload_response.txt	
 }
 
 check_if_upload_success_full() {
-	if  ! grep -q "modules/module.list" "/tmp/upload_response.txt"; then
-		echo "Failed to update module $1. Please check /tmp/upload_response.txt and /tmp/login_response.txt for more info"
+	if  ! grep -q "modules/module.list" "upload_response.txt"; then
+		echo "Failed to update module $1. Please check upload_response.txt and login_response.txt for more info"
 		exit 1
 	fi	
 }
 
 check_if_login_success_full() {
-	if grep -q "login.htm" "/tmp/login_response.txt"; then
-		echo "Failed to login as openmrs user 'admin'. Please verify the admin password. Check /tmp/login_response.txt for more info"
+	if grep -q "login.htm" "login_response.txt"; then
+		echo "Failed to login as openmrs user 'admin'. Please verify the admin password. Check login_response.txt for more info"
 		exit 1
 	fi	
 }
 
 upload_from_http_url(){
-	curl -isS -b /tmp/cookie.txt -F action=upload -F download=true -F downloadURL=$1 $OPENMRS_URL/admin/modules/module.list > /tmp/upload_response.txt	
+	curl -isS -b cookie.txt -F action=upload -F download=true -F downloadURL=$1 $OPENMRS_URL/admin/modules/module.list > upload_response.txt	
 }
 
 upload_module() {	
@@ -51,7 +51,7 @@ upload_module() {
 }
 
 cleanup() {
-	rm -rf /tmp/cookie.txt /tmp/login_response.txt /tmp/upload_response.txt > /dev/null 2>&1	
+	rm -rf cookie.txt login_response.txt upload_response.txt > /dev/null 2>&1	
 }
 
 upload_modules() {

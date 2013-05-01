@@ -41,7 +41,7 @@ class openmrs {
     ensure      => present,
     content     => template("openmrs/bahmnicore.properties.erb"),
     owner       => "${bahmni_user}",
-    group       => "${bahmni_user}"
+    mode        => 644
   }
 
   exec { "openmrs_webapp" :
@@ -54,16 +54,16 @@ class openmrs {
     ensure      => present,
     content     => template("openmrs/log4j.xml.erb"),
     owner       => "${bahmni_user}",
-    group       => "${bahmni_user}",
-    require     => Exec["openmrs_webapp"]
+    require     => Exec["openmrs_webapp"],
+    mode        => 644
   }
 
   file { "${web_xml_file}" :
     ensure      => present,
     content     => template("openmrs/web.xml"),
     owner       => "${bahmni_user}",
-    group       => "${bahmni_user}",
-    require     => Exec["openmrs_webapp"]
+    require     => Exec["openmrs_webapp"],
+    mode        => 644
   }
 
   file { "${temp_dir}/create-openmrs-db.sql" :
@@ -84,7 +84,7 @@ class openmrs {
     ensure      => present,
     content     => template("openmrs/run-liquibase.sh"),
     owner       => "${bahmni_user}",
-    group       => "${bahmni_user}"
+    mode        => 544
   }
 
   exec { "openmrs_data" :
