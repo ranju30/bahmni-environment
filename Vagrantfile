@@ -9,10 +9,13 @@ Vagrant::Config.run do |config|
   config.ssh.username = "root"
   # config.vm.forward_port 80, 8080
   # config.vm.share_folder "v-data", "/vagrant_data", "../data"
+
+  stages = {'provision' => "provision.pp", 'deploy' => 'deploy.pp'}
+  stage = stages[ENV['STAGE']]
   
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "puppet/manifests"
-    puppet.manifest_file = "site.pp"
+    puppet.manifest_file = stage
     puppet.module_path = "puppet/modules"
   end
 end

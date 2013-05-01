@@ -16,4 +16,10 @@ class java {
     ensure => "link",
     target => "${java_path}"
  	}
+
+  exec { "set Java env variable" :
+    command => "export JAVA_HOME=${java_home}",
+    path    => "${os_path}",
+    provider => "shell"
+  }
 }

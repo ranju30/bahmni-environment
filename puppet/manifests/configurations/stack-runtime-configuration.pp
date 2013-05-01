@@ -18,15 +18,15 @@ $tomcatAjpPort="8009"
 $tomcatParentDirectory="/home/${bahmni_user}"
 $tomcatInstallationDirectory = "${tomcatParentDirectory}/apache-tomcat-${tomcat_version}"
 
+#OpenMRS
+$openmrs_password = "Admin123"
+
 # OpenERP properties used by OpenMRS
 $openERPPort=8069
 $openERPHost=localhost
 $openERPDatabase=openerp
 $openERPUser=admin
 $openERPPassword=password
-
-$imagesDirectory="/home/${bahmni_user}/patient_images"
-
 
 ######################## JASPER CONFIG START##############################################
 $jasperTomcatHome = $tomcatInstallationDirectory
@@ -36,5 +36,5 @@ $jasperDbHost = "localhost"
 $jasperDbUsername = "root"
 $jasperDbPassword = "password"
 $jasperDbName = "jasperserver"
-$jasperResetDb = "y" ## Provide "y" or "n"
-######################## JASPER CONFIG END################################################
+
+$imagesDirectory="/home/${bahmni_user}/patient_images"

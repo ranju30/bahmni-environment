@@ -1,0 +1,1 @@
+STAGE="deploy" vagrant provision

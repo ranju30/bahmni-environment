@@ -1,4 +1,5 @@
 $temp_dir = "/tmp"
+$logs_dir = "${temp_dir}/logs"
 $package_dir = "/packages"
 $java_home = "/usr/lib/jvm/jre1.7.0_21"
 $java = "/usr/bin/java"

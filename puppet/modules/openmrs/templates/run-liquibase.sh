@@ -1,0 +1,2 @@
+java -jar openmrs/WEB-INF/lib/liquibase-core-2.0.5.jar --driver=com.mysql.jdbc.Driver --classpath=openmrs.war --changeLogFile=liquibase-schema-only.xml --url=jdbc:mysql://localhost:3306/openmrs --username=root --password=password update
+java -jar openmrs/WEB-INF/lib/liquibase-core-2.0.5.jar --driver=com.mysql.jdbc.Driver --classpath=openmrs.war --changeLogFile=liquibase-core-data.xml --url=jdbc:mysql://localhost:3306/openmrs --username=root --password=password update

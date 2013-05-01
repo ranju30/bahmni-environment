@@ -3,7 +3,7 @@ Convention
 variable_name
 file-name.pp
 
-No wget. Provisioning should work in low resource scenarios.
+Do not use wget. Provisioning should work in low/no network sites as well.
 Make sure the resource definitions have checks so that when run again they are fast and leave the system in correct state
 Class with arguments only if we would declare more than one of those resources.
 Use the order of definition to express the order of execution, "require" is really not required.
@@ -16,3 +16,5 @@ Technical debt
 --------------
 1. We have a pattern - create a shell script using a template file and then execute the same script. Can this be done via a single custom resource type
 2. Make all the actions idempotent, i.e. do nothing if already in the state required
+3. There are a lot of classes where we had to set path, set user, group etc. Find out if there is a way to set this in one place and get this to work.
+4. All the shell scripts are currently dumped in temp dir. May be we should have sub-folders inside it as well
