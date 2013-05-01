@@ -3,12 +3,14 @@ import "configurations/stack-installers-configuration"
 import "configurations/stack-runtime-configuration"
 
 node default {
-	include host
-	include tools
-	include java
+	# include host
+	# include tools
+	# include java
 
-  import "subsystems/openmrs"
-  import "subsystems/jasperreports"
+ #  import "subsystems/openmrs"
+ #  import "subsystems/jasperreports"
 
-  include tomcat-runtime
+ #  include tomcat-runtime
+  include postgresql
+  include python
 }

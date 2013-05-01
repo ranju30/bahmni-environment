@@ -1,15 +1,18 @@
-class openerp{
-    file { "add-installation-script" :
-        ensure      => present,
-        path        => "${temp_dir}/install_openerp.sh",
-        content     => template("openerp/install_openerp.sh"),
-        mode        => 764,
-    }
+class openerp {
+    require python
 
-    exec { "add-installation-script" :
-        provider    => "shell",
-        command     => "/bin/sh --verbose ${temp_dir}/install_openerp.sh",
-        timeout     => 0,
-        require     => File["add-installation-script"],
-    }
+    
+    # file { "add-installation-script" :
+    #     ensure      => present,
+    #     path        => "${temp_dir}/install_openerp.sh",
+    #     content     => template("openerp/install_openerp.sh"),
+    #     mode        => 764,
+    # }
+
+    # exec { "add-installation-script" :
+    #     provider    => "shell",
+    #     command     => "/bin/sh --verbose ${temp_dir}/install_openerp.sh",
+    #     timeout     => 0,
+    #     require     => File["add-installation-script"],
+    # }
 }
