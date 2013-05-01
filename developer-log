@@ -1,12 +1,13 @@
-Convention
-----------
-variable_name
+Convention (case included)
+--------------------------
+variable_name, resource_name, class_name
 file-name.pp
 
 Do not use wget. Provisioning should work in low/no network sites as well.
 Make sure the resource definitions have checks so that when run again they are fast and leave the system in correct state
 Class with arguments only if we would declare more than one of those resources.
 Use the order of definition to express the order of execution, "require" is really not required.
+Define the resources based on what it creates rather and what it does
 
 Read puppet documentation. Good one here. http://docs.puppetlabs.com/learning/
 Discuss with the team if you disagree.
@@ -18,3 +19,4 @@ Technical debt
 2. Make all the actions idempotent, i.e. do nothing if already in the state required
 3. There are a lot of classes where we had to set path, set user, group etc. Find out if there is a way to set this in one place and get this to work.
 4. All the shell scripts are currently dumped in temp dir. May be we should have sub-folders inside it as well
+5. Deployment classes do not need to "require" Provision classes. Eventually we should not need this but currently we are not confident whether running same class twice would have an affect or not.

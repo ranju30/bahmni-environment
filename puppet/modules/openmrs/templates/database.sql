@@ -1,10 +1,10 @@
-CREATE DATABASE openmrs
+CREATE DATABASE IF NOT EXISTS openmrs
 DEFAULT CHARACTER SET utf8
 DEFAULT COLLATE utf8_general_ci;
 
 use openmrs;
 
-CREATE TABLE `liquibasechangelog` (
+CREATE TABLE IF NOT EXISTS `liquibasechangelog` (
 			  `ID` varchar(63) NOT NULL,
 			  `AUTHOR` varchar(63) NOT NULL,
 			  `FILENAME` varchar(200) NOT NULL,

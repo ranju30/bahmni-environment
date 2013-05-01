@@ -1,16 +1,20 @@
 class mysql {
+	require host
+
 	package { "mysql" :
-		ensure  =>  "present"
+		ensure  => present
 	}
 }
 
 class mysqlserver {
+	require host
+
 	package { "mysql-server" :
-		ensure  =>  "present"
+		ensure  => present
 	}
 
 	service { "mysqld" :
-		ensure => "running",
+		ensure => running,
 		enable => true,
 		require => Package["mysql-server"]
 	}

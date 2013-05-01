@@ -1,4 +1,6 @@
 class tomcat {
+  require java
+
   exec { "tomcat_untar" :
     command   => "tar --overwrite -zxf ${package_dir}/apache-tomcat-${tomcat_version}.tar.gz -C ${tomcatParentDirectory}",
     user      => "${bahmni_user}",
@@ -28,6 +30,7 @@ class tomcat {
     group     => "${bahmni_user}",
     owner     => "${bahmni_user}",
     replace   => true,
+    require   => Exec["tomcat_untar"]
   }
 
   file { "${tomcatInstallationDirectory}/conf/tomcat-users.xml" :
@@ -35,11 +38,13 @@ class tomcat {
     content   => template("tomcat/tomcat-users.xml.erb"),
     group     => "${bahmni_user}",
     owner     => "${bahmni_user}",
+    require   => Exec["tomcat_untar"]
   }
 
   exec{ "change_tomcat_owner" :
     command   => "chown -R ${bahmni_user}:${bahmni_user} ${tomcatInstallationDirectory}",
-    path      => "${os_path}"
+    path      => "${os_path}",
+    require   => Exec["tomcat_untar"]
   }
 
   exec { "installtomcatservice" :
@@ -48,12 +53,5 @@ class tomcat {
     command   => "chkconfig --add tomcat",
     require   => Exec["change_tomcat_owner"],
     onlyif    => "chkconfig --list tomcat; [ $? -eq 1 ]"
-  }
-
-  service { "tomcat" :
-    ensure    => running,
-    enable    => true,
-    hasstatus => false,
-    path      => "${os_path}"
   }
 }
