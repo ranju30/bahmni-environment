@@ -14,6 +14,7 @@
 		  <arg value="${openmrs.rest.module}"/>
 		  <arg value="http://modules.openmrs.org/modules/download/webservices.rest19ext/webservices.rest19ext-1.0.29298.omod"/>
 		  <arg value="http://modules.openmrs.org/modules/download/idgen/idgen-2.4.1.omod"/>
+		  <arg value="${address.hierarchy.module}"/>
 		  <arg value="${bhamni.core.module}"/>
 		</exec>
     </target>
