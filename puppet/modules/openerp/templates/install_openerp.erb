@@ -1,0 +1,29 @@
+su - postgres -c "createuser --superuser openerp"
+
+unzip -q -n $1/gdata-2.0.17.zip -d .
+cd gdata*
+python setup.py -q install
+
+cd /usr/local
+adduser openerp
+DIR="/var/run/openerp /var/log/openerp"
+for NAME in $DIR
+do
+if [ ! -d $NAME ]; then
+   mkdir $NAME
+   chown openerp.openerp $NAME
+fi
+done
+
+service openerp stop
+cp $1/$2 .
+tar -zxf $2 --transform 's!^[^/]\+\($\|/\)!openerp\1!'
+cd openerp
+python setup.py -q install
+cp openerp-server /usr/local/bin
+cp install/openerp-server.init /etc/init.d/openerp
+cp install/openerp-server.conf /etc
+chown openerp:openerp /etc/openerp-server.conf
+chmod u+x /etc/init.d/openerp
+chkconfig openerp on
+service openerp start
