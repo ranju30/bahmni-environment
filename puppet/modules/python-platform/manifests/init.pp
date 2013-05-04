@@ -67,12 +67,6 @@ class python-platform {
   package { "pywebdav" : ensure => installed, require => Package["poppler-utils"] }
   package { "xlwt" : ensure => installed, require => Package["pywebdav"] }
 
-  exec { "pyparsing" :
-  	command => "easy_install http://cheeseshop.python.org/packages/source/p/pyparsing/pyparsing-1.5.5.tar.gz",
-  	path => "${os_path}",
-  	require => Package["xlwt"]
-  }
-
   file { ["${python_temp}/install_python_package_from_zip.sh" :
     content => template("python-platform/install_python_package_from_zip.erb"),
     ensure => present,
@@ -85,11 +79,25 @@ class python-platform {
     mode => 544
   }
 
+  exec { "gdata" :
+    command => "sh install_python_package_from_zip.sh ${python_package_dir} gdata-2.0.17.tar.gz gdata ${log_expression}",
+    path => "${os_path}",
+    cwd => "${python_temp}",
+    require => [File["${python_temp}/install_python_package_from_zip.sh"], Package["xlwt"]]
+  }
+
+  exec { "pyparsing" :
+    command => "sh install_python_package_from_egg.sh ${python_package_dir} pyparsing ${log_expression}",
+    path => "${os_path}",
+    cwd => "${python_temp}",
+    require => [Package["xlwt"], File["${python_temp}/install_python_package_from_egg.sh"]]
+  }
+
   exec { "pycryptopp" :
     command => "sh install_python_package_from_zip.sh ${python_package_dir} pycryptopp-0.6.0.1206569328141510525648634803928199668821045408958.tar.gz pycryptopp ${log_expression}",
     path => "${os_path}",
     cwd => "${python_temp}",
-    require => File["${python_temp}/install_python_package_from_zip.sh"]
+    require => Exec["pyparsing"]
   }
 
   exec { "suds" :

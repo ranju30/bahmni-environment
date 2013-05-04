@@ -1,9 +1,5 @@
 su - postgres -c "createuser --superuser openerp"
 
-unzip -q -n $1/gdata-2.0.17.zip -d .
-cd gdata*
-python setup.py -q install
-
 cd /usr/local
 adduser openerp
 DIR="/var/run/openerp /var/log/openerp"
