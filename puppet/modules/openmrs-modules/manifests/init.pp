@@ -1,9 +1,9 @@
 # Doesn't have dependency on openmrs because this would be used during deployment
-class openmrs-module ( $omod_file_name) {
+class openmrs-modules ( $omod_file_name) {
   file { "deploy_openmrs_modules.sh" :
     ensure      => present,
     content     => template("openmrs-modules/deploy-openmrs-modules.sh"),
-    path 				=> "${temp_dir}/deploy-openmrs-modules.sh"
+    path 				=> "${temp_dir}/deploy-openmrs-modules.sh",
     owner       => "${bahmni_user}",
     mode        => 544
   }

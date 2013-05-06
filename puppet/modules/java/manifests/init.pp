@@ -8,23 +8,19 @@ class java {
     mode   => 777
   }
 
-	exec { "untar" :
-  	command => "tar zxf ${package_dir}/${java_installer_file} -C ${java_home}",
-    provider => "shell",
-    onlyif  => "test ! -f ${java_path}",
-    path => "${os_path}",
-    require => File["${java_home}"]
+  package { "jre" :
+    ensure => installed
   }
 
 	file { "${java}" :
     ensure  => "link",
     target  => "${java_path}",
-    require => Exec["untar"]
+    require => Package["jre"]
  	}
 
   exec { "JAVA_HOME env variable" :
     command   => "export JAVA_HOME=${java_home}",
     path      => "${os_path}",
-    provider  => "shell"
+    provider  => shell
   }
 }

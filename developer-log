@@ -9,8 +9,7 @@ Class with arguments only if we would declare more than one of those resources.
 Use the order of definition to express the order of execution, "require" is really not required.
 Define the resources based on what it creates rather and what it does
 
-Read puppet documentation. Good one here. http://docs.puppetlabs.com/learning/
-Discuss with the team if you disagree.
+Good Puppet Doc here: http://docs.puppetlabs.com/learning/
 http://www.ibm.com/developerworks/linux/library/l-lpic1-v3-102-5/
 
 Technical debt

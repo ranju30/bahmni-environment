@@ -1,5 +1,5 @@
 class openerp {
-  require python-platform
+  require python
   require postgresql
 
   $openerp_temp = "${temp_dir}/openerp"
