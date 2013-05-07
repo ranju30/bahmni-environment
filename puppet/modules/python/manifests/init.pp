@@ -75,11 +75,17 @@ class python {
     mode => 544
   }
 
+  file { "${python_temp}/install-python-package-from-gzip.sh" :
+    content => template("python/install-python-package-from-gzip.erb"),
+    ensure => present,
+    mode => 544
+  }
+
   exec { "gdata" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} gdata-2.0.17.tar.gz gdata ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} gdata-2.0.17.tar.gz gdata ${log_expression}",
     path => "${os_path}",
     cwd => "${python_temp}",
-    require => [File["${python_temp}/install-python-package-from-zip.sh"], Package["pywebdav"]]
+    require => [File["${python_temp}/install-python-package-from-gzip.sh"], Package["pywebdav"]]
   }
 
   exec { "pyparsing" :
