@@ -80,7 +80,7 @@ class python {
   }
 
   exec { "gdata" :
-    command => "sh install-python-package-from-gzip.sh ${python_package_dir} gdata-2.0.17.tar gdata ${temp_dir} ${log_expression}",
+    command => "echo y | sh install-python-package-from-gzip.sh ${python_package_dir} gdata-2.0.17.tar gdata ${temp_dir} ${log_expression}",
     path => "${os_path}",
     cwd => "${python_temp}",
     require => [File["${python_temp}/install-python-package-from-gzip.sh"], Package["pywebdav"]]

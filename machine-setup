@@ -26,3 +26,5 @@ yum install openssh.x86_64
 # Start the ssh server
 
 # Change the hosts file by putting in the host name
+
+# Change IP tables to allow everything
