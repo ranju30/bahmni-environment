@@ -1,3 +1,6 @@
-gunzip -q -n $1/$2 -d .
+cp $1/$2.gz $4/
+gunzip -q $4/$2.gz
+cd $4
+tar -xvf $2.tar
 cd $3*
 python setup.py -q install
