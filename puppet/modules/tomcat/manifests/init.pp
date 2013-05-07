@@ -13,7 +13,8 @@ class tomcat {
     ensure  => present,
     content => template ("tomcat/setenv.sh"),
     owner   => "${bahmni_user}",
-    mode    => 644
+    mode    => 644,
+    require => Exec["tomcat_untar"]
   }
 
   file { "${tomcatInstallationDirectory}/conf/server.xml" :
