@@ -10,11 +10,8 @@ node default {
 	include mysqlserver
 	class {users : userName => "${bahmni_user}", password_hash => "${bahmni_user_password_hash}"}
 	include tomcat
-	include openmrs
   include jasperserver
-  # include tomcat-runtime
  # 	include python
  # 	include postgresql
 	# include openerp
-	# include openmrs-modules
 }
