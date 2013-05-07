@@ -36,6 +36,36 @@
  $tomcatParentDirectory="/home/${jssUser}"
  $tomcatInstallationDirectory = "${tomcatParentDirectory}/apache-tomcat-${tomcatVersion}"
  
+ ######################## HTTPD CONFIG START#############################################
+ ## HTTPD
+ $sslEnabled = true
+ $sslExcludeList = ["10.155.8.115","127.0.0.1","192.168.42.45"]
+ $dropPacketsIfIPNotInSslExcludeList = false # true if the packets have to dropped when accessed over http
+
+ ## The following redirects can contain either a string or an array;
+ ## If it is a string, the same is used for both ProxyPass and ProxyPassReverse rules;
+ ## In case of array, 1st element of the array specifies ProxyPass rule and 2nd element specifies ProxyPassReverse rule.
+ $httpRedirects = ["/jasperserver http://localhost:8080/jasperserver"]
+ $httpsRedirects = ["/openmrs http://localhost:8080/openmrs",
+                    "/registration http://localhost:8080/registration"] #TODO: Deploy registration to apache directly <Deepak>
+
+ ## HTTPS
+ $SSLCertificateFile = "/etc/pki/tls/certs/localhost.crt"
+ $SSLCertificateKeyFile = "/etc/pki/tls/private/localhost.key"
+ $sslCertificateChainFile = "" ## Leave blank if no chain certificate is required.
+ $sslCACertificateFile = "" ## Leave blank if no CA certificate is required.
+ $serverName = "" ##ServerName entry in httpd and ssl conf
+
+ ## Authentication
+ $authenticationRequired = false     ## Specify if authentication is necessary.
+ $authenticationKey = "APIKey"             ## The key which is to be authenticated.
+ $authenticationValues = ["1234","5678"]           ## The values which must be compared for authentication.
+ ## Use property httpsRedirects to setup proxypass redirects
+ $authenticationExcludeHosts = []
+ $authenticationExcludeUrlPatterns = []
+
+ ######################## HTTPD CONFIG END################################################
+ 
 
 # OpenERP properties used by OpenMRS
 $openERPPort=8069
@@ -63,6 +93,7 @@ $imagesDirectory="/home/${jssUser}/patient_images"
  # comment out resources not required to be installed
 
  # class {users : userName => "${jssUser}", password => "${jssPassword}" }
+ # class { httpd : sslEnabled => $sslEnabled, sslCertificateFile => "${SSLCertificateFile}", sslCertificateKeyFile => "${SSLCertificateKeyFile}", sslCertificateChainFile => $sslCertificateChainFile, sslCACertificateFile => $sslCACertificateFile, serverName => $serverName}
  # class {tomcat : require => Class["users"], version => "${tomcatVersion}", userName => "${jssUser}", tomcatManagerUserName => "${tomcatManagerUserName}",tomcatManagerPassword => "${tomcatManagerPassword}", tomcatHttpPort => "${tomcatHttpPort}", tomcatRedirectPort => "${tomcatRedirectPort}",tomcatShutdownPort => "${tomcatShutdownPort}", tomcatAjpPort => "${tomcatAjpPort}", tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
  # class {openmrs : require => Class["tomcat"], tomcatInstallationDirectory => "${tomcatInstallationDirectory}"}
  # class { ant: require => Class["users"]}

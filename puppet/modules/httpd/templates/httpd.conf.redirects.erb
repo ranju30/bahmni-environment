@@ -1,0 +1,28 @@
+# Virtual host for default port 80 to tomcat(8080)
+<VirtualHost *:80>
+<% if @sslEnabled == true -%>
+	RewriteEngine On
+  RewriteCond %{HTTPS} off
+	<% if @sslExcludeList!=nil and @sslExcludeList.length > 0 -%>
+		RewriteCond %{REMOTE_HOST} !(<%= @sslExcludeList.join("|") %>)
+	<% end -%>
+  <% if @dropPacketsIfIPNotInSslExcludeList == true -%>
+   	RewriteRule (.*) [F]
+  <% else -%>
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+  <% end -%>
+<% end -%>
+
+<% if @httpRedirects!=nil and @httpRedirects.length > 0 -%>
+	<%- @httpRedirects.each do |redirectionRule| -%>
+		<%- if redirectionRule.is_a?(Array) -%>
+	        ProxyPass <%= redirectionRule[0] %>
+	        ProxyPassReverse <%= redirectionRule[1] %>
+	    <%- else -%>
+	        ProxyPass <%= redirectionRule %>
+	        ProxyPassReverse <%= redirectionRule %>
+	    <%- end -%>
+	<% end -%>
+<% end -%>
+</VirtualHost>
+
