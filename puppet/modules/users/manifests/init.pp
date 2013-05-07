@@ -15,7 +15,7 @@ class users ( $userName, $password_hash ) {
   }
 
   file { "add-user-to-sudoers" :
-    ensure      => "present",
+    ensure      => present,
     path        => "/home/${userName}/add-user-to-sudoers.sh",
     content     => template("users/add-user-to-sudoers.sh"),
     owner       => "${userName}",
@@ -27,6 +27,6 @@ class users ( $userName, $password_hash ) {
     provider    => "shell",
     command     => "sh /home/${userName}/add-user-to-sudoers.sh ${userName}",
     onlyif      => "test `grep -i ${userName} /etc/sudoers  | wc -l` -eq 0",
-    require     => User["${userName}"]
+    require     => [User["${userName}"], Exec["${userName} homedir"]]
   }
 }
