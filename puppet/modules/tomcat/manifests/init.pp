@@ -12,7 +12,7 @@ class tomcat {
     path    => "${tomcatInstallationDirectory}/bin/setenv.sh",
     ensure  => present,
     content => template ("tomcat/setenv.sh"),
-    user    => "${bahmni_user}",
+    owner   => "${bahmni_user}",
     mode    => 644
   }
 
