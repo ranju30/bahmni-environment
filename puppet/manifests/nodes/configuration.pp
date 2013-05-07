@@ -23,11 +23,11 @@
  $javaHome="/usr/lib/jvm/jre1.7.0"
 
  #Tomcat 7.0.22 configuration
-
  $tomcatManagerPassword = "p@ssw0rd"
  $tomcatVersion = "7.0.22"
 
  ## optional
+ $tomcatSessionTimeoutInMinutes = 120
  $tomcatManagerUserName = "tomcat"
  $tomcatHttpPort="8080"
  $tomcatRedirectPort="8443"
