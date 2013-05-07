@@ -62,7 +62,7 @@ class python {
   package { "poppler-utils" : ensure => installed, require => Package["byacc"] }
   package { "pywebdav" : ensure => installed, require => Package["poppler-utils"] }
 
-# python-psycopg2 python-lxml PyXML python-setuptools libxslt-python pytz python-matplotlib python-babel python-mako python-dateutil pychart python-reportlab python-devel python-imaging python-vobject hippo-canvas-python mx python-gdata python-ldap python-openid python-werkzeug python-vatnumber pygtk2 glade3 python python-psutil python-docutils make automake gcc gcc-c++ kernel-devel byacc flashplugin-nonfree poppler-utils pywebdav
+# pydot python-psycopg2 python-lxml PyXML python-setuptools libxslt-python pytz python-matplotlib python-babel python-mako python-dateutil pychart python-reportlab python-devel python-imaging python-vobject hippo-canvas-python mx python-gdata python-ldap python-openid python-werkzeug python-vatnumber pygtk2 glade3 python python-psutil python-docutils make automake gcc gcc-c++ kernel-devel byacc flashplugin-nonfree poppler-utils pywebdav
 
   file { "${python_temp}/install-python-package-from-zip.sh" :
     content => template("python/install-python-package-from-zip.erb"),

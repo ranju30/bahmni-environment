@@ -5,10 +5,10 @@ Vagrant::Config.run do |config|
   config.vm.box = "bahmni-complete"
   config.vm.box_url = "centos-6.2-64bit-puppet-vbox.4.1.8-11.box"
   # config.vm.boot_mode = :gui
-  config.vm.network :hostonly, "192.168.33.10"
-  # config.vm.network :bridged
+  # config.vm.network :hostonly, "192.168.33.10"
+  config.vm.network :bridged
   config.ssh.username = "root"
-  # config.vm.customize ["modifyvm", :id, "--memory", 1024]
+  config.vm.customize ["modifyvm", :id, "--memory", 1024]
   # config.vm.forward_port 80, 8080
   # config.vm.share_folder "v-data", "/vagrant_data", "../data"
 

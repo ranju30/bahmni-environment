@@ -5,16 +5,16 @@ import "configurations/stack-runtime-configuration"
 node default {
 	include host
 	include tools
-	include java
+	 include java
 	include mysql
 	include mysqlserver
 	class {users : userName => "${bahmni_user}", password_hash => "${bahmni_user_password_hash}"}
 	include tomcat
 	include openmrs
   include jasperserver
-  include tomcat-runtime
- 	include python
- 	include postgresql
-	include openerp
+  # include tomcat-runtime
+ # 	include python
+ # 	include postgresql
+	# include openerp
 	# include openmrs-modules
 }

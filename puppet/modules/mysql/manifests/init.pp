@@ -24,8 +24,4 @@ class mysqlserver {
 		require => [Package["mysql-server"], Package["mysql"] , Service["mysqld"]],
 		path => "${os_path}"
 	}
-	
-	package { "mysql-connector-java" :
-		ensure => "present"
-	}
 }
