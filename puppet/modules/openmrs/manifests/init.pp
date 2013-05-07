@@ -1,7 +1,7 @@
 class openmrs {
-  require java
-  require mysqlserver
-  require tomcat
+  # require java
+  # require mysqlserver
+  # require tomcat
 
   $bahmnicore_properties = "/home/${bahmni_user}/.OpenMRS/bahmnicore.properties"
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/classes/log4j.xml"
@@ -14,10 +14,11 @@ class openmrs {
     purge         => true
   }
 
-  exec {"openmrs.war" :
-    command     => "cp ${package_dir}/openmrs.war ${tomcatInstallationDirectory}/webapps",
+  exec { "openmrs.war" :
+    command     => "cp ${packages_servers_dir}/openmrs.war ${tomcatInstallationDirectory}/webapps",
     user        => "${bahmni_user}",
-    path        => "${os_path}"
+    path        => "${os_path}",
+    provider    => shell
   }
 
   file { "${imagesDirectory}" :
@@ -28,24 +29,27 @@ class openmrs {
 
   file { "$tomcatInstallationDirectory/webapps/patient_images" :
     ensure => "link",
-    target => "${imagesDirectory}"
+    target => "${imagesDirectory}",
+    require => File["${imagesDirectory}"]
   }
 
   file { "/home/${bahmni_user}/.OpenMRS" :
     ensure      => directory,
     owner       => "${bahmni_user}",
-    group       => "${bahmni_user}"
+    group       => "${bahmni_user}",
+    mode        => 666
   }
 
   file { "${bahmnicore_properties}" :
     ensure      => present,
     content     => template("openmrs/bahmnicore.properties.erb"),
     owner       => "${bahmni_user}",
-    mode        => 644
+    mode        => 644,
+    require     => File[]
   }
 
   exec { "openmrs_webapp" :
-    command   => "unzip -o -q ${package_dir}/openmrs.war -d ${tomcatInstallationDirectory}/webapps/openmrs",
+    command   => "unzip -o -q ${packages_servers_dir}/openmrs.war -d ${tomcatInstallationDirectory}/webapps/openmrs",
     provider  => "shell",
     path      => "${os_path}"
   }

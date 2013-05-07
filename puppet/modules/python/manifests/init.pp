@@ -2,8 +2,7 @@ class python {
   notify { "Setting up python platform" :}
 
   $python_temp = "${temp_dir}/python"
-  $python_package_dir = "${package_dir}/python"
-  $rpm_package_dir = "${package_dir}/rpm"
+  $python_package_dir = "${package_dir}/python-packages"
   $log_file = "${logs_dir}/python.log"
   $log_expression = ">> ${log_file} 2>> ${log_file}"
 

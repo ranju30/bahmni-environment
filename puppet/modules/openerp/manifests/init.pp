@@ -20,7 +20,7 @@ class openerp {
 
   exec { "openerp_installed" :
     provider    => shell,
-    command     => "sh install_openerp.sh ${package_dir} ${openerp_installer_file} ${log_expression}",
+    command     => "sh install_openerp.sh ${packages_servers_dir} ${openerp_installer_file} ${log_expression}",
     timeout     => 300,
     path        => "${os_path}",
     require     => File["${openerp_temp}/install_openerp.sh"],

@@ -2,16 +2,18 @@ class tomcat {
   require java
 
   exec { "tomcat_untar" :
-    command   => "tar -zxf --keep-newer-files ${package_dir}/apache-tomcat-${tomcat_version}.tar.gz -C ${tomcatParentDirectory}",
+    command   => "tar -zxf --keep-newer-files ${packages_servers_dir}/apache-tomcat-${tomcat_version}.tar.gz -C ${tomcatParentDirectory}",
     user      => "${bahmni_user}",
     creates   => "${tomcatInstallationDirectory}",
     provider  => shell
   }
 
-  exec { "CATALINA_OPTS Env Variable" :
-    command   => 'export CATALINA_OPTS="-XX:MaxPermSize=512m -Xms128m -Xmx512m"',
-    path      => "${os_path}",
-    provider  => shell
+  file { "CATALINA_OPTS" :
+    path    => "${tomcatInstallationDirectory}/bin/setenv.sh",
+    ensure  => present,
+    content => template ("tomcat/setenv.sh"),
+    user    => "${bahmni_user}",
+    mode    => 644
   }
 
   file { "${tomcatInstallationDirectory}/conf/server.xml" :
