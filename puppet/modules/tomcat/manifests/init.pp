@@ -42,7 +42,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         group       => "${userName}",
         owner       => "${userName}",
         replace     => true,
-        require     => File["tomcat_untar"],
+        require     => Exec["tomcat_untar"],
     }
 
     file { "${tomcatInstallationDirectory}/conf/web.xml" :
@@ -51,7 +51,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         group       => "${userName}",
         owner       => "${userName}",
         replace     => true,
-        require     => File["tomcat_untar"],
+        require     => Exec["tomcat_untar"],
     }
 
     file { "${tomcatInstallationDirectory}/conf/tomcat-users.xml" :
@@ -59,7 +59,7 @@ class tomcat ( $version, $userName, $tomcatManagerUserName = "tomcat", $tomcatMa
         content     => template("tomcat/tomcat-users.xml.erb"),
         group       => "${userName}",
         owner       => "${userName}",
-        require     => File["tomcat_untar"],
+        require     => Exec["tomcat_untar"],
     }
 
     exec{ "change_tomcat_owner" :
