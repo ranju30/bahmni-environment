@@ -14,31 +14,11 @@ class openmrs ( $tomcatInstallationDirectory) {
         require		=> Exec["download-openmrs-war"],
     }
 
-    file { "${imagesDirectory}" :
-        ensure      => directory,
-        owner       => "${jssUser}",
-        group       => "${jssUser}",
-    }
-
-	 file { "$tomcatInstallationDirectory/webapps/patient_images":
-       ensure => "link",
-       target => "${imagesDirectory}",
-       require => File["${imagesDirectory}"],
-    }
-
     file { "/home/${jssUser}/.OpenMRS" :
         ensure      => directory,
         owner       => "${jssUser}",
         group       => "${jssUser}",
         require    => Exec["install-openmrs"],
-    }
-
-    file { "/home/${jssUser}/.OpenMRS/bahmnicore.properties" :
-        ensure      => present,
-        content     => template("openmrs/bahmnicore.properties.erb"),
-        owner       => "${jssUser}",
-        group       => "${jssUser}",
-        require    => File["/home/${jssUser}/.OpenMRS"],
     }
 
     exec {"restart_tomcat" :
