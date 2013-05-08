@@ -11,6 +11,7 @@ node default {
 	include mysqlserver
 	class {users : userName => "${bahmni_user}", password_hash => "${bahmni_user_password_hash}"}
 	include tomcat
+	include httpd 
   include jasperserver
  	include python
  	include postgresql

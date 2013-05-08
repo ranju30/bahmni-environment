@@ -2,8 +2,6 @@ class openmrs {
   # require java
   # require mysqlserver
   # require tomcat
-
-  $bahmnicore_properties = "/home/${bahmni_user}/.OpenMRS/bahmnicore.properties"
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/classes/log4j.xml"
   $web_xml_file = "$tomcatInstallationDirectory/webapps/openmrs/WEB-INF/web.xml"
   $log_file = "${logs_dir}/openmrs-module.log"
@@ -21,31 +19,11 @@ class openmrs {
     provider    => shell
   }
 
-  file { "${imagesDirectory}" :
-    ensure      => directory,
-    owner       => "${bahmni_user}",
-    group       => "${bahmni_user}"
-  }
-
-  file { "$tomcatInstallationDirectory/webapps/patient_images" :
-    ensure => "link",
-    target => "${imagesDirectory}",
-    require => File["${imagesDirectory}"]
-  }
-
   file { "/home/${bahmni_user}/.OpenMRS" :
     ensure      => directory,
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     mode        => 666
-  }
-
-  file { "${bahmnicore_properties}" :
-    ensure      => present,
-    content     => template("openmrs/bahmnicore.properties.erb"),
-    owner       => "${bahmni_user}",
-    mode        => 644,
-    require     => File[]
   }
 
   exec { "openmrs_webapp" :

@@ -18,6 +18,41 @@ $tomcatAjpPort="8009"
 $tomcatParentDirectory="/home/${bahmni_user}"
 $tomcatInstallationDirectory = "${tomcatParentDirectory}/apache-tomcat-${tomcat_version}"
 
+# Set host name or ip address
+$deployHost="localhost"
+
+######################## HTTPD CONFIG START#############################################
+## HTTPD
+$sslEnabled = true
+$sslExcludeList = ["127.0.0.1"]
+$dropPacketsIfIPNotInSslExcludeList = false # true if the packets have to dropped when accessed over http
+
+
+## The following redirects can contain either a string or an array;
+## If it is a string, the same is used for both ProxyPass and ProxyPassReverse rules;
+## In case of array, 1st element of the array specifies ProxyPass rule and 2nd element specifies ProxyPassReverse rule.
+$httpRedirects = ["/jasperserver http://${deployHost}:8080/jasperserver"]
+$httpsRedirects = ["/openmrs http://${deployHost}:8080/openmrs",
+                   "/patient_images http://${deployHost}:8080/patient_images",
+                   "/registration http://${deployHost}:8080/registration"] #TODO: Deploy registration to apache directly <Deepak>
+
+## HTTPS
+$SSLCertificateFile = "/etc/pki/tls/certs/localhost.crt"
+$SSLCertificateKeyFile = "/etc/pki/tls/private/localhost.key"
+$sslCertificateChainFile = "" ## Leave blank if no chain certificate is required.
+$sslCACertificateFile = "" ## Leave blank if no CA certificate is required.
+$serverName = "" ##ServerName entry in httpd and ssl conf
+
+## Authentication
+$authenticationRequired = false     ## Specify if authentication is necessary.
+$authenticationKey = "APIKey"             ## The key which is to be authenticated.
+$authenticationValues = ["1234","5678"]           ## The values which must be compared for authentication.
+## Use property httpsRedirects to setup proxypass redirects
+$authenticationExcludeHosts = []
+$authenticationExcludeUrlPatterns = []
+
+######################## HTTPD CONFIG END################################################
+
 #OpenMRS
 $openmrs_password = "Admin123"
 
@@ -36,5 +71,9 @@ $jasperDbHost = "localhost"
 $jasperDbUsername = "root"
 $jasperDbPassword = "password"
 $jasperDbName = "jasperserver"
+######################## JASPER CONFIG END##############################################
 
+# Bahmni core properties
 $imagesDirectory="/home/${bahmni_user}/patient_images"
+$protocol = $sslEnabled ? { true => 'https', default =>  'http'}
+$imagesUrl="${protocol}://${deployHost}/patient_images"
