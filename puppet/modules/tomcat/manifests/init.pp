@@ -29,8 +29,8 @@ class tomcat {
   file { "${tomcatInstallationDirectory}/conf/web.xml" :
       ensure      => present,
       content     => template("tomcat/web.xml.erb"),
-      group       => "${userName}",
-      owner       => "${userName}",
+      group       => "${bahmni_user}",
+      owner       => "${bahmni_user}",
       replace     => true,
       require     => Exec["tomcat_untar"],
   }
