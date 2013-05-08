@@ -78,7 +78,7 @@ _main_() {
 	login $1
 	shift
 	upload_modules $@
-	# cleanup
+	cleanup
 }
 
 _main_ $@
