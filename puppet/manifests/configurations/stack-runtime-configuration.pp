@@ -17,6 +17,7 @@ $tomcatShutdownPort="8005"
 $tomcatAjpPort="8009"
 $tomcatParentDirectory="/home/${bahmni_user}"
 $tomcatInstallationDirectory = "${tomcatParentDirectory}/apache-tomcat-${tomcat_version}"
+$tomcatSessionTimeoutInMinutes = 120
 
 # Set host name or ip address
 $deployHost="localhost"
@@ -37,8 +38,8 @@ $httpsRedirects = ["/openmrs http://${deployHost}:8080/openmrs",
                    "/registration http://${deployHost}:8080/registration"] #TODO: Deploy registration to apache directly <Deepak>
 
 ## HTTPS
-$SSLCertificateFile = "/etc/pki/tls/certs/localhost.crt"
-$SSLCertificateKeyFile = "/etc/pki/tls/private/localhost.key"
+$sslCertificateFile = "/etc/pki/tls/certs/localhost.crt"
+$sslCertificateKeyFile = "/etc/pki/tls/private/localhost.key"
 $sslCertificateChainFile = "" ## Leave blank if no chain certificate is required.
 $sslCACertificateFile = "" ## Leave blank if no CA certificate is required.
 $serverName = "" ##ServerName entry in httpd and ssl conf

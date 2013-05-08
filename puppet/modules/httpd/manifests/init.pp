@@ -2,7 +2,6 @@
 # Project specific rules need to be inserted manually into httpd.conf and ssl.conf
 
 class httpd {
-
     package { "httpd" :
         ensure => "present"
     }
