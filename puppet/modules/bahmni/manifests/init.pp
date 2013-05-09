@@ -9,7 +9,7 @@ class bahmni {
         group       => "${bahmni_user}",
     }
 
-	 file { "$tomcatInstallationDirectory/webapps/patient_images":
+	 file { "${deployDirectory}/patient_images":
        ensure => "link",
        target => "${imagesDirectory}",
        require => File["${imagesDirectory}"],

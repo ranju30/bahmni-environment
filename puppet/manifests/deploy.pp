@@ -4,5 +4,6 @@ node default {
 	include openmrs
   # include tomcat-runtime
 	# include openmrs-modules
-	# include bahmni
+  # include bahmni
+  # include registration
 }

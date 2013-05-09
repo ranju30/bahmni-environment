@@ -19,8 +19,13 @@ $tomcatParentDirectory="/home/${bahmni_user}"
 $tomcatInstallationDirectory = "${tomcatParentDirectory}/apache-tomcat-${tomcat_version}"
 $tomcatSessionTimeoutInMinutes = 120
 
+$deployablesDirectory="/home/${bahmni_user}/deployables"
+
 # Set host name or ip address
 $deployHost="localhost"
+$deployDirectory="/var/www"
+
+$registrationAppDirectory="${deployablesDirectory}/registration"
 
 ######################## HTTPD CONFIG START#############################################
 ## HTTPD
@@ -33,9 +38,10 @@ $dropPacketsIfIPNotInSslExcludeList = false # true if the packets have to droppe
 ## If it is a string, the same is used for both ProxyPass and ProxyPassReverse rules;
 ## In case of array, 1st element of the array specifies ProxyPass rule and 2nd element specifies ProxyPassReverse rule.
 $httpRedirects = ["/jasperserver http://${deployHost}:8080/jasperserver"]
-$httpsRedirects = ["/openmrs http://${deployHost}:8080/openmrs",
-                   "/patient_images http://${deployHost}:8080/patient_images",
-                   "/registration http://${deployHost}:8080/registration"] #TODO: Deploy registration to apache directly <Deepak>
+$httpsRedirects = ["/openmrs http://${deployHost}:8080/openmrs"]
+$httpsStaticWebapps = ["/registration ${registrationAppDirectory}", "/patient_images ${deployDirectory}/patient_images"]
+$httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib"]                    
+$httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules"]
 
 ## HTTPS
 $sslCertificateFile = "/etc/pki/tls/certs/localhost.crt"

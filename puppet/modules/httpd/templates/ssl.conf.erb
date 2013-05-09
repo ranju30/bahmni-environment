@@ -257,4 +257,28 @@ SSLProxyEngine on
 	    <%- end -%>
 	<% end -%>
 <% end -%>
+
+<% if @httpsStaticWebapps!=nil and  @httpsStaticWebapps.length > 0 -%>
+	<%- @httpsStaticWebapps.each do |httpsStaticWebapp| -%>
+			Alias httpsStaticWebapp
+	<% end -%>
+<% end -%>
+
+<% if @httpsCachedDirectories!=nil and  @httpsCachedDirectories.length > 0 -%>
+	<%- @httpsCachedDirectories.each do |httpsCachedDirectory| -%>
+			<Directory "<%=httpsCachedDirectory%>">
+			        ExpiresActive On
+			        ExpiresDefault "access plus 1 year"
+			</Directory>
+	<% end -%>
+<% end -%>
+
+# This makes sure chrome doesn't cache aggressively but makes call with If-Modified-Match : "ETAG_VALUE" and get 304 if not modified		
+<% if @httpsAggressiveCacheDisabledDirectories!=nil and  @httpsAggressiveCacheDisabledDirectories.length > 0 -%>
+	<%- @httpsAggressiveCacheDisabledDirectories.each do |httpsAggressiveCacheDisabledDirectory| -%>
+		  <Directory "<%=httpsAggressiveCacheDisabledDirectory%>">
+		          Header unset Last-Modified 
+		  </Directory>
+	<% end -%>
+<% end -%>
 </VirtualHost>
