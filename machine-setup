@@ -20,6 +20,10 @@ vi /etc/yum.conf
 # Create epel repository - there is a file in the samples folder
 vi /etc/yum.repos.d/epel.repo
 
+# Copy local yum repository. The local yum repo contains all rpms needed by our puppet deploys, and will be added by the # puppet scripts. 
+cd /etc/yum.repos.d/
+# Change all .repo files with enabled=0 to enabled=1
+
 # Install openssh locally or as below
 yum install openssh.x86_64
 

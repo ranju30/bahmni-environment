@@ -1,13 +1,13 @@
 class python {
   notify { "Setting up python platform" :}
 
-  $python_temp = "${temp_dir}/python"
+  $python_temp_dir = "${temp_dir}/python"
   $python_package_dir = "${package_dir}/python-packages"
   $log_file = "${logs_dir}/python.log"
   $log_expression = ">> ${log_file} 2>> ${log_file}"
 
   file { "${log_file}" : ensure => absent, purge => true}
-  file { "${python_temp}" : ensure => directory, mode => 744}
+  file { "${python_temp_dir}" : ensure => directory, mode => 744}
 
 	package { "epel-release" :
     provider => rpm,
@@ -61,238 +61,238 @@ class python {
   package { "poppler-utils" : ensure => installed, require => Package["byacc"] }
   package { "pywebdav" : ensure => installed, require => Package["poppler-utils"] }
 
-  file { "${python_temp}/install-python-package-from-zip.sh" :
+  file { "${python_temp_dir}/install-python-package-from-zip.sh" :
     content => template("python/install-python-package-from-zip.erb"),
     ensure => present,
     mode => 544
   }
 
-  file { "${python_temp}/install-python-package-from-egg.sh" :
+  file { "${python_temp_dir}/install-python-package-from-egg.sh" :
     content => template("python/install-python-package-from-egg.erb"),
     ensure => present,
     mode => 544
   }
 
-  file { "${python_temp}/install-python-package-from-gzip.sh" :
+  file { "${python_temp_dir}/install-python-package-from-gzip.sh" :
     content => template("python/install-python-package-from-gzip.erb"),
     ensure => present,
     mode => 544
   }
 
   exec { "gdata" :
-    command => "echo y | sh install-python-package-from-gzip.sh ${python_package_dir} gdata-2.0.17.tar gdata ${temp_dir} ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} gdata-2.0.17.tar gdata ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
-    require => [File["${python_temp}/install-python-package-from-gzip.sh"], Package["pywebdav"]]
+    cwd => "${python_temp_dir}",
+    require => [File["${python_temp_dir}/install-python-package-from-gzip.sh"]], Package["pywebdav"]]
   }
 
   exec { "pyparsing" :
     command => "sh install-python-package-from-egg.sh ${python_package_dir} pyparsing ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
-    require => [Package["pywebdav"], File["${python_temp}/install-python-package-from-egg.sh"]]
+    cwd => "${python_temp_dir}",
+    require => [File["${python_temp_dir}/install-python-package-from-egg.sh"], Exec["gdata"]]
   }
 
   exec { "pycryptopp" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} pycryptopp-0.6.0.1206569328141510525648634803928199668821045408958.tar.gz pycryptopp ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} pycryptopp-0.6.0.1206569328141510525648634803928199668821045408958.tar pycryptopp ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["pyparsing"]
   }
 
   exec { "suds" :
     command => "sh install-python-package-from-egg.sh ${python_package_dir} suds ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
-    require => [Exec["pycryptopp"], File["${python_temp}/install-python-package-from-egg.sh"]]
+    cwd => "${python_temp_dir}",
+    require => [Exec["pycryptopp"], File["${python_temp_dir}/install-python-package-from-egg.sh"]]
   }
 
   exec { "MarkupSafe" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} MarkupSafe-0.15.tar.gz MarkupSafe ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} MarkupSafe-0.15.tar MarkupSafe ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["suds"]
   }
 
   exec { "Beaker" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} Beaker-1.6.4.tar.gz Beaker ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} Beaker-1.6.4.tar Beaker ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["MarkupSafe"]
   }
 
-  exec { "pychart" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} PyChart-1.39.tar.gz pychart ${log_expression}",
+  exec { "PyChart" :
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} PyChart-1.39.tar PyChart ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["Beaker"]
   }
 
   exec { "babel" :
     command => "sh install-python-package-from-egg.sh ${python_package_dir} babel ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
-    require => Exec["pychart"]
+    cwd => "${python_temp_dir}",
+    require => Exec["PyChart"]
   }
 
   exec { "docutils" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} docutils-0.10.tar.gz docutils ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} docutils-0.10.tar docutils ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["babel"]
   }
 
   exec { "feedparser" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} feedparser-5.1.3.tar.gz feedparser ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} feedparser-5.1.3.tar feedparser ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["docutils"]
   }
 
   exec { "Jinja2" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} Jinja2-2.6.tar.gz Jinja2 ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} Jinja2-2.6.tar Jinja2 ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["feedparser"]
   }
 
   exec { "lxml" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} lxml-3.2.0.tar.gz lxml ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} lxml-3.2.0.tar lxml ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["Jinja2"]
   }
 
-  exec { "mako" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} Mako-0.8.0.tar.gz mako ${log_expression}",
+  exec { "Mako" :
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} Mako-0.8.0.tar Mako ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["lxml"]
   }
 
   exec { "mock" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} mock-1.0.1.tar.gz mock ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} mock-1.0.1.tar mock ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
-    require => Exec["mako"]
+    cwd => "${python_temp_dir}",
+    require => Exec["Mako"]
   }
 
   exec { "PIL" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} PIL-1.1.7.tar.gz PIL ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} PIL-1.1.7.tar PIL ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["mock"]
   }
 
   exec { "psutil" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} psutil-0.7.1.tar.gz psutil ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} psutil-0.7.1.tar psutil ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["PIL"]
   }
 
   exec { "psycopg2" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} psycopg2-2.5.tar.gz psycopg2 ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} psycopg2-2.5.tar psycopg2 ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["psutil"]
   }
 
   exec { "pydot" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} pydot-1.0.28.tar.gz pydot ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} pydot-1.0.28.tar pydot ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["psycopg2"]
   }
 
   exec { "python-dateutil" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} python-dateutil-1.5.tar.gz python-dateutil ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} python-dateutil-1.5.tar python-dateutil ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["pydot"]
   }
 
   exec { "python-openid" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} python-openid-2.2.5.tar.gz python-openid ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} python-openid-2.2.5.tar python-openid ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["python-dateutil"]
   }
 
   exec { "pytz" :
     command => "sh install-python-package-from-egg.sh ${python_package_dir} pytz ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["python-openid"]
   }
 
-  exec { "pywebdav" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} PyWebDAV-0.9.8.tar.gz pywebdav ${log_expression}",
+  exec { "PyWebDAV" :
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} PyWebDAV-0.9.8.tar PyWebDAV ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["pytz"]
   }
 
-  exec { "pyyaml" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} PyYAML-3.10.tar.gz pyyaml ${log_expression}",
+  exec { "PyYAML" :
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} PyYAML-3.10.tar PyYAML ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
-    require => Exec["pywebdav"]
+    cwd => "${python_temp_dir}",
+    require => Exec["PyWebDAV"]
   }
 
   exec { "reportlab" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} reportlab-2.7.tar.gz reportlab ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} reportlab-2.7.tar reportlab ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
-    require => Exec["pyyaml"]
+    cwd => "${python_temp_dir}",
+    require => Exec["PyYAML"]
   }
 
   exec { "simplejson" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} simplejson-3.2.0.tar.gz simplejson ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} simplejson-3.2.0.tar simplejson ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["reportlab"]
   }
 
   exec { "unittest2" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} unittest2-0.5.1.tar.gz unittest2 ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} unittest2-0.5.1.tar unittest2 ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["simplejson"]
   }
 
   exec { "vatnumber" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} vatnumber-1.0.tar.gz vatnumber ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} vatnumber-1.0.tar vatnumber ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["unittest2"]
   }
 
   exec { "vobject" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} vobject-0.8.1c.tar.gz vobject ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} vobject-0.8.1c.tar vobject ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["vatnumber"]
   }
 
-  exec { "werkzeug" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} Werkzeug-0.8.3.tar.gz werkzeug ${log_expression}",
+  exec { "Werkzeug" :
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} Werkzeug-0.8.3.tar Werkzeug ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["vobject"]
   }
 
   exec { "xlwt" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} xlwt-0.7.5.tar.gz xlwt ${log_expression}",
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} xlwt-0.7.5.tar xlwt ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
-    require => Exec["werkzeug"]
+    cwd => "${python_temp_dir}",
+    require => Exec["Werkzeug"]
   }
 
-  exec { "pyopenssl" :
-    command => "sh install-python-package-from-zip.sh ${python_package_dir} pyOpenSSL-0.13.tar.gz pyopenssl ${log_expression}",
+  exec { "pyOpenSSL" :
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} pyOpenSSL-0.13.tar pyOpenSSL ${log_expression}",
     path => "${os_path}",
-    cwd => "${python_temp}",
+    cwd => "${python_temp_dir}",
     require => Exec["xlwt"]
   }
 }
