@@ -20,7 +20,8 @@ class users ( $userName, $password_hash ) {
     content     => template("users/add-user-to-sudoers.sh"),
     owner       => "${userName}",
     group       => "${userName}",
-    mode        => 764
+    mode        => 764,
+    require     => User["${userName}"]
   }
 
   exec { "add-user-to-sudoers" :
