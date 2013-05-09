@@ -83,7 +83,7 @@ class python {
     command => "sh install-python-package-from-gzip.sh ${python_package_dir} gdata-2.0.17.tar gdata ${log_expression}",
     path => "${os_path}",
     cwd => "${python_temp_dir}",
-    require => [File["${python_temp_dir}/install-python-package-from-gzip.sh"]], Package["pywebdav"]]
+    require => [File["${python_temp_dir}/install-python-package-from-gzip.sh"], Package["pywebdav"]]
   }
 
   exec { "pyparsing" :
