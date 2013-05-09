@@ -25,7 +25,7 @@ $deployablesDirectory="/home/${bahmni_user}/deployables"
 $deployHost="localhost"
 $deployDirectory="/var/www"
 
-$registrationAppDirectory="${deployablesDirectory}/registration"
+$registrationAppDirectory="${deployDirectory}/registration"
 
 ######################## HTTPD CONFIG START#############################################
 ## HTTPD

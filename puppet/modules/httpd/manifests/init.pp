@@ -9,6 +9,7 @@ class httpd {
     exec { "httpd_conf_backup" :
         cwd         => "/etc/httpd/conf",
         command     => "mv httpd.conf httpd.conf.bkup",
+        path        => "${os_path}",
         require     => Package["httpd"],
     }
 
@@ -33,6 +34,7 @@ class httpd {
 		exec { "ssl_conf_backup" :
 		    cwd         => "/etc/httpd/conf.d",
 		    command     => "mv ssl.conf ssl.conf.bkup",
+        path        => "${os_path}",
 		    require     => Package["mod_ssl"],
 		}
 

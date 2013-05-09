@@ -260,7 +260,7 @@ SSLProxyEngine on
 
 <% if @httpsStaticWebapps!=nil and  @httpsStaticWebapps.length > 0 -%>
 	<%- @httpsStaticWebapps.each do |httpsStaticWebapp| -%>
-			Alias httpsStaticWebapp
+			Alias <%= httpsStaticWebapp %>
 	<% end -%>
 <% end -%>
 
