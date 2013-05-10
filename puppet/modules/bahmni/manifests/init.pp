@@ -10,13 +10,6 @@ class bahmni {
         mode        => 644,
     }
 
-    file { "${deployDirectory}" :
-        ensure      => directory,
-        owner       => "${bahmni_user}",
-        group       => "${bahmni_user}",
-        mode        => 644,
-    }
-
 	 file { "${deployDirectory}/patient_images":
        ensure => "link",
        target => "${imagesDirectory}",
