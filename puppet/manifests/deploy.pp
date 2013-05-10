@@ -12,7 +12,11 @@ node default {
   }
 
   file { "${deployment_log_file}" :
-    ensure    => absent
+      ensure      => present,
+      owner       => "${bahmni_user}",
+      group       => "${bahmni_user}",
+      mode        => 666,
+      content     => "",
   }
 
   include ant
