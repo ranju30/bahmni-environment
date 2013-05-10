@@ -22,6 +22,7 @@ echo "Modifying/Inserting required properties"
 
 findAndReplace "bind-address" "0.0.0.0"
 findAndReplace "log_bin" "\/var\/log\/mysql\/mysql-bin.log"
+findAndReplace "expire_logs_days" "$expireLogsDays"
 findAndReplace "server-id" "$masterServerId"
 findAndReplace "innodb_flush_log_at_trx_commit" "1"
 findAndReplace "sync_binlog" "1"
