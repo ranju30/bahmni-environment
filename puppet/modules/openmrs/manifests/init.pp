@@ -52,7 +52,7 @@ class openmrs {
     command     => "mysql -uroot -p${mysqlRootPassword} < ${temp_dir}/create-openmrs-db-and-user.sql ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
-    require     => File["${temp_dir}/create-openmrs-db.sql"]
+    require     => File["${temp_dir}/create-openmrs-db-and-user.sql"]
   }
 
   file { "${temp_dir}/run-liquibase.sh" :
