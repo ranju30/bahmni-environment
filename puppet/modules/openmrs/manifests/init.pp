@@ -9,6 +9,15 @@ class openmrs {
     mode        => 666
   }
 
+  file { "/home/${bahmni_user}/.OpenMRS/openmrs-runtime.properties" :
+    ensure      => present,
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+    mode        => 644,
+    content     => template("openmrs/openmrs-runtime.properties"),
+    require     => File["/home/${bahmni_user}/.OpenMRS"],
+  }
+
   exec { "openmrs_webapp" :
     command   => "unzip -o -q ${build_output_dir}/openmrs.war -d ${tomcatInstallationDirectory}/webapps/openmrs ${deployment_log_expression}",
     provider  => shell,
