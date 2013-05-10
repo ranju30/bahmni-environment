@@ -7,12 +7,20 @@ class bahmni {
         ensure      => directory,
         owner       => "${bahmni_user}",
         group       => "${bahmni_user}",
+        mode        => 644,
+    }
+
+    file { "${deployDirectory}" :
+        ensure      => directory,
+        owner       => "${bahmni_user}",
+        group       => "${bahmni_user}",
+        mode        => 644,
     }
 
 	 file { "${deployDirectory}/patient_images":
        ensure => "link",
        target => "${imagesDirectory}",
-       require => File["${imagesDirectory}"],
+       require => File["${imagesDirectory}", "${deployDirectory}"],
     }
 
    file { "${bahmnicore_properties}" :
