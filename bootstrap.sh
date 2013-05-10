@@ -1,8 +1,7 @@
 #!/bin/sh
 
 # to setup vm : 
-# $ wget https://raw.github.com/jss-emr/jss-scm/master/bootstrap.sh
-# $ chmod +x bootstrap.sh
+# $ wget https://raw.github.com/bhamni/bahmni-environment/master/bootstrap.sh && chmod +x bootstrap.sh && sudo ./bootstrap.sh
 # $ sudo ./bootstrap.sh
 
 #parameters:
@@ -19,7 +18,7 @@ usage() {
   echo "Two main options: -c & -d"
   echo ""
   echo "./bootstrap.sh -c path/to/configuration.pp"
-  echo "          This will run bootstrap the box with jss software according to configuration.pp"
+  echo "          This will run bootstrap the box with bahmni software according to configuration.pp"
   echo ""
   echo "./bootstrap.sh -d"
   echo "          This will run apply configuration via puppet in debug mode"
@@ -65,16 +64,16 @@ installGit() {
 getJssSCM() {
   cd /tmp/
 
-  if [ ! -d /tmp/jss-scm/ ]; then
-      git clone git://github.com/jss-emr/jss-scm.git
+  if [ ! -d /tmp/bahmni-environment/ ]; then
+      git clone git://github.com/bhamni/bahmni-environment.git
   else
-      cd /tmp/jss-scm/ && git reset --hard && git clean -fd && git pull --rebase && cd /tmp/
+      cd /tmp/bahmni-environment/ && git reset --hard && git clean -fd && git pull --rebase && cd /tmp/
   fi
-	chmod -R a+w /tmp/jss-scm/
+	chmod -R a+w /tmp/bahmni-environment/
 }
 
 setupPuppetConfiguration() {
-  cd /tmp/jss-scm/puppet
+  cd /tmp/bahmni-environment/puppet
 
   if [ -f $CONFIG_FILE ]; then
     cp $CONFIG_FILE manifests/nodes/configuration.pp
@@ -84,7 +83,7 @@ setupPuppetConfiguration() {
 }
 
 puppetApply() {
-  cd /tmp/jss-scm/puppet
+  cd /tmp/bahmni-environment/puppet
 
   if [ "$DEBUG" = "true" ]; then
       puppet apply manifests/site.pp --debug --modulepath=modules/ && echo "Completed"
