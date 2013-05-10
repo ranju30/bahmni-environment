@@ -25,12 +25,12 @@ echo "Starting MySQL in safe mode.."
 mysqld_safe --skip-slave-start & 2> /dev/null
 
 sleep 2
-dumpFileExists=`ls -l mysql_master_dump.db`
+dumpFileExists=`ls -l $master_dump_file`
 
-if [ "$?" != "0" ]; then echo "Dump file not found. Expected fileName is 'mysql_master_dump.db'"; exit 1; fi
+if [ "$?" != "0" ]; then echo "Dump file not found. Expected file : $master_dump_file"; exit 1; fi
 
 echo "Restoring dump from file."
-mysql -uroot -p$spassword < mysql_master_dump.db
+mysql -uroot -p$spassword < $master_dump_file
 echo "Restore complete."
 
 stopMySQL
