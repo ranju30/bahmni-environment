@@ -18,3 +18,15 @@ CREATE TABLE IF NOT EXISTS `liquibasechangelog` (
 			  `ORDEREXECUTED` varchar(20) DEFAULT NULL,
 			  PRIMARY KEY (`ID`,`AUTHOR`,`FILENAME`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+GRANT USAGE ON openmrs.* TO 'openmrs-user'@'localhost';
+GRANT USAGE ON openmrs.* TO 'openmrs-user'@'%';
+DROP USER 'openmrs-user'@'localhost';
+DROP USER 'openmrs-user'@'%';
+
+CREATE USER 'openmrs-user'@'localhost' identified by 'password';
+CREATE USER 'openmrs-user'@'%' identified by 'password';
+GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'%' identified by 'password';
+GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'localhost' identified by 'password';
+FLUSH PRIVILEGES;

@@ -15,7 +15,7 @@ class openmrs {
     group       => "${bahmni_user}",
     mode        => 644,
     content     => template("openmrs/openmrs-runtime.properties"),
-    require     => File["/home/${bahmni_user}/.OpenMRS"],
+    require     => File["/home/${bahmni_user}/.OpenMRS"]
   }
 
   exec { "openmrs_webapp" :
@@ -41,7 +41,7 @@ class openmrs {
     mode        => 644
   }
 
-  file { "${temp_dir}/create-openmrs-db.sql" :
+  file { "${temp_dir}/create-openmrs-db-and-user.sql" :
     ensure      => present,
     content     => template("openmrs/database.sql"),
     owner       => "${bahmni_user}",
@@ -49,7 +49,7 @@ class openmrs {
   }
 
   exec { "openmrs_database" :
-    command     => "mysql -uroot -p${mysqlRootPassword} < ${temp_dir}/create-openmrs-db.sql ${deployment_log_expression}",
+    command     => "mysql -uroot -p${mysqlRootPassword} < ${temp_dir}/create-openmrs-db-and-user.sql ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
     require     => File["${temp_dir}/create-openmrs-db.sql"]
