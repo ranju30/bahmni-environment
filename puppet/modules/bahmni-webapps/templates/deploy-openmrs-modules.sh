@@ -8,8 +8,10 @@ check_args() {
 }
 
 login() {
+	echo "curl -isS -c cookie.txt -d uname=admin -d pw=${1} $OPENMRS_URL/loginServlet"
 	curl -isS -c cookie.txt -d uname=admin -d pw=${1} $OPENMRS_URL/loginServlet > login_response.txt
-	check_if_login_success_full	
+	cat login_response.txt
+	check_if_login_is_successful
 }
 
 upload_from_local_file() {
@@ -18,8 +20,9 @@ upload_from_local_file() {
 	   echo Error: module file $OMOD_FILE does not exist
 	   exit 1
 	fi
-
+	echo "curl -isS -b cookie.txt -F action=upload -F update=true -F moduleFile=\@$OMOD_FILE $OPENMRS_URL/admin/modules/module.list"
 	curl -isS -b cookie.txt -F action=upload -F update=true -F moduleFile=\@$OMOD_FILE $OPENMRS_URL/admin/modules/module.list > upload_response.txt	
+	cat upload_response.txt
 }
 
 check_if_upload_success_full() {
@@ -29,14 +32,14 @@ check_if_upload_success_full() {
 	fi	
 }
 
-check_if_login_success_full() {
+check_if_login_is_successful() {
 	if grep -q "login.htm" "login_response.txt"; then
 		echo "Failed to login as openmrs user 'admin'. Please verify the admin password. Check login_response.txt for more info"
 		exit 1
 	fi	
 }
 
-upload_from_http_url(){
+upload_from_http_url() {
 	curl -isS -b cookie.txt -F action=upload -F download=true -F downloadURL=$1 $OPENMRS_URL/admin/modules/module.list > upload_response.txt	
 }
 
@@ -67,8 +70,10 @@ _main_() {
 	check_args $@
 	login $1
 	shift
+	shift
 	upload_modules $@
 	cleanup
 }
 
+OPENMRS_URL=$2
 _main_ $@

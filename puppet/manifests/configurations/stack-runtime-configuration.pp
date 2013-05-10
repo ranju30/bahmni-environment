@@ -23,9 +23,9 @@ $deployablesDirectory="/home/${bahmni_user}/deployables"
 
 # Set host name or ip address
 $deployHost="localhost"
-$deployDirectory="/var/www"
+$httpd_deploy_dir="/var/www"
 
-$registrationAppDirectory="${deployDirectory}/registration"
+$registrationAppDirectory="${httpd_deploy_dir}/registration"
 
 ######################## HTTPD CONFIG START#############################################
 ## HTTPD
@@ -39,7 +39,7 @@ $dropPacketsIfIPNotInSslExcludeList = false # true if the packets have to droppe
 ## In case of array, 1st element of the array specifies ProxyPass rule and 2nd element specifies ProxyPassReverse rule.
 $httpRedirects = ["/jasperserver http://${deployHost}:8080/jasperserver"]
 $httpsRedirects = ["/openmrs http://${deployHost}:8080/openmrs"]
-$httpsStaticWebapps = ["/registration ${registrationAppDirectory}", "/patient_images ${deployDirectory}/patient_images"]
+$httpsStaticWebapps = ["/registration ${registrationAppDirectory}", "/patient_images ${httpd_deploy_dir}/patient_images"]
 $httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib"]                    
 $httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules"]
 
@@ -84,3 +84,7 @@ $jasperDbName = "jasperserver"
 $imagesDirectory="/home/${bahmni_user}/patient_images"
 $protocol = $sslEnabled ? { true => 'https', default =>  'http'}
 $imagesUrl="${protocol}://${deployHost}/patient_images"
+
+##########################################################################
+
+$ant_home="/home/${bahmni_user}/apache-ant-1.9.0"

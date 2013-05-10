@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+if [ $# -lt 3 ]; then
+   echo "Usage: $0 properties-file openmrs-data-jars-zip-path ant-home"
+   exit 1
+fi
+
+SCRIPTS_DIR=`dirname $0`
+PROPERTIES_FILE=$1
+OPENMRS_DATA_ZIP_FILE=$2
+export OPENMRS_PROP_FILE=$1
+
+if ! [ -f $1 ]; then
+	echo "Could not find properties file $1"
+	exit 1
+fi
+
+unzip -q -o $OPENMRS_DATA_ZIP_FILE -d ./lib
+
+set +e
+$3/bin/ant db.init -propertyfile $PROPERTIES_FILE -f bahmni-flyway-ant.xml 2>/tmp/flyway.init.error
+set -e
+
+$3/bin/ant db.migrate -propertyfile $PROPERTIES_FILE -f bahmni-flyway-ant.xml
+rm -rf ./*

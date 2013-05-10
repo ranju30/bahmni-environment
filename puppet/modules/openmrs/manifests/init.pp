@@ -1,23 +1,6 @@
 class openmrs {
-  # require java
-  # require mysqlserver
-  # require tomcat
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/classes/log4j.xml"
   $web_xml_file = "$tomcatInstallationDirectory/webapps/openmrs/WEB-INF/web.xml"
-  $log_file = "${logs_dir}/openmrs-module.log"
-  $log_expression = ">> ${log_file} 2>> ${log_file}"
-
-  file { "${log_file}" :
-    ensure        => absent,
-    purge         => true
-  }
-
-  exec { "openmrs.war" :
-    command     => "cp ${packages_servers_dir}/openmrs.war ${tomcatInstallationDirectory}/webapps",
-    user        => "${bahmni_user}",
-    path        => "${os_path}",
-    provider    => shell
-  }
 
   file { "/home/${bahmni_user}/.OpenMRS" :
     ensure      => directory,
@@ -27,9 +10,10 @@ class openmrs {
   }
 
   exec { "openmrs_webapp" :
-    command   => "unzip -o -q ${packages_servers_dir}/openmrs.war -d ${tomcatInstallationDirectory}/webapps/openmrs",
-    provider  => "shell",
-    path      => "${os_path}"
+    command   => "unzip -o -q ${build_output_dir}/openmrs.war -d ${tomcatInstallationDirectory}/webapps/openmrs ${deployment_log_expression}",
+    provider  => shell,
+    path      => "${os_path}",
+    require   => File["${deployment_log_file}"]
   }
 
   file { "${log4j_xml_file}" :
@@ -56,9 +40,9 @@ class openmrs {
   }
 
   exec { "openmrs_database" :
-    command     => "mysql -uroot -p${mysqlRootPassword} < ${temp_dir}/create-openmrs-db.sql ${log_expression}",
+    command     => "mysql -uroot -p${mysqlRootPassword} < ${temp_dir}/create-openmrs-db.sql ${deployment_log_expression}",
     path        => "${os_path}",
-    provider    => "shell",
+    provider    => shell,
     require     => File["${temp_dir}/create-openmrs-db.sql"]
   }
 
@@ -70,7 +54,7 @@ class openmrs {
   }
 
   exec { "openmrs_data" :
-    command     => "${temp_dir}/run-liquibase.sh ${log_expression}",
+    command     => "${temp_dir}/run-liquibase.sh ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => "shell",
     cwd         => "${tomcatInstallationDirectory}/webapps",
