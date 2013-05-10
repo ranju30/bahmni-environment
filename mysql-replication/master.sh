@@ -1,7 +1,9 @@
 #!/bin/bash
 
+BASE_DIR=`dirname $0`
+
 # MySQL Master configurator
-. ./replicator.sh
+. $BASE_DIR/replicator.sh
 
 # rm -f /tmp/my.cnf
 
@@ -61,3 +63,4 @@ mysqldump -u$musername -p$mpassword --all-databases --master-data > mysql_master
 mysql -u$musername -p$mpassword -e "unlock tables";
 
 echo "Completed Taking dump. Find file named 'mysql_master_dump.db' "
+echo "Please copy this file to slave box and configure the 'master_dump_file' property in slave's replication.properties"

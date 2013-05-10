@@ -65,7 +65,7 @@ getJssSCM() {
   cd /tmp/
 
   if [ ! -d /tmp/bahmni-environment/ ]; then
-      git clone git://github.com/bhamni/bahmni-environment.git
+      git clone git://github.com/Bhamni/bahmni-environment.git
   else
       cd /tmp/bahmni-environment/ && git reset --hard && git clean -fd && git pull --rebase && cd /tmp/
   fi

@@ -1,6 +1,8 @@
 #!/bin/sh
 
-. ./replication.properties
+BASE_DIR=`dirname $0`
+
+. $BASE_DIR/replication.properties
 
 #echo "master-username = $musername"
 #echo "master-password = $mpassword"

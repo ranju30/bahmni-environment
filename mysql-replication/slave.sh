@@ -1,8 +1,9 @@
 #!/bin/sh
 
-# MySQL Slave machine configuration
+BASE_DIR=`dirname $0`
 
-. ./replicator.sh
+# MySQL Slave machine configuration
+. $BASE_DIR/replicator.sh
 
 echo "Modifying/Inserting required properties"
 cp /etc/my.cnf /tmp/my.cnf
