@@ -1,44 +1,46 @@
 # The order is important (for help you can use info command)
 
-# Connect to ethernet and then bring up that interface
+# Connect to ethernet and then bring up that interface (vagrant/vbox does this automatically)
 ifup eth0
 
-# Edit the network config file to assign IP etc. You would need to restart the network service after this. Check the samples folder.
+# Edit the network config file to assign IP etc. You would need to restart the network service after this. Check the samples folder. (vagrant/vbox would automatically assign an ip)
 vi /etc/sysconfig/network-scripts/ifcfg-eth0
 service network restart
 
-# Change the name of the host to something like emr01-gan-jss, emr02-gan-jss. See the sample file below
+# Change the name of the host to something like emr01-gan-jss, emr02-gan-jss. See the sample file below (needed only for production boxes or if one is particular about the name of machine)
 vi /etc/sysconfig/network
 # Sample file
 NETWORKING=yes
 HOSTNAME=emr01-gan-jss
 
-# Enable caching in yum.conf file
+# Enable/Disable caching in yum.conf file (this is not required always because the installation should happen from local machine)
 vi /etc/yum.conf
-# keepcache=1
+keepcache=1
+# sed -i 's/keepcache=1/keepcache=0/g' /etc/yum.conf
 
-# Create epel repository - there is a file in the samples folder
+# Create epel repository - there is a file in the samples folder (not required for vagrant/vbox as the install would happen from localrepo)
 vi /etc/yum.repos.d/epel.repo
 
 # Copy local yum repository. The local yum repo contains all rpms needed by our puppet deploys, and will be added by the # puppet scripts. 
 cd /etc/yum.repos.d/
 # Change all .repo files with enabled=0 to enabled=1
+# e.g. sed -i 's/enabled=1/enabled=0/g' /etc/yum.repos.d/CentOS-Base.repo
 
-# Install openssh locally or as below
+# Install openssh locally or as below (not required for vagrant/vbox because it comes with ssh)
 yum install openssh.x86_64
-
 # Start the ssh server
+service sshd start
 
-# Change the hosts file by putting in the host name
+# Change the hosts file by putting in the host name (not required for vagrant/vbox - not particular about the name)
 
-# Change IP tables to allow everything
+# Change IP tables to allow everything (vagrant/vbox doesn't block by default hence not required fot it)
 
-#Set time
+# Set date-time (done via puppet now)
 chkconfig ntpd on
 ntpdate pool.ntp.org
 service ntpd start
 
-#Disable SELinux
+#Disable SELinux (done via puppet now)
 vi /etc/selinux/config
 ensure the following line 
 SELINUX=enforcing

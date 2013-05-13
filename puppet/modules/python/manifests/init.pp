@@ -60,7 +60,7 @@ class python {
   # package { "flashplugin-nonfree" : ensure => installed, require => Package["byacc"] }
   package { "poppler-utils" : ensure => installed, require => Package["byacc"] }
   package { "pywebdav" : ensure => installed, require => Package["poppler-utils"] }
-  package { "libpng" : ensure => installed }
+  package { "libpng" : ensure => installed}
   package { "libpng-devel" : ensure => installed}
   package { "libjpeg" : ensure => installed}
   package { "libjpeg-devel" : ensure => installed}
