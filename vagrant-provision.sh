@@ -1,1 +1,0 @@
-STAGE="provision" vagrant provision
