@@ -14,4 +14,49 @@ class postgresql {
 		path => "${os_path}",
 		require => Exec["postgresdb"]
 	}
+	
+	case $postgresMachine {
+      master:{
+          file {"/usr/local/pgsql/data/pg_hba.conf":
+              content     => template("postgres/master_pg_hba.erb"),
+              owner       => "${postgresUser}",
+              group       => "${postgresUser}",
+              mode        => 600,
+              require     => Exec["backup_conf"],
+          }
+
+          file {"/usr/local/pgsql/data/postgresql.conf":
+              content     => template("postgres/master_postgresql.erb"),
+              owner       => "${postgresUser}",
+              group       => "${postgresUser}",
+              mode        => 600,
+              require     => Exec["backup_conf"],
+          }
+      }
+
+      slave:{
+          file {"/usr/local/pgsql/data/pg_hba.conf":
+              content     => template("postgres/slave_pg_hba.erb"),
+              owner       => "${postgresUser}",
+              group       => "${postgresUser}",
+              mode        => 600,
+              require     => Exec["backup_conf"],
+          }
+
+          file {"/usr/local/pgsql/data/postgresql.conf":
+              content     => template("postgres/slave_postgresql.erb"),
+              owner       => "${postgresUser}",
+              group       => "${postgresUser}",
+              mode        => 600,
+              require     => Exec["backup_conf"],
+          }
+          
+          file {"/usr/local/pgsql/data/recovery.conf":
+              content     => template("postgres/slave_recovery.erb"),
+              owner       => "${postgresUser}",
+              group       => "${postgresUser}",
+              mode        => 600,
+          }
+      }
+  }
 }

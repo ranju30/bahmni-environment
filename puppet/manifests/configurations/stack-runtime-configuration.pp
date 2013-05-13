@@ -8,6 +8,12 @@ $bahmni_user_password_hash = '$1$IW4OvlrH$Kui/55oif8W3VZIrnX6jL1' #p@ssw0rd
 # mysql
 $mysqlRootPassword = "password"
 
+## Postgres
+$postgresUser="postgres"
+$postgresMachine = "master" ## [master | slave]
+$postgresMaster = "127.0.0.1"
+$postgresSlave = "127.0.0.1"
+
 #Tomcat 7
 $tomcatManagerUserName = "tomcat"
 $tomcatManagerPassword = "p@ssw0rd"
