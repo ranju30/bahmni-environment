@@ -33,5 +33,12 @@ yum install openssh.x86_64
 
 # Change IP tables to allow everything
 
-# Disable SE-LINUX
-SELINUX=permissive or disabled
+#Set time
+chkconfig ntpd on
+ntpdate pool.ntp.org
+service ntpd start
+
+#Disable SELinux
+vi /etc/selinux/config
+ensure the following line 
+SELINUX=enforcing
