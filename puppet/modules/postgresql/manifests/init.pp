@@ -71,7 +71,7 @@ class postgresql {
             }
 
             exec { "tar_pg_data_folder":
-                command     => "tar cfP /tmp/pg_master_db_file_backup.tar ${postgresDataFolder} --exclude pg_xlog/* --exclude *.conf --exclude postmaster.pid --exclude *.conf.backup",
+                command     => "tar cfP /tmp/pg_master_db_file_backup.tar ${postgresDataFolder} --exclude pg_xlog/* --exclude pg_hba.conf --exclude postgresql.conf --exclude postmaster.pid --exclude *.conf.backup",
             		path        =>  "${os_path}",
                 user        => "${postgresUser}",
                 require     => Exec["start_pg_backup_for_replication"],
@@ -88,19 +88,11 @@ class postgresql {
 
       slave:{
           if $postgresFirstTimeSetup == true {            
-              exec { "backup_pg_data_folder":
-                  command     => "mv ${postgresDataFolder} ${postgresDataFolder}.old",
-              		path        =>  "${os_path}",
-                  user        => "${postgresUser}",
-                  onlyif      => "test -d ${postgresDataFolder}",
-                  require     => Exec["backup_postgresql_conf", "backup_pg_hba_conf"],
-              }
-
               exec { "untar_pg_data_folder":
                   command     => "tar xvfP ${postgresMasterDbFileBackup}",
               		path        =>  "${os_path}",
                   user        => "${postgresUser}",
-                  require     => Exec["backup_pg_data_folder"],
+                  require     => Exec["backup_postgresql_conf", "backup_pg_hba_conf"],
               }
               
               $pgInitialSetup = Exec["untar_pg_data_folder"]
