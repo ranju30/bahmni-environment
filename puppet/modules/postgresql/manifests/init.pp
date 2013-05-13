@@ -12,18 +12,34 @@ class postgresql {
 		require => Package["postgresql92"]
 	}
 
-	exec { "postgres-server" :
-		command => "chkconfig ${postgresServiceName} on && service ${postgresServiceName} start",
+	exec { "chkconfig-postgres-server" :
+		command => "chkconfig ${postgresServiceName} on",
 		path => "${os_path}",
 		require => Exec["postgresdb"]
 	}
 
-  exec{ "backup_conf":
+  service {"${postgresServiceName}" :
+      ensure      => "running",
+      enable      => true,
+      require     => Exec["chkconfig-postgres-server"]
+  }
+
+  exec{ "backup_postgresql_conf":
       cwd         => "${postgresDataFolder}",
-      command     => "mv postgresql.conf postgresql.conf.backup && mv pg_hba.conf pg_hba.conf.backup",
+      command     => "mv postgresql.conf postgresql.conf.backup",
   		path        => "${os_path}",
       user        => "${postgresUser}",
-      require     => Exec["postgres-server"],
+      onlyif      => "test -f postgresql.conf",
+      require     => Exec["chkconfig-postgres-server"],
+  }
+
+  exec{ "backup_pg_hba_conf":
+      cwd         => "${postgresDataFolder}",
+      command     => "mv pg_hba.conf pg_hba.conf.backup",
+  		path        => "${os_path}",
+      user        => "${postgresUser}",
+      onlyif      => "test -f pg_hba.conf",
+      require     => Exec["chkconfig-postgres-server"],
   }
 	
 	case $postgresMachine {
@@ -33,7 +49,7 @@ class postgresql {
               owner       => "${postgresUser}",
               group       => "${postgresUser}",
               mode        => 600,
-              require     => Exec["backup_conf"],
+              require     => Exec["backup_postgresql_conf", "backup_pg_hba_conf"],
               notify       => Service["${postgresServiceName}"],
           }
 
@@ -42,7 +58,7 @@ class postgresql {
               owner       => "${postgresUser}",
               group       => "${postgresUser}",
               mode        => 600,
-              require     => Exec["backup_conf"],
+              require     => Exec["backup_postgresql_conf", "backup_pg_hba_conf"],
               notify       => Service["${postgresServiceName}"],
           }
           
@@ -51,11 +67,11 @@ class postgresql {
                 command     => "psql -c \"SELECT pg_start_backup('replbackup');\"",
             		path        =>  "${os_path}",
                 user        => "${postgresUser}",
-                require     => File["${postgresDataFolder}/pg_hba.conf", "${postgresDataFolder}/postgresql.conf"],
+                require     => [File["${postgresDataFolder}/pg_hba.conf", "${postgresDataFolder}/postgresql.conf"], Service["${postgresServiceName}"]],
             }
 
             exec { "tar_pg_data_folder":
-                command     => "tar cfP /tmp/pg_master_db_file_backup.tar ${postgresDataFolder} --exclude pg_xlog --exclude *.conf --exclude postmaster.pid --exclude *.conf.backup",
+                command     => "tar cfP /tmp/pg_master_db_file_backup.tar ${postgresDataFolder} --exclude pg_xlog/* --exclude *.conf --exclude postmaster.pid --exclude *.conf.backup",
             		path        =>  "${os_path}",
                 user        => "${postgresUser}",
                 require     => Exec["start_pg_backup_for_replication"],
@@ -73,10 +89,11 @@ class postgresql {
       slave:{
           if $postgresFirstTimeSetup == true {            
               exec { "backup_pg_data_folder":
-                  command     => "mv ${postgresMasterDbFileBackup} ${postgresMasterDbFileBackup}.old",
+                  command     => "mv ${postgresDataFolder} ${postgresDataFolder}.old",
               		path        =>  "${os_path}",
                   user        => "${postgresUser}",
-                  require     => Exec["backup_conf"],
+                  onlyif      => "test -d ${postgresDataFolder}",
+                  require     => Exec["backup_postgresql_conf", "backup_pg_hba_conf"],
               }
 
               exec { "untar_pg_data_folder":
@@ -84,12 +101,11 @@ class postgresql {
               		path        =>  "${os_path}",
                   user        => "${postgresUser}",
                   require     => Exec["backup_pg_data_folder"],
-                  notify       => Service["${postgresServiceName}"],
               }
               
               $pgInitialSetup = Exec["untar_pg_data_folder"]
           } else {            
-              $pgInitialSetup = Exec["backup_conf"]
+              $pgInitialSetup = Exec["backup_postgresql_conf", "backup_pg_hba_conf"]
           }
 
           file {"${postgresDataFolder}/pg_hba.conf":
