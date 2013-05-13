@@ -14,7 +14,7 @@ Vagrant::Config.run do |config|
 
   stages = {'provision' => "provision.pp", 'deploy' => 'deploy.pp'}
   manifest_file = stages[ENV['STAGE']]
-  manifest_file = "provision.pp" if manifest_file.nil?
+  manifest_file = "do-nothing.pp" if manifest_file.nil?
 
   config.vm.provision :puppet do |puppet|
     puppet.pp_path="/vagrant-temp/vagrant-puppet"

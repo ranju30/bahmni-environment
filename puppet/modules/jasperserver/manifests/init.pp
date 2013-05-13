@@ -30,7 +30,7 @@ class jasperserver {
 
   # exec { "jasperserver_scripts_permission" :
   #   command     => "find . -name '*.sh' | xargs chmod u+x ${log_expression}",
-  #   user        => "${jssUser}",
+  #   user        => "${bahmni_user}",
   #   require     => [Exec["extracted_jasperserver"], File["${do_js_setup_script}"]],
   #   cwd         => "${jasperHome}",
   #   path        => "${os_path}"

@@ -40,7 +40,7 @@ check_if_login_is_successful() {
 }
 
 upload_from_http_url() {
-	curl -isS -b cookie.txt -F action=upload -F download=true -F downloadURL=$1 $OPENMRS_URL/admin/modules/module.list > upload_response.txt	
+	curl -isS -b cookie.txt -F action=upload -F download=true -F downloadURL=$1 $OPENMRS_URL/admin/modules/module.list > upload_response.txt
 }
 
 upload_module() {	

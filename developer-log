@@ -1,3 +1,12 @@
+Stages
+------
+Provision
+Stop Bahmni
+Deploy Bahmni
+Start Bahmni
+
+Development: Deploy Bahmni on running platform
+
 Convention (case included)
 --------------------------
 variable_name, resource_name, class_name
@@ -20,6 +29,8 @@ Technical debt
 3. There are a lot of classes where we had to set path, set user, group etc. Find out if there is a way to set this in one place and get this to work.
 4. All the shell scripts are currently dumped in temp dir. May be we should have sub-folders inside it as well
 5. Deployment classes do not need to "require" Provision classes. Eventually we should not need this but currently we are not confident whether running same class twice would have an affect or not.
+6. How to avoid running provision on vagrant reload.
+7. Run tomcat as a service
 
 TODO
 ----

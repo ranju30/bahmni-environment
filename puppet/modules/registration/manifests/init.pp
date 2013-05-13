@@ -1,7 +1,13 @@
 class registration {
-  exec { "unzip" :
-    command   => "unzip -q -o ${deployablesDirectory}/registration.zip -d ${registrationAppDirectory}",
+	file { "${registrationAppDirectory}" :
+		ensure => absent,
+		recurse => true
+	}
+
+  exec { "deploy_registration" :
+    command   => "unzip -q -o ${build_output_dir}/registration.zip -d ${registrationAppDirectory} ${deployment_log_expression}",
     provider  => shell,
-    require => File["${httpd_deploy_dir}"],
+    path 			=> "${os_path}",
+    require   => File["${registrationAppDirectory}"]
   }
 }

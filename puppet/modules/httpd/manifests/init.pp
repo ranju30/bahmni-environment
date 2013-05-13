@@ -19,14 +19,14 @@ class httpd {
        notify       => Service["httpd"],
     }
 
-    service {"httpd" :
-        ensure      => "running",
+    service { "httpd" :
+        ensure      => running,
         enable      => true,
         require     => Package["httpd"]
     }
 
 	package { "mod_ssl" :
-	    ensure      =>  "present",
+	    ensure      => present,
 	    require     => File["/etc/httpd/conf/httpd.conf"],
 	}
 

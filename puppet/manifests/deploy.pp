@@ -3,6 +3,8 @@ import "configurations/stack-installers-configuration"
 import "configurations/stack-runtime-configuration"
 import "configurations/deployment-configuration"
 
+# pre-condition
+# bahmni-stop must have been run before this
 node default {
 	file { "${httpd_deploy_dir}" :
       ensure      => directory,
@@ -19,10 +21,11 @@ node default {
       content     => "",
   }
 
-  include ant
-  include bahmni-stop
 	include openmrs
 	include bahmni-configuration
 	include bahmni-webapps
+  include ant
 	include bahmni-data
+  include bahmni-openerp
+  include registration
 }

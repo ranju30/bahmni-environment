@@ -32,3 +32,6 @@ yum install openssh.x86_64
 # Change the hosts file by putting in the host name
 
 # Change IP tables to allow everything
+
+# Disable SE-LINUX
+SELINUX=permissive or disabled
