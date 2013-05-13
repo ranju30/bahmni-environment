@@ -21,4 +21,8 @@ test-output/
 .DS_Store
 *.log*
 *.box
-packages/*
+packages/build/*
+packages/localrepo/*
+packages/python-packages/*
+packages/servers/*
+packages/tools/*
