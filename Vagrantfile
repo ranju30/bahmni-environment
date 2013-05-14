@@ -12,9 +12,13 @@ Vagrant::Config.run do |config|
   # config.vm.forward_port 80, 8080
   # config.vm.share_folder "v-data", "/vagrant_data", "../data"
 
-  manifest_file = ENV['STAGE'] + ".pp"
-  manifest_file = "do-nothing.pp" if manifest_file.nil?
+  if ENV['STAGE'] == nil
+    manifest_file = "do-nothing.pp"
+  else
+    manifest_file = ENV['STAGE'] + ".pp"
+  end
 
+  
   config.vm.provision :puppet do |puppet|
     puppet.pp_path="/vagrant-temp/vagrant-puppet"
     puppet.manifests_path = "puppet/manifests"

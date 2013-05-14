@@ -1,4 +1,6 @@
 class python {
+  require host
+
   notify { "Setting up python platform" :}
 
   $python_temp_dir = "${temp_dir}/python"
@@ -60,10 +62,10 @@ class python {
   # package { "flashplugin-nonfree" : ensure => installed, require => Package["byacc"] }
   package { "poppler-utils" : ensure => installed, require => Package["byacc"] }
   package { "pywebdav" : ensure => installed, require => Package["poppler-utils"] }
-  package { "libpng" : ensure => installed}
-  package { "libpng-devel" : ensure => installed}
-  package { "libjpeg" : ensure => installed}
-  package { "libjpeg-devel" : ensure => installed}
+  package { "libpng" : ensure => installed, require => Package["poppler-utils"]}
+  package { "libpng-devel" : ensure => installed, require => Package["libpng"]}
+  package { "libjpeg-turbo" : ensure => installed, require => Package["poppler-utils"]}
+  package { "libjpeg-turbo-devel" : ensure => installed, require => Package["libjpeg-turbo"]}
 
   file { "${python_temp_dir}/install-python-package-from-zip.sh" :
     content => template("python/install-python-package-from-zip.erb"),

@@ -2,6 +2,8 @@
 # Project specific rules need to be inserted manually into httpd.conf and ssl.conf
 
 class httpd {
+    require yum-repo
+    
     package { "httpd" :
         ensure => "present"
     }

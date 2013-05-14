@@ -1,4 +1,5 @@
 class tomcat {
+  require host
   require java
 
   exec { "tomcat_untar" :

@@ -1,4 +1,6 @@
 class postgresql {
+  require host
+
 	package { "postgresql92-libs" : ensure => installed}
 	package { "postgresql92-server" : ensure => installed, require => Package["postgresql92-libs"]}
 	package { "postgresql92" : ensure => installed, require => Package["postgresql92-server"]}

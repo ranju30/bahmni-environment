@@ -1,5 +1,5 @@
 class mysql {
-	require host
+	require yum-repo
 
 	package { "mysql" :
 		ensure  => present
@@ -7,7 +7,7 @@ class mysql {
 }
 
 class mysqlserver {
-	require host
+	require yum-repo
 
 	package { "mysql-server" :
 		ensure  => present

@@ -1,4 +1,6 @@
 class users ( $userName, $password_hash ) {
+  require host
+
   user { "${userName}" :
     ensure      => present,
     shell       => "/bin/bash",

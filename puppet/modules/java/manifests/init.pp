@@ -1,5 +1,5 @@
 class java {
-  require host
+  require yum-repo
   
   package { "jre" :
     ensure => installed

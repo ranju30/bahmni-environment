@@ -4,5 +4,5 @@ import "configurations/stack-runtime-configuration"
 import "configurations/deployment-configuration"
 
 node default {
-	include host
+	package { "libjpeg-turbo" : ensure => present, provider => yum}
 }
