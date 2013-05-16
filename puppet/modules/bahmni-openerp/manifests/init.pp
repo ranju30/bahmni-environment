@@ -2,9 +2,8 @@ class bahmni-openerp {
 	$bahmni_openerp_temp_dir = "${temp_dir}/bahmni-openerp"
 
 	file { "${bahmni_openerp_temp_dir}" :
-		ensure => directory,
-		recurse => true,
-		purge => true
+		ensure 	=> absent,
+		force 	=> true,
 	}
 
 	exec { "bahmni_openerp_codebase" :
