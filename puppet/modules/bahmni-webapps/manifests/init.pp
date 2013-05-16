@@ -5,10 +5,12 @@ class bahmni-webapps {
   $openmrs_modules_dir = "/home/${bahmni_user}/.OpenMRS/modules"
 
   file { "${openmrs_modules_dir}" :
-    ensure => directory,
     owner  => "${bahmni_user}",
     mode   => 644,
-    purge  => true
+    ensure    => directory,
+    recurse   => true,
+    force     => true,
+    purge     => true
   }
 
   exec { "omods" :

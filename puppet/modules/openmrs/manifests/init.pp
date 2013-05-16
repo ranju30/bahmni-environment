@@ -4,15 +4,16 @@ class openmrs {
   $web_xml_file = "${openmrs_webapp_location}/WEB-INF/web.xml"
 
   file { "${openmrs_webapp_location}" :
-     ensure => absent,
-     recurse => true,
-     owner => "${bahmni_user}"
+    ensure    => directory,
+    recurse   => true,
+    force     => true,
+    purge     => true,
+    owner => "${bahmni_user}"
   }
 
   file { "/home/${bahmni_user}/.OpenMRS/openmrs-runtime.properties" :
     ensure      => present,
     owner       => "${bahmni_user}",
-    group       => "${bahmni_user}",
     mode        => 644,
     content     => template("openmrs/openmrs-runtime.properties"),
     require     => File["/home/${bahmni_user}/.OpenMRS"]
@@ -48,6 +49,21 @@ class openmrs {
     require     => Exec["latest_openmrs_webapp"],
     mode        => 644
   }
+
+    require tomcat
+
+  exec { "openmrs_webapp" :
+    command   => "unzip -o -q ${build_output_dir}/openmrs.war -d ${tomcatInstallationDirectory}/webapps/openmrs",
+    provider  => shell,
+    path      => "${os_path}"
+  }
+
+  # exec { "catalina_start" :
+  #   command     => "sh ${tomcatInstallationDirectory}/bin/catalina.sh start ${deployment_log_expression}",
+  #   user        => "${bahmni_user}",
+  #   provider    => shell,
+  #   path        => "${os_path}"
+  # }
 
   file { "${temp_dir}/create-openmrs-db-and-user.sql" :
     ensure      => present,

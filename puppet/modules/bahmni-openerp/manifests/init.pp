@@ -2,8 +2,10 @@ class bahmni-openerp {
 	$bahmni_openerp_temp_dir = "${temp_dir}/bahmni-openerp"
 
 	file { "${bahmni_openerp_temp_dir}" :
-		ensure 	=> absent,
-		force 	=> true,
+    ensure    => directory,
+    recurse   => true,
+    force     => true,
+    purge     => true
 	}
 
 	exec { "bahmni_openerp_codebase" :
@@ -22,6 +24,6 @@ class bahmni-openerp {
 	exec { "bahmni_openerp" :
 		command => "cp -r ${bahmni_openerp_temp_dir}/* $OPENERP_ROOT ${deployment_log_expression}",
 		path => "${os_path}",
-		require => Exec["bahmni_openerp_codebase_version"]
+		require => Exec["bahmni_openerp_codebase"]
 	}
 }
