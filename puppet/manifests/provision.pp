@@ -17,5 +17,4 @@ node default {
  	include python
  	include postgresql
 	include openerp
-	include openmrs-setup
 }
