@@ -20,7 +20,7 @@ class tomcat {
 
   file { "/etc/init.d/tomcat" :
       ensure      => present,
-      content     => template("tomcat/tomcat.initd"),
+      content     => template("tomcat/tomcat.initd.erb"),
       mode        => 777,
       group       => "root",
       owner       => "root",
