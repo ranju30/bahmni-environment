@@ -20,7 +20,7 @@ $postgresFirstTimeSetup=true # Use this for first time setup of master and slave
 $postgresMasterDbFileBackup="/tmp/pg_master_db_file_backup.tar" # The path of master db backup tar file on slave
 
 #Postgres calculated variables
-$postgresServiceName = "postgres-${postgresMajorVersion}.{postgresMinorVersion}"
+$postgresServiceName = "postgresql-${postgresMajorVersion}.${postgresMinorVersion}"
 
 #Tomcat 7
 $tomcatManagerUserName = "tomcat"
