@@ -62,6 +62,7 @@ start() {
     daemon --user openerp --check openerp-server \
     "/usr/bin/setsid /usr/bin/openerp-server \
     -c /etc/openerp-server.conf \
+    --update all \
     --pidfile=$PIDFILE \
     --logfile=$LOGFILE &"
 
