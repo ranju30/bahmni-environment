@@ -18,6 +18,15 @@ class tomcat {
     require => Exec["tomcat_untar"]
   }
 
+  file { "/etc/init.d/tomcat" :
+      ensure      => present,
+      content     => template("tomcat/tomcat.initd"),
+      mode        => 777,
+      group       => "root",
+      owner       => "root",
+      require     => Exec["tomcat_untar"],
+  }
+
   file { "${tomcatInstallationDirectory}/conf/server.xml" :
     ensure    => present,
     content   => template("tomcat/server.xml.erb"),
