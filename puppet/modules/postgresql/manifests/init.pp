@@ -1,17 +1,19 @@
 class postgresql {
   require host
 
-	package { "postgresql92-libs" : ensure => installed}
-	package { "postgresql92-server" : ensure => installed, require => Package["postgresql92-libs"]}
-	package { "postgresql92" : ensure => installed, require => Package["postgresql92-server"]}
-
-  $postgresServiceName = "postgresql-9.2"
-  $postgresDataFolder = "/var/lib/pgsql/9.2/data"
+  $postgresDataFolder = "/var/lib/pgsql/${postgresMajorVersion}.${postgresMinorVersion}/data"
+  $postgresPackageName = "postgresql${postgresMajorVersion}${postgresMinorVersion}"
+  $postgresLibsPackageName = "${postgresPackageName}-libs"
+  $postgresServerPackageName = "${postgresPackageName}-server"
+  
+	package { "${postgresLibsPackageName}" : ensure => installed}
+	package { "${postgresServerPackageName}" : ensure => installed, require => Package["${postgresLibsPackageName}"]}
+	package { "${postgresPackageName}" : ensure => installed, require => Package["${postgresServerPackageName}"]}
 
 	exec { "postgresdb" :
 		command => "service ${postgresServiceName} initdb",
 		path => "${os_path}",
-		require => Package["postgresql92"]
+		require => Package["${postgresPackageName}"]
 	}
 
 	exec { "chkconfig-postgres-server" :

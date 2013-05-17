@@ -26,4 +26,19 @@ class openerp {
     require     => File["${openerp_temp}/install_openerp.sh"],
     cwd         => "${openerp_temp}"
   }
+  
+  file { "/etc/init.d/openerp" :
+      ensure      => present,
+      content     => template("openerp/openerp.initd.erb"),
+      mode        => 777,
+      group       => "root",
+      owner       => "root",
+      require     => Exec["openerp_installed"],
+  }
+
+  service { "openerp":
+    enable    => true,
+    ensure    => "running",
+    require   => File["/etc/init.d/openerp"],
+  }  
 }

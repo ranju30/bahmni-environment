@@ -59,11 +59,8 @@ class tomcat {
     require   => Exec["tomcat_untar"]
   }
 
-  exec { "installtomcatservice" :
-    provider  => "shell",
-    user      => "root",
-    command   => "chkconfig --add tomcat",
+  service { "tomcat":
+    enable    => true,
     require   => Exec["change_tomcat_owner"],
-    onlyif    => "chkconfig --list tomcat; [ $? -eq 1 ]"
-  }
+  }  
 }

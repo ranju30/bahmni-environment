@@ -9,6 +9,8 @@ $bahmni_user_password_hash = '$1$IW4OvlrH$Kui/55oif8W3VZIrnX6jL1' #p@ssw0rd
 $mysqlRootPassword = "password"
 
 ## Postgres
+$postgresMajorVersion ="9"
+$postgresMinorVersion = "2"
 $postgresUser="postgres"
 $postgresMachine = "master" ## [master | slave]
 $postgresMaster = "10.4.5.96"
@@ -16,6 +18,9 @@ $postgresSlave = "10.4.5.75"
 
 $postgresFirstTimeSetup=true # Use this for first time setup of master and slave
 $postgresMasterDbFileBackup="/tmp/pg_master_db_file_backup.tar" # The path of master db backup tar file on slave
+
+#Postgres calculated variables
+$postgresServiceName = "postgres-${postgresMajorVersion}.{postgresMinorVersion}"
 
 #Tomcat 7
 $tomcatManagerUserName = "tomcat"
