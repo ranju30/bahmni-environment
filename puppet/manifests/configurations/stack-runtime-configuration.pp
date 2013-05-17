@@ -74,7 +74,10 @@ $authenticationExcludeUrlPatterns = []
 
 ######################## HTTPD CONFIG END################################################
 
-#OpenMRS
+# Nagios
+$nagios_host_file_path = "objects/localhost.cfg"
+
+# OpenMRS
 $openmrs_password = "Admin123"
 
 # OpenERP properties used by OpenMRS
