@@ -1,3 +1,7 @@
+
+#createrepo is not present by default. Install it.
+yum install createrepo
+
 # disable yum cache
 sed -i 's/keepcache=1/keepcache=0/g' /etc/yum.conf
 
