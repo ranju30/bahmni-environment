@@ -76,6 +76,7 @@ $authenticationExcludeUrlPatterns = []
 
 # Nagios
 $nagios_host_file_path = "objects/localhost.cfg"
+$nagios_user = "nagios"
 
 # OpenMRS
 $openmrs_password = "Admin123"
