@@ -1,7 +1,9 @@
 class registration {
 	file { "${registrationAppDirectory}" :
-		ensure => absent,
-		recurse => true
+    ensure    => absent,
+    recurse   => true,
+    force     => true,
+    purge     => true
 	}
 
   exec { "deploy_registration" :

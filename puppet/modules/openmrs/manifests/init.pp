@@ -50,14 +50,6 @@ class openmrs {
     mode        => 644
   }
 
-    require tomcat
-
-  exec { "openmrs_webapp" :
-    command   => "unzip -o -q ${build_output_dir}/openmrs.war -d ${tomcatInstallationDirectory}/webapps/openmrs",
-    provider  => shell,
-    path      => "${os_path}"
-  }
-
   # exec { "catalina_start" :
   #   command     => "sh ${tomcatInstallationDirectory}/bin/catalina.sh start ${deployment_log_expression}",
   #   user        => "${bahmni_user}",
@@ -87,10 +79,10 @@ class openmrs {
   }
 
   exec { "openmrs_data" :
-    command     => "${temp_dir}/run-liquibase.sh ${deployment_log_expression}",
+    command     => "${temp_dir}/run-liquibase.sh ${build_output_dir} ${deployment_log_expression}",
     path        => "${os_path}",
-    provider    => "shell",
+    provider    => shell,
     cwd         => "${tomcatInstallationDirectory}/webapps",
-    require     => [Exec["openmrs_database"], File["${temp_dir}/run-liquibase.sh"], Exec["openmrs_webapp"]]
+    require     => [Exec["openmrs_database"], File["${temp_dir}/run-liquibase.sh"], Exec["latest_openmrs_webapp"]]
   }
 }

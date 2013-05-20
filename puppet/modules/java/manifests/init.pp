@@ -11,4 +11,10 @@ class java {
     content => template ("java/java.sh"),
     mode    => 644
   }
+
+  file { "${java_home}/lib/tools.jar" :
+    source => "${packages_servers_dir}/tools.jar",
+    ensure => present,
+    require => Package["jre"]
+  }
 }

@@ -28,7 +28,7 @@ class postgresql {
       require     => Exec["chkconfig-postgres-server"]
   }
 
-  exec{ "backup_postgresql_conf":
+  exec{ "backup_postgresql_conf" :
       cwd         => "${postgresDataFolder}",
       command     => "mv postgresql.conf postgresql.conf.backup",
   		path        => "${os_path}",
@@ -37,7 +37,7 @@ class postgresql {
       require     => Exec["chkconfig-postgres-server"],
   }
 
-  exec{ "backup_pg_hba_conf":
+  exec{ "backup_pg_hba_conf" :
       cwd         => "${postgresDataFolder}",
       command     => "mv pg_hba.conf pg_hba.conf.backup",
   		path        => "${os_path}",
@@ -48,7 +48,7 @@ class postgresql {
 	
 	case $postgresMachine {
       master:{
-          file {"${postgresDataFolder}/pg_hba.conf":
+          file {"${postgresDataFolder}/pg_hba.conf" :
               content     => template("postgresql/master_pg_hba.erb"),
               owner       => "${postgresUser}",
               group       => "${postgresUser}",
@@ -57,7 +57,7 @@ class postgresql {
               notify       => Service["${postgresServiceName}"],
           }
 
-          file {"${postgresDataFolder}/postgresql.conf":
+          file {"${postgresDataFolder}/postgresql.conf" :
               content     => template("postgresql/master_postgresql.erb"),
               owner       => "${postgresUser}",
               group       => "${postgresUser}",
@@ -67,21 +67,21 @@ class postgresql {
           }
           
           if $postgresFirstTimeSetup == true {            
-            exec { "start_pg_backup_for_replication":
+            exec { "start_pg_backup_for_replication" :
                 command     => "psql -c \"SELECT pg_start_backup('replbackup');\"",
             		path        =>  "${os_path}",
                 user        => "${postgresUser}",
                 require     => [File["${postgresDataFolder}/pg_hba.conf", "${postgresDataFolder}/postgresql.conf"], Service["${postgresServiceName}"]],
             }
 
-            exec { "tar_pg_data_folder":
+            exec { "tar_pg_data_folder" :
                 command     => "tar cfP /tmp/pg_master_db_file_backup.tar ${postgresDataFolder} --exclude pg_xlog/* --exclude pg_hba.conf --exclude postgresql.conf --exclude postmaster.pid --exclude *.conf.backup",
             		path        =>  "${os_path}",
                 user        => "${postgresUser}",
                 require     => Exec["start_pg_backup_for_replication"],
             }
 
-            exec { "stop_pg_backup_for_replication":
+            exec { "stop_pg_backup_for_replication" :
                 command     => "psql -c \"SELECT pg_stop_backup();\"",
             		path        =>  "${os_path}",
                 user        => "${postgresUser}",
@@ -104,7 +104,7 @@ class postgresql {
               $pgInitialSetup = Exec["backup_postgresql_conf", "backup_pg_hba_conf"]
           }
 
-          file {"${postgresDataFolder}/pg_hba.conf":
+          file {"${postgresDataFolder}/pg_hba.conf" :
               content     => template("postgresql/slave_pg_hba.erb"),
               owner       => "${postgresUser}",
               group       => "${postgresUser}",
@@ -113,7 +113,7 @@ class postgresql {
               notify       => Service["${postgresServiceName}"],
           }
 
-          file {"${postgresDataFolder}/postgresql.conf":
+          file {"${postgresDataFolder}/postgresql.conf" :
               content     => template("postgresql/slave_postgresql.erb"),
               owner       => "${postgresUser}",
               group       => "${postgresUser}",
@@ -122,7 +122,7 @@ class postgresql {
               notify       => Service["${postgresServiceName}"],
           }
           
-          file {"${postgresDataFolder}/recovery.conf":
+          file {"${postgresDataFolder}/recovery.conf" :
               content     => template("postgresql/slave_recovery.erb"),
               owner       => "${postgresUser}",
               group       => "${postgresUser}",
