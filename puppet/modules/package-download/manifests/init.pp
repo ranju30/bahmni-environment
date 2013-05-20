@@ -11,7 +11,7 @@ class package-download {
 	file { "${bahmni_data_temp}/getpackages.sh" :
 		path    => "${bahmni_data_temp}/getpackages.sh",
 		ensure      => present,
-		content     => template("bahmni-data/getpackages.erb"),
+		content     => template("package-download/getpackages.erb"),
 		owner       => "${bahmni_user}",
 		mode        => 544,
 		require     => File["${bahmni_data_temp}"]
