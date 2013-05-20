@@ -1,20 +1,20 @@
 class package-download {
   
-	$bahmni_data_temp = "${temp_dir}/bahmni-data"
+	$package_download_temp = "${temp_dir}/package_download"
 
-	file { "${bahmni_data_temp}" :
+	file { "${package_download_temp}" :
 		ensure 	=> directory,
 		mode 	=> 666,
 	    owner   => "${bahmni_user}",
 	}
 
-	file { "${bahmni_data_temp}/getpackages.sh" :
-		path    => "${bahmni_data_temp}/getpackages.sh",
+	file { "${package_download_temp}/getpackages.sh" :
+		path    => "${package_download_temp}/getpackages.sh",
 		ensure      => present,
 		content     => template("package-download/getpackages.erb"),
 		owner       => "${bahmni_user}",
 		mode        => 544,
-		require     => File["${bahmni_data_temp}"]
+		require     => File["${package_download_temp}"]
 	}
 
 	exec { "get-packages-from-ci" :
@@ -22,6 +22,6 @@ class package-download {
 		user 		=> "${bahmni_user}",
 		before	 	=> [Class["bahmni-webapps"], Class["openmrs"], Class["bahmni-data"], Class["Registration"]],
 		path 			=> "${os_path}",
-		cwd				=> "${bahmni_data_temp}"
+		cwd				=> "${package_download_temp}"
 	}
 }

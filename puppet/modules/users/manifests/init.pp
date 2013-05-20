@@ -23,13 +23,13 @@ class users ( $userName, $password_hash ) {
     owner       => "${userName}",
     group       => "${userName}",
     mode        => 764,
-    require     => User["${userName}"]
+    require     => Exec["${userName} homedir"]
   }
 
   exec { "add-user-to-sudoers" :
     provider    => "shell",
     command     => "sh /home/${userName}/add-user-to-sudoers.sh ${userName}",
     onlyif      => "test `grep -i ${userName} /etc/sudoers  | wc -l` -eq 0",
-    require     => [User["${userName}"], Exec["${userName} homedir"]]
+    require     => File["add-user-to-sudoers"]
   }
 }
