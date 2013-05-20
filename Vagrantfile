@@ -17,7 +17,6 @@ Vagrant::Config.run do |config|
   else
     manifest_file = ENV['STAGE'] + ".pp"
   end
-
   
   config.vm.provision :puppet do |puppet|
     puppet.pp_path="/vagrant-temp/vagrant-puppet"

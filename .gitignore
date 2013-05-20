@@ -26,3 +26,4 @@ packages/localrepo/*
 packages/python-packages/*
 packages/servers/*
 packages/tools/*
+machine-images/*
