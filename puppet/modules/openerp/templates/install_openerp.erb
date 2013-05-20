@@ -17,9 +17,5 @@ tar -zxf $2 --transform 's!^[^/]\+\($\|/\)!openerp\1!'
 cd openerp
 python setup.py -q install
 cp openerp-server /usr/local/bin
-cp install/openerp-server.init /etc/init.d/openerp
 cp install/openerp-server.conf /etc
 chown openerp:openerp /etc/openerp-server.conf
-chmod u+x /etc/init.d/openerp
-chkconfig openerp on
-service openerp start

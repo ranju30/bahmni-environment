@@ -25,6 +25,22 @@
         </layout>
     </appender>
 
+    <appender name="EMAIL"  class="org.bahmni.util.EmailAppender">
+        <param name="BufferSize" value="512" />
+        <param name="SMTPHost" value="gmail-smtp-in.l.google.com" />
+        <param name="From" value="bahmni-support@googlegroups.com" />
+        <param name="To" value="bahmni-support@googlegroups.com" />
+        <param name="Subject" value="Bahmni Error" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="[%t] - %d %p [%c] - %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+            <param name="LevelMax" value="FATAL"/>
+        </filter>
+    </appender>
+
     <logger name="org.apache">
         <level value="WARN" />
     </logger>
@@ -72,6 +88,7 @@
     <root>
         <level value="WARN" />
         <appender-ref ref="CONSOLE" />
+        <appender-ref ref="EMAIL" />
         <appender-ref ref="MEMORY_APPENDER" />
     </root>
 

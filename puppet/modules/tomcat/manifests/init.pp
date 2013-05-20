@@ -18,6 +18,15 @@ class tomcat {
     require => Exec["tomcat_untar"]
   }
 
+  file { "/etc/init.d/tomcat" :
+      ensure      => present,
+      content     => template("tomcat/tomcat.initd.erb"),
+      mode        => 777,
+      group       => "root",
+      owner       => "root",
+      require     => Exec["tomcat_untar"],
+  }
+
   file { "${tomcatInstallationDirectory}/conf/server.xml" :
     ensure    => present,
     content   => template("tomcat/server.xml.erb"),
@@ -50,11 +59,8 @@ class tomcat {
     require   => Exec["tomcat_untar"]
   }
 
-  exec { "installtomcatservice" :
-    provider  => "shell",
-    user      => "root",
-    command   => "chkconfig --add tomcat",
+  service { "tomcat":
+    enable    => true,
     require   => Exec["change_tomcat_owner"],
-    onlyif    => "chkconfig --list tomcat; [ $? -eq 1 ]"
-  }
+  }  
 }
