@@ -33,7 +33,7 @@ Technical debt
 4. All the shell scripts are currently dumped in temp dir. May be we should have sub-folders inside it as well
 5. Deployment classes do not need to "require" Provision classes. Eventually we should not need this but currently we are not confident whether running same class twice would have an affect or not.
 6. How to avoid running provision on vagrant reload.
-7. Run tomcat as a service
+7. The packaging of containing unnecessary items in it
 
 TODO
 ----
