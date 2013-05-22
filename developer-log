@@ -27,6 +27,7 @@ http://www.ibm.com/developerworks/linux/library/l-lpic1-v3-102-5/
 
 Technical debt
 --------------
+0. Enable acpi - https://wiki.archlinux.org/index.php/Acpid
 1. We have a pattern - create a shell script using a template file and then execute the same script. Can this be done via a single custom resource type
 2. Make all the actions idempotent, i.e. do nothing if already in the state required
 3. There are a lot of classes where we had to set path, set user, group etc. Find out if there is a way to set this in one place and get this to work.
@@ -34,6 +35,8 @@ Technical debt
 5. Deployment classes do not need to "require" Provision classes. Eventually we should not need this but currently we are not confident whether running same class twice would have an affect or not.
 6. How to avoid running provision on vagrant reload.
 7. The packaging of containing unnecessary items in it
+8. Tomcat memory should be configurable
+9. Need to ensure that all passwords are cleaned up after deployment/provisioning - or better not save password anywhere
 
 TODO
 ----

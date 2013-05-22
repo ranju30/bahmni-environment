@@ -1,0 +1,19 @@
+drop table `csvimport`;
+CREATE TABLE `csvimport` (
+  `REG_NO` varchar(255) NOT NULL,
+  `FNAME` varchar(255) NOT NULL,
+  `LNAME` varchar(255) NOT NULL,
+  `FHNAME` varchar(255) NOT NULL
+);
+
+LOAD DATA INFILE "/Users/Vsingh/Projects/bhamni/csv/RegistrationMaster.csv" INTO TABLE csvimport COLUMNS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\' LINES TERMINATED BY '\r' IGNORE 1 LINES;
+
+
+
+select * from csvimport join (select REG_NO from csvimport group by REG_NO having count(*) > 1) foo on foo.REG_NO = csvimport.REG_NO;
+select * from csvimport join (select REG_NO from csvimport group by REG_NO having count(*) > 1) foo on foo.REG_NO = csvimport.REG_NO group by fname having count(fname) > 1;
+
+
+select * from csvimport join (select REG_NO from csvimport group by REG_NO having count(*) > 1) foo on foo.REG_NO = csvimport.REG_NO  INTO OUTFILE '/tmp/all-duplicates.csv' FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
+
+select * from csvimport join (select REG_NO from csvimport group by REG_NO having count(*) > 1) foo on foo.REG_NO = csvimport.REG_NO group by fname having count(fname) > 1 INTO OUTFILE '/tmp/all-duplicates.csv' FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';

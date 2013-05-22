@@ -20,6 +20,12 @@ class bahmni-webapps {
     path => "${os_path}"
   }
 
+  file { "${openmrs_modules_dir}/${idgen_omod_file}" :
+    source => "${packages_servers_dir}/${idgen_omod_file}",
+    ensure => present,
+    require => File["${openmrs_modules_dir}"],
+  }
+
   # $deploy_temp_dir = "${temp_dir}/deploy"
 
   # file { "${deploy_temp_dir}" :

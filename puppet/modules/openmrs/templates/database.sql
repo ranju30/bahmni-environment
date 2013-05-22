@@ -1,7 +1,4 @@
-CREATE DATABASE IF NOT EXISTS openmrs
-DEFAULT CHARACTER SET utf8
-DEFAULT COLLATE utf8_general_ci;
--- use openmrs;
+CREATE DATABASE IF NOT EXISTS openmrs DEFAULT CHARACTER SET utf8;
 
 use openmrs;
 

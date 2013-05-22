@@ -33,10 +33,19 @@ class bahmni-data {
     mode  => 666
   }
 
+  file { "${bahmni_data_temp}/flyway.properties" :
+    path        => "${bahmni_data_temp}/flyway.properties",
+    ensure      => present,
+    content     => template("bahmni-data/flyway.properties.erb"),
+    owner       => "${bahmni_user}",
+    mode        => 544,
+    require     => File["${bahmni_data_temp}"]
+  }
+
   exec { "bahmni db upgrade" :
-  	command		=> "sh flyway-migration.sh ${build_output_dir}/bahmni.properties ${build_output_dir}/openmrs-data-jars.zip ${ant_home} ${deployment_log_expression}",
+  	command		=> "sh flyway-migration.sh flyway.properties ${build_output_dir}/openmrs-data-jars.zip ${ant_home} ${deployment_log_expression}",
   	user 			=> "${bahmni_user}",
-  	require 	=> [File["${bahmni_data_temp}/bahmni-flyway-ant.xml"], File["${bahmni_data_temp}/flyway-migration.sh"]],
+  	require 	=> [File["${bahmni_data_temp}/bahmni-flyway-ant.xml"], File["${bahmni_data_temp}/flyway-migration.sh"], File["${bahmni_data_temp}/flyway.properties"]],
   	path 			=> "${os_path}",
   	cwd				=> "${bahmni_data_temp}"
   }

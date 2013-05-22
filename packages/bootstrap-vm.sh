@@ -2,7 +2,7 @@
 yum install createrepo
 
 # disable yum cache
-sed -i 's/keepcache=1/keepcache=0/g' /etc/yum.conf
+sh disable-yum-cache.sh
 
 # disable other repos
 sh disable-online-repo.sh

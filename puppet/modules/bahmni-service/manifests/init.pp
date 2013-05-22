@@ -14,6 +14,6 @@ class bahmni-service($status) {
   service { "httpd" :
     ensure      => "${status}",
     enable      => true,
-    require     => Package["httpd"]
+    require     => Service["tomcat"]
   }
 }
