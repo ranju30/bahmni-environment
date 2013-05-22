@@ -1,0 +1,22 @@
+import "configurations/node-configuration"
+import "configurations/stack-installers-configuration"
+import "configurations/stack-runtime-master-configuration"
+import "configurations/deployment-configuration"
+
+node default {
+    include yum-repo
+    include host
+    include tools
+    include java
+    include mysql
+    include mysqlserver
+    class {users : userName => "${bahmni_user}", password_hash => "${bahmni_user_password_hash}"}
+    include tomcat
+    include httpd
+    include jasperserver
+    include python
+    include postgresql
+    include openerp
+    include nagios
+    include bahmni-nagios
+}
