@@ -21,9 +21,5 @@ node default {
       content     => "",
   }
 
-	include openmrs
-	include bahmni-configuration
-	include bahmni-webapps
-  include ant
 	include bahmni-data
 }
