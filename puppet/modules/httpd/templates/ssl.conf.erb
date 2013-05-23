@@ -230,9 +230,13 @@ CustomLog logs/ssl_request_log \
           "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 
 SSLProxyEngine on
+
+<% if @authenticationRequired == true or (@httpsSubdomains != nil and  @httpsSubdomains.length > 0)-%>
+	RewriteEngine on
+<% end -%>
+
 #https rules for authentication
 <% if @authenticationRequired == true -%>
-	RewriteEngine on
   SetEnvIf <%= @authenticationKey %> ^(<%= @authenticationValues.join("|") %>)$ validAuthenticationKey=1
   <% if @authenticationExcludeHosts!=nil and @authenticationExcludeHosts.length > 0 -%>
   	SetEnvIf Remote_Addr <%= @authenticationExcludeHosts.join("|") %> validAuthenticationKey=1
@@ -245,6 +249,14 @@ SSLProxyEngine on
   RewriteCond %{ENV:validAuthenticationKey} !=1
   RewriteRule (.*) /$1 [R=401]
 <% end -%>
+
+<% if @httpsSubdomains!=nil and  @httpsSubdomains.length > 0 -%>
+	<%- @httpsSubdomains.each do |httpsSubdomain| -%>
+	  RewriteCond %{HTTP_HOST} ^<%=httpsSubdomain[:subdomain]%>\.(.*)
+    RewriteRule (.*) <%=httpsSubdomain[:url]%>$1 [P]
+	<% end -%>
+<% end -%>
+
 
 <% if @httpsRedirects!=nil and  @httpsRedirects.length > 0 -%>
 	<%- @httpsRedirects.each do |redirectionRule| -%>
