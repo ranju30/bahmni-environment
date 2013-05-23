@@ -54,7 +54,7 @@ $dropPacketsIfIPNotInSslExcludeList = false # true if the packets have to droppe
 $httpRedirects = ["/jasperserver http://${deployHost}:8080/jasperserver"]
 $httpsRedirects = ["/openmrs http://${deployHost}:8080/openmrs"]
 $httpsStaticWebapps = ["/registration ${registrationAppDirectory}", "/patient_images ${httpd_deploy_dir}/patient_images"]
-$httpsSubdomains = [{:subdomain => "openerp", :url => " http://${deployHost}:8069"}]
+$httpsSubdomains = [{subdomain => "openerp", url => " http://${deployHost}:8069"}]
 $httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib"]                    
 $httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules"]
 

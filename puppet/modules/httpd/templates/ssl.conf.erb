@@ -252,8 +252,8 @@ SSLProxyEngine on
 
 <% if @httpsSubdomains!=nil and  @httpsSubdomains.length > 0 -%>
 	<%- @httpsSubdomains.each do |httpsSubdomain| -%>
-	  RewriteCond %{HTTP_HOST} ^<%=httpsSubdomain[:subdomain]%>\.(.*)
-    RewriteRule (.*) <%=httpsSubdomain[:url]%>$1 [P]
+	  RewriteCond %{HTTP_HOST} ^<%=httpsSubdomain["subdomain"]%>\.(.*)
+    RewriteRule (.*) <%=httpsSubdomain["url"]%>$1 [P]
 	<% end -%>
 <% end -%>
 
