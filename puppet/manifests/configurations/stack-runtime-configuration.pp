@@ -51,12 +51,15 @@ $dropPacketsIfIPNotInSslExcludeList = false # true if the packets have to droppe
 ## The following redirects can contain either a string or an array;
 ## If it is a string, the same is used for both ProxyPass and ProxyPassReverse rules;
 ## In case of array, 1st element of the array specifies ProxyPass rule and 2nd element specifies ProxyPassReverse rule.
-$httpRedirects = ["/jasperserver http://${deployHost}:8080/jasperserver"]
-$httpsRedirects = ["/openmrs http://${deployHost}:8080/openmrs"]
-$httpsStaticWebapps = ["/registration ${registrationAppDirectory}", "/patient_images ${httpd_deploy_dir}/patient_images"]
-$httpsSubdomains = [{subdomain => "openerp", url => " http://${deployHost}:8069"}]
+$httpRedirects = [{path => "/jasperserver", redirectPath => "http://${deployHost}:8080/jasperserver"}]
+$httpsRedirects = [{path => "/openmrs", redirectPath => "http://${deployHost}:8080/openmrs"}]
+
+#Static webapps
+$httpsStaticWebapps = [{path => "/registration", directory => "${registrationAppDirectory}"},
+                       {path => "/patient_images", directory => "${httpd_deploy_dir}/patient_images"}]
 $httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib"]                    
 $httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules"]
+$httpsSubdomains = [{subdomain => "openerp", url => " http://${deployHost}:8069"}]
 
 ## HTTPS
 $sslCertificateFile = "/etc/pki/tls/certs/localhost.crt"
