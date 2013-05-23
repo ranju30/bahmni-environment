@@ -235,6 +235,8 @@ SSLProxyEngine on
 	RewriteEngine on
 <% end -%>
 
+RequestHeader set "X-Forwarded-Proto" "https"
+
 #https rules for authentication
 <% if @authenticationRequired == true -%>
   SetEnvIf <%= @authenticationKey %> ^(<%= @authenticationValues.join("|") %>)$ validAuthenticationKey=1
