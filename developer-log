@@ -44,3 +44,12 @@ pydot
 createrepo
 puppet
 git
+
+
+
+select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
+select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
+select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
+select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
+select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
+select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
