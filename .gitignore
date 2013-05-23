@@ -28,3 +28,4 @@ packages/python-packages/*
 packages/servers/*
 packages/tools/*
 machine-images/*
+packages/data-dump

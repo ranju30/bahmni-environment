@@ -21,5 +21,5 @@ node default {
       content     => "",
   }
 
-	include bahmni-data
+	include bahmni-openerp-basedata
 }
