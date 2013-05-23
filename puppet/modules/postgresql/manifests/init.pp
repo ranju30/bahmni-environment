@@ -1,7 +1,6 @@
 class postgresql {
   require host
 
-  $postgresDataFolder = "/var/lib/pgsql/${postgresMajorVersion}.${postgresMinorVersion}/data"
   $postgresPackageName = "postgresql${postgresMajorVersion}${postgresMinorVersion}"
   $postgresLibsPackageName = "${postgresPackageName}-libs"
   $postgresServerPackageName = "${postgresPackageName}-server"

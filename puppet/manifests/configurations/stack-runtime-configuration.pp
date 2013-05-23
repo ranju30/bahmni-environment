@@ -21,6 +21,7 @@ $postgresMasterDbFileBackup="/tmp/pg_master_db_file_backup.tar" # The path of ma
 
 #Postgres calculated variables
 $postgresServiceName = "postgresql-${postgresMajorVersion}.${postgresMinorVersion}"
+$postgresDataFolder = "/var/lib/pgsql/${postgresMajorVersion}.${postgresMinorVersion}/data"
 
 #Tomcat 7
 $tomcatManagerUserName = "tomcat"
