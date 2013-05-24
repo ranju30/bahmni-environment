@@ -1,0 +1,7 @@
+ #!/bin/bash
+
+TEMP_DIR=<%=temp_dir%>
+DAY=`date | cut -f1 -d' '`
+BACKUP_FILENAME=$TEMP_DIR/mysql_backup_$DAY
+
+mysqldump -uroot -p<%=mysqlRootPassword%> --all-databases | gzip > $BACKUP_FILENAME.sql.gz
