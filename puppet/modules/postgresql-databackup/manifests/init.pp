@@ -1,8 +1,8 @@
-class databackup {
+class postgresql-databackup {
 
   file { "${temp_dir}/pgsql_databackup.sh" :
     ensure      => present,
-    content     => template("databackup/pgsql_databackup.sh.erb"),
+    content     => template("postgresql-databackup/pgsql_databackup.sh.erb"),
     owner       => "${bahmni_user}",
     mode        => 544,
   }
