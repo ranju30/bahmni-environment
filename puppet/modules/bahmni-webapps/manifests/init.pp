@@ -19,11 +19,12 @@ class bahmni-webapps {
     require => File["${openmrs_modules_dir}"],
     path => "${os_path}"
   }
-
-  file { "${openmrs_modules_dir}/${idgen_omod_file}" :
-    source => "${packages_servers_dir}/${idgen_omod_file}",
-    ensure => present,
+  
+  exec { "email-appender" :
+    command => "cp ${build_output_dir}/bahmnicore-mail-appender-0.2-SNAPSHOT-jar-with-dependencies.jar ${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/lib",
+    user    => "${bahmni_user}",
     require => File["${openmrs_modules_dir}"],
+    path    => "${os_path}"
   }
 
   # $deploy_temp_dir = "${temp_dir}/deploy"
