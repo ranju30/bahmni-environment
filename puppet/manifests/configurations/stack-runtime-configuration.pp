@@ -12,12 +12,6 @@ $mysqlRootPassword = "password"
 $postgresMajorVersion ="9"
 $postgresMinorVersion = "2"
 $postgresUser="postgres"
-$postgresMachine = "master" ## [master | slave]
-$postgresMaster = "10.4.5.96"
-$postgresSlave = "10.4.5.75"
-
-$postgresFirstTimeSetup=true # Use this for first time setup of master and slave
-$postgresMasterDbFileBackup="/tmp/pg_master_db_file_backup.tar" # The path of master db backup tar file on slave
 
 #Postgres calculated variables
 $postgresServiceName = "postgresql-${postgresMajorVersion}.${postgresMinorVersion}"

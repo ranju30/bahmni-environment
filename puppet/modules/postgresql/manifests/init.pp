@@ -90,9 +90,18 @@ class postgresql {
       }
 
       slave:{
-          
-          $pgInitialSetup = Exec["backup_postgresql_conf", "backup_pg_hba_conf"]
-          
+        if $postgresFirstTimeSetup == true {            
+          exec { "untar_pg_data_folder":
+            command     => "tar xvfP ${postgresMasterDbFileBackup}",
+            path        =>  "${os_path}",
+            user        => "${postgresUser}",
+            require     => Exec["backup_postgresql_conf", "backup_pg_hba_conf"],
+          }
+
+          $pgInitialSetup = Exec["untar_pg_data_folder"]
+        } else {            
+            $pgInitialSetup = Exec["backup_postgresql_conf", "backup_pg_hba_conf"]
+        }
           file {"${postgresDataFolder}/pg_hba.conf" :
               content     => template("postgresql/slave_pg_hba.erb"),
               owner       => "${postgresUser}",

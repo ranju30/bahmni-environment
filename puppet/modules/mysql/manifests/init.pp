@@ -45,7 +45,7 @@ class mysqlreplication{
     }
 
     exec { "run-mysql-replication-scripts" :
-        command     => "sh ${temp_dir}/replicate.sh",
+        command     => "sh -v ${temp_dir}/replicate.sh",
         path        => "${os_path}",
         cwd         => "${temp_dir}",
         require     => [File["${temp_dir}/replicate.sh"],File["${temp_dir}/replicator.sh"],Service["mysqld"]]

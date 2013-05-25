@@ -1,6 +1,7 @@
 import "configurations/node-configuration"
 import "configurations/stack-installers-configuration"
-import "configurations/stack-runtime-master-configuration"
+import "configurations/stack-runtime-configuration"
+import "configurations/stack-replication-master-configuration"
 import "configurations/deployment-configuration"
 
 node default {
@@ -18,6 +19,4 @@ node default {
     include python
     include postgresql
     include openerp
-    include nagios
-    include bahmni-nagios
 }
