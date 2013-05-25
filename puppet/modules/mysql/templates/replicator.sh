@@ -2,8 +2,6 @@
 
 BASE_DIR=`dirname $0`
 
-. $BASE_DIR/replication.properties
-
 #echo "master-username = $musername"
 #echo "master-password = $mpassword"
 #echo "master-host = $mhost"

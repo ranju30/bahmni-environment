@@ -10,6 +10,7 @@ node default {
     include java
     include mysql
     include mysqlserver
+    include mysqlreplication
     class {users : userName => "${bahmni_user}", password_hash => "${bahmni_user_password_hash}"}
     include tomcat
     include httpd

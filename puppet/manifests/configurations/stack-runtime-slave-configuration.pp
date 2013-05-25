@@ -10,31 +10,32 @@ $mysqlRootPassword = "password"
 
 # mysql replication
 # Master Properties
-musername=root
-mpassword=password
-mhost=192.168.33.10
-masterServerId=100
-expireLogsDays=90
+$musername="root"
+$mpassword="password"
+$mhost="192.168.2.19"
+$masterServerId="100"
+$expireLogsDays="90"
 
 # Slave Properties 
-susername=root
-spassword=password
-shost=192.168.33.15
-slaveServerId=101
+$susername="root"
+$spassword="password"
+$shost="192.168.2.9"
+$slaveServerId="101"
+$mysqlMachine="slave"
 
-master_dump_file=/tmp/mysql_master_dump.db
-log_file=mysql-bin.000001
-log_pos=467
+$master_dump_file="/tmp/mysql_master_dump.db"
+$log_file="mysql-bin.000001"
+$log_pos="467"
 
 ## Postgres
 $postgresMajorVersion ="9"
 $postgresMinorVersion = "2"
 $postgresUser="postgres"
 $postgresMachine = "slave"
-$postgresMaster = "192.168.33.10"
-$postgresSlave = "192.168.33.15"
+$postgresMaster = "192.168.2.19"
+$postgresSlave = "192.168.2.9"
 
-$postgresFirstTimeSetup=true # Use this for first time setup of master and slave
+$postgresFirstTimeSetup="true # Use this for first time setup of master and slave"
 $postgresMasterDbFileBackup="/tmp/pg_master_db_file_backup.tar" # The path of master db backup tar file on slave
 
 #Postgres calculated variables
@@ -100,11 +101,11 @@ $nagios_user = "nagios"
 $openmrs_password = "Admin123"
 
 # OpenERP properties used by OpenMRS
-$openERPPort=8069
-$openERPHost=localhost
-$openERPDatabase=openerp
-$openERPUser=admin
-$openERPPassword=password
+$openERPPort="8069"
+$openERPHost="localhost"
+$openERPDatabase="openerp"
+$openERPUser="admin"
+$openERPPassword="password"
 
 ######################## JASPER CONFIG START##############################################
 $jasperTomcatHome = $tomcatInstallationDirectory

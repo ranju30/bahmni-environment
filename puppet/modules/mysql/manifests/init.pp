@@ -24,10 +24,15 @@ class mysqlserver {
         require => [Package["mysql-server"], Package["mysql"] , Service["mysqld"]],
         path => "${os_path}"
     }
+}
 
-    file { "${temp_dir}/${mysqlMachine}.sh" :
+class mysqlreplication{
+    require mysql
+    require mysqlserver
+
+    file { "${temp_dir}/replicate.sh" :
         ensure      => present,
-        content     => template("mysql/${mysqlMachine}.sh"),
+        content     => template("mysql/${mysqlMachine}.sh.erb"),
         owner       => "${bahmni_user}",
         mode        => 544
     }
@@ -40,9 +45,9 @@ class mysqlserver {
     }
 
     exec { "run-mysql-replication-scripts" :
-        command     => "sh ${temp_dir}/${machine}.sh",
+        command     => "sh ${temp_dir}/replicate.sh",
         path        => "${os_path}",
         cwd         => "${temp_dir}",
-        require     => [Package["mysql-server"], Package["mysql"] , Service["mysqld"], Exec["setmysqlpassword"], File['${temp_dir}/${mysqlMachine}.sh'],File['${temp_dir}/replicator.sh']]
+        require     => [File["${temp_dir}/replicate.sh"],File["${temp_dir}/replicator.sh"],Service["mysqld"]]
     }
 }
