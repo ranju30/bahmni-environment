@@ -13,15 +13,24 @@ class bahmni-webapps {
     purge     => true
   }
 
-  exec { "omods" :
+  exec { "bahmni_omods" :
     command => "cp ${build_output_dir}/*.omod ${openmrs_modules_dir} ${deployment_log_expression}",
+    user    => "${bahmni_user}",
+    require => File["${openmrs_modules_dir}"],
+    path => "${os_path}"
+  }
+
+# TODO: This should ideally be part of deployment as we do not change this module ourselves.
+# But we are deleting the older omods.
+  exec { "openmrs_omods" :
+    command => "cp ${packages_servers_dir}/*.omod ${openmrs_modules_dir} ${deployment_log_expression}",
     user    => "${bahmni_user}",
     require => File["${openmrs_modules_dir}"],
     path => "${os_path}"
   }
   
   exec { "email-appender" :
-    command => "cp ${build_output_dir}/bahmnicore-mail-appender-0.2-SNAPSHOT-jar-with-dependencies.jar ${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/lib",
+    command => "cp ${build_output_dir}/bahmnicore-mail-appender-${bahmni_version}-jar-with-dependencies.jar ${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/lib",
     user    => "${bahmni_user}",
     require => File["${openmrs_modules_dir}"],
     path    => "${os_path}"

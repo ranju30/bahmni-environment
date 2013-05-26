@@ -6,3 +6,20 @@ $deployment_log_expression = ">> ${deployment_log_file} 2>> ${deployment_log_fil
 $bahmni_openerp_branch = "master"
 $bahmni_openerp_temp_dir = "${temp_dir}/bahmni-openerp"
 $openerp_base_data_dump = "bahmni-openerp-base-data.sql"
+$bahmni_version = "0.2-SNAPSHOT"
+$jss_registration_csv = "Test.csv"
+
+file { "${deployment_log_file}" :
+  ensure      => present,
+  owner       => "${bahmni_user}",
+  group       => "${bahmni_user}",
+  mode        => 666,
+  content     => "",
+}
+
+file { "${httpd_deploy_dir}" :
+  ensure      => directory,
+  owner       => "${bahmni_user}",
+  group       => "${bahmni_user}",
+  mode        => 644,
+}

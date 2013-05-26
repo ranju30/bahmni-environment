@@ -10,10 +10,10 @@ class bahmni-configuration {
   }
 
  file { "${httpd_deploy_dir}/patient_images" :
-       ensure => "link",
-       target => "${imagesDirectory}",
-       require => File["${imagesDirectory}", "${httpd_deploy_dir}"],
-    }
+   ensure => "link",
+   target => "${imagesDirectory}",
+   require => File["${imagesDirectory}", "${httpd_deploy_dir}"],
+ }
 
  file { "${bahmnicore_properties}" :
     ensure      => present,

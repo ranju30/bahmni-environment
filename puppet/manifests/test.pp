@@ -6,20 +6,5 @@ import "configurations/deployment-configuration"
 # pre-condition
 # bahmni-stop must have been run before this
 node default {
-	file { "${httpd_deploy_dir}" :
-      ensure      => directory,
-      owner       => "${bahmni_user}",
-      group       => "${bahmni_user}",
-      mode        => 644,
-  }
-
-  file { "${deployment_log_file}" :
-      ensure      => present,
-      owner       => "${bahmni_user}",
-      group       => "${bahmni_user}",
-      mode        => 666,
-      content     => "",
-  }
-
 	include bahmni-openerp-basedata
 }
