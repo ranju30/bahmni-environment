@@ -17,6 +17,4 @@ node default {
  	include python
  	include postgresql
 	include openerp
-	include nagios
-	include bahmni-nagios
 }

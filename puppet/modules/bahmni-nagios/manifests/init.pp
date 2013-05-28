@@ -71,4 +71,12 @@ class bahmni-nagios{
         ensure  => running,
         require => Exec["setup_object_files_in_config"] 
     }
+
+    service { "nrpe":
+        ensure     => running,
+        enable     => true,
+        hasrestart => true,
+        hasstatus  => true,
+        require => Package["nrpe"]
+    }
 }
