@@ -1,4 +1,5 @@
 class yum-repo {
+  require bootstrap
 	file { "local_repo" :
 		path 			=> "/etc/yum.repos.d/local.repo",
     ensure    => present,

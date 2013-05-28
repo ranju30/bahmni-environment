@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="62">
+  <server artifactsdir="artifacts" commandRepositoryLocation="default" serverId="411c7502-b326-483b-87dc-a4d4fd30dc8b" />
+  <pipelines group="defaultGroup">
+    <pipeline name="Address_Hierarchy" isLocked="false">
+      <materials>
+        <git url="https://github.com/Bhamni/openmrs-module-addresshierarchy.git" />
+      </materials>
+      <stage name="defaultStage">
+        <jobs>
+          <job name="defaultJob">
+            <tasks>
+              <exec command="mvn">
+                <arg>clean</arg>
+                <arg>install</arg>
+                <arg>-U</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </pipelines>
+  <agents>
+    <agent hostname="localhost" ipaddress="127.0.0.1" uuid="81d4c18a-a0e1-4484-802d-f08499a2de0a" />
+  </agents>
+</cruise>
+
