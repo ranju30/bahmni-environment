@@ -301,4 +301,11 @@ class python {
     cwd => "${python_temp_dir}",
     require => Exec["xlwt"]
   }
+
+  exec { "nonblockingloghandler" :
+    command => "easy_install nonblockingloghandler ${log_expression}",
+    path => "${os_path}",
+    cwd => "${python_temp_dir}",
+    require => Exec["pyOpenSSL"]
+  }
 }
