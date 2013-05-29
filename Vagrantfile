@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant::Config.run do |config|
+Vagrant.configure("2") do |config|
   config.vm.box = "bahmni-complete"
   config.vm.box_url = "centos-6.2-64bit-puppet-vbox.4.1.8-11.box"
   # config.vm.boot_mode = :gui

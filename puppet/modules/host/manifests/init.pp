@@ -24,7 +24,7 @@ class host {
 	}
 
 	class { "timezone" :
-    timezone => "IST"
+    timezone => "Asia/Kolkata"
   }
 
   package { "ntp" :
@@ -48,8 +48,13 @@ class host {
   	require => Exec["time_clock_synchronized"]
   }
 
-  exec { "selinux_permissive" :
-  	command => "sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config",
+  exec { "selinux_disabled_from_enforcing" :
+    command => "sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config",
+    path    => "${os_path}"
+  }
+
+  exec { "selinux_disabled_from_permissive" :
+  	command => "sed -i 's/SELINUX=permissive/SELINUX=disabled/g' /etc/selinux/config",
   	path 		=> "${os_path}"
   }
 }
