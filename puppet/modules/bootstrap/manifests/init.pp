@@ -12,7 +12,8 @@ class bootstrap {
 #    source => "puppet:///modules/bootstrap/local.repo"
 #  }
 
-  file {["/etc/yum.repos.d/CentOS-Base.repo", "/etc/yum.repos.d/epel.repo", "/etc/yum.repos.d/puppetlabs.repo", "/etc/yum.repos.d/pgdg-92-centos.repo"]:
+###  file {["/etc/yum.repos.d/CentOS-Base.repo", "/etc/yum.repos.d/epel.repo", "/etc/yum.repos.d/puppetlabs.repo", "/etc/yum.repos.d/pgdg-92-centos.repo"]:
+  file {["/etc/yum.repos.d/epel.repo", "/etc/yum.repos.d/puppetlabs.repo", "/etc/yum.repos.d/pgdg-92-centos.repo"]:
      ensure => absent;
   }
 

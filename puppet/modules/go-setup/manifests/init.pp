@@ -18,4 +18,16 @@ class go-setup {
     require   => Package["go-server", "go-agent"]
   }
 
+  file { "/etc/hosts" :
+    ensure  => present,
+    content => template("go-setup/hosts"),
+    replace => true,
+  }
+
+  file { "/home/${bahmni_user}/startGo.sh" :
+    ensure  => present,
+    content => template("go-setup/startGo.sh"),
+    mode    => 555,
+  }
+
 }

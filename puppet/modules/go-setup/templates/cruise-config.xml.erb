@@ -10,7 +10,7 @@
         <jobs>
           <job name="defaultJob">
             <tasks>
-              <exec command="mvn">
+              <exec command="<%= maven_home %>/bin/mvn">
                 <arg>clean</arg>
                 <arg>install</arg>
                 <arg>-U</arg>
