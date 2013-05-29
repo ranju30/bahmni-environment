@@ -13,8 +13,8 @@ $postgresMajorVersion ="9"
 $postgresMinorVersion = "2"
 $postgresUser="postgres"
 $postgresMachine = "master" ## [master | slave]
-$postgresMaster = "10.4.5.96"
-$postgresSlave = "10.4.5.75"
+$postgresMaster = "192.168.0.152"
+$postgresSlave = "192.168.0.115"
 
 $postgresFirstTimeSetup=true # Use this for first time setup of master and slave
 $postgresMasterDbFileBackup="/tmp/pg_master_db_file_backup.tar" # The path of master db backup tar file on slave
@@ -37,7 +37,7 @@ $tomcatSessionTimeoutInMinutes = 120
 $deployablesDirectory="/home/${bahmni_user}/deployables"
 
 # Set host name or ip address
-$deployHost="localhost"
+$deployHost="192.168.0.152"
 $httpd_deploy_dir="/var/www"
 
 $registrationAppDirectory="${httpd_deploy_dir}/registration"

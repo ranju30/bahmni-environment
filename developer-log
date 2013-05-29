@@ -53,3 +53,24 @@ select datname from pg_database where datdba=(select usesysid from pg_user where
 select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
 select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
 select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
+
+
+Issues
+------
+wal segment size
+REST extension
+date time, ist
+puppet mysql/postgres replication
+setenv
+shell script for running puppet script
+all openerp module dependencies
+dump on vinay's machine
+selinux disabled
+set timeout to 0
+missing eggs
+log file sizes
+
+remaining
+---------
+reports
+lsyncd
