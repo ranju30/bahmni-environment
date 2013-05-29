@@ -28,9 +28,9 @@
     <appender name="EMAIL"  class="org.bahmni.util.EmailAppender">
         <param name="BufferSize" value="512" />
         <param name="SMTPHost" value="gmail-smtp-in.l.google.com" />
-        <param name="From" value="bahmni-support@googlegroups.com" />
-        <param name="To" value="bahmni-support@googlegroups.com" />
-        <param name="Subject" value="Bahmni Error" />
+        <param name="From" value="jss.bahmni@gmail.com" />
+        <param name="To" value="bahmni-jss-support@googlegroups.com" />
+        <param name="Subject" value="OpenMRS Error : " />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
                 value="[%t] - %d %p [%c] - %m%n" />
@@ -39,6 +39,12 @@
             <param name="LevelMin" value="ERROR"/>
             <param name="LevelMax" value="FATAL"/>
         </filter>
+    </appender>
+
+    <appender name="asyncSMTPAppender" class="org.apache.log4j.AsyncAppender">
+        <appender-ref ref="EMAIL"/>
+        <param name="BufferSize" value="512" />
+        <param name="Blocking" value="false" />
     </appender>
 
     <logger name="org.apache">
@@ -88,7 +94,7 @@
     <root>
         <level value="WARN" />
         <appender-ref ref="CONSOLE" />
-        <appender-ref ref="EMAIL" />
+        <appender-ref ref="asyncSMTPAppender" />
         <appender-ref ref="MEMORY_APPENDER" />
     </root>
 
