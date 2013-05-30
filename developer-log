@@ -66,6 +66,8 @@ all openerp module dependencies
 dump on vinay's machine
 missing eggs
 log file sizes
+git ignore test.pp
+crontab email delete
 
 remaining
 ---------
