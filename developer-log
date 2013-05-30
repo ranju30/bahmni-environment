@@ -37,6 +37,8 @@ Technical debt
 7. The packaging of containing unnecessary items in it
 8. Tomcat memory should be configurable
 9. Need to ensure that all passwords are cleaned up after deployment/provisioning - or better not save password anywhere
+10. puppet mysql/postgres replication running via puppet code
+11. Refactor puppet scripts to keep all the environment specific variables in a single file (tomcat memory parameter)
 
 TODO
 ----
@@ -55,13 +57,12 @@ select datname from pg_database where datdba=(select usesysid from pg_user where
 select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
 
 
+Things to go in package
+-----------------------
+REST extension
+
 Issues
 ------
-wal segment size
-REST extension
-date time, ist
-puppet mysql/postgres replication
-setenv
 all openerp module dependencies
 dump on vinay's machine
 missing eggs
@@ -73,3 +74,21 @@ remaining
 ---------
 reports
 lsyncd
+
+The migration process didn't exit after it finished. Something to do with threads.
+Both the backup failed when run from puppet
+
+Support tasks
+-------------
+Printing of bills
+Monitoring
+Backup should stop postgres and take backup
+Setup network so that subdomains, sub-nets and domain work correctly.
+Network to allow ssh from outside.
+Setup key based auth for machines.
+Take backup of zero shell.
+Finish all the reports.
+Active passive deployment via command line instead of changing the files
+
+Performance
+-----------

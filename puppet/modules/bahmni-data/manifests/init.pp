@@ -56,7 +56,6 @@ class bahmni-data {
 
   exec { "bahmni db upgrade" :
   	command		=> "sh flyway-migration.sh flyway.properties ${build_output_dir}/openmrs-data-jars.zip ${ant_home} ${deployment_log_expression}",
-  	user 			=> "${bahmni_user}",
   	require 	=> [File["${bahmni_data_temp}/bahmni-flyway-ant.xml"], File["${bahmni_data_temp}/flyway-migration.sh"], File["${bahmni_data_temp}/flyway.properties"], File["${bahmni_data_temp}/logging.properties"]],
   	path 			=> "${os_path}",
   	cwd				=> "${bahmni_data_temp}"
