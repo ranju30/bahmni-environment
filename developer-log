@@ -39,6 +39,7 @@ Technical debt
 9. Need to ensure that all passwords are cleaned up after deployment/provisioning - or better not save password anywhere
 10. puppet mysql/postgres replication running via puppet code
 11. Refactor puppet scripts to keep all the environment specific variables in a single file (tomcat memory parameter)
+12. Active passive deployment via command line instead of changing the files
 
 TODO
 ----
@@ -47,15 +48,12 @@ createrepo
 puppet
 git
 
-
-
 select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
 select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
 select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
 select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
 select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
 select datname from pg_database where datdba=(select usesysid from pg_user where usename='openerp') and datname not in ('template1', 'template0', 'postgres') order by datname
-
 
 Things to go in package
 -----------------------
@@ -80,15 +78,16 @@ Both the backup failed when run from puppet
 
 Support tasks
 -------------
-Printing of bills
 Monitoring
 Backup should stop postgres and take backup
-Setup network so that subdomains, sub-nets and domain work correctly.
+Setup network so that subdomains, sub-nets and domain work correctly
 Network to allow ssh from outside.
 Setup key based auth for machines.
 Take backup of zero shell.
-Finish all the reports.
-Active passive deployment via command line instead of changing the files
 
 Performance
 -----------
+
+Understand
+----------
+How to find the checksum for a file from puppet
