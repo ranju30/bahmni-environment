@@ -3,7 +3,5 @@
 BACKUP_DIR=<%=backup_dir%>
 DAY=`date | cut -f1 -d' '`
 BACKUP_FILENAME=$BACKUP_DIR/pgsql_backup_$DAY
-PGSQL_DATA_FOLDER=<%=postgresDataFolder%>
-USER=$1
 
-su - $USER -c "tar -cf $BACKUP_FILENAME.tar $PGSQL_DATA_FOLDER"
+su - postgres -c "pg_dumpall | gzip -c > $BACKUP_FILENAME.gz"

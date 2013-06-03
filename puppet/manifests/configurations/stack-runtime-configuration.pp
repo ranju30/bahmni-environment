@@ -42,6 +42,9 @@ $httpd_deploy_dir="/var/www"
 
 $registrationAppDirectory="${httpd_deploy_dir}/registration"
 
+# Backup config
+$backup_hour = 22  
+
 ######################## HTTPD CONFIG START#############################################
 ## HTTPD
 $sslEnabled = true

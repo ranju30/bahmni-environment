@@ -1,5 +1,8 @@
 class bahmni-databackup {
-  $backup_hour = 22;
+  file { "${backup_dir}" :
+    ensure => directory,
+    mode  => 666
+  }
 
   file { "${temp_dir}/mysql_databackup.sh" :
     ensure      => present,
@@ -12,7 +15,7 @@ class bahmni-databackup {
       command => "sh ${temp_dir}/mysql_databackup.sh ",
       user    => "root",
       hour  => $backup_hour,
-      require => File["${temp_dir}/mysql_databackup.sh"]
+      require => File["${temp_dir}/mysql_databackup.sh", "${backup_dir}"]
   }
   
   file { "${temp_dir}/pgsql_databackup.sh" :
@@ -23,9 +26,9 @@ class bahmni-databackup {
   }
   
   cron { "backup_postgres" :
-       command => "sh ${temp_dir}/pgsql_databackup.sh ${bahmni_user}",
+       command => "sh ${temp_dir}/pgsql_databackup.sh",
        user    => "root",
        hour  => $backup_hour,
-       require => File["${temp_dir}/pgsql_databackup.sh"]
+       require => File["${temp_dir}/pgsql_databackup.sh", "${backup_dir}"]
    }
 }
