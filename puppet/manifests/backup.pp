@@ -6,6 +6,5 @@ import "configurations/deployment-configuration"
 # pre-condition
 # bahmni-stop must have been run before this
 node default {
-	include mysql-databackup
-	include postgresql-databackup
+	include bahmni-databackup
 }

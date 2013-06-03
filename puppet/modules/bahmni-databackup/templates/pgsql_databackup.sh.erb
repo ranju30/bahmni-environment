@@ -1,8 +1,8 @@
 #!/bin/bash
 
-TEMP_DIR=<%=temp_dir%>
+BACKUP_DIR=<%=backup_dir%>
 DAY=`date | cut -f1 -d' '`
-BACKUP_FILENAME=$TEMP_DIR/pgsql_backup_$DAY
+BACKUP_FILENAME=$BACKUP_DIR/pgsql_backup_$DAY
 PGSQL_DATA_FOLDER=<%=postgresDataFolder%>
 USER=$1
 
