@@ -31,4 +31,6 @@ class bahmni-databackup {
        hour  => $backup_hour,
        require => File["${temp_dir}/pgsql_databackup.sh", "${backup_dir}"]
    }
+   
+   # Image replication + backup happens in jss-cron module
 }
