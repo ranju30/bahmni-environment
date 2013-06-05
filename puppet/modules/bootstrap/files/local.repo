@@ -1,4 +1,0 @@
-[local]
-name=Local yum repository, runs without Internet connection
-baseurl=file:///packages/localrepo
-gpgcheck=0

@@ -1,6 +1,4 @@
 class go-setup {
-  require java
-  require maven
 
   package { "go-server" :
     ensure => present;
@@ -24,10 +22,16 @@ class go-setup {
     replace => true,
   }
 
-  file { "/home/${bahmni_user}/startGo.sh" :
-    ensure  => present,
-    content => template("go-setup/startGo.sh"),
-    mode    => 555,
-  }
+  #service { "go-server" :
+  #  ensure      => running,
+  #  enable      => true,
+  #  require     => File["/etc/go/cruise-config.xml"]
+  #}
+
+  #service { "go-agent" :
+  #  ensure      => running,
+  #  enable      => true,
+  #  require     => Service["go-server"]
+  #}
 
 }

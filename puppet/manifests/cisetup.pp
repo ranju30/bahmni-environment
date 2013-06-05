@@ -6,13 +6,17 @@ import "configurations/cisetup-configuration"
 
 node default {
 
-	stage { "first" : before => Stage['main']}
+	stage { "first" : }
+  stage { "last" : }
+
+  stage['first'] -> stage['main']
+  stage['main'] -> stage['last']
 
 	class { "bootstrap": stage => 'first'; }
   class { "yum-repo":  stage => 'first'; }
   class { "host":      stage => 'first'; }
   class { "users":
-       stage         => "first",    
+       stage         => "first",
        userName      => "${bahmni_user}", 
        password_hash => "${bahmni_user_password_hash}"
   }
@@ -29,5 +33,7 @@ node default {
   include openerp
 
   include maven
-  include go-setup
+  include git-nodejs-karma
+  
+  class { "go-setup" : stage => "last"; }
 }

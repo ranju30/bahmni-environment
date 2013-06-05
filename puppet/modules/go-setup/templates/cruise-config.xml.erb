@@ -2,7 +2,7 @@
 <cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="62">
   <server artifactsdir="artifacts" commandRepositoryLocation="default" serverId="411c7502-b326-483b-87dc-a4d4fd30dc8b" />
   <pipelines group="defaultGroup">
-    <pipeline name="Address_Hierarchy" isLocked="false">
+    <pipeline name="Build-Address-Hierarchy" isLocked="false">
       <materials>
         <git url="https://github.com/Bhamni/openmrs-module-addresshierarchy.git" />
       </materials>
@@ -14,6 +14,139 @@
                 <arg>clean</arg>
                 <arg>install</arg>
                 <arg>-U</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="Build-OpenMRS-Core-Module" isLocked="false">
+      <materials>
+        <git url="https://github.com/Bhamni/openmrs-core.git" />
+      </materials>
+      <stage name="defaultStage">
+        <jobs>
+          <job name="defaultJob">
+            <tasks>
+              <exec command="<%= maven_home %>/bin/mvn">
+                <arg>clean</arg>
+                <arg>install</arg>
+                <arg>-DskipTests</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+     <pipeline name="OpenMRS-module-idgen-no-jenkins-build" isLocked="false">
+      <materials>
+        <git url="https://github.com/Bhamni/openmrs-module-idgen.git" />
+      </materials>
+      <stage name="defaultStage">
+        <jobs>
+          <job name="defaultJob">
+            <tasks>
+              <exec command="<%= maven_home %>/bin/mvn">
+                <arg>clean</arg>
+                <arg>install</arg>
+                <arg>-DskipTests</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="Build-OpenMRS-Rest-Module" isLocked="false">
+      <materials>
+        <git url="https://github.com/Bhamni/openmrs-module-webservices.rest.git" />
+      </materials>
+      <stage name="defaultStage">
+        <jobs>
+          <job name="defaultJob">
+            <tasks>
+              <exec command="<%= maven_home %>/bin/mvn">
+                <arg>clean</arg>
+                <arg>install</arg>
+                <arg>-DskipTests</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+   <pipeline name="Build-Bahmni-Core" isLocked="false">
+      <materials>
+        <git url="https://github.com/Bhamni/bahmni-core.git" />
+      </materials>
+      <stage name="defaultStage">
+        <jobs>
+          <job name="defaultJob">
+            <tasks>
+              <exec command="<%= maven_home %>/bin/mvn">
+                <arg>clean</arg>
+                <arg>install</arg>
+                <arg>-U</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+   <pipeline name="Build-OpenMRS-Data" isLocked="false">
+      <materials>
+        <git url="https://github.com/Bhamni/openmrs-data.git" />
+      </materials>
+      <stage name="defaultStage">
+        <jobs>
+          <job name="defaultJob">
+            <tasks>
+              <exec command="<%= maven_home %>/bin/mvn">
+                <arg>clean</arg>
+                <arg>package</arg>
+                <arg>-U</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="Build-Bahmni-Reports-Data" isLocked="false">
+      <materials>
+        <git url="https://github.com/Bhamni/bahmni-reports-data.git" />
+      </materials>
+      <stage name="defaultStage">
+        <jobs>
+          <job name="defaultJob">
+            <tasks>
+              <exec command="<%= maven_home %>/bin/mvn">
+                <arg>clean</arg>
+                <arg>install</arg>
+                <arg>-U</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="Build-Registration-UI" isLocked="false">
+      <materials>
+        <git url="https://github.com/Bhamni/registration.git" />
+      </materials>
+      <stage name="testStage">
+        <jobs>
+          <job name="testJob">
+            <tasks>
+              <exec command="scripts/test.sh">
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="packagingStage">
+        <jobs>
+          <job name="packagingJob">
+            <tasks>
+              <exec command="scripts/package.sh">
               </exec>
             </tasks>
           </job>
