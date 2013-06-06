@@ -90,7 +90,7 @@ $authenticationExcludeUrlPatterns = []
 # Nagios
 $nagios_server_ip = $secondary_machine_ip
 $nagios_user = "nagios"
-$nagios-machine-type = "server" # server | client
+$nagios_machine_type = "server" # server | client
 $support_email="bahmni-jss-support@googlegroups.com" # configured to allow devs to test using their own email id
 $nagios_openmrs_user=admin
 $nagios_openmrs_user_password=test

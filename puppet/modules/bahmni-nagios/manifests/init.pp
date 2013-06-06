@@ -90,7 +90,7 @@ class bahmni-nagios-client {
 }
 
 class bahmni-nagios {
-    case $nagios-machine-type {
+    case $nagios_machine_type {
         "server": {
             require bahmni-nagios-server
         }
