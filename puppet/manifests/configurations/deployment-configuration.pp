@@ -10,9 +10,6 @@ $bahmni_version = "0.2-SNAPSHOT"
 $jss_registration_csv = "RegistrationMaster.csv"
 $number_of_migrator_threads = 1
 
-$primary_machine_ip = "192.168.0.152"
-$secondary_machine_ip = "192.168.0.115"
-
 file { "${deployment_log_file}" :
   ensure      => present,
   owner       => "${bahmni_user}",

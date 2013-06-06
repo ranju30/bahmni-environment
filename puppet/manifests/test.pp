@@ -6,5 +6,7 @@ import "configurations/deployment-configuration"
 # pre-condition
 # bahmni-stop must have been run before this
 node default {
-	include bahmni-openerp-basedata
+	# include nagios
+	# include host	
+	include bahmni-nagios
 }

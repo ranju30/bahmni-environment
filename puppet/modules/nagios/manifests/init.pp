@@ -1,4 +1,6 @@
 class nagios {
+    require yum-repo
+    
     package { "nagios" :
         ensure  =>  "present"
     }
@@ -13,12 +15,19 @@ class nagios {
         require => Package["nagios-plugins-all"]
     }
 
+    file { "/etc/nagios/nrpe.cfg":
+        content     => template("nagios/nrpe.cfg"),
+        ensure      => present,
+        owner       => "${nagios_user}",
+        notify      => Service["nrpe"]
+    }
+
     service { "nrpe":
         ensure     => running,
         enable     => true,
         hasrestart => true,
         hasstatus  => true,
-        require => Package["nrpe"]
+        require    => Package["nrpe"]
     }
 
     package { "nagios-plugins-nrpe" :
@@ -26,8 +35,20 @@ class nagios {
         require => Service["nrpe"]
     }
 
-    service { "nagios":
-        ensure  => running,
-        require => Exec["setup_object_files_in_config"] 
+    package { "mailx" :
+        ensure  =>  "present"
+    }
+
+    file { "${nagios_plugins_dir}":
+        ensure  => directory
+    }
+
+    file { "/usr/lib64/nagios/plugins/":
+        source      => "${nagios_plugins_dir}",
+        recurse     => true,
+        owner       => "${nagios_user}",
+        group       => "${nagios_user}",
+        mode        =>  555,
+        require     => File["${nagios_plugins_dir}"]
     }
 }

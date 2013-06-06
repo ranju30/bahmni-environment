@@ -4,6 +4,11 @@
 # to generate password hash use 'echo "password" | openssl passwd -1 -stdin'
 $bahmni_user = "jss"
 $bahmni_user_password_hash = '$1$IW4OvlrH$Kui/55oif8W3VZIrnX6jL1' #p@ssw0rd
+$ssh_port=22
+
+# Machines
+$primary_machine_ip = "192.168.0.152"
+$secondary_machine_ip = "192.168.0.115"
 
 # mysql
 $mysqlRootPassword = "password"
@@ -13,8 +18,8 @@ $postgresMajorVersion ="9"
 $postgresMinorVersion = "2"
 $postgresUser="postgres"
 $postgresMachine = "master" ## [master | slave]
-$postgresMaster = "192.168.0.152"
-$postgresSlave = "192.168.0.115"
+$postgresMaster = $primary_machine_ip
+$postgresSlave = $secondary_machine_ip
 
 $postgresFirstTimeSetup=true # Use this for first time setup of master and slave
 $postgresMasterDbFileBackup="/tmp/pg_master_db_file_backup.tar" # The path of master db backup tar file on slave
@@ -83,8 +88,10 @@ $authenticationExcludeUrlPatterns = []
 ######################## HTTPD CONFIG END################################################
 
 # Nagios
-$nagios_host_file_path = "objects/localhost.cfg"
+$nagios_server_ip = $secondary_machine_ip
 $nagios_user = "nagios"
+$nagios-machine-type = "server" # server | client
+$support_email="bahmni-jss-support@googlegroups.com" # configured to allow devs to test using their own email id
 
 # OpenMRS
 $openmrs_database_user = "openmrs-user"
