@@ -33,7 +33,7 @@ node default {
   include openerp
 
   include maven
-  include git-nodejs-karma
+  include ci-tools
   
   class { "go-setup" : stage => "last"; }
 }
