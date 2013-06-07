@@ -9,8 +9,8 @@ node default {
 	stage { "first" : }
   stage { "last" : }
 
-  stage['first'] -> stage['main']
-  stage['main'] -> stage['last']
+  Stage['first'] -> Stage['main']
+  Stage['main'] -> Stage['last']
 
 	class { "bootstrap": stage => 'first'; }
   class { "yum-repo":  stage => 'first'; }
