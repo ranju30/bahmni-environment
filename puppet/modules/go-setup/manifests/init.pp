@@ -22,16 +22,16 @@ class go-setup {
     replace => true,
   }
 
-  #service { "go-server" :
-  #  ensure      => running,
-  #  enable      => true,
-  #  require     => File["/etc/go/cruise-config.xml"]
-  #}
+  service { "go-server" :
+    ensure      => running,
+    enable      => true,
+    require     => File["/etc/go/cruise-config.xml"]
+  }
 
-  #service { "go-agent" :
-  #  ensure      => running,
-  #  enable      => true,
-  #  require     => Service["go-server"]
-  #}
+  service { "go-agent" :
+    ensure      => running,
+    enable      => true,
+    require     => Service["go-server"]
+  }
 
 }

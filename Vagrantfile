@@ -26,6 +26,8 @@ Vagrant::Config.run do |config|
     puppet.manifests_path = "puppet/manifests"
     puppet.manifest_file = manifest_file
     puppet.module_path = "puppet/modules"
-    #puppet.options = "--verbose --debug --noop"
+    #puppet.options = "--verbose --debug --noop --graph  --graphdir /vagrant/graphs"
+    # sample command to run puppet directly 
+    # puppet apply --graph --graphdir /vagrant/graphs -v -l /tmp/manifest.log --modulepath modules manifests/cisetup.pp
   end
 end
