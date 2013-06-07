@@ -16,6 +16,9 @@
                 <arg>-U</arg>
               </exec>
             </tasks>
+            <artifacts>
+              <artifact src="omod/target/addresshierarchy-2.2.10-SNAPSHOT.omod" />
+            </artifacts>
           </job>
         </jobs>
       </stage>
@@ -34,11 +37,14 @@
                 <arg>-DskipTests</arg>
               </exec>
             </tasks>
+            <artifacts>
+              <artifact src="webapp/target/openmrs.war" />
+            </artifacts>
           </job>
         </jobs>
       </stage>
     </pipeline>
-     <pipeline name="OpenMRS-module-idgen-no-jenkins-build" isLocked="false">
+    <pipeline name="OpenMRS-module-idgen-no-jenkins-build" isLocked="false">
       <materials>
         <git url="https://github.com/Bhamni/openmrs-module-idgen.git" />
       </materials>
@@ -52,6 +58,9 @@
                 <arg>-DskipTests</arg>
               </exec>
             </tasks>
+            <artifacts>
+              <artifact src="omod/target/idgen-2.5-SNAPSHOT.omod" />
+            </artifacts>
           </job>
         </jobs>
       </stage>
@@ -70,11 +79,14 @@
                 <arg>-DskipTests</arg>
               </exec>
             </tasks>
+            <artifacts>
+              <artifact src="omod/target/*.omod" />
+            </artifacts>
           </job>
         </jobs>
       </stage>
     </pipeline>
-   <pipeline name="Build-Bahmni-Core" isLocked="false">
+    <pipeline name="Build-Bahmni-Core" isLocked="false">
       <materials>
         <git url="https://github.com/Bhamni/bahmni-core.git" />
       </materials>
@@ -88,11 +100,16 @@
                 <arg>-U</arg>
               </exec>
             </tasks>
+            <artifacts>
+              <artifact src="omod/target/bahmnicore-0.2-SNAPSHOT.omod" />
+              <artifact src="bahmni-mail-appender/target/bahmnicore-mail-appender-0.2-SNAPSHOT-jar-with-dependencies.jar" />
+              <artifact src="jss-old-data/target/jss-old-data-0.2-SNAPSHOT-jar-with-dependencies.jar" />
+            </artifacts>
           </job>
         </jobs>
       </stage>
     </pipeline>
-   <pipeline name="Build-OpenMRS-Data" isLocked="false">
+    <pipeline name="Build-OpenMRS-Data" isLocked="false">
       <materials>
         <git url="https://github.com/Bhamni/openmrs-data.git" />
       </materials>
@@ -106,6 +123,9 @@
                 <arg>-U</arg>
               </exec>
             </tasks>
+            <artifacts>
+              <artifact src="target\openmrs-data-jars.zip" />
+            </artifacts>
           </job>
         </jobs>
       </stage>
@@ -121,7 +141,9 @@
               <exec command="<%= maven_home %>/bin/mvn">
                 <arg>clean</arg>
                 <arg>install</arg>
-                <arg>-U</arg>
+                <arg>benerator:generate</arg>
+                <arg>-e</arg>
+                <runif status="passed" />
               </exec>
             </tasks>
           </job>
@@ -136,8 +158,7 @@
         <jobs>
           <job name="testJob">
             <tasks>
-              <exec command="scripts/test.sh">
-              </exec>
+              <exec command="scripts/test.sh" />
             </tasks>
           </job>
         </jobs>
@@ -146,16 +167,15 @@
         <jobs>
           <job name="packagingJob">
             <tasks>
-              <exec command="scripts/package.sh">
-              </exec>
+              <exec command="scripts/package.sh" />
             </tasks>
+            <artifacts>
+              <artifact src="target/registration.zip" />
+            </artifacts>
           </job>
         </jobs>
       </stage>
     </pipeline>
   </pipelines>
-  <agents>
-    <agent hostname="localhost" ipaddress="127.0.0.1" uuid="81d4c18a-a0e1-4484-802d-f08499a2de0a" />
-  </agents>
 </cruise>
 
