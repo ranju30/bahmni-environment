@@ -1,20 +1,26 @@
 class remove-unwanted-nagios-cfg {
+    require nagios
+    
     file { "/etc/nagios/objects":
         ensure      => directory,
         recurse     => true,
-        owner       => "${nagios_user}"
+        owner       => "${nagios_user}",
+        require     => Class["nagios"]
     }
 
     file { "/etc/nagios/objects/windows.cfg":
         ensure      => absent,
+        require     => Class["nagios"]
     }
 
     file { "/etc/nagios/objects/printer.cfg":
         ensure      => absent,
+        require     => Class["nagios"]
     }
 
     file { "/etc/nagios/objects/switch.cfg":
         ensure      => absent,
+        require     => Class["nagios"]
     }
 }
 
@@ -64,7 +70,7 @@ class bahmni-nagios-cfg {
     exec { "setup_object_files_in_config" :
         command => "sed -i 's/^cfg_file\s*=.*$//g' /etc/nagios/nagios.cfg && find /etc/nagios/objects -name \\*cfg | sed 's/\\(.*\\)/cfg_file=\\1/g' >> /etc/nagios/nagios.cfg",
         path    => "${os_path}",
-        require => [File["/usr/lib64/nagios/plugins/"]],
+        require => [File["/usr/lib64/nagios/plugins/"], Class["remove-unwanted-nagios-cfg"]],
         notify  => Service["nagios"],
     }
 }
@@ -73,6 +79,10 @@ class bahmni-nagios-cfg {
 class bahmni-nagios-server {
     require nagios
     require bahmni-nagios-cfg
+
+    package { "perl-Time-HiRes":
+        ensure => installed,
+    }
 
     service { "nagios":
         enable => true,

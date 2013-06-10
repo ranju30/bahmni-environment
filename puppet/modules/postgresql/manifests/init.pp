@@ -91,11 +91,18 @@ class postgresql {
 
       slave:{
           if $postgresFirstTimeSetup == true {            
+              exec { "backup_pg_data_folder":
+                  command     => "service ${postgresServiceName} stop && rm -rf ${postgresDataFolder}-backup && mv -f ${postgresDataFolder} ${postgresDataFolder}-backup",
+                  path        =>  "${os_path}",
+                  require     => Exec["backup_postgresql_conf", "backup_pg_hba_conf"],
+                  onlyif      => "test -d ${postgresDataFolder}",
+             }
+
               exec { "untar_pg_data_folder":
                   command     => "tar xvfP ${postgresMasterDbFileBackup}",
               		path        =>  "${os_path}",
                   user        => "${postgresUser}",
-                  require     => Exec["backup_postgresql_conf", "backup_pg_hba_conf"],
+                  require     => Exec["backup_pg_data_folder"],
               }
               
               $pgInitialSetup = Exec["untar_pg_data_folder"]
