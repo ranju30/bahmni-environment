@@ -8,7 +8,8 @@ class host {
     ensure    => directory,
     recurse   => true,
     force     => true,
-    purge     => true
+    purge     => true,
+    mode      => 777,
   }
 
 	file { "${temp_dir}/logs" :
