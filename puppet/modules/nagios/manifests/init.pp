@@ -40,7 +40,8 @@ class nagios {
     }
 
     file { "${nagios_plugins_dir}":
-        ensure  => directory
+        ensure  => directory,
+        require => Package["nagios"]
     }
 
     file { "/usr/lib64/nagios/plugins/":

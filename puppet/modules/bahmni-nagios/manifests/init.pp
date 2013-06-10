@@ -1,6 +1,6 @@
-class remove-unwanted-nagios-cfg {
+class bahmni-nagios-cfg {
     require nagios
-    
+
     file { "/etc/nagios/objects":
         ensure      => directory,
         recurse     => true,
@@ -22,10 +22,6 @@ class remove-unwanted-nagios-cfg {
         ensure      => absent,
         require     => Class["nagios"]
     }
-}
-
-class bahmni-nagios-cfg {
-    require remove-unwanted-nagios-cfg
 
     file { "/etc/nagios/objects/localhost.cfg":
         content     => template("bahmni-nagios/localhost.cfg"),
@@ -66,19 +62,19 @@ class bahmni-nagios-cfg {
         notify      => Service["nagios"],
         require     => File["/etc/nagios/objects"]
     }
-
-    exec { "setup_object_files_in_config" :
-        command => "sed -i 's/^cfg_file\s*=.*$//g' /etc/nagios/nagios.cfg && find /etc/nagios/objects -name \\*cfg | sed 's/\\(.*\\)/cfg_file=\\1/g' >> /etc/nagios/nagios.cfg",
-        path    => "${os_path}",
-        require => [File["/usr/lib64/nagios/plugins/"], Class["remove-unwanted-nagios-cfg"]],
-        notify  => Service["nagios"],
-    }
 }
 
 
 class bahmni-nagios-server {
     require nagios
     require bahmni-nagios-cfg
+
+    exec { "setup_object_files_in_config" :
+        command => "sed -i 's/^cfg_file\s*=.*$//g' /etc/nagios/nagios.cfg && find /etc/nagios/objects -name \\*cfg | sed 's/\\(.*\\)/cfg_file=\\1/g' >> /etc/nagios/nagios.cfg",
+        path    => "${os_path}",
+        require => Class["bahmni-nagios-cfg"],
+        notify  => Service["nagios"],
+    }
 
     package { "perl-Time-HiRes":
         ensure => installed,
