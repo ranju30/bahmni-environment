@@ -10,7 +10,7 @@ class users ( $userName, $password_hash ) {
 
   exec { "${userName} homedir" :
     provider    => "shell",
-    command     => "cp -R /etc/skel /home/$userName; chown -R $userName:$userName /home/$userName",
+    command     => "cp -R /etc/skel /home/$userName; chown -R $userName:$userName /home/$userName; umask 002;",
     creates     => "/home/$userName",
     onlyif      => "test ! -f /home/${userName}/.bashrc",
     require     => User["${userName}"]
