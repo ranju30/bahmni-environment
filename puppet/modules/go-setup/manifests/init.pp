@@ -7,6 +7,10 @@ class go-setup {
   package { "go-agent" :
     ensure => present;
   }
+
+  user { "go" :
+   groups => ["${userName}"],
+  }
   
   file { "/etc/go/cruise-config.xml" :
     ensure    => present,
