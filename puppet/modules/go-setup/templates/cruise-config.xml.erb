@@ -154,15 +154,16 @@
     <pipeline name="Functional_Test">
       <materials>
         <pipeline pipelineName="Bahmni_Applications" stageName="defaultStage" />
+        <git url="https://github.com/jss-emr/jss-scm.git" dest="jss_scm" materialName="JSS_SCM" />
       </materials>
       <stage name="defaultStage">
         <jobs>
           <job name="registration">
             <tasks>
-              <fetchartifact pipeline="Bahmni_Applications" stage="defaultStage" job="Registration" srcfile="registration.zip">
+              <fetchartifact pipeline="Bahmni_Applications" stage="defaultStage" job="Registration" srcfile="registration.zip" dest="registration">
                 <runif status="passed" />
               </fetchartifact>
-              <exec command="unzip">
+              <exec command="unzip" workingdir="registration">
                 <arg>-o</arg>
                 <arg>registration.zip</arg>
                 <arg>-d</arg>
@@ -173,10 +174,10 @@
           </job>
           <job name="opd">
             <tasks>
-              <fetchartifact pipeline="Bahmni_Applications" stage="defaultStage" job="OPD" srcfile="opd.zip">
+              <fetchartifact pipeline="Bahmni_Applications" stage="defaultStage" job="OPD" srcfile="opd.zip" dest="opd">
                 <runif status="passed" />
               </fetchartifact>
-              <exec command="unzip">
+              <exec command="unzip" workingdir="opd">
                 <arg>-o</arg>
                 <arg>opd.zip</arg>
                 <arg>-d</arg>
@@ -186,13 +187,48 @@
             </tasks>
           </job>
           <job name="openmrs-core">
-          <tasks>
-          <fetchartifact pipeline="MRS_Pipeline/OpenMRS-Data/Bahmni-Core/Bahmni_Applications" stage="BuildStage" job="OpenMRS_Core" srcfile="openmrs.war">
-          <runif status="passed" />
-         </fetchartifact>
-              <exec command="/bin/bash">
+            <tasks>
+              <fetchartifact pipeline="MRS_Pipeline/OpenMRS-Data/Bahmni-Core/Bahmni_Applications" stage="BuildStage" job="OpenMRS_Core" srcfile="openmrs.war" dest="openmrs-core">
+                <runif status="passed" />
+              </fetchartifact>
+              <exec command="/bin/bash" workingdir="openmrs-core">
                 <arg>-c</arg>
                 <arg>scp openmrs.war /home/jss/apache-tomcat-7.0.22/webapps</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+          <job name="openmrs-omods">
+            <tasks>
+              <fetchartifact pipeline="MRS_Pipeline/OpenMRS-Data/Bahmni-Core/Bahmni_Applications" stage="BuildStage" job="Address_Hierarchy" srcfile="*.omod" dest="omods">
+                <runif status="passed" />
+              </fetchartifact>
+              <fetchartifact pipeline="Bahmni-Core/Bahmni_Applications" stage="defaultStage" job="defaultJob" srcfile="*.omod" dest="omods">
+                <runif status="passed" />
+              </fetchartifact>
+              <fetchartifact pipeline="MRS_Pipeline/OpenMRS-Data/Bahmni-Core/Bahmni_Applications" stage="BuildStage" job="mrs_rest_services" srcfile="*.omod" dest="omods">
+                <runif status="passed" />
+              </fetchartifact>
+              <fetchartifact pipeline="MRS_Pipeline/OpenMRS-Data/Bahmni-Core/Bahmni_Applications" stage="BuildStage" job="idgen" srcfile="*.omod" dest="omods">
+                <runif status="passed" />
+              </fetchartifact>
+              <exec command="sh" workingdir="jss_scm">
+                <arg>deploy/openmrs-addons/openmrs-modules/scripts/upload-modules.sh</arg>
+                <arg>p@ssw0rd</arg>
+                <arg>`ls ../omods/*.omod`</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+          <job name="openmrs-data">
+            <tasks>
+              <fetchartifact pipeline="OpenMRS-Data/Bahmni-Core/Bahmni_Applications" stage="defaultStage" job="defaultJob" srcfile="openmrs-data-jars.zip" dest="openmrs-data">
+                <runif status="passed" />
+              </fetchartifact>
+              <exec command="sh" workingdir="jss_scm">
+                <arg>deploy/openmrs-addons/openmrs-data/scripts/deploy.sh</arg>
+                <arg>deploy/openmrs-addons/conf/production.properties</arg>
+                <arg>../openmrs-data/openmrs-data-jars.zip</arg>
                 <runif status="passed" />
               </exec>
             </tasks>
