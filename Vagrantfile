@@ -12,6 +12,7 @@ Vagrant::Config.run do |config|
 
   config.vm.share_folder "packages", "/packages", "packages", :owner => "root"
   config.vm.forward_port 8153, 8153
+  config.vm.forward_port 8080, 8080
 
   # config.vm.share_folder "v-data", "/vagrant_data", "../data"
 

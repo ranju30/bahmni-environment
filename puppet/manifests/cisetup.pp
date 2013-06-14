@@ -4,13 +4,16 @@ import "configurations/stack-runtime-configuration"
 import "configurations/deployment-configuration"
 import "configurations/cisetup-configuration"
 
+
 node default {
 
 	stage { "first" : }
   stage { "last" : }
+  stage { "deploy" : }
 
   Stage['first'] -> Stage['main']
-  Stage['main'] -> Stage['last']
+  Stage['main'] -> Stage['deploy']
+  Stage['deploy'] -> Stage['last']
 
 	class { "bootstrap": stage => 'first'; }
   class { "yum-repo":  stage => 'first'; }
@@ -32,8 +35,18 @@ node default {
   include postgresql
   include openerp
 
+
   include maven
   include ci-tools
+
+
+  class { "openmrs" : stage => "deploy"; }
+  class { "bahmni-configuration" : stage => "deploy"; }
+  class { "bahmni-webapps" : stage => "deploy"; }
+  class { "bahmni-data" : stage => "deploy"; }
+  class { "bahmni-openerp" : stage => "deploy"; }
+  class { "registration" : stage => "deploy"; }
+
   
   class { "go-setup" : stage => "last"; }
 }

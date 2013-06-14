@@ -13,4 +13,12 @@ class ant {
 	  path    => "${os_path}",
 	  require => Exec["remove_ant"]
 	}
+
+  file { "ant_home_path" :
+  	path    => "/etc/profile.d/ant.sh",
+	  ensure  => present,
+	  content => template ("ant/ant.sh"),
+	  mode    => 644,
+	  require => Exec["ant_untar"]
+	}
 }
