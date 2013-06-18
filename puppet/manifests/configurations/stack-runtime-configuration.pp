@@ -116,6 +116,7 @@ $jasperDbHost = "localhost"
 $jasperDbUsername = "root"
 $jasperDbPassword = "password"
 $jasperDbName = "jasperserver"
+$jasperAllowPasswordChange="true"
 ######################## JASPER CONFIG END##############################################
 
 # Bahmni core properties

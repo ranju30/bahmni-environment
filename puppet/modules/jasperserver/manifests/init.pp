@@ -79,4 +79,11 @@ class jasperserver {
     require     => File["${temp_dir}/configure_jasper_home.sh"],
     provider    => shell
   }
+
+  file { "${jasperTomcatHome}/webapps/jasperserver/WEB-INF/jasperserver-servlet.xml" :
+    content     => template("jasperserver/jasperserver-servlet.xml.erb"),
+    mode        => 644,
+    owner       => "${bahmni_user}",
+    require     => Exec["make_jasperserver"]
+  }
 }
