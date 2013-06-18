@@ -8,10 +8,21 @@ class go-setup {
     ensure => present;
   }
 
-  user { "go" :
-   groups => ["${userName}"],
-  }
-  
+  # file { "/home/go" :
+  #   ensure  => directory,
+  #   mode    => 775,
+  #   require     => Package["go-server", "go-agent"]
+  # }
+
+  # user { "go" :
+  #   ensure      => present,
+  #   shell       => "/bin/bash",
+  #   home        => "/home/go",
+  #   gid         => "go",
+  #   groups      => ["${userName}"], # add 'go' user to 'jss' group.
+  #   require     => File["/home/go"],
+  # }
+ 
   file { "/etc/go/cruise-config.xml" :
     ensure    => present,
     content   => template("go-setup/cruise-config.xml.erb"),

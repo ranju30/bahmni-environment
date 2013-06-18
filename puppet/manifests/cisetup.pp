@@ -39,7 +39,6 @@ node default {
   include maven
   include ci-tools
 
-
   class { "openmrs" : stage => "deploy"; }
   class { "bahmni-configuration" : stage => "deploy"; }
   class { "bahmni-webapps" : stage => "deploy"; }

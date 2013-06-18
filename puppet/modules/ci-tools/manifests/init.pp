@@ -1,7 +1,16 @@
 class ci-tools {
 
   package { "git" :
-            ensure => present,
+    ensure => present,
+  }
+
+  package { "ruby" :
+    ensure => present,
+  }
+
+  package { "rubygems" :
+    ensure => present,
+    require => Package["ruby"]            
   }
 
   package { "nodejs" :
@@ -23,7 +32,7 @@ class ci-tools {
             command     => "npm install -g phantomjs",
             provider    => "shell",
             require     => Package["npm"],
-  }
+  } 
 
   exec { "phantom-jasmine":
             command     => "npm install -g phantom-jasmine",
@@ -31,6 +40,22 @@ class ci-tools {
             require     => Package["npm"],
   }
 
+  exec { "bower":
+            command   => "npm install -g bower",
+            provider  => "shell",
+            require   => Package["npm"],
+  }
 
+  exec { "grunt-cli":
+            command   => "npm install -g grunt-cli",
+            provider  => "shell",
+            require   => Package["npm"],
+  }
+
+  exec { "compass":
+            command   => "gem install compass",
+            provider  => "shell",
+            require   => Package["rubygems"]
+  }
 
 }

@@ -6,7 +6,8 @@ class bahmni-webapps {
 
   file { "${openmrs_modules_dir}" :
     owner  => "${bahmni_user}",
-    mode   => 644,
+    group  =>  "${bahmni_user}",   
+    mode   => 664,
     ensure    => directory,
     recurse   => true,
     force     => true,

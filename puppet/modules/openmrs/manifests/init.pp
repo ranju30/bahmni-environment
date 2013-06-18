@@ -8,13 +8,16 @@ class openmrs {
     recurse   => true,
     force     => true,
     purge     => true,
-    owner => "${bahmni_user}"
+    owner => "${bahmni_user}",
+    group => "${bahmni_user}",
+
   }
 
   file { "/home/${bahmni_user}/.OpenMRS/openmrs-runtime.properties" :
     ensure      => present,
     owner       => "${bahmni_user}",
-    mode        => 644,
+    group       => "${bahmni_user}",
+    mode        => 664,
     content     => template("openmrs/openmrs-runtime.properties"),
     require     => File["/home/${bahmni_user}/.OpenMRS"]
   }
@@ -38,16 +41,18 @@ class openmrs {
     ensure      => present,
     content     => template("openmrs/log4j.xml.erb"),
     owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
     require     => Exec["latest_openmrs_webapp"],
-    mode        => 644,
+    mode        => 664,
   }
 
   file { "${web_xml_file}" :
     ensure      => present,
     content     => template("openmrs/web.xml"),
     owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
     require     => Exec["latest_openmrs_webapp"],
-    mode        => 644
+    mode        => 664
   }
 
   # exec { "catalina_start" :
@@ -75,7 +80,8 @@ class openmrs {
     ensure      => present,
     content     => template("openmrs/run-liquibase.sh"),
     owner       => "${bahmni_user}",
-    mode        => 544
+    group       => "${bahmni_user}",
+    mode        => 554
   }
 
   exec { "openmrs_data" :
