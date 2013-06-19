@@ -46,6 +46,7 @@ $deployHost="192.168.0.152"
 $httpd_deploy_dir="/var/www"
 
 $registrationAppDirectory="${httpd_deploy_dir}/registration"
+$bahmniAppsAppDirectory="${httpd_deploy_dir}/bahmni-apps"
 
 # Backup config
 $backup_hour = 3 # 3 AM Every day  
@@ -65,8 +66,10 @@ $httpsRedirects = [{path => "/openmrs", redirectPath => "http://${deployHost}:80
 
 #Static webapps
 $httpsStaticWebapps = [{path => "/registration", directory => "${registrationAppDirectory}"},
+					   {path => "/bahmni-apps", directory => "${bahmniAppsAppDirectory}"},
                        {path => "/patient_images", directory => "${httpd_deploy_dir}/patient_images"}]
-$httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib"]                    
+$httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib", 
+						   "${bahmniAppsAppDirectory}/lib", "${bahmniAppsAppDirectory}/css/lib"]                    
 $httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules"]
 $httpsSubdomains = [{subdomain => "openerp", url => " http://${deployHost}:8069"}]
 
