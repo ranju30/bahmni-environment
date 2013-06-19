@@ -111,6 +111,9 @@ $openERPDatabase=openerp
 $openERPUser=admin
 $openERPPassword=password
 
+$openerpShellUser = "openerp"
+$openerpGroup = "openerp"
+
 ######################## JASPER CONFIG START##############################################
 $jasperTomcatHome = $tomcatInstallationDirectory
 $jasperHome = "/usr/local/jasperreports-server-cp-5.0.0-bin"

@@ -19,9 +19,18 @@ class bahmni-openerp {
 	# 	require => Exec["bahmni_openerp_codebase"]
 	# }
 
+	file { "${openerp_install_location}" :
+		ensure => directory,
+		owner   => "${openerpShellUser}",
+		group  => "${openerpGroup}",
+		recurse => true,
+		mode    => 775,
+	}
+
 	exec { "bahmni_openerp" :
 		command => "cp -r ${bahmni_openerp_temp_dir}/* ${openerp_install_location}/openerp/addons ${deployment_log_expression}",
 		path => "${os_path}",
-		require => Exec["bahmni_openerp_codebase"]
+		require => Exec["bahmni_openerp_codebase"],
+		user    => "${openerpShellUser}",
 	}
 }

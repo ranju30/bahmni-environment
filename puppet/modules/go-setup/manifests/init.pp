@@ -5,24 +5,17 @@ class go-setup {
   }
 
   package { "go-agent" :
-    ensure => present;
+    ensure => present,
+    require => Package["go-server"],
   }
 
-  # file { "/home/go" :
-  #   ensure  => directory,
-  #   mode    => 775,
-  #   require     => Package["go-server", "go-agent"]
-  # }
+  user { "go" :
+    ensure      => present,
+    # add 'go' user to 'jss' and 'openerp' group.
+    groups      => ["${bahmni_user}", "${openerpGroup}"], 
+    require     => Package["go-agent"],
+  }
 
-  # user { "go" :
-  #   ensure      => present,
-  #   shell       => "/bin/bash",
-  #   home        => "/home/go",
-  #   gid         => "go",
-  #   groups      => ["${userName}"], # add 'go' user to 'jss' group.
-  #   require     => File["/home/go"],
-  # }
- 
   file { "/etc/go/cruise-config.xml" :
     ensure    => present,
     content   => template("go-setup/cruise-config.xml.erb"),

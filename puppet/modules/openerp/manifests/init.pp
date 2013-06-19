@@ -24,7 +24,7 @@ class openerp {
     timeout     => 300,
     path        => "${os_path}",
     require     => File["${openerp_temp}/install_openerp.sh"],
-    cwd         => "${openerp_temp}"
+    cwd         => "${openerp_temp}",
   }
   
   file { "/etc/init.d/openerp" :

@@ -23,4 +23,5 @@ file { "${httpd_deploy_dir}" :
   owner       => "${bahmni_user}",
   group       => "${bahmni_user}",
   mode        => 664,
+  recurse     => true,
 }
