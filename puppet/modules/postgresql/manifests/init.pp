@@ -51,7 +51,7 @@ class postgresql {
               content     => template("postgresql/master_pg_hba.erb"),
               owner       => "${postgresUser}",
               group       => "${postgresUser}",
-              mode        => 600,
+              mode        => 660,
               require     => Exec["backup_postgresql_conf", "backup_pg_hba_conf"],
               notify       => Service["${postgresServiceName}"],
           }
@@ -60,7 +60,7 @@ class postgresql {
               content     => template("postgresql/master_postgresql.erb"),
               owner       => "${postgresUser}",
               group       => "${postgresUser}",
-              mode        => 600,
+              mode        => 660,
               require     => Exec["backup_postgresql_conf", "backup_pg_hba_conf"],
               notify       => Service["${postgresServiceName}"],
           }

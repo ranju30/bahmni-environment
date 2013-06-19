@@ -70,19 +70,19 @@ class python {
   file { "${python_temp_dir}/install-python-package-from-zip.sh" :
     content => template("python/install-python-package-from-zip.erb"),
     ensure => present,
-    mode => 544
+    mode => 554
   }
 
   file { "${python_temp_dir}/install-python-package-from-egg.sh" :
     content => template("python/install-python-package-from-egg.erb"),
     ensure => present,
-    mode => 544
+    mode => 554
   }
 
   file { "${python_temp_dir}/install-python-package-from-gzip.sh" :
     content => template("python/install-python-package-from-gzip.erb"),
     ensure => present,
-    mode => 544
+    mode => 554
   }
 
   exec { "gdata" :

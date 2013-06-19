@@ -4,7 +4,7 @@ class yum-repo {
 		path 			=> "/etc/yum.repos.d/local.repo",
     ensure    => present,
     content   => template("yum-repo/local.repo.erb"),
-    mode      => 644
+    mode      => 664
   }
 
   exec { "update" :

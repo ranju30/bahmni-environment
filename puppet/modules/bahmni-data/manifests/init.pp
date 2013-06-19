@@ -18,7 +18,8 @@ class bahmni-data {
     content     => template("bahmni-data/bahmni-flyway-ant.erb"),
 	  ensure      => present,
 	  owner       => "${bahmni_user}",
-	  mode        => 544,
+    group       => "${bahmni_user}",
+	  mode        => 554,
 	  require			=> File["${bahmni_data_temp}"]
 	}
 
@@ -27,7 +28,8 @@ class bahmni-data {
     ensure      => present,
     content     => template("bahmni-data/flyway-migration.erb"),
     owner       => "${bahmni_user}",
-    mode        => 544,
+    group       => "${bahmni_user}",
+    mode        => 554,
     require     => File["${bahmni_data_temp}"]
   }
 
@@ -41,7 +43,8 @@ class bahmni-data {
     ensure      => present,
     content     => template("bahmni-data/flyway.properties.erb"),
     owner       => "${bahmni_user}",
-    mode        => 544,
+    group       => "${bahmni_user}",
+    mode        => 554,
     require     => File["${bahmni_data_temp}"]
   }
 
@@ -50,7 +53,8 @@ class bahmni-data {
     ensure      => present,
     content     => template("bahmni-data/logging.properties"),
     owner       => "${bahmni_user}",
-    mode        => 544,
+    group       => "${bahmni_user}",
+    mode        => 554,
     require     => File["${bahmni_data_temp}"]
   }
 

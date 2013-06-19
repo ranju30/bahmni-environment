@@ -12,9 +12,10 @@ class jasperserver {
   }
 
   file { "${jasperHome}" :
-    mode        => 744,
+    mode        => 774,
     ensure      => directory,
     owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
     loglevel    => "warning",
     recurse     => true
   }
@@ -46,13 +47,13 @@ class jasperserver {
   file { "${default_master_properties}" :
     content     => template("jasperserver/default_master.properties.erb"),
     owner       => "${bahmni_user}",
-    mode        => 544,
+    mode        => 554,
     require     => Exec["extracted_jasperserver"]
   }
 
   file { "${do_js_setup_script}" :
     content     => template("jasperserver/do-js-setup.sh"),
-    mode        => 544,
+    mode        => 554,
     owner       => "${bahmni_user}",
     require     => Exec["extracted_jasperserver"]
   }
@@ -69,7 +70,7 @@ class jasperserver {
   file { "${temp_dir}/configure_jasper_home.sh" :
     content    => template("jasperserver/configure_jasper_home.sh"),
     owner      => "${bahmni_user}",
-    mode       => 544
+    mode       => 554
   }
 
   exec { "config_jasper_home" :

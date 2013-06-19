@@ -22,5 +22,5 @@ file { "${httpd_deploy_dir}" :
   ensure      => directory,
   owner       => "${bahmni_user}",
   group       => "${bahmni_user}",
-  mode        => 644,
+  mode        => 664,
 }

@@ -48,7 +48,8 @@ class bahmni-webapps {
   # file { "${deploy_temp_dir}/wait-for-webapp-load.sh" :
   #   content     => template("bahmni-webapps/wait-for-webapp-load.sh"),
   #   owner       => "${bahmni_user}",
-  #   mode        =>  544,
+  #   group       => "${bahmni_user}", 
+  #   mode        =>  554,
   #   require     => File["${deploy_temp_dir}"]
   # }
 
@@ -75,7 +76,8 @@ class bahmni-webapps {
   #   content     => template("bahmni-webapps/deploy-openmrs-modules.sh"),
   #   path 				=> "${deploy_temp_dir}/deploy-openmrs-modules.sh",
   #   owner       => "${bahmni_user}",
-  #   mode        => 544,
+  #   group       => "${bahmni_user}",
+  #   mode        => 554,
   #   require     => File["${deploy_temp_dir}"]
   # }
 

@@ -14,7 +14,7 @@ class tomcat {
     ensure  => present,
     content => template ("tomcat/setenv.sh"),
     owner   => "${bahmni_user}",
-    mode    => 644,
+    mode    => 664,
     require => Exec["tomcat_untar"]
   }
 
@@ -32,7 +32,7 @@ class tomcat {
     content   => template("tomcat/server.xml.erb"),
     owner     => "${bahmni_user}",
     replace   => true,
-    mode      => 644,
+    mode      => 664,
     require   => Exec["tomcat_untar"]
   }
 
@@ -49,18 +49,21 @@ class tomcat {
     ensure    => present,
     content   => template("tomcat/tomcat-users.xml.erb"),
     owner     => "${bahmni_user}",
-    mode      => 644,
+    mode      => 664,
     require   => Exec["tomcat_untar"]
   }
 
-  exec{ "change_tomcat_owner" :
-    command   => "chown -R ${bahmni_user}:${bahmni_user} ${tomcatInstallationDirectory}",
-    path      => "${os_path}",
-    require   => Exec["tomcat_untar"]
+  file { "${tomcatInstallationDirectory}" :
+    ensure => directory,
+    recurse => true,
+    mode   => 776,
+    owner  => "${bahmni_user}",
+    group  => "${bahmni_user}",
+    require => Exec["tomcat_untar"]
   }
 
   service { "tomcat":
     enable    => true,
-    require   => Exec["change_tomcat_owner"],
+    require   => File["${tomcatInstallationDirectory}"],
   }  
 }

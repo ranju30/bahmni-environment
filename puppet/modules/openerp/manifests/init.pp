@@ -14,7 +14,7 @@ class openerp {
   file { "${openerp_temp}/install_openerp.sh" :
     ensure      => present,
     content     => template("openerp/install_openerp.erb"),
-    mode        => 544,
+    mode        => 554,
     require     => [File["${log_file}"], File["${openerp_temp}"]]
   }
 

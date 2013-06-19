@@ -12,7 +12,7 @@ class java {
       path    => "/etc/profile.d/java.sh",
       ensure  => present,
       content => template ("java/java.sh"),
-      mode    => 644,
+      mode    => 664,
       require => Package["jdk"]
     }
 
@@ -28,7 +28,7 @@ class java {
       path    => "/etc/profile.d/java.sh",
       ensure  => present,
       content => template ("java/java.sh"),
-      mode    => 644,
+      mode    => 664,
       require => Package["jre"]
     }
 

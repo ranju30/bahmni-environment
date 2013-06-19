@@ -18,7 +18,7 @@ class ant {
   	path    => "/etc/profile.d/ant.sh",
 	  ensure  => present,
 	  content => template ("ant/ant.sh"),
-	  mode    => 644,
+	  mode    => 664,
 	  require => Exec["ant_untar"]
 	}
 }

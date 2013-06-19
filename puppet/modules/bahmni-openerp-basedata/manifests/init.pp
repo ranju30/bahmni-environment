@@ -6,7 +6,9 @@ class bahmni-openerp-basedata {
     path    		=> "${temp_dir}/create-database.sh",
     content     => template("bahmni-openerp-basedata/create-database.sh"),
 	  ensure      => present,
-	  mode        => 544
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+	  mode        => 554
 	}
 
 	exec { "openerp_database" :

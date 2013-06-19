@@ -8,7 +8,8 @@ class bahmni-databackup {
     ensure      => present,
     content     => template("bahmni-databackup/mysql_databackup.sh.erb"),
     owner       => "${bahmni_user}",
-    mode        => 544,
+    group       => "${bahmni_user}",
+    mode        => 554,
   }
 
   cron { "backup_mysql" :
@@ -22,7 +23,8 @@ class bahmni-databackup {
     ensure      => present,
     content     => template("bahmni-databackup/pgsql_databackup.sh.erb"),
     owner       => "${bahmni_user}",
-    mode        => 544,
+    group       => "${bahmni_user}",
+    mode        => 554,
   }
   
   cron { "backup_postgres" :

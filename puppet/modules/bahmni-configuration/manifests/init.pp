@@ -20,6 +20,6 @@ class bahmni-configuration {
     content     => template("bahmni-configuration/bahmnicore.properties.erb"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
-    mode        => 644
+    mode        => 664
   }
 }
