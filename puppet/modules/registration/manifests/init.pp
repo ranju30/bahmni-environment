@@ -11,7 +11,7 @@ class registration {
     command   => "unzip -q -o ${build_output_dir}/registration.zip -d ${registrationAppDirectory} ${deployment_log_expression}",
     provider  => shell,
     path 	  => "${os_path}",
-    require   => File["${registrationAppDirectory}"]
+    #require   => File["${registrationAppDirectory}"]
   }
 
   file { "registrationAppDirectory exists" :
@@ -21,5 +21,6 @@ class registration {
     group       => "${bahmni_user}",
     mode        => 664,
     recurse     => true,
+    require     => Exec["deploy_registration"],
   }
 }

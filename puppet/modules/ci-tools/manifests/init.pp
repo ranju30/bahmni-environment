@@ -22,23 +22,23 @@ class ci-tools {
             require => Package["nodejs"],
   }
 
-  exec { "karma":
-            command     => "npm install -g karma",
-            provider    => "shell",
-            require     => Package["npm"],
-  }
+  # exec { "karma":
+  #           command     => "npm install -g karma",
+  #           provider    => "shell",
+  #           require     => Package["npm"],
+  # }
 
-  exec { "phantomjs":
-            command     => "npm install -g phantomjs",
-            provider    => "shell",
-            require     => Package["npm"],
-  } 
+  # exec { "phantomjs":
+  #           command     => "npm install -g phantomjs",
+  #           provider    => "shell",
+  #           require     => Package["npm"],
+  # } 
 
-  exec { "phantom-jasmine":
-            command     => "npm install -g phantom-jasmine",
-            provider    => "shell",
-            require     => Package["npm"],
-  }
+  # exec { "phantom-jasmine":
+  #           command     => "npm install -g phantom-jasmine",
+  #           provider    => "shell",
+  #           require     => Package["npm"],
+  # }
 
   exec { "bower":
             command   => "npm install -g bower",

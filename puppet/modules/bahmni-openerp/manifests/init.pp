@@ -1,4 +1,7 @@
+
 class bahmni-openerp {
+	require openerp
+
 	file { "${bahmni_openerp_temp_dir}" :
     ensure    => directory,
     recurse   => true,
@@ -19,13 +22,14 @@ class bahmni-openerp {
 	# 	require => Exec["bahmni_openerp_codebase"]
 	# }
 
-	file { "${openerp_install_location}" :
-		ensure => directory,
-		owner   => "${openerpShellUser}",
-		group  => "${openerpGroup}",
-		recurse => true,
-		mode    => 775,
-	}
+## Mujir/Sush - This takes > 13 hours to complete!!!!!!
+	# file { "${openerp_install_location}" :
+	# 	ensure => directory,
+	# 	owner   => "${openerpShellUser}",
+	# 	group  => "${openerpGroup}",
+	# 	recurse => true,
+	# 	mode    => 775,
+	# }
 
 	exec { "bahmni_openerp" :
 		command => "cp -r ${bahmni_openerp_temp_dir}/* ${openerp_install_location}/openerp/addons ${deployment_log_expression}",
