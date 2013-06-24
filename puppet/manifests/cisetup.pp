@@ -7,8 +7,7 @@ import "configurations/cisetup-configuration"
 
 node default {
 
-
-	stage { "first" : }
+  stage { "first" : }
   stage { "last" : }
   stage { "deploy" : }
 
@@ -16,13 +15,16 @@ node default {
   Stage['main'] -> Stage['deploy']
   Stage['deploy'] -> Stage['last']
 
-	class { "bootstrap": stage => 'first'; }
+  class { "bootstrap": stage => 'first'; }
   class { "yum-repo":  stage => 'first'; }
   class { "host":      stage => 'first'; }
   class { "users":
        stage         => "first",
        userName      => "${bahmni_user}", 
        password_hash => "${bahmni_user_password_hash}"
+  }
+  class { nodejs:
+    version => '0.8.19'
   }
 
   include tools
@@ -48,4 +50,3 @@ node default {
   class { "ci-tools" : stage => "last"; }
   class { "go-setup" : stage => "last"; }
 }
-

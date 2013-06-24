@@ -1,4 +1,6 @@
 class ci-tools {
+  require node_requirements
+  require nodejs
 
   # Mujir/Sush - This external puppet module installs git
   require rvm
@@ -67,15 +69,6 @@ class ci-tools {
     require => Group["rvm"],
   }
 
-  package { "nodejs" :
-    ensure => present;
-  }
-
-  package { "npm" :
-    ensure  => present,
-    require => Package["nodejs"],
-  }
-
   package { "xorg-x11-server-Xvfb" :
     ensure  => present,
   }
@@ -91,34 +84,37 @@ class ci-tools {
     require  => Package["firefox"]
   }
   
+  file { '/usr/bin/npm':
+   ensure => 'link',
+   target => '/usr/lib/node_modules/npm/bin/npm-cli.js',
+  }
+
+  exec { "phantomjs":
+    command   => "npm install -g phantomjs",
+    provider  => "shell",
+    require   => File["/usr/bin/npm"],
+    path      => "${os_path}"
+  }
+
   exec { "bower":
     command   => "npm install -g bower",
     provider  => "shell",
-    require   => Package["npm"],
+    require   => File["/usr/bin/npm"],
+    path      => "${os_path}"
   }
 
   exec { "grunt-cli":
     command   => "npm install -g grunt-cli",
     provider  => "shell",
-    require   => Package["npm"],
+    require   => File["/usr/bin/npm"],
+    path      => "${os_path}"
   }
+}
 
-  exec { "karma":
-    command     => "npm install -g karma",
-    provider    => "shell",
-    require     => Package["npm"],
+class node_requirements{
+  file{ "/usr/lib/node_modules":
+    ensure  => directory,
+    mode    => 755,
+    before  =>  Exec["Inflate"]
   }
-
-  exec { "phantomjs":
-    command     => "npm install -g phantomjs",
-    provider    => "shell",
-    require     => Package["npm"],
-  } 
-
-  exec { "phantom-jasmine":
-    command     => "npm install -g phantom-jasmine",
-    provider    => "shell",
-    require     => Package["npm"],
-  }
-
 }

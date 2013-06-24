@@ -1,3 +1,6 @@
 [submodule "puppet/modules/rvm"]
 	path = puppet/modules/rvm
 	url = git://github.com/blt04/puppet-rvm.git
+[submodule "puppet/modules/nodejs"]
+	path = puppet/modules/nodejs
+	url = https://github.com/thomseddon/puppet-nodejs.git
