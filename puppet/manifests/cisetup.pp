@@ -23,9 +23,7 @@ node default {
        userName      => "${bahmni_user}", 
        password_hash => "${bahmni_user_password_hash}"
   }
-  class { nodejs:
-    version => '0.8.19'
-  }
+  
 
   include tools
   include java    
@@ -45,6 +43,7 @@ node default {
   class { "bahmni-openerp" : stage => "deploy"; }
   class { "registration" : stage => "deploy"; }
 
+  class { "nodejs": stage => "last", version => '0.8.19'; }
   class { "bahmni-openerp-basedata" : stage => "last"; }
   class { "maven" : stage => "last"; }
   class { "ci-tools" : stage => "last"; }

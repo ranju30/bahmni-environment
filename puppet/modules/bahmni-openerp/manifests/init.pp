@@ -41,7 +41,7 @@ class bahmni-openerp {
 	exec { "change_group_rights_for_openerp_folders_current_content" :
 		command => "chown -R openerp:openerp $openerp_install_location; chmod -R 775 $openerp_install_location; ",
 		path => "${os_path}",
-		require => Exec["change_group_rights_for_openerp_temp_folders"],
+		require => Exec["change_group_rights_for_openerp_temp_folders_current_content"],
 	}
   exec { "change_group_rights_for_openerp_folders" :
 		command => "umask 002; ",

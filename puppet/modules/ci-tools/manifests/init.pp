@@ -8,11 +8,6 @@ class ci-tools {
   # Mujir - added this dependency so we can start openerp service
   require bahmni-openerp-basedata
 
-  service { "openerp":
-      enable => true,
-      ensure => running
-  }
-
   # Capybara needs ruby > 1.9.3
   rvm_system_ruby { '1.9.3':
     ensure => 'present',
