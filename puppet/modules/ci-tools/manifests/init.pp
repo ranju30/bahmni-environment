@@ -95,7 +95,7 @@ class ci-tools {
     require   => File["/usr/bin/npm"],
     path      => "${os_path}"
   }
-
+  
   exec { "bower":
     command   => "npm install -g bower",
     provider  => "shell",
@@ -109,10 +109,17 @@ class ci-tools {
     require   => File["/usr/bin/npm"],
     path      => "${os_path}"
   }
+
+#  exec { "karma":
+#    command     => "npm install -g karma",
+#    provider    => "shell",
+#    require     => Package["npm"],
+#  }
+
 }
 
 class node_requirements{
-  file{ "/usr/lib/node_modules":
+  file{ "/usr/lib/node_modules": 
     ensure  => directory,
     mode    => 755,
     before  =>  Exec["Inflate"]

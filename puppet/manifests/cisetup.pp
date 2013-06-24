@@ -50,3 +50,4 @@ node default {
   class { "ci-tools" : stage => "last"; }
   class { "go-setup" : stage => "last"; }
 }
+
