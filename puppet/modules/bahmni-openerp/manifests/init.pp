@@ -56,5 +56,4 @@ class bahmni-openerp {
 		require => Exec["change_group_rights_for_openerp_folders"],
 	}
 
-
 }

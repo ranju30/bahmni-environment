@@ -3,9 +3,13 @@ class ci-tools {
   # Mujir/Sush - This external puppet module installs git
   require rvm
 
-  # package { "rvm" :
-  #   ensure => present,
-  # }
+  # Mujir - added this dependency so we can start openerp service
+  require bahmni-openerp-basedata
+
+  service { "openerp":
+      enable => true,
+      ensure => running
+  }
 
   # Capybara needs ruby > 1.9.3
   rvm_system_ruby { '1.9.3':
@@ -100,21 +104,21 @@ class ci-tools {
   }
 
   exec { "karma":
-            command     => "npm install -g karma",
-            provider    => "shell",
-            require     => Package["npm"],
+    command     => "npm install -g karma",
+    provider    => "shell",
+    require     => Package["npm"],
   }
 
   exec { "phantomjs":
-            command     => "npm install -g phantomjs",
-            provider    => "shell",
-            require     => Package["npm"],
+    command     => "npm install -g phantomjs",
+    provider    => "shell",
+    require     => Package["npm"],
   } 
 
   exec { "phantom-jasmine":
-            command     => "npm install -g phantom-jasmine",
-            provider    => "shell",
-            require     => Package["npm"],
-  }  
+    command     => "npm install -g phantom-jasmine",
+    provider    => "shell",
+    require     => Package["npm"],
+  }
 
 }
