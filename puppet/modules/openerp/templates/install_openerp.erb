@@ -19,5 +19,3 @@ python setup.py -q install
 cp openerp-server /usr/local/bin
 cp install/openerp-server.conf /etc
 chown openerp:openerp /etc/openerp-server.conf
-chown -R openerp:openerp <%= openerp_install_location %>
-chmod -R 775 <%= openerp_install_location %>

@@ -4,6 +4,7 @@ class bahmni-openerp {
 
 	file { "${bahmni_openerp_temp_dir}" :
     ensure    => directory,
+    owner			=> "${openerpShellUser}",
     recurse   => true,
     force     => true,
     purge     => true
@@ -12,6 +13,7 @@ class bahmni-openerp {
 	exec { "bahmni_openerp_codebase" :
 		command => "git clone https://github.com/Bhamni/openerp-modules.git ${bahmni_openerp_temp_dir} ${deployment_log_expression}",
 		path => "${os_path}",
+		user    => "${openerpShellUser}",		
 		require => File["${bahmni_openerp_temp_dir}"]
 	}
 
@@ -31,10 +33,28 @@ class bahmni-openerp {
 	# 	mode    => 775,
 	# }
 
+	exec { "change_group_rights_for_openerp_temp_folders_current_content" :
+		command => "chown -R openerp:openerp $bahmni_openerp_temp_dir; chmod -R 775 $bahmni_openerp_temp_dir; ",
+		path => "${os_path}",
+		require => Exec["bahmni_openerp_codebase"],
+	}
+	exec { "change_group_rights_for_openerp_folders_current_content" :
+		command => "chown -R openerp:openerp $openerp_install_location; chmod -R 775 $openerp_install_location; ",
+		path => "${os_path}",
+		require => Exec["change_group_rights_for_openerp_temp_folders"],
+	}
+  exec { "change_group_rights_for_openerp_folders" :
+		command => "umask 002; ",
+		path => "${openerp_install_location}",
+		require => Exec["change_group_rights_for_openerp_folders_current_content"],
+	}
+
 	exec { "bahmni_openerp" :
 		command => "cp -r ${bahmni_openerp_temp_dir}/* ${openerp_install_location}/openerp/addons ${deployment_log_expression}",
 		path => "${os_path}",
-		require => Exec["bahmni_openerp_codebase"],
 		user    => "${openerpShellUser}",
+		require => Exec["change_group_rights_for_openerp_folders"],
 	}
+
+
 }

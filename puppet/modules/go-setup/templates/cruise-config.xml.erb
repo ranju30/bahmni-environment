@@ -92,10 +92,10 @@
               <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="Address_Hierarchy" srcfile="address_hierarchy_omods/addresshierarchy-2.2.10-SNAPSHOT.omod" dest="deployables/omod">
                 <runif status="passed" />
               </fetchartifact>
-              <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="idgen" srcfile="idgen_omods/idgen-2.5-SNAPSHOT.omod" dest="deployables/omod">
+              <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="idgen" srcfile="idgen_omods/bahmni-idgen-2.6-SNAPSHOT.omod" dest="deployables/omod">
                 <runif status="passed" />
               </fetchartifact>
-              <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="mrs_rest_services" srcfile="mrs_rest_services_omods/webservices.rest-1.2-SNAPSHOT.c18bbd.omod" dest="deployables/omod">
+              <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="mrs_rest_services" srcfile="mrs_rest_services_omods/bahmni-webservices.rest-2.1.1-SNAPSHOT.6ca42f.omod" dest="deployables/omod">
                 <runif status="passed" />
               </fetchartifact>
               <exec command="cp">
@@ -166,19 +166,33 @@
     <pipeline name="OpenERP_Pipeline">
       <environmentvariables>
         <variable name="OPENERP_LOCATION">
-          <value>/usr/lib/python2.6/site-packages/openerp-7.0_20130301_002301-py2.6.egg</value>
+          <value><%= openerp_install_location %></value>
         </variable>
       </environmentvariables>
       <materials>
-        <git url="https://github.com/Bhamni/openerp-modules.git" />
+        <git url="https://github.com/Bhamni/openerp-modules.git" dest="openerp-modules" />
+        <git url="https://github.com/Bhamni/openerp-functional-tests.git" dest="openerp-functional-tests" />
       </materials>
       <stage name="deployStage">
         <jobs>
           <job name="defaultJob">
             <tasks>
-              <exec command="/bin/bash">
+              <exec command="/bin/bash" workingdir="openerp-modules">
                 <arg>-c</arg>
                 <arg>cp -R ./* $OPENERP_LOCATION/openerp/addons/</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="runFunctionalTestsStage">
+        <jobs>
+          <job name="runFunctionalTestsJob">
+            <tasks>
+              <exec command="/bin/bash" workingdir="openerp-functional-tests">
+                <arg>--login</arg>
+                <arg>run.sh</arg>
                 <runif status="passed" />
               </exec>
             </tasks>

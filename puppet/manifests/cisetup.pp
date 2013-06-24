@@ -7,6 +7,7 @@ import "configurations/cisetup-configuration"
 
 node default {
 
+
 	stage { "first" : }
   stage { "last" : }
   stage { "deploy" : }
@@ -35,10 +36,6 @@ node default {
   include postgresql
   include openerp
 
-
-  include maven
-  include ci-tools
-
   class { "openmrs" : stage => "deploy"; }
   class { "bahmni-configuration" : stage => "deploy"; }
   class { "bahmni-webapps" : stage => "deploy"; }
@@ -46,6 +43,9 @@ node default {
   class { "bahmni-openerp" : stage => "deploy"; }
   class { "registration" : stage => "deploy"; }
 
-  
+  class { "bahmni-openerp-basedata" : stage => "last"; }
+  class { "maven" : stage => "last"; }
+  class { "ci-tools" : stage => "last"; }
   class { "go-setup" : stage => "last"; }
 }
+

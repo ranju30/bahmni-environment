@@ -17,6 +17,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "packages", "/packages", :owner => "root"
   config.vm.network :forwarded_port, host: 8153, guest: 8153
   config.vm.network :forwarded_port, host: 8080, guest: 8080
+  config.vm.network :forwarded_port, host: 8069, guest: 8069
 
   # config.vm.share_folder "v-data", "/vagrant_data", "../data"
 

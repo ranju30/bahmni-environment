@@ -1,4 +1,6 @@
 class go-setup {
+  require maven
+  require ci-tools
 
   package { "go-server" :
     ensure => present;
@@ -12,7 +14,8 @@ class go-setup {
   user { "go" :
     ensure      => present,
     # add 'go' user to 'jss' and 'openerp' group.
-    groups      => ["${bahmni_user}", "${openerpGroup}"], 
+    # adding 'go' to 'rvm' group, otherwise `bundle install` needs password.
+    groups      => ["${bahmni_user}", "${openerpGroup}", "rvm"], 
     require     => Package["go-agent"],
   }
 

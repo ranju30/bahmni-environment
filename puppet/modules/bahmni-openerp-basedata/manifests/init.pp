@@ -19,10 +19,16 @@ class bahmni-openerp-basedata {
     require			=> File["${temp_dir}/create-database.sh"]
 	}
 
-	exec { "openerp_base_data" :
-		command => "psql openerp < ${package_dir}/data-dump/${openerp_base_data_dump} ${log_expression}",
-		user    => "postgres",
-		path 		=> "${os_path}",
-		require	=> Exec["openerp_database"]
-	}
+	# exec { "openerp_base_data" :
+	# 	command => "psql openerp < ${package_dir}/data-dump/${openerp_base_data_dump} ${log_expression}",
+	# 	user    => "postgres",
+	# 	path 		=> "${os_path}",
+	# 	require	=> Exec["openerp_database"]
+	# }
+  exec { "openerp_base_data_for_ci" :
+    command => "psql -U openerp openerp < ${packages_servers_dir}/openERPInitialDatabaseDump ",
+    user    => "postgres",
+    path    => "${os_path}",
+    require => Exec["openerp_database"]
+  }  
 }

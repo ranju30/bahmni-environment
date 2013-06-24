@@ -1,61 +1,120 @@
 class ci-tools {
 
-  package { "git" :
-    ensure => present,
+  # Mujir/Sush - This external puppet module installs git
+  require rvm
+
+  # package { "rvm" :
+  #   ensure => present,
+  # }
+
+  # Capybara needs ruby > 1.9.3
+  rvm_system_ruby { '1.9.3':
+    ensure => 'present',
+    default_use => false;
   }
 
-  package { "ruby" :
-    ensure => present,
+  # Go needs ruby 1.8
+  rvm_system_ruby { '1.8':
+    ensure => 'present',
+    default_use => true;
   }
 
-  package { "rubygems" :
-    ensure => present,
-    require => Package["ruby"]            
+  rvm_gem { 'bundler':  
+    name => 'bundler',
+    ruby_version => '1.9.3',
+    ensure => latest,
+    require => Rvm_system_ruby['1.9.3'];
+  }
+  rvm_gem { 'i18n':
+    name => 'i18n',
+    ruby_version => '1.9.3',
+    ensure => latest,
+    require => Rvm_gem['bundler'];
+  }
+  rvm_gem { 'nokogiri':
+    name => 'nokogiri',
+    ruby_version => '1.9.3',
+    ensure => latest,
+    require => Rvm_gem['i18n'];
+  }
+  rvm_gem { 'capybara':
+    name => 'capybara',
+    ruby_version => '1.9.3',
+    ensure => latest,
+    require => Rvm_gem['nokogiri'];
+  }
+  rvm_gem { 'compass':
+    name => 'compass',
+    ruby_version => '1.9.3',
+    ensure => latest,
+    require => Rvm_gem['capybara'];
+  }
+
+  # Mujir - is there a clean way to do this.
+  group { "rvm" :
+    ensure  => "present",
+    require => Rvm_system_ruby['1.9.3'],
+  }
+  # Mujir - is there a clean way to do this.
+  exec { "make rvm group owner of rvm gems" :
+    #command => "chgrp -R rvm `rvm gemdir 1.9.3`",
+    command => "chgrp -R rvm /usr/local/rvm/gems/ruby-1.9.3-p429",
+    path => "${os_path}",
+    require => Group["rvm"],
   }
 
   package { "nodejs" :
-            ensure => present;
+    ensure => present;
   }
 
   package { "npm" :
-            ensure  => present,
-            require => Package["nodejs"],
+    ensure  => present,
+    require => Package["nodejs"],
   }
 
-  # exec { "karma":
-  #           command     => "npm install -g karma",
-  #           provider    => "shell",
-  #           require     => Package["npm"],
-  # }
+  package { "xorg-x11-server-Xvfb" :
+    ensure  => present,
+  }
 
-  # exec { "phantomjs":
-  #           command     => "npm install -g phantomjs",
-  #           provider    => "shell",
-  #           require     => Package["npm"],
-  # } 
+  package { "firefox" :
+    ensure  => present,
+      require => Package["xorg-x11-server-Xvfb"],
+  }
 
-  # exec { "phantom-jasmine":
-  #           command     => "npm install -g phantom-jasmine",
-  #           provider    => "shell",
-  #           require     => Package["npm"],
-  # }
-
+  exec {"dbus-uuidgen" : 
+    command  => "dbus-uuidgen > /var/lib/dbus/machine-id;",
+    provider => "shell",
+    require  => Package["firefox"]
+  }
+  
   exec { "bower":
-            command   => "npm install -g bower",
-            provider  => "shell",
-            require   => Package["npm"],
+    command   => "npm install -g bower",
+    provider  => "shell",
+    require   => Package["npm"],
   }
 
   exec { "grunt-cli":
-            command   => "npm install -g grunt-cli",
-            provider  => "shell",
-            require   => Package["npm"],
+    command   => "npm install -g grunt-cli",
+    provider  => "shell",
+    require   => Package["npm"],
   }
 
-  exec { "compass":
-            command   => "gem install compass",
-            provider  => "shell",
-            require   => Package["rubygems"]
+  exec { "karma":
+            command     => "npm install -g karma",
+            provider    => "shell",
+            require     => Package["npm"],
   }
+
+  exec { "phantomjs":
+            command     => "npm install -g phantomjs",
+            provider    => "shell",
+            require     => Package["npm"],
+  } 
+
+  exec { "phantom-jasmine":
+            command     => "npm install -g phantom-jasmine",
+            provider    => "shell",
+            require     => Package["npm"],
+  }  
 
 }
