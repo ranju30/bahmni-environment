@@ -105,11 +105,12 @@ class ci-tools {
     path      => "${os_path}"
   }
 
-#  exec { "karma":
-#    command     => "npm install -g karma",
-#    provider    => "shell",
-#    require     => Package["npm"],
-#  }
+# Mujir - needed by OPD build. Once we move OPD to grunt, remove this!!
+ # exec { "karma":
+ #   command     => "npm install -g karma",
+ #   provider    => "shell",
+ #   require     => Package["npm"],
+ # }
 
 }
 

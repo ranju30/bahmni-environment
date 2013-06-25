@@ -46,6 +46,7 @@ $deployHost="192.168.0.152"
 $httpd_deploy_dir="/var/www"
 
 $registrationAppDirectory="${httpd_deploy_dir}/registration"
+$opdAppDirectory="${httpd_deploy_dir}/opd"
 $bahmniAppsAppDirectory="${httpd_deploy_dir}/bahmni-apps"
 
 # Backup config

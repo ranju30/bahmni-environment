@@ -51,7 +51,9 @@
                 <arg>install</arg>
                 <runif status="passed" />
               </exec>
-              <exec command="grunt" workingdir="registration">
+              <exec command="/bin/bash" workingdir="registration">
+                <arg>--login</arg>
+                <arg>build.sh</arg>
                 <runif status="passed" />
               </exec>
             </tasks>
@@ -86,16 +88,16 @@
                 <arg>scripts/package.sh</arg>
                 <runif status="passed" />
               </exec>
+              <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="Address_Hierarchy" srcdir="address_hierarchy_omods" dest="deployables/omod">
+                <runif status="passed" />
+              </fetchartifact>
+              <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="idgen" srcdir="idgen_omods" dest="deployables/omod">
+                <runif status="passed" />
+              </fetchartifact>
+              <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="mrs_rest_services" srcdir="mrs_rest_services_omods" dest="deployables/omod">
+                <runif status="passed" />
+              </fetchartifact>
               <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="OpenMRS_Core" srcfile="openmrs.war" dest="deployables">
-                <runif status="passed" />
-              </fetchartifact>
-              <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="Address_Hierarchy" srcfile="address_hierarchy_omods/addresshierarchy-2.2.10-SNAPSHOT.omod" dest="deployables/omod">
-                <runif status="passed" />
-              </fetchartifact>
-              <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="idgen" srcfile="idgen_omods/bahmni-idgen-2.6-SNAPSHOT.omod" dest="deployables/omod">
-                <runif status="passed" />
-              </fetchartifact>
-              <fetchartifact pipeline="MRS_Pipeline" stage="BuildStage" job="mrs_rest_services" srcfile="mrs_rest_services_omods/bahmni-webservices.rest-2.1.1-SNAPSHOT.6ca42f.omod" dest="deployables/omod">
                 <runif status="passed" />
               </fetchartifact>
               <exec command="cp">
@@ -139,9 +141,14 @@
                 <arg>/home/jss/apache-tomcat-7.0.22/webapps</arg>
                 <runif status="passed" />
               </exec>
+              <exec command="/bin/sh">
+                <arg>-c</arg>
+                <arg>rm -rf /home/jss/.OpenMRS/modules/*.omod</arg>
+                <runif status="passed" />
+              </exec>
               <exec command="/bin/bash">
                 <arg>-c</arg>
-                <arg>cp -R -f deployables/omod/*.omod /home/jss/.OpenMRS/modules/</arg>
+                <arg>find deployables/omod/ -type f -name "*.omod" -exec cp {} /home/jss/.OpenMRS/modules/ \;</arg>
                 <runif status="passed" />
               </exec>
               <exec command="unzip">
