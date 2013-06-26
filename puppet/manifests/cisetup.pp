@@ -8,12 +8,12 @@ import "configurations/cisetup-configuration"
 node default {
 
   stage { "first" : }
-  stage { "last" : }
-  stage { "deploy" : }
 
-  Stage['first'] -> Stage['main']
-  Stage['main'] -> Stage['deploy']
-  Stage['deploy'] -> Stage['last']
+  stage { "rvm-install" : }
+  stage { "deploy" : }
+  stage { "last" : }
+
+  Stage['first'] -> Stage['main'] -> Stage['rvm-install'] -> Stage['deploy'] -> Stage['last']
 
   class { "bootstrap": stage => 'first'; }
   class { "yum-repo":  stage => 'first'; }
@@ -23,7 +23,6 @@ node default {
        userName      => "${bahmni_user}", 
        password_hash => "${bahmni_user_password_hash}"
   }
-  
 
   include tools
   include java    
@@ -43,7 +42,9 @@ node default {
   class { "bahmni-openerp" : stage => "deploy"; }
   class { "registration" : stage => "deploy"; }
 
-  class { "nodejs": stage => "last", version => '0.8.19'; }
+  class { "rvm" : stage => "last", version =>"1.21.2"; }
+
+  class { "nodejs" : stage => "last", version => '0.8.19'; }
   class { "bahmni-openerp-basedata" : stage => "last"; }
   class { "maven" : stage => "last"; }
   class { "ci-tools" : stage => "last"; }

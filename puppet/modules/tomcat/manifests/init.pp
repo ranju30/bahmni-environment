@@ -53,13 +53,19 @@ class tomcat {
     require   => Exec["tomcat_untar"]
   }
 
+  # Mujir - recursively doing this through file resource eats up time. Hence the exec below.
   file { "${tomcatInstallationDirectory}" :
     ensure => directory,
-    recurse => true,
     mode   => 776,
     owner  => "${bahmni_user}",
     group  => "${bahmni_user}",
     require => Exec["tomcat_untar"]
+  }
+  exec { "change_group_rights_for_tomcatInstallationDirectory" :
+    provider => "shell",
+    command => "chown -R ${bahmni_user}:${bahmni_user} ${tomcatInstallationDirectory}; chmod -R 776 ${tomcatInstallationDirectory}; ",
+    path => "${os_path}",
+    require => File["${tomcatInstallationDirectory}"],
   }
 
   service { "tomcat":

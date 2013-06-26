@@ -11,14 +11,21 @@ class jasperserver {
     purge         => true
   }
 
+  # Mujir - recursively doing this through file resource eats up time. Hence the exec below.\
   file { "${jasperHome}" :
     mode        => 774,
     ensure      => directory,
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     loglevel    => "warning",
-    recurse     => true
   }
+  exec { "change_group_rights_for_jasperHome" :
+    provider => "shell",
+    command => "chown -R ${bahmni_user}:${bahmni_user} ${jasperHome}; chmod -R 774 ${jasperHome}; ",
+    path => "${os_path}",
+    require => File["${jasperHome}"],
+  }
+
 
   exec { "extracted_jasperserver" :
     command     => "unzip -q -n ${packages_servers_dir}/jasperreports-server-cp-5.0.0-bin.zip -d ${jasperHome}/.. ${log_expression}",
