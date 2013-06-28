@@ -1,6 +1,5 @@
-jss-scm
-=======
+bahmni-environment
+==================
 
-Setup your VM
-_____________
-wget https://raw.github.com/jss-emr/jss-scm/master/bootstrap.sh && sh ./bootstrap.sh
+Setup your test environment on a virtual box using Vagrant
+__________________________________________________________
