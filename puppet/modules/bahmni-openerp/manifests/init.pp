@@ -14,8 +14,6 @@ class bahmni-openerp {
     provider => "shell",	
 		command => "git clone https://github.com/Bhamni/openerp-modules.git ${bahmni_openerp_temp_dir} ${deployment_log_expression}",
 		path => "${os_path}",
-		user => "${openerpShellUser}",
-		group => "${openerpGroup}",		
 		require => File["${bahmni_openerp_temp_dir}"]
 	}
 

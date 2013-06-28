@@ -24,7 +24,7 @@ class registration {
   }
   exec { "change_rights_for_registration_dir" :
     provider => "shell",
-    command => "chown -R ${bahmni_user}:${bahmni_user} ${registrationAppDirectory}; chmod -R 664 ${registrationAppDirectory}; umask 223;",
+    command => "chown -R ${bahmni_user}:${bahmni_user} ${registrationAppDirectory}; chmod -R 664 ${registrationAppDirectory}; umask 113;",
     path => "${os_path}",
     require => File["registrationAppDirectory exists"],
   }
@@ -47,7 +47,7 @@ class registration {
   }
   exec { "change_rights_for_opd_dir" :
     provider => "shell",
-    command => "chown -R ${bahmni_user}:${bahmni_user} ${opdAppDirectory}; chmod -R 664 ${opdAppDirectory}; umask 223;",
+    command => "chown -R ${bahmni_user}:${bahmni_user} ${opdAppDirectory}; chmod -R 664 ${opdAppDirectory}; umask 113;",
     path => "${os_path}",
     require => File["opdAppDirectory exists"],
   }

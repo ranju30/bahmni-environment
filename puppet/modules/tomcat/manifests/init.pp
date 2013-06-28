@@ -70,6 +70,7 @@ class tomcat {
 
   service { "tomcat":
     enable    => true,
+    ensure => running,
     require   => File["${tomcatInstallationDirectory}"],
   }  
 }

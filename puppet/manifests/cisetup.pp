@@ -9,11 +9,10 @@ node default {
 
   stage { "first" : }
 
-  stage { "rvm-install" : }
   stage { "deploy" : }
   stage { "last" : }
 
-  Stage['first'] -> Stage['main'] -> Stage['rvm-install'] -> Stage['deploy'] -> Stage['last']
+  Stage['first'] -> Stage['main'] -> Stage['deploy'] -> Stage['last']
 
   class { "bootstrap": stage => 'first'; }
   class { "yum-repo":  stage => 'first'; }
@@ -41,8 +40,6 @@ node default {
   class { "bahmni-data" : stage => "deploy"; }
   class { "bahmni-openerp" : stage => "deploy"; }
   class { "registration" : stage => "deploy"; }
-
-  class { "rvm" : stage => "last", version =>"1.21.2"; }
 
   class { "nodejs" : stage => "last", version => '0.8.19'; }
   class { "bahmni-openerp-basedata" : stage => "last"; }
