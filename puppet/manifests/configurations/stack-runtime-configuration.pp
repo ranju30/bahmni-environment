@@ -132,4 +132,4 @@ $imagesUrl="${protocol}://${deployHost}/patient_images"
 
 ##########################################################################
 
-$ant_home="/home/${bahmni_user}/apache-ant-1.9.0"
+$ant_home="/home/${bahmni_user}/apache-ant-1.9.1"
