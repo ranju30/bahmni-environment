@@ -166,6 +166,59 @@
                 <runif status="passed" />
               </exec>
             </tasks>
+            <artifacts>
+              <artifact src="deployables" />
+            </artifacts>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="DeployToQA">
+        <approval type="manual" />
+        <jobs>
+          <job name="deployToQAJob">
+            <tasks>
+              <fetchartifact pipeline="Bahmni_MRS_Pipeline" stage="BuildStage" job="FunctionalTests" srcdir="deployables">
+                <runif status="passed" />
+              </fetchartifact>
+              <exec command="/bin/sh" workingdir="jss-scm">
+                <arg>deploy/openmrs-addons/openmrs-data/scripts/deploy.sh</arg>
+                <arg>deploy/openmrs-addons/conf/production.properties</arg>
+                <arg>../deployables/openmrs-data-jars.zip</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="cp">
+                <arg>deployables/openmrs.war</arg>
+                <arg>/home/jss/apache-tomcat-7.0.22/webapps</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/sh">
+                <arg>-c</arg>
+                <arg>rm -rf /home/jss/.OpenMRS/modules/*.omod</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash">
+                <arg>-c</arg>
+                <arg>find deployables/omod/ -type f -name "*.omod" -exec cp {} /home/jss/.OpenMRS/modules/ \;</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="unzip">
+                <arg>-o</arg>
+                <arg>deployables/registration.zip</arg>
+                <arg>-d</arg>
+                <arg>/var/www/registration</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="unzip">
+                <arg>-o</arg>
+                <arg>deployables/opd.zip</arg>
+                <arg>-d</arg>
+                <arg>/var/www/opd</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+            <resources>
+              <resource>QA</resource>
+            </resources>
           </job>
         </jobs>
       </stage>
@@ -180,29 +233,24 @@
         <git url="https://github.com/Bhamni/openerp-modules.git" dest="openerp-modules" />
         <git url="https://github.com/Bhamni/openerp-functional-tests.git" dest="openerp-functional-tests" />
       </materials>
-      <stage name="deployStage">
+      <stage name="runFunctionalTestsStage">
         <jobs>
-          <job name="defaultJob">
+          <job name="runFunctionalTestsJob">
             <tasks>
               <exec command="/bin/bash" workingdir="openerp-modules">
                 <arg>-c</arg>
                 <arg>cp -R ./* $OPENERP_LOCATION/openerp/addons/</arg>
                 <runif status="passed" />
               </exec>
-            </tasks>
-          </job>
-        </jobs>
-      </stage>
-      <stage name="runFunctionalTestsStage">
-        <jobs>
-          <job name="runFunctionalTestsJob">
-            <tasks>
               <exec command="/bin/bash" workingdir="openerp-functional-tests">
                 <arg>--login</arg>
                 <arg>run.sh</arg>
                 <runif status="passed" />
               </exec>
             </tasks>
+            <artifacts>
+              <artifact src="openerp-modules" />
+            </artifacts>
           </job>
         </jobs>
       </stage>
@@ -228,6 +276,98 @@
         </jobs>
       </stage>
     </pipeline>
+    <pipeline name="Bahmni_Deploy">
+      <environmentvariables>
+        <variable name="OPENERP_LOCATION">
+          <value><%= openerp_install_location %></value>
+        </variable>
+      </environmentvariables>      
+      <materials>
+        <pipeline pipelineName="Bahmni_MRS_Pipeline" stageName="BuildStage" />
+        <pipeline pipelineName="OpenERP_Pipeline" stageName="runFunctionalTestsStage" />
+        <pipeline pipelineName="Reports_Pipeline" stageName="defaultStage" />
+      </materials>
+      <stage name="deployToQAStage">
+        <approval type="manual" />        
+        <jobs>
+          <job name="deployToQAJob">
+            <tasks>
+              <fetchartifact pipeline="Bahmni_MRS_Pipeline" stage="BuildStage" job="FunctionalTests" srcdir="deployables" dest="deployables/mrs">
+                <runif status="passed" />
+              </fetchartifact>
+              <fetchartifact pipeline="OpenERP_Pipeline" stage="runFunctionalTestsStage" job="runFunctionalTestsJob" srcdir="openerp-modules" dest="deployables/openerp">
+                <runif status="passed" />
+              </fetchartifact>
+              <exec command="/bin/sh" workingdir="jss-scm">
+                <arg>deploy/openmrs-addons/openmrs-data/scripts/deploy.sh</arg>
+                <arg>deploy/openmrs-addons/conf/production.properties</arg>
+                <arg>../deployables/mrs/openmrs-data-jars.zip</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="cp">
+                <arg>deployables/mrs/openmrs.war</arg>
+                <arg>/home/jss/apache-tomcat-7.0.22/webapps</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/sh">
+                <arg>-c</arg>
+                <arg>rm -rf /home/jss/.OpenMRS/modules/*.omod</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash">
+                <arg>-c</arg>
+                <arg>find deployables/mrs/omod/ -type f -name "*.omod" -exec cp {} /home/jss/.OpenMRS/modules/ \;</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="unzip">
+                <arg>-o</arg>
+                <arg>deployables/mrs/registration.zip</arg>
+                <arg>-d</arg>
+                <arg>/var/www/registration</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="unzip">
+                <arg>-o</arg>
+                <arg>deployables/mrs/opd.zip</arg>
+                <arg>-d</arg>
+                <arg>/var/www/opd</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash" workingdir="openerp-modules">
+                <arg>-c</arg>
+                <arg>cp -R ./* $OPENERP_LOCATION/openerp/addons/</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+            <resources>
+              <resource>QA</resource>
+            </resources>
+          </job>
+        </jobs>
+      </stage>     
+    </pipeline>
+    <pipeline name="OpenElis">
+      <materials>
+        <git url="https://github.com/Bhamni/OpenElis.git" />
+      </materials>
+      <stage name="defaultStage">
+        <jobs>
+          <job name="test">
+            <tasks>
+              <ant target="test" />
+            </tasks>
+          </job>
+          <job name="deploy">
+            <tasks>
+              <ant target="dist" />
+            </tasks>
+            <artifacts>
+              <artifact src="openelis/dist/openelis.war" />
+            </artifacts>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>    
   </pipelines>
   <pipelines group="MRS_Pipeline">
     <pipeline name="MRS_Pipeline">
@@ -296,4 +436,3 @@
     </pipeline>
   </pipelines>
 </cruise>
-
