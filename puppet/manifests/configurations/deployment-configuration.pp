@@ -24,12 +24,12 @@ file { "${httpd_deploy_dir}" :
   ensure      => directory,
   owner       => "${bahmni_user}",
   group       => "${bahmni_user}",
-  mode        => 664,
+  mode        => 774,
   # recurse     => true,
 }
 exec { "change_rights_for_httpd_deploy_dir" :
   provider => "shell",
-  command => "chown -R ${bahmni_user}:${bahmni_user} ${httpd_deploy_dir}; chmod -R 664 ${httpd_deploy_dir}; umask 223;",
+  command => "chown -R ${bahmni_user}:${bahmni_user} ${httpd_deploy_dir}; chmod -R 774 ${httpd_deploy_dir}; umask 003;",
   path => "${os_path}",
   require => File["${httpd_deploy_dir}"],
 }

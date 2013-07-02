@@ -26,7 +26,7 @@ class bahmni-openerp-basedata {
 	# 	require	=> Exec["openerp_database"]
 	# }
   exec { "openerp_base_data_for_ci" :
-    command => "psql -U openerp openerp < ${packages_servers_dir}/openERPInitialDatabaseDump ",
+    command => "psql -U openerp openerp < ${packages_servers_dir}/bahmni-openerp-base-data.sql",
     user    => "postgres",
     path    => "${os_path}",
     require => Exec["openerp_database"]

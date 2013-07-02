@@ -56,12 +56,31 @@
                 <arg>build.sh</arg>
                 <runif status="passed" />
               </exec>
+              <exec command="/bin/bash" workingdir="registration">
+                <arg>--login</arg>
+                <arg>scripts/package.sh</arg>
+                <runif status="passed" />
+              </exec>              
             </tasks>
           </job>
           <job name="OPD">
             <tasks>
-              <exec command="/bin/sh" workingdir="opd">
-                <arg>scripts/test.sh</arg>
+              <exec command="npm" workingdir="opd">
+                <arg>install</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="bower" workingdir="opd">
+                <arg>install</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash" workingdir="opd">
+                <arg>--login</arg>
+                <arg>build.sh</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash" workingdir="opd">
+                <arg>--login</arg>
+                <arg>scripts/package.sh</arg>
                 <runif status="passed" />
               </exec>
             </tasks>
