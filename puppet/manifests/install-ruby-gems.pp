@@ -1,3 +1,7 @@
+node default {
+  include rvm_jss
+}
+
 class rvm_jss {
 
   # Mujir/Sush - This external puppet module installs git

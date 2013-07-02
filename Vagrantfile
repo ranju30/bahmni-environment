@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "centos-6.2-64bit-puppet-vbox.4.1.8-11.box"
   # config.vm.boot_mode = :gui
   # config.vm.network :hostonly, "192.168.33.10"
-  # config.vm.network :public_network
+  config.vm.network :public_network
   # config.ssh.username = "root"
 
 
