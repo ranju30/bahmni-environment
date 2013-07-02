@@ -6,7 +6,5 @@ import "configurations/deployment-configuration"
 # pre-condition
 # bahmni-stop must have been run before this
 node default {
-	# include nagios
-	# include host	
-	include bahmni-nagios
+	include bahmni-webapps
 }

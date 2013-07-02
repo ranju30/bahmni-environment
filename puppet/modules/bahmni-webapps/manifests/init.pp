@@ -21,13 +21,27 @@ class bahmni-webapps {
     path => "${os_path}"
   }
 
-# TODO: This should ideally be part of deployment as we do not change this module ourselves.
-# But we are deleting the older omods.
   exec { "openmrs_omods" :
     command => "cp ${packages_servers_dir}/*.omod ${openmrs_modules_dir} ${deployment_log_expression}",
     user    => "${bahmni_user}",
     require => File["${openmrs_modules_dir}"],
     path => "${os_path}"
+  }
+
+  file { "${temp_dir}/run-modules-liquibase.sh" :
+    ensure      => present,
+    content     => template("bahmni-webapps/run-modules-liquibase.sh"),
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+    mode        => 554
+  }
+
+  exec { "openmrs_modules_data" :
+    command     => "${temp_dir}/run-modules-liquibase.sh ${build_output_dir} ${openmrs_modules_dir} ${deployment_log_expression}",
+    path        => "${os_path}",
+    provider    => shell,
+    cwd         => "${tomcatInstallationDirectory}/webapps",
+    require     => [Exec["bahmni_omods"], Exec["openmrs_omods"], File["${temp_dir}/run-modules-liquibase.sh"]]
   }
   
   exec { "email-appender" :
@@ -36,62 +50,4 @@ class bahmni-webapps {
     require => File["${openmrs_modules_dir}"],
     path    => "${os_path}"
   }
-
-  # $deploy_temp_dir = "${temp_dir}/deploy"
-
-  # file { "${deploy_temp_dir}" :
-  #   ensure => directory,
-  #   mode   => 666,
-  #   owner  => "${bahmni_user}"
-  # }
-
-  # file { "${deploy_temp_dir}/wait-for-webapp-load.sh" :
-  #   content     => template("bahmni-webapps/wait-for-webapp-load.sh"),
-  #   owner       => "${bahmni_user}",
-  #   group       => "${bahmni_user}", 
-  #   mode        =>  554,
-  #   require     => File["${deploy_temp_dir}"]
-  # }
-
-  # exec { "catalina_start" :
-  #   command     => "sh ${tomcatInstallationDirectory}/bin/catalina.sh start ${deployment_log_expression}",
-  #   user        => "${bahmni_user}",
-  #   provider    => shell,
-  #   path        => "${os_path}"
-  # }
-
-  # define wait_till_webapps_loads {
-  #   exec { "wait_till_${title}_loads" :
-  #     command     => "sh ${deploy_temp_dir}/wait-for-webapp-load.sh http://localhost:${tomcatHttpPort}/${title} ${deployment_log_expression}",
-  #     user        => "${bahmni_user}",
-  #     path        => "${os_path}",
-  #     require     => [File["${deploy_temp_dir}/wait-for-webapp-load.sh"], Exec["catalina_start"]],
-  #     timeout     => 180
-  #   }
-  # }
-  # wait_till_webapps_loads { ["openmrs", "jasperserver"]: }
-
-  # file { "deploy-openmrs-modules.sh" :
-  #   ensure      => present,
-  #   content     => template("bahmni-webapps/deploy-openmrs-modules.sh"),
-  #   path 				=> "${deploy_temp_dir}/deploy-openmrs-modules.sh",
-  #   owner       => "${bahmni_user}",
-  #   group       => "${bahmni_user}",
-  #   mode        => 554,
-  #   require     => File["${deploy_temp_dir}"]
-  # }
-
-  # exec { "webservices.rest-1.2-SNAPSHOT" :
-  #   command   => "cp ${build_output_dir}/webservices.rest-1.2-SNAPSHOT*.omod ${deploy_temp_dir}/webservices.rest-1.2-SNAPSHOT.omod ${deployment_log_expression}",
-  #   path      => "${os_path}",
-  #   provider  => shell
-  # }
-
-  # exec { "deploy_openmrs_modules" :
-  #   command   => "sh deploy-openmrs-modules.sh ${openmrs_password} http://localhost:${tomcatHttpPort}/openmrs webservices.rest-1.2-SNAPSHOT.omod ${build_output_dir}/addresshierarchy-2.2.10-SNAPSHOT.omod ${build_output_dir}/idgen-2.4.1.omod ${build_output_dir}/bahmnicore-0.2-SNAPSHOT.omod ${deployment_log_expression}",
-  #   provider  => shell,
-  #   path      => "${os_path}",
-  #   require   => [File["deploy-openmrs-modules.sh"], Exec["wait_till_openmrs_loads"], Exec["webservices.rest-1.2-SNAPSHOT"]],
-  #   cwd       => "${deploy_temp_dir}"
-  # }
 }
