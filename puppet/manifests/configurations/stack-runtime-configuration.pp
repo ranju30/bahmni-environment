@@ -63,16 +63,18 @@ $dropPacketsIfIPNotInSslExcludeList = false # true if the packets have to droppe
 ## If it is a string, the same is used for both ProxyPass and ProxyPassReverse rules;
 ## In case of array, 1st element of the array specifies ProxyPass rule and 2nd element specifies ProxyPassReverse rule.
 $httpRedirects = [{path => "/jasperserver", redirectPath => "http://${deployHost}:8080/jasperserver"}]
-$httpsRedirects = [{path => "/openmrs", redirectPath => "http://${deployHost}:8080/openmrs"}]
+$httpsRedirects = [{path => "/openmrs", redirectPath => "http://${deployHost}:8080/openmrs"},
+                   {path => "/openelis", redirectPath => "http://${deployHost}:8080/openelis"}]
 
 #Static webapps
 $httpsStaticWebapps = [{path => "/registration", directory => "${registrationAppDirectory}"},
+                       {path => "/opd", directory => "${opdAppDirectory}"},
 					   {path => "/bahmni-apps", directory => "${bahmniAppsAppDirectory}"},
                        {path => "/patient_images", directory => "${httpd_deploy_dir}/patient_images"}]
 $httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib", 
 						   "${bahmniAppsAppDirectory}/lib", "${bahmniAppsAppDirectory}/css/lib"]                    
-$httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules"]
-$httpsSubdomains = [{subdomain => "openerp", url => " http://${deployHost}:8069"}]
+$httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules", "${opdAppDirectory}/modules"]
+$httpsSubdomains = [{subdomain => "openerp", url => "http://${deployHost}:8069"}]
 
 ## HTTPS
 $sslCertificateFile = "/etc/pki/tls/certs/localhost.crt"
