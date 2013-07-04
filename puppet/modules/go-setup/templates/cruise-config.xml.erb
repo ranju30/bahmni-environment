@@ -10,6 +10,7 @@
         <git url="https://github.com/Bhamni/opd.git" dest="opd" materialName="OPD" />
         <pipeline pipelineName="MRS_Pipeline" stageName="BuildStage" />
         <git url="https://github.com/jss-emr/jss-scm.git" dest="jss-scm" materialName="JSS_SCM" />
+        <git url="https://github.com/jss-emr/jss-reports.git" dest="jss-reports" materialName="Custom_Jasperserver" />
       </materials>
       <stage name="BuildStage">
         <jobs>
@@ -22,6 +23,9 @@
                 <runif status="passed" />
               </exec>
             </tasks>
+            <resources>
+              <resource>MVN</resource>
+            </resources>
             <artifacts>
               <artifact src="openmrsdata/target/openmrs-data-jars.zip" />
             </artifacts>
@@ -35,6 +39,9 @@
                 <runif status="passed" />
               </exec>
             </tasks>
+            <resources>
+              <resource>MVN</resource>
+            </resources>
             <artifacts>
               <artifact src="bahmnicore/omod/target/*.omod" dest="bahmnicoreartifacts" />
               <artifact src="bahmnicore/bahmni-mail-appender/target/*.jar" dest="bahmnicoreartifacts" />
@@ -60,8 +67,15 @@
                 <arg>--login</arg>
                 <arg>scripts/package.sh</arg>
                 <runif status="passed" />
-              </exec>              
+              </exec>
             </tasks>
+            <resources>
+              <resource>UI</resource>
+            </resources>
+            <artifacts>
+              <artifact src="registration/dist" />
+              <artifact src="registration/target/registration.zip" />
+            </artifacts>
           </job>
           <job name="OPD">
             <tasks>
@@ -84,6 +98,13 @@
                 <runif status="passed" />
               </exec>
             </tasks>
+            <resources>
+              <resource>UI</resource>
+            </resources>
+            <artifacts>
+              <artifact src="opd/dist" />
+              <artifact src="opd/target/opd.zip" />
+            </artifacts>
           </job>
           <job name="FunctionalTests">
             <tasks>
@@ -99,11 +120,13 @@
                 <arg>-DskipTests</arg>
                 <runif status="passed" />
               </exec>
-              <exec command="/bin/sh" workingdir="registration">
+              <exec command="/bin/bash" workingdir="registration">
+                <arg>--login</arg>
                 <arg>scripts/package.sh</arg>
                 <runif status="passed" />
               </exec>
-              <exec command="/bin/sh" workingdir="opd">
+              <exec command="/bin/bash" workingdir="opd">
+                <arg>--login</arg>
                 <arg>scripts/package.sh</arg>
                 <runif status="passed" />
               </exec>
@@ -185,6 +208,9 @@
                 <runif status="passed" />
               </exec>
             </tasks>
+            <resources>
+              <resource>OpenERP</resource>
+            </resources>
             <artifacts>
               <artifact src="deployables" />
             </artifacts>
@@ -295,98 +321,53 @@
         </jobs>
       </stage>
     </pipeline>
-    <pipeline name="Bahmni_Deploy">
+    <pipeline name="Bahmni_Deploy_QA" template="Bhamni_Deploy">
       <environmentvariables>
         <variable name="OPENERP_LOCATION">
           <value><%= openerp_install_location %></value>
         </variable>
-      </environmentvariables>      
+      </environmentvariables>
       <materials>
         <pipeline pipelineName="Bahmni_MRS_Pipeline" stageName="BuildStage" />
         <pipeline pipelineName="OpenERP_Pipeline" stageName="runFunctionalTestsStage" />
         <pipeline pipelineName="Reports_Pipeline" stageName="defaultStage" />
+        <git url="https://github.com/jss-emr/jss-scm.git" />
+        <pipeline pipelineName="OpenElis" stageName="Build" materialName="OpenElisPipeline" />
       </materials>
-      <stage name="deployToQAStage">
-        <approval type="manual" />        
-        <jobs>
-          <job name="deployToQAJob">
-            <tasks>
-              <fetchartifact pipeline="Bahmni_MRS_Pipeline" stage="BuildStage" job="FunctionalTests" srcdir="deployables" dest="deployables/mrs">
-                <runif status="passed" />
-              </fetchartifact>
-              <fetchartifact pipeline="OpenERP_Pipeline" stage="runFunctionalTestsStage" job="runFunctionalTestsJob" srcdir="openerp-modules" dest="deployables/openerp">
-                <runif status="passed" />
-              </fetchartifact>
-              <exec command="/bin/sh" workingdir="jss-scm">
-                <arg>deploy/openmrs-addons/openmrs-data/scripts/deploy.sh</arg>
-                <arg>deploy/openmrs-addons/conf/production.properties</arg>
-                <arg>../deployables/mrs/openmrs-data-jars.zip</arg>
-                <runif status="passed" />
-              </exec>
-              <exec command="cp">
-                <arg>deployables/mrs/openmrs.war</arg>
-                <arg>/home/jss/apache-tomcat-7.0.22/webapps</arg>
-                <runif status="passed" />
-              </exec>
-              <exec command="/bin/sh">
-                <arg>-c</arg>
-                <arg>rm -rf /home/jss/.OpenMRS/modules/*.omod</arg>
-                <runif status="passed" />
-              </exec>
-              <exec command="/bin/bash">
-                <arg>-c</arg>
-                <arg>find deployables/mrs/omod/ -type f -name "*.omod" -exec cp {} /home/jss/.OpenMRS/modules/ \;</arg>
-                <runif status="passed" />
-              </exec>
-              <exec command="unzip">
-                <arg>-o</arg>
-                <arg>deployables/mrs/registration.zip</arg>
-                <arg>-d</arg>
-                <arg>/var/www/registration</arg>
-                <runif status="passed" />
-              </exec>
-              <exec command="unzip">
-                <arg>-o</arg>
-                <arg>deployables/mrs/opd.zip</arg>
-                <arg>-d</arg>
-                <arg>/var/www/opd</arg>
-                <runif status="passed" />
-              </exec>
-              <exec command="/bin/bash" workingdir="openerp-modules">
-                <arg>-c</arg>
-                <arg>cp -R ./* $OPENERP_LOCATION/openerp/addons/</arg>
-                <runif status="passed" />
-              </exec>
-            </tasks>
-            <resources>
-              <resource>QA</resource>
-            </resources>
-          </job>
-        </jobs>
-      </stage>     
     </pipeline>
     <pipeline name="OpenElis">
       <materials>
-        <git url="https://github.com/Bhamni/OpenElis.git" />
+        <git url="https://github.com/Bhamni/OpenElis.git" dest="OpenElis" />
       </materials>
-      <stage name="defaultStage">
+      <stage name="Build">
         <jobs>
-          <job name="test">
+          <job name="build">
             <tasks>
-              <ant target="test" />
-            </tasks>
-          </job>
-          <job name="deploy">
-            <tasks>
-              <ant target="dist" />
+              <ant target="build" workingdir="OpenElis">
+                <runif status="passed" />
+              </ant>
             </tasks>
             <artifacts>
-              <artifact src="openelis/dist/openelis.war" />
+              <artifact src="OpenElis/openelis/dist/openelis.war" />
             </artifacts>
           </job>
         </jobs>
       </stage>
-    </pipeline>    
+    </pipeline>
+    <pipeline name="Bahmni_Deploy_Integration" template="Bhamni_Deploy">
+      <environmentvariables>
+        <variable name="OPENERP_LOCATION">
+          <value><%= openerp_install_location %></value>
+        </variable>
+      </environmentvariables>
+      <materials>
+        <pipeline pipelineName="Bahmni_MRS_Pipeline" stageName="BuildStage" />
+        <pipeline pipelineName="OpenERP_Pipeline" stageName="runFunctionalTestsStage" />
+        <pipeline pipelineName="Reports_Pipeline" stageName="defaultStage" />
+        <git url="https://github.com/jss-emr/jss-scm.git" />
+        <pipeline pipelineName="OpenElis" stageName="Build" materialName="OpenElisPipeline" />
+      </materials>
+    </pipeline>
   </pipelines>
   <pipelines group="MRS_Pipeline">
     <pipeline name="MRS_Pipeline">
@@ -454,4 +435,109 @@
       </stage>
     </pipeline>
   </pipelines>
+  <templates>
+    <pipeline name="Bhamni_Deploy">
+      <stage name="deployStage">
+        <approval type="manual" />
+        <jobs>
+          <job name="deployJob">
+            <tasks>
+              <fetchartifact pipeline="Bahmni_MRS_Pipeline" stage="BuildStage" job="FunctionalTests" srcdir="deployables" dest="deployables/mrs">
+                <runif status="passed" />
+              </fetchartifact>
+              <fetchartifact pipeline="OpenERP_Pipeline" stage="runFunctionalTestsStage" job="runFunctionalTestsJob" srcdir="openerp-modules" dest="deployables/openerp">
+                <runif status="passed" />
+              </fetchartifact>
+              <fetchartifact pipeline="OpenElis" stage="Build" job="build" srcfile="openelis.war" dest="deployables/openelis">
+                <runif status="passed" />
+              </fetchartifact>
+              <exec command="/bin/sh">
+                <arg>deploy/openmrs-addons/openmrs-data/scripts/deploy.sh</arg>
+                <arg>deploy/openmrs-addons/conf/production.properties</arg>
+                <arg>deployables/mrs/deployables/openmrs-data-jars.zip</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="cp">
+                <arg>deployables/mrs/deployables/openmrs.war</arg>
+                <arg>/home/jss/apache-tomcat-7.0.22/webapps</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash">
+                <arg>-c</arg>
+                <arg>find deployables/mrs/deployables/omod/ -type f -name "*.omod" -exec cp {} /home/jss/.OpenMRS/modules/ \;</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="cp">
+                <arg>deployables/openelis/openelis.war</arg>
+                <arg>/home/jss/apache-tomcat-7.0.22/webapps</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="rm">
+                <arg>-rf</arg>
+                <arg>/var/www/registration</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="unzip">
+                <arg>-o</arg>
+                <arg>deployables/mrs/deployables/registration.zip</arg>
+                <arg>-d</arg>
+                <arg>/var/www/registration</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="rm">
+                <arg>-rf</arg>
+                <arg>/var/www/opd</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="unzip">
+                <arg>-o</arg>
+                <arg>deployables/mrs/deployables/opd.zip</arg>
+                <arg>-d</arg>
+                <arg>/var/www/opd</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash" workingdir="deployables/openerp/openerp-modules">
+                <arg>-c</arg>
+                <arg>cp -R ./* $OPENERP_LOCATION/openerp/addons/</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </templates>
+  <environments>
+    <environment name="Integration">
+      <agents>
+        <physical uuid="1a70e0f8-6a7a-4f6f-96f8-1319ce471f8b" />
+      </agents>
+      <pipelines>
+        <pipeline name="Bahmni_Deploy_Integration" />
+      </pipelines>
+    </environment>
+    <environment name="QA">
+      <agents>
+        <physical uuid="96f384a7-ad80-4859-8b83-7eca4d929e52" />
+      </agents>
+      <pipelines>
+        <pipeline name="Bahmni_Deploy_QA" />
+      </pipelines>
+    </environment>
+  </environments>
+  <agents>
+    <agent hostname="jss-misc.thoughtworks.com" ipaddress="172.18.2.8" uuid="3ab3ab9b-38ee-4c0a-ac9b-e533059eb89d">
+      <resources>
+        <resource>UI</resource>
+        <resource>OpenERP</resource>
+      </resources>
+    </agent>
+    <agent hostname="jss-misc03.thoughtworks.com" ipaddress="172.18.2.11" uuid="26819600-4eef-46ff-8198-f6b869e45509">
+      <resources>
+        <resource>OpenERP</resource>
+        <resource>UI</resource>
+        <resource>MVN</resource>
+      </resources>
+    </agent>
+  </agents>
 </cruise>
