@@ -42,7 +42,7 @@ $tomcatSessionTimeoutInMinutes = 120
 $deployablesDirectory="/home/${bahmni_user}/deployables"
 
 # Set host name or ip address
-$deployHost="192.168.0.152"
+$deployHost=$ipaddress
 $httpd_deploy_dir="/var/www"
 
 $registrationAppDirectory="${httpd_deploy_dir}/registration"
