@@ -42,7 +42,6 @@ $tomcatSessionTimeoutInMinutes = 120
 $deployablesDirectory="/home/${bahmni_user}/deployables"
 
 # Set host name or ip address
-$deployHost=$ipaddress
 $httpd_deploy_dir="/var/www"
 
 $registrationAppDirectory="${httpd_deploy_dir}/registration"
@@ -62,9 +61,9 @@ $dropPacketsIfIPNotInSslExcludeList = false # true if the packets have to droppe
 ## The following redirects can contain either a string or an array;
 ## If it is a string, the same is used for both ProxyPass and ProxyPassReverse rules;
 ## In case of array, 1st element of the array specifies ProxyPass rule and 2nd element specifies ProxyPassReverse rule.
-$httpRedirects = [{path => "/jasperserver", redirectPath => "http://${deployHost}:8080/jasperserver"}]
-$httpsRedirects = [{path => "/openmrs", redirectPath => "http://${deployHost}:8080/openmrs"},
-                   {path => "/openelis", redirectPath => "http://${deployHost}:8080/openelis"}]
+$httpRedirects = [{path => "/jasperserver", redirectPath => "http://localhost:8080/jasperserver"}]
+$httpsRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/openmrs"},
+                   {path => "/openelis", redirectPath => "http://localhost:8080/openelis"}]
 
 #Static webapps
 $httpsStaticWebapps = [{path => "/registration", directory => "${registrationAppDirectory}"},
@@ -74,7 +73,7 @@ $httpsStaticWebapps = [{path => "/registration", directory => "${registrationApp
 $httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib", 
 						   "${bahmniAppsAppDirectory}/lib", "${bahmniAppsAppDirectory}/css/lib"]                    
 $httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules", "${opdAppDirectory}/modules"]
-$httpsSubdomains = [{subdomain => "openerp", url => "http://${deployHost}:8069"}]
+$httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
 
 ## HTTPS
 $sslCertificateFile = "/etc/pki/tls/certs/localhost.crt"
@@ -129,8 +128,7 @@ $jasperDbName = "jasperserver"
 
 # Bahmni core properties
 $imagesDirectory="/home/${bahmni_user}/patient_images"
-$protocol = $sslEnabled ? { true => 'https', default =>  'http'}
-$imagesUrl="${protocol}://${deployHost}/patient_images"
+$imagesUrl="/patient_images"
 
 ##########################################################################
 

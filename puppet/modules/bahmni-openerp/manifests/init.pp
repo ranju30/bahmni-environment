@@ -1,10 +1,9 @@
-
 class bahmni-openerp {
 	require openerp
 
 	file { "${bahmni_openerp_temp_dir}" :
     ensure    => directory,
-    owner			=> "${openerpShellUser}",
+    owner	  => "${openerpShellUser}",
     recurse   => true,
     force     => true,
     purge     => true
@@ -24,14 +23,7 @@ class bahmni-openerp {
 	# 	require => Exec["bahmni_openerp_codebase"]
 	# }
 
-## Mujir/Sush - This takes > 13 hours to complete!!!!!!
-	# file { "${openerp_install_location}" :
-	# 	ensure => directory,
-	# 	owner   => "${openerpShellUser}",
-	# 	group  => "${openerpGroup}",
-	# 	recurse => true,
-	# 	mode    => 775,
-	# }
+    ## Mujir/Sush - Using puppet's {recurse => true} takes > 13 hours to complete!!!!!!
 	exec { "change_group_rights_for_openerp_temp_folders_current_content" :
 	  provider => "shell",
 		command => "chown -R openerp:openerp $bahmni_openerp_temp_dir; chmod -R 775 $bahmni_openerp_temp_dir; ",
@@ -54,5 +46,4 @@ class bahmni-openerp {
 		group => "${openerpGroup}",
 		require => Exec["change_group_rights_for_openerp_folders_current_content"],
 	}
-
 }
