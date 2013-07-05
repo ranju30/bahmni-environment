@@ -8,7 +8,7 @@ class registration {
 
   exec { "change_rights_for_httpd_deploy_dir" :
     provider => "shell",
-    command => "chown -R ${bahmni_user}:${bahmni_user} ${httpd_deploy_dir}; chmod -R ug+w,a+r ${httpd_deploy_dir}; umask 223;",
+    command => "chown -R ${bahmni_user}:${bahmni_user} ${httpd_deploy_dir}; chmod -R ug+w,a+r ${httpd_deploy_dir}",
     path => "${os_path}",
     require => File["${httpd_deploy_dir}"],
   }
