@@ -52,7 +52,7 @@ $bahmniAppsAppDirectory="${httpd_deploy_dir}/bahmni-apps"
 $backup_hour = 3 # 3 AM Every day  
 
 ######################## HTTPD CONFIG START#############################################
-import "configurations/httpd-default-configuration"
+import "httpd-default-configuration"
 
 ## The following redirects can contain either a string or an array;
 ## If it is a string, the same is used for both ProxyPass and ProxyPassReverse rules;

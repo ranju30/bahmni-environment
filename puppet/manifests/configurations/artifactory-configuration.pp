@@ -1,5 +1,5 @@
 #Apache as proxy server
-import "configurations/httpd-default-configuration"
+import "httpd-default-configuration"
 $httpsRedirects = [{path => "/artifactory", redirectPath => "http://localhost:8081/artifactory"}]
 
 #client configuration
