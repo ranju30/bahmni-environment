@@ -52,11 +52,7 @@ $bahmniAppsAppDirectory="${httpd_deploy_dir}/bahmni-apps"
 $backup_hour = 3 # 3 AM Every day  
 
 ######################## HTTPD CONFIG START#############################################
-## HTTPD
-$sslEnabled = true
-$sslExcludeList = ["127.0.0.1"]
-$dropPacketsIfIPNotInSslExcludeList = false # true if the packets have to dropped when accessed over http
-
+import "configurations/httpd-default-configuration"
 
 ## The following redirects can contain either a string or an array;
 ## If it is a string, the same is used for both ProxyPass and ProxyPassReverse rules;
@@ -64,7 +60,6 @@ $dropPacketsIfIPNotInSslExcludeList = false # true if the packets have to droppe
 $httpRedirects = [{path => "/jasperserver", redirectPath => "http://localhost:8080/jasperserver"}]
 $httpsRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/openmrs"},
                    {path => "/openelis", redirectPath => "http://localhost:8080/openelis"}]
-
 #Static webapps
 $httpsStaticWebapps = [{path => "/registration", directory => "${registrationAppDirectory}"},
                        {path => "/opd", directory => "${opdAppDirectory}"},
@@ -74,22 +69,6 @@ $httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationApp
 						   "${bahmniAppsAppDirectory}/lib", "${bahmniAppsAppDirectory}/css/lib"]                    
 $httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules", "${opdAppDirectory}/modules"]
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
-
-## HTTPS
-$sslCertificateFile = "/etc/pki/tls/certs/localhost.crt"
-$sslCertificateKeyFile = "/etc/pki/tls/private/localhost.key"
-$sslCertificateChainFile = "" ## Leave blank if no chain certificate is required.
-$sslCACertificateFile = "" ## Leave blank if no CA certificate is required.
-$serverName = "" ##ServerName entry in httpd and ssl conf
-
-## Authentication
-$authenticationRequired = false     ## Specify if authentication is necessary.
-$authenticationKey = "APIKey"             ## The key which is to be authenticated.
-$authenticationValues = ["1234","5678"]           ## The values which must be compared for authentication.
-## Use property httpsRedirects to setup proxypass redirects
-$authenticationExcludeHosts = []
-$authenticationExcludeUrlPatterns = []
-
 ######################## HTTPD CONFIG END################################################
 
 # Nagios
