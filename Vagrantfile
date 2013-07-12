@@ -11,13 +11,11 @@ Vagrant.configure("2") do |config|
   config.ssh.username = "root"
 
   config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--memory", 1024]
+    v.customize ["modifyvm", :id, "--memory", 1024, "--cpus", 2, "--name", "Bahmni"]
   end
   
   config.vm.synced_folder "packages", "/packages", :owner => "root"
-  config.vm.network :forwarded_port, host: 8153, guest: 8153
-  config.vm.network :forwarded_port, host: 8080, guest: 8080
-  config.vm.network :forwarded_port, host: 8069, guest: 8069
+  config.vm.synced_folder "../..", "/Projects", :owner => "root"
 
   if ENV['STAGE'] == nil
     manifest_file = "do-nothing.pp"
