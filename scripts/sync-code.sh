@@ -1,0 +1,1 @@
+rsync -rh --progress -i --itemize-changes --update --delete --chmod=Du=r,Dg=rwx,Do=rwx,Fu=rwx,Fg=rwx,Fo=rwx -p ../OpenElis -e ssh root@192.168.33.10:/

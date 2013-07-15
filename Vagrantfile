@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   end
   
   config.vm.synced_folder "packages", "/packages", :owner => "root"
-  config.vm.synced_folder "../..", "/Projects", :owner => "root"
+#  config.vm.synced_folder "../..", "/Projects", :owner => "root"
 
   if ENV['STAGE'] == nil
     manifest_file = "do-nothing.pp"
