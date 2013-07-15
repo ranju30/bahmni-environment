@@ -13,7 +13,7 @@ BASE_DIR=`dirname $0`
 #echo "slave-host = $shost" 
 
 if [ `whoami` != 'root' ]; then
-	echo "Can be exeucted only with root privileges"
+	echo "Can be executed only with root privileges"
 	exit 1;
 fi
 
