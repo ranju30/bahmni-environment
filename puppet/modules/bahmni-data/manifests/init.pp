@@ -1,6 +1,5 @@
 class bahmni-data {
   require ant
-  require bahmni-webapps
   
 	$bahmni_data_temp = "${temp_dir}/bahmni-data"
 
