@@ -23,7 +23,7 @@ class openmrs {
   }
 
   exec { "latest_openmrs_webapp" :
-    command   => "unzip -o -q ${build_output_dir}/openmrs.war -d ${tomcatInstallationDirectory}/webapps/openmrs ${deployment_log_expression}",
+    command   => "unzip -o -q ${build_output_dir}/${openmrs_war_file_name} -d ${tomcatInstallationDirectory}/webapps/openmrs ${deployment_log_expression}",
     provider  => shell,
     path      => "${os_path}",
     require   => [File["${deployment_log_file}"], File["${openmrs_webapp_location}"]],
