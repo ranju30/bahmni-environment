@@ -10,7 +10,7 @@ class bahmni-ui-app($appName) {
   }
 
   exec { "deploy_bahmni-apps" :
-    command   => "unzip -q -o ${build_output_dir}/$appZipFile.zip -d ${appDirectory} ${deployment_log_expression}",
+    command   => "unzip -q -o $appZipFile -d ${appDirectory} ${deployment_log_expression}",
     provider  => shell,
     path      => "${os_path}",
     require   => File["${appDirectory}"]
