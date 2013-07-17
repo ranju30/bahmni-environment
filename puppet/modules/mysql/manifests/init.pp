@@ -1,25 +1,38 @@
+class mysql-common {
+	package { "MySQL-shared-compat" :
+		ensure  => present
+	}
+
+	package { "MySQL-shared" :
+		ensure  => present
+	}
+	
+}
+
 class mysql {
 	require yum-repo
+	require mysql-common
 
-	package { "mysql" :
+	package { "MySQL-client" :
 		ensure  => present
 	}
 }
 
 class mysqlserver {
 	require yum-repo
-
-	package { "mysql-server" :
+	require mysql-common
+	
+	package { "MySQL-server" :
 		ensure  => present
 	}
+	
+	file { "/etc/my.cnf" :
+		ensure      => present,
+		content     => template("mysql/my.cnf"),
+		require     => Package["MySQL-server"],
+	}
 
-  file { "/etc/my.cnf" :
-    ensure      => present,
-    content     => template("mysql/my.cnf"),
-    require     => Package["mysql-server"],
-  }
-
-	service { "mysqld" :
+	service { "mysql" :
 		ensure => running,
 		enable => true,
 		require => File["/etc/my.cnf"]
@@ -27,16 +40,16 @@ class mysqlserver {
 
  	exec { "setmysqlpassword" :
 		command => "mysqladmin -u root PASSWORD ${mysqlRootPassword}; /bin/true",
-		require => [Package["mysql-server"], Package["mysql"] , Service["mysqld"]],
+		require => [Package["MySQL-server"], Package["MySQL-client"] , Service["mysql"]],
 		path => "${os_path}"
 	}
 
 	## Needed for Reporting database creation.. Mujir - move away from this file to a Reporting module
-  file { "${temp_dir}/createReportingDB.sql" :
-    ensure      => present,
-    content     => template("mysql/createReportingDB.sql"),
-    require     => Exec["setmysqlpassword"],
-  }
+	file { "${temp_dir}/createReportingDB.sql" :
+		ensure      => present,
+		content     => template("mysql/createReportingDB.sql"),
+		require     => Exec["setmysqlpassword"],
+	}
 
 	## Needed for Reporting database creation.. Mujir - move away from this file to a Reporting module
   exec { "createReportingDB" :
