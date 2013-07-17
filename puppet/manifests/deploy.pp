@@ -11,5 +11,5 @@ node default {
   include bahmni-webapps
   include bahmni-data
   include bahmni-openerp
-  include registration
+  include bahmni-ui-apps
 }
