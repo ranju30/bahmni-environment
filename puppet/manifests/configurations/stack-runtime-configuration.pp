@@ -95,6 +95,9 @@ $openERPPassword=password
 $openerpShellUser = "openerp"
 $openerpGroup = "openerp"
 
+$openERPConnectTimeout=10000
+$openERPReadTimeout=20000
+
 ######################## JASPER CONFIG START##############################################
 $jasperTomcatHome = $tomcatInstallationDirectory
 $jasperHome = "/usr/local/jasperreports-server-cp-5.0.0-bin"
