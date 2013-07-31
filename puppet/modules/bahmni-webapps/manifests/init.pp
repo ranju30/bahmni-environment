@@ -44,10 +44,4 @@ class bahmni-webapps {
     require     => [Exec["bahmni_omods"], Exec["openmrs_omods"], File["${temp_dir}/run-modules-liquibase.sh"]]
   }
   
-  exec { "email-appender" :
-    command => "cp ${build_output_dir}/bahmnicore-mail-appender-${bahmni_version}-jar-with-dependencies.jar ${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/lib",
-    user    => "${bahmni_user}",
-    require => File["${openmrs_modules_dir}"],
-    path    => "${os_path}"
-  }
 }
