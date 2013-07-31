@@ -8,6 +8,6 @@ fi
 local=$1
 remote=$2
 path=$3
-sync_command="date +%H:%M:%S && rsync -iru --exclude .git  --progress --itemize-changes --update --delete --chmod=Du=r,Dg=rwx,Do=rwx,Fu=rwx,Fg=rwx,Fo=rwx -p $local -e ssh root@$remote:$path"
+sync_command="date +%H:%M:%S && rsync -iru --exclude .git --exclude target --progress --itemize-changes --update --delete -p $local -e ssh root@$remote:$path"
 sh -c "$sync_command"
 fswatch $local "$sync_command"
