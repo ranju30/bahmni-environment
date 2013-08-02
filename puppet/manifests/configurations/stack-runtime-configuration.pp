@@ -79,6 +79,9 @@ $support_email="bahmni-jss-support@googlegroups.com" # configured to allow devs 
 $nagios_openmrs_user=admin
 $nagios_openmrs_user_password=test
 
+$openelis_username="admin"
+$openelis_password="adminADMIN!"
+
 # OpenMRS
 $openmrs_database_user = "openmrs-user"
 $openmrs_database_password = "password"
