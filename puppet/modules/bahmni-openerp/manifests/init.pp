@@ -46,4 +46,30 @@ class bahmni-openerp {
 		group => "${openerpGroup}",
 		require => Exec["change_group_rights_for_openerp_folders_current_content"],
 	}
+
+  exec { "latest_openerp_atomfeed_webapp" :
+    command   => "unzip -o -q ${build_output_dir}/${openerp_atomfeed_war_file_name} -d ${tomcatInstallationDirectory}/webapps/openerp-atomfeed-service ${deployment_log_expression}",
+    provider  => shell,
+    path      => "${os_path}",
+    require   => [Exec["bahmni_openerp"]],
+    user      => "${bahmni_user}"
+  }
+
+  file { "${temp_dir}/bahmni-openerp/run-liquibase.sh" :
+    ensure      => present,
+    content     => template("bahmni-openerp/run-liquibase.sh"),
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+    require   => Exec["latest_openerp_atomfeed_webapp"],
+    mode        => 554
+  }
+
+  exec { "bahmni_openerp_data" :
+    command     => "${temp_dir}/bahmni-openerp/run-liquibase.sh ${build_output_dir} ${deployment_log_expression}",
+    path        => "${os_path}",
+    provider    => shell,
+    cwd         => "${tomcatInstallationDirectory}/webapps",
+    require     => [File["${temp_dir}/bahmni-openerp/run-liquibase.sh"]]
+  }
+
 }
