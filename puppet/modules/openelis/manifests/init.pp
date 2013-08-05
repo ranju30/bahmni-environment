@@ -3,6 +3,7 @@ class openelis {
 
   $openelis_webapp_location =  "${tomcatInstallationDirectory}/webapps/openelis"
   $bahmni_openelis_temp_dir = "${temp_dir}/OpenElis"
+  $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openelis_war_file_name}/WEB-INF/classes/log4j.xml"
 
   file { "${openelis_webapp_location}" :
     ensure    => directory,
@@ -14,7 +15,7 @@ class openelis {
   }
 
   exec { "latest_openelis_webapp" :
-    command   => "unzip -o -q ${build_output_dir}/openelis.war -d ${openelis_webapp_location} ${deployment_log_expression}",
+    command   => "unzip -o -q ${build_output_dir}/${openelis_war_file_name}.war -d ${openelis_webapp_location} ${deployment_log_expression}",
     provider  => shell,
     path      => "${os_path}",
     require   => [File["${deployment_log_file}"], File["${openelis_webapp_location}"]],
@@ -44,4 +45,14 @@ class openelis {
     path => "${os_path}:${ant_home}/bin",
     require => Exec["latest_bahmni_openelis_codebase"]
   }  
+
+  file { "${log4j_xml_file}" :
+    ensure      => present,
+    content     => template("openelis/log4j.xml.erb"),
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+    require     => Exec["latest_openelis_webapp"],
+    mode        => 664,
+  }
+
 }

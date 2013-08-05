@@ -75,7 +75,7 @@ class bahmni-openerp {
     require     => [File["${temp_dir}/bahmni-openerp/run-liquibase.sh"]]
   }
 
-   file { "${log4j_xml_file}" :
+  file { "${log4j_xml_file}" :
     ensure      => present,
     content     => template("bahmni-openerp/log4j.xml.erb"),
     owner       => "${bahmni_user}",
