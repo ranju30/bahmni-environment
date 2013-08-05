@@ -10,7 +10,6 @@ class openmrs {
     purge     => true,
     owner => "${bahmni_user}",
     group => "${bahmni_user}",
-
   }
 
   file { "/home/${bahmni_user}/.OpenMRS/openmrs-runtime.properties" :

@@ -1,6 +1,9 @@
 class bahmni-openerp {
 	require openerp
 
+    $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openerp_atomfeed_war_file_name}/WEB-INF/classes/log4j.xml"
+
+
 	file { "${bahmni_openerp_temp_dir}" :
     ensure    => directory,
     owner	  => "${openerpShellUser}",
@@ -48,7 +51,7 @@ class bahmni-openerp {
 	}
 
   exec { "latest_openerp_atomfeed_webapp" :
-    command   => "unzip -o -q ${build_output_dir}/${openerp_atomfeed_war_file_name} -d ${tomcatInstallationDirectory}/webapps/openerp-atomfeed-service ${deployment_log_expression}",
+    command   => "unzip -o -q ${build_output_dir}/${openerp_atomfeed_war_file_name}.war -d ${tomcatInstallationDirectory}/webapps/openerp-atomfeed-service ${deployment_log_expression}",
     provider  => shell,
     path      => "${os_path}",
     require   => [Exec["bahmni_openerp"]],
@@ -70,6 +73,15 @@ class bahmni-openerp {
     provider    => shell,
     cwd         => "${tomcatInstallationDirectory}/webapps",
     require     => [File["${temp_dir}/bahmni-openerp/run-liquibase.sh"]]
+  }
+
+   file { "${log4j_xml_file}" :
+    ensure      => present,
+    content     => template("bahmni-openerp/log4j.xml.erb"),
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+    require     => Exec["latest_openerp_atomfeed_webapp"],
+    mode        => 664,
   }
 
 }
