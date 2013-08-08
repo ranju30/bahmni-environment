@@ -116,5 +116,5 @@ $imagesDirectory="/home/${bahmni_user}/patient_images"
 $imagesUrl="/patient_images"
 
 ##########################################################################
-
-$ant_home="/home/${bahmni_user}/apache-ant-1.9.1"
+$ant_version="1.9.1"
+$ant_home="/home/${bahmni_user}/apache-ant-${ant_version}"

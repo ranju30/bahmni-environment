@@ -1,6 +1,4 @@
 class bahmni-openerp {
-	require openerp
-
     $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openerp_atomfeed_war_file_name}/WEB-INF/classes/log4j.xml"
 
 
