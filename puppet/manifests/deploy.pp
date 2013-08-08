@@ -12,4 +12,5 @@ node default {
   include bahmni-data
   include bahmni-openerp
   include bahmni-ui-apps
+  include openelis
 }
