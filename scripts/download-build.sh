@@ -15,6 +15,8 @@ wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_Pipeline/Latest/Buil
 wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_Pipeline/Latest/BuildStage/Latest/FunctionalTests/deployables/openmrs-data-jars.zip
 wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_Pipeline/Latest/BuildStage/Latest/BahmniCore/elisatomfeedclient-beanshell.zip
 
+wget https://ci-bahmni.thoughtworks.com/go/files/OpenERP_Pipeline/Latest/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
+
 OPENElIS_BUILD="Latest"
 wget https://ci-bahmni.thoughtworks.com/go/files/OpenElis/$OPENElIS_BUILD/Build/Latest/build/openelis.war
 wget https://ci-bahmni.thoughtworks.com/go/files/OpenElis/$OPENElIS_BUILD/Build/Latest/build/OpenElis.zip

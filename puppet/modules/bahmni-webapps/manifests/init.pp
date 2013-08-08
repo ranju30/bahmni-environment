@@ -21,12 +21,6 @@ class bahmni-webapps {
     path => "${os_path}"
   }
 
-  exec { "openmrs_omods" :
-    command => "cp ${packages_servers_dir}/*.omod ${openmrs_modules_dir} ${deployment_log_expression}",
-    user    => "${bahmni_user}",
-    require => File["${openmrs_modules_dir}"],
-    path => "${os_path}"
-  }
 
   file { "${temp_dir}/run-modules-liquibase.sh" :
     ensure      => present,
@@ -41,7 +35,7 @@ class bahmni-webapps {
     path        => "${os_path}",
     provider    => shell,
     cwd         => "${tomcatInstallationDirectory}/webapps",
-    require     => [Exec["bahmni_omods"], Exec["openmrs_omods"], File["${temp_dir}/run-modules-liquibase.sh"]]
+    require     => [Exec["bahmni_omods"], File["${temp_dir}/run-modules-liquibase.sh"]]
   }
   
 }

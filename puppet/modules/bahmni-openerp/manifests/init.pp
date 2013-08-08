@@ -3,11 +3,8 @@ class bahmni-openerp {
 
 
 	file { "${bahmni_openerp_temp_dir}" :
-    ensure    => directory,
-    owner	  => "${openerpShellUser}",
-    recurse   => true,
-    force     => true,
-    purge     => true
+    ensure    => absent,
+    force     => true
 	}
 
 	exec { "bahmni_openerp_codebase" :

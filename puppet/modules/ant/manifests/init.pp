@@ -6,7 +6,7 @@ class ant {
 	}
 
 	exec { "ant_untar" :
-	  command => "tar zxf ${package_dir}/tools/apache-ant-${ant_version}.tar.gz ${deployment_log_expression}",
+	  command => "tar zxf ${package_dir}/tools/apache-ant-${ant_version}-bin.tar.gz ${deployment_log_expression}",
 	  user    => "${bahmni_user}",
 	  cwd     => "/home/${bahmni_user}",
 	  creates => "${ant_home}",
