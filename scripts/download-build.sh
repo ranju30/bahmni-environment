@@ -17,9 +17,8 @@ wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_Pipeline/Latest/Buil
 
 wget https://ci-bahmni.thoughtworks.com/go/files/OpenERP_Pipeline/Latest/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
 
-OPENElIS_BUILD="Latest"
-wget https://ci-bahmni.thoughtworks.com/go/files/OpenElis/$OPENElIS_BUILD/Build/Latest/build/openelis.war
-wget https://ci-bahmni.thoughtworks.com/go/files/OpenElis/$OPENElIS_BUILD/Build/Latest/build/OpenElis.zip
+wget https://ci-bahmni.thoughtworks.com/go/files/OpenElis/Latest/Build/Latest/build/openelis.war
+wget https://ci-bahmni.thoughtworks.com/go/files/OpenElis/Latest/Build/Latest/build/OpenElis.zip
 
 
 unzip distro-1.0-SNAPSHOT-distro.zip

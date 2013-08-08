@@ -23,4 +23,4 @@ set +e
 $3/bin/ant db.init -propertyfile $PROPERTIES_FILE -f bahmni-flyway-ant.xml
 set -e
 
-$3/bin/ant db.migrate -propertyfile $PROPERTIES_FILE -f bahmni-flyway-ant.xml
+$3/bin/ant db.repair db.migrate -propertyfile $PROPERTIES_FILE -f bahmni-flyway-ant.xml
