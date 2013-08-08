@@ -2,6 +2,7 @@ class bahmni-webapps {
   require openmrs
   require bahmni-configuration
 
+  $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
   $openmrs_modules_dir = "/home/${bahmni_user}/.OpenMRS/modules"
 
   file { "${openmrs_modules_dir}" :
@@ -37,5 +38,18 @@ class bahmni-webapps {
     cwd         => "${tomcatInstallationDirectory}/webapps",
     require     => [Exec["bahmni_omods"], File["${temp_dir}/run-modules-liquibase.sh"]]
   }
+
+  file { "${build_output_dir}/elisatomfeedclient-beanshell.zip" :
+        ensure      => present
+        owner       => "${bahmni_user}",
+        group       => "${bahmni_user}",
+        mode        => 554
+  }
+
+  exec { "openelis-atomfeed-beanshell" :
+      command => "unzip ${build_output_dir}/elisatomfeedclient-beanshell.zip $openmrs_dir/beanshell",
+      path        => "${os_path}",
+      provider    => shell
+    }
   
 }
