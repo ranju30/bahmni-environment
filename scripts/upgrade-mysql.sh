@@ -20,7 +20,7 @@ CNFBACKUP=${CNF}.backup.${NOW}
 rm -f $BACKUPFILE
 
 mysqldump -uroot -p$rootPassword --all-databases > $BACKUPFILE
-service mysqld stop
+service mysql stop
 
 yum -vy remove mysql.x86_64 mysql-libs.x86_64 mysql-server.x86_64
 yum -vy install MySQL-server MySQL-shared MySQL-shared-compat MySQL-client
