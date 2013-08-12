@@ -40,7 +40,7 @@ class bahmni-webapps {
   }
 
   file { "${build_output_dir}/elisatomfeedclient-beanshell.zip" :
-        ensure      => present
+        ensure      => present,
         owner       => "${bahmni_user}",
         group       => "${bahmni_user}",
         mode        => 554
