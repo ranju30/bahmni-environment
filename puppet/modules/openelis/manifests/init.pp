@@ -5,29 +5,18 @@ class openelis {
   $bahmni_openelis_temp_dir = "${temp_dir}/OpenElis"
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openelis_war_file_name}/WEB-INF/classes/log4j.xml"
 
-  file { "${openelis_webapp_location}" :
-    ensure    => directory,
-    recurse   => true,
-    force     => true,
-    purge     => true,
-    owner => "${bahmni_user}",
-    group => "${bahmni_user}",
-  }
-
   exec { "latest_openelis_webapp" :
-    command   => "unzip -o -q ${build_output_dir}/${openelis_war_file_name}.war -d ${openelis_webapp_location} ${deployment_log_expression}",
+    command   => "rm -rf ${openelis_webapp_location} && unzip -o -q ${build_output_dir}/${openelis_war_file_name}.war -d ${openelis_webapp_location} ${deployment_log_expression}",
     provider  => shell,
     path      => "${os_path}",
-    require   => [File["${deployment_log_file}"], File["${openelis_webapp_location}"]],
+    require   => [File["${deployment_log_file}"]],
     user      => "${bahmni_user}",
   }
 
   exec { "bahmni_openelis_codebase" :
     provider => "shell",
-    command   => "unzip -o -q ${build_output_dir}/OpenElis.zip -d ${temp_dir} ${deployment_log_expression}",
-    path => "${os_path}",
-    creates   => "${bahmni_openelis_temp_dir}",
-    timeout => 0
+    command   => "rm -rf ${bahmni_openelis_temp_dir} && unzip -o -q ${build_output_dir}/OpenElis.zip -d ${temp_dir} ${deployment_log_expression}",
+    path => "${os_path}"
   }
 
   exec { "openelis_setupdb" :
@@ -46,5 +35,4 @@ class openelis {
     require     => Exec["latest_openelis_webapp"],
     mode        => 664,
   }
-
 }
