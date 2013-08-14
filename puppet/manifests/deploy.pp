@@ -9,7 +9,7 @@ node default {
   include openmrs
   include bahmni-configuration
   include bahmni-webapps
-  include bahmni-data
+  class { bahmni-data: require => Class["bahmni-webapps"] }
   include bahmni-openerp
   include bahmni-ui-apps
   include openelis
