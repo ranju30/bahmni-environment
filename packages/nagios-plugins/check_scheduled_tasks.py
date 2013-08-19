@@ -27,7 +27,10 @@ else:
 
 socket.setdefaulttimeout(5)
 request = urllib2.Request(serverUrl)
-request.add_header('Authorization', 'Basic ' + b64encode(options.authorization))
+
+if (not options.authorization is None):
+	request.add_header('Authorization', 'Basic ' + b64encode(options.authorization))
+
 try:
 	response = urllib2.urlopen(request)
 except urllib2.HTTPError as e:
