@@ -51,6 +51,13 @@ class jasperserver {
     require     => Exec["extracted_jasperserver"]
   }
 
+  exec {"jasper_postgresql_connector" :
+    command      => "cp ${packages_servers_dir}/${postgresql_jdbc_connector_jar_file} ${jasperTomcatHome}/lib/ ${log_expression}",
+    path        => "${os_path}",
+    user        => "${bahmni_user}",
+    require     => Exec["extracted_jasperserver"]
+  }
+
   file { "${default_master_properties}" :
     content     => template("jasperserver/default_master.properties.erb"),
     owner       => "${bahmni_user}",
@@ -71,7 +78,7 @@ class jasperserver {
     user        => "${bahmni_user}",
     path        => "${os_path}",
     provider    => "shell",
-    require     => [Exec["extracted_jasperserver"], File["${do_js_setup_script}"], File["${default_master_properties}"], Exec["jasper_mysql_connector"]]
+    require     => [Exec["extracted_jasperserver"], File["${do_js_setup_script}"], File["${default_master_properties}"], Exec["jasper_mysql_connector"], Exec["jasper_postgresql_connector"]]
   }
 
   file { "${temp_dir}/configure_jasper_home.sh" :
