@@ -35,4 +35,23 @@ class openelis {
     require     => Exec["latest_openelis_webapp"],
     mode        => 664,
   }
+
+  file { "${uploadedFilesDirectory}" :
+    ensure => directory,
+    mode => 774,
+    owner => "${bahmni_user}",
+    group => "${bahmni_user}",
+  }
+
+  file { "${uploadedFilesDirectory}/elis" :
+    ensure => directory,
+    mode => 774,
+    owner => "${bahmni_user}",
+    group => "${bahmni_user}",
+    require => File["${uploadedFilesDirectory}"],
+  }
+
+## tomcat file change
+  ##<Context path="/uploaded-files" docBase="/home/jss/uploaded-files"/>
+  
 }

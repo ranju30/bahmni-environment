@@ -48,6 +48,8 @@ $registrationAppDirectory="${httpd_deploy_dir}/registration"
 $opdAppDirectory="${httpd_deploy_dir}/opd"
 $bahmniAppsAppDirectory="${httpd_deploy_dir}/bahmni-apps"
 
+$uploadedFilesDirectory="${tomcatParentDirectory}/uploaded-files"
+
 # Backup config
 $backup_hour = 3 # 3 AM Every day  
 
