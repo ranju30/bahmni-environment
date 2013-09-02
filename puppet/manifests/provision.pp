@@ -13,10 +13,10 @@ node default {
 	class {users : userName => "${bahmni_user}", password_hash => "${bahmni_user_password_hash}"}
 	include tomcat
 	include httpd
-	include jasperserver
+	class { jasperserver: require => Class["tomcat"] }
  	include python
  	include postgresql
-	include openerp
+	class { openerp: require => Class["python", "postgresql"] }
 	include nagios
 	include bahmni-nagios
 }

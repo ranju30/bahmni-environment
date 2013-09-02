@@ -1,7 +1,4 @@
 class openerp {
-  require python
-  require postgresql
-
   $openerp_temp = "${temp_dir}/openerp"
   $log_file = "${logs_dir}/openerp-module.log"
   $log_expression = ">> ${log_file} 2>> ${log_file}"

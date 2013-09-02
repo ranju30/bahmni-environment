@@ -1,6 +1,4 @@
 class jasperserver {
-  require tomcat
-  
   $log_file = "${logs_dir}/jasperserver-module.log"
   $log_expression = ">> ${log_file} 2>> ${log_file}"
   $default_master_properties = "${jasperHome}/buildomatic/default_master.properties"
