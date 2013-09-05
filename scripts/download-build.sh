@@ -13,7 +13,7 @@ wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_Pipeline/Latest/Buil
 wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_Pipeline/Latest/BuildStage/Latest/FunctionalTests/deployables/bahmni-apps.zip
 wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_Pipeline/Latest/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-0.2-SNAPSHOT-jar-with-dependencies.jar
 wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_Pipeline/Latest/BuildStage/Latest/FunctionalTests/deployables/openmrs-data-jars.zip
-wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_Pipeline/Latest/BuildStage/Latest/FunctionalTests/deployables/elisatomfeedclient-beanshell.zip
+wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_Pipeline/Latest/BuildStage/Latest/FunctionalTests/deployables/elisatomfeedclient-omod-beanshell.zip
 
 wget https://ci-bahmni.thoughtworks.com/go/files/OpenERP_Pipeline/Latest/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
 

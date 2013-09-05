@@ -39,7 +39,7 @@ class bahmni-webapps {
     require     => [Exec["bahmni_omods"], File["${temp_dir}/run-modules-liquibase.sh"]]
   }
 
-  file { "${build_output_dir}/elisatomfeedclient-beanshell.zip" :
+  file { "${build_output_dir}/elisatomfeedclient-omod-beanshell.zip" :
        ensure      => present,
        owner       => "${bahmni_user}",
        group       => "${bahmni_user}",
@@ -47,7 +47,7 @@ class bahmni-webapps {
   }
 
   exec { "openelis-atomfeed-beanshell" :
-     command => "unzip ${build_output_dir}/elisatomfeedclient-beanshell.zip $openmrs_dir/beanshell",
+     command => "unzip ${build_output_dir}/elisatomfeedclient-omod-beanshell.zip -d $openmrs_dir/beanshell",
      path        => "${os_path}",
      provider    => shell
    }
