@@ -5,12 +5,11 @@ class mysql-common {
 
 	package { "MySQL-shared" :
 		ensure  => present
-	}
-	
+	}	
 }
 
 class mysql {
-	require yum-repo
+	#require yum-repo
 	require mysql-common
 
 	package { "MySQL-client" :
@@ -19,7 +18,7 @@ class mysql {
 }
 
 class mysqlserver {
-	require yum-repo
+	#require yum-repo
 	require mysql-common
 	
 	package { "MySQL-server" :
@@ -31,31 +30,29 @@ class mysqlserver {
 		content     => template("mysql/my.cnf"),
 		require     => Package["MySQL-server"],
 	}
+	
+	file { "/tmp/changepassword.sql" :
+		ensure      => present,
+		content     => template("mysql/changepassword.sql.erb"),
+	}
+
+	file { "/root/initdb.sh" :
+		ensure      => present,
+		content     => template("mysql/initdb.sh.erb"),
+	}
 
 	service { "mysql" :
 		ensure => running,
 		enable => true,
-		require => File["/etc/my.cnf"]
+		require => File["/etc/my.cnf"],
 	}
 
- 	exec { "setmysqlpassword" :
-		command => "mysqladmin -u root PASSWORD ${mysqlRootPassword}; /bin/true",
-		require => [Package["MySQL-server"], Package["MySQL-client"] , Service["mysql"]],
-		path => "${os_path}"
-	}
+	notice('sh /root/initdb.sh ${mysqlRootPassword} ${deployment_log_expression}')
 
-	## Needed for Reporting database creation.. Mujir - move away from this file to a Reporting module
-	file { "${temp_dir}/createReportingDB.sql" :
-		ensure      => present,
-		content     => template("mysql/createReportingDB.sql"),
-		require     => Exec["setmysqlpassword"],
+	exec {"changepassword" : 
+		command		=> "sh /root/initdb.sh ${mysqlRootPassword} ${deployment_log_expression}",
+	    provider  	=> shell,
+    	user      	=> "root",
+    	require 	=> [File["/tmp/changepassword.sql"], File["/root/initdb.sh"], Service["mysql"]],
 	}
-
-	## Needed for Reporting database creation.. Mujir - move away from this file to a Reporting module
-  exec { "createReportingDB" :
-    command     => "mysql -uroot -p${mysqlRootPassword} < ${temp_dir}/createReportingDB.sql ${deployment_log_expression}",
-    path        => "${os_path}",
-    provider    => shell,
-    require     => File["${temp_dir}/createReportingDB.sql"]
-  }
 }
