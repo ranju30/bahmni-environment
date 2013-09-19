@@ -47,7 +47,7 @@ class bahmni-webapps {
   }
 
   exec { "openelis-atomfeed-beanshell" :
-     command => "unzip ${build_output_dir}/elisatomfeedclient-omod-beanshell.zip -d $openmrs_dir/beanshell",
+     command => "unzip -o ${build_output_dir}/elisatomfeedclient-omod-beanshell.zip -d $openmrs_dir/beanshell",
      path        => "${os_path}",
      provider    => shell
    }
