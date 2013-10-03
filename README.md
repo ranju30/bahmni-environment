@@ -6,3 +6,4 @@ virtual box and vagrant tips
 4. If you are using port forwarding and using any of the forwarded ports on your host machine, your vagrant boot can hang.
 5. VAGRANT_LOG=info vagrant <command> provides useful insights incase you get stuck.
 6. If your eth1 and eth2 on your VM still (even after following step 3) doesn't come up, you might be better off replacing /etc/sysconfig/network-scripts/ifcfg-eth1 and /etc/sysconfig/network-scripts/ifcfg-eth2 files on your VM with these respectively - https://raw.github.com/Bhamni/bahmni-environment/master/samples/virtualbox-vargant/ifcfg-eth1 and https://raw.github.com/Bhamni/bahmni-environment/master/samples/virtualbox-vargant/ifcfg-eth2 respectively. You can use wget.
+7. Keep the vagrant plugins uptodate using vagrant plugin ... commands.
