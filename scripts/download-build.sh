@@ -1,7 +1,7 @@
 # $1 should be /packages/build folder
 if [ $# -lt 1 ]
 then
-        echo "Usage : $0 download_folder(packages/build)"
+        echo "Usage : $0 download_folder(/packages/build)"
         exit
 fi
 
@@ -18,7 +18,9 @@ then
   BASE_URL=http://172.18.2.11:8153
 fi
 
-wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/Latest/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-1.0-SNAPSHOT-distro.zip
+rm -f *
+
+wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/Latest/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-2.5-SNAPSHOT-distro.zip
 wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/Latest/BuildStage/Latest/FunctionalTests/deployables/registration.zip
 wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/Latest/BuildStage/Latest/FunctionalTests/deployables/opd.zip
 wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/Latest/BuildStage/Latest/FunctionalTests/deployables/bahmni-apps.zip
@@ -32,5 +34,5 @@ wget $BASE_URL/go/files/OpenElis/Latest/Build/Latest/build/openelis.war
 wget $BASE_URL/go/files/OpenElis/Latest/Build/Latest/build/OpenElis.zip
 
 
-unzip distro-1.0-SNAPSHOT-distro.zip
-cp distro-1.0-SNAPSHOT/* .
+unzip distro-2.5-SNAPSHOT-distro.zip
+cp distro-2.5-SNAPSHOT/* .
