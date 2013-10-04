@@ -88,7 +88,6 @@ $openelis_password="adminADMIN\!"
 $openmrs_database_user = "openmrs-user"
 $openmrs_database_password = "password"
 $openmrs_password = "test"
-$idgen_omod_file = "idgen-2.4.1.omod"
 
 # OpenERP properties used by OpenMRS
 $openERPPort=8069
