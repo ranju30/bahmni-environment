@@ -90,4 +90,12 @@ class openmrs {
     cwd         => "${tomcatInstallationDirectory}/webapps",
     require     => [Exec["openmrs_database"], File["${temp_dir}/run-liquibase.sh"], Exec["latest_openmrs_webapp"]]
   }
+
+   exec { "bahmni_java_utils_jars" :
+    command => "cp ${build_output_dir}/*.jar ${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/lib ${deployment_log_expression}",
+    user    => "${bahmni_user}",
+    require => Exec["latest_openmrs_webapp"],
+    path => "${os_path}"
+  }
+
 }
