@@ -21,13 +21,13 @@ fi
 MRS_Build_Name=Latest
 rm -f *
 
-wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-2.5-SNAPSHOT-distro.zip
-wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/registration.zip
-wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/opd.zip
-wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/bahmni-apps.zip
-wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-2.5-SNAPSHOT-jar-with-dependencies.jar
-wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/openmrs-data-jars.zip
-wget $BASE_URL/go/files/Bahmni_MRS_Pipeline/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/elisatomfeedclient-omod-beanshell.zip
+wget $BASE_URL/go/files/Bahmni_MRS_master/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-2.5-SNAPSHOT-distro.zip
+wget $BASE_URL/go/files/Bahmni_MRS_master/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/registration.zip
+wget $BASE_URL/go/files/Bahmni_MRS_master/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/opd.zip
+wget $BASE_URL/go/files/Bahmni_MRS_master/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/bahmni-apps.zip
+wget $BASE_URL/go/files/Bahmni_MRS_master/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-2.5-SNAPSHOT-jar-with-dependencies.jar
+wget $BASE_URL/go/files/Bahmni_MRS_master/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/openmrs-data-jars.zip
+wget $BASE_URL/go/files/Bahmni_MRS_master/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/elisatomfeedclient-omod-beanshell.zip
 
 wget $BASE_URL/go/files/OpenERP_Pipeline/Latest/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
 
