@@ -47,6 +47,7 @@ $httpd_deploy_dir="/var/www"
 $registrationAppDirectory="${httpd_deploy_dir}/registration"
 $opdAppDirectory="${httpd_deploy_dir}/opd"
 $bahmniAppsAppDirectory="${httpd_deploy_dir}/bahmni-apps"
+$homeAppDirectory="${httpd_deploy_dir}/home"
 
 $uploadedFilesDirectory="${tomcatParentDirectory}/uploaded-files"
 
@@ -66,10 +67,11 @@ $httpsRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/o
 $httpsStaticWebapps = [{path => "/registration", directory => "${registrationAppDirectory}"},
                        {path => "/opd", directory => "${opdAppDirectory}"},
 					   {path => "/bahmni-apps", directory => "${bahmniAppsAppDirectory}"},
-                       {path => "/patient_images", directory => "${httpd_deploy_dir}/patient_images"}]
+                       {path => "/patient_images", directory => "${httpd_deploy_dir}/patient_images"},
+                       {path => "/home", directory => "${homeAppDirectory}"}]
 $httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib", 
 						   "${bahmniAppsAppDirectory}/lib", "${bahmniAppsAppDirectory}/css/lib"]                    
-$httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules", "${opdAppDirectory}/modules"]
+$httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules", "${opdAppDirectory}/modules", "${homeAppDirectory}/modules"]
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
 ######################## HTTPD CONFIG END################################################
 
