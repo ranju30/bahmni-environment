@@ -47,7 +47,7 @@ $httpd_deploy_dir="/var/www"
 $registrationAppDirectory="${httpd_deploy_dir}/registration"
 $opdAppDirectory="${httpd_deploy_dir}/opd"
 $homeAppDirectory="${httpd_deploy_dir}/home"
-$bahmniConfigDirectory=="${httpd_deploy_dir}/bahmni_config"
+$bahmniConfigDirectory="${httpd_deploy_dir}/bahmni_config"
 
 $uploadedFilesDirectory="${tomcatParentDirectory}/uploaded-files"
 
