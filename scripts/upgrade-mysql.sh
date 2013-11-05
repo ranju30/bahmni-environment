@@ -19,7 +19,7 @@ CNF=/etc/my.cnf
 CNFBACKUP=${CNF}.backup.${NOW}
 rm -f $BACKUPFILE
 
-mysqldump -uroot -p$rootPassword --all-databases > $BACKUPFILE
+mysqldump -uroot -p$rootPassword --all-databases --routines > $BACKUPFILE
 service mysqld stop
 
 yum -vy remove mysql.x86_64 mysql-libs.x86_64 mysql-server.x86_64

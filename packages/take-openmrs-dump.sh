@@ -1,1 +1,1 @@
-mysqldump -uroot -ppassword openmrs > openmrs-dump.sql
+mysqldump -uroot -ppassword --routines openmrs > openmrs-dump.sql

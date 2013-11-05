@@ -8,4 +8,4 @@ if [ -z $rootPassword ]; then
 fi	
 
 TIME=`date +%Y%m%d_%H%M%S`
-mysqldump -uroot -p$rootPassword --all-databases | gzip > /backup/mysql_backup_$TIME.sql.gz
+mysqldump -uroot -p$rootPassword --all-databases --routines | gzip > /backup/mysql_backup_$TIME.sql.gz

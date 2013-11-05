@@ -60,7 +60,7 @@ echo -e "\tLog file position\t: " $log_file_pos
 echo "################################################################"
 
 echo "Taking MySQL dump of the entire DB."
-mysqldump -u$musername -p$mpassword --all-databases --master-data > mysql_master_dump.db
+mysqldump -u$musername -p$mpassword --all-databases --routines --master-data > mysql_master_dump.db
 mysql -u$musername -p$mpassword -e "unlock tables";
 
 echo "Completed Taking dump. Find file named 'mysql_master_dump.db' "
