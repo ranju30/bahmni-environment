@@ -1,5 +1,6 @@
 class bahmni-distro {
-notice("File is ${build_output_dir}/${openmrs_distro_file_name_prefix}-distro.zip")
+
+  notice("Variable is ${openmrs_distro_file_name_prefix}")
 
   file { "${build_output_dir}/${openmrs_distro_file_name_prefix}-distro.zip" :
     owner  => "${bahmni_user}",
