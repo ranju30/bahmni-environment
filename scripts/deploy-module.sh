@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 SCRIPTS_DIR=`dirname $0`
 BASE_DIR=$SCRIPTS_DIR/..
 
