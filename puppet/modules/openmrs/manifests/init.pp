@@ -1,4 +1,6 @@
 class openmrs {
+  require bahmni-distro
+  
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/classes/log4j.xml"
   $openmrs_webapp_location =  "${tomcatInstallationDirectory}/webapps/openmrs"
   $web_xml_file = "${openmrs_webapp_location}/WEB-INF/web.xml"
@@ -22,7 +24,7 @@ class openmrs {
   }
 
   exec { "latest_openmrs_webapp" :
-    command   => "unzip -o -q ${build_output_dir}/${openmrs_war_file_name}.war -d ${tomcatInstallationDirectory}/webapps/openmrs ${deployment_log_expression}",
+    command   => "unzip -o -q ${build_output_dir}/${openmrs_distro_file_name_prefix}/${openmrs_war_file_name}.war -d ${tomcatInstallationDirectory}/webapps/openmrs ${deployment_log_expression}",
     provider  => shell,
     path      => "${os_path}",
     require   => [File["${deployment_log_file}"], File["${openmrs_webapp_location}"]],
@@ -53,13 +55,6 @@ class openmrs {
     require     => Exec["latest_openmrs_webapp"],
     mode        => 664
   }
-
-  # exec { "catalina_start" :
-  #   command     => "sh ${tomcatInstallationDirectory}/bin/catalina.sh start ${deployment_log_expression}",
-  #   user        => "${bahmni_user}",
-  #   provider    => shell,
-  #   path        => "${os_path}"
-  # }
 
   file { "${temp_dir}/create-openmrs-db-and-user.sql" :
     ensure      => present,

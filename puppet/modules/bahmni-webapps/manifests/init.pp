@@ -1,6 +1,7 @@
 class bahmni-webapps {
   require openmrs
   require bahmni-configuration
+  require bahmni-distro
 
   $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
   $openmrs_modules_dir = "/home/${bahmni_user}/.OpenMRS/modules"
@@ -16,9 +17,9 @@ class bahmni-webapps {
   }
 
   exec { "bahmni_omods" :
-    command => "cp ${build_output_dir}/*.omod ${openmrs_modules_dir} ${deployment_log_expression}",
+    command => "cp ${build_output_dir}/${openmrs_distro_file_name_prefix}/*.omod ${openmrs_modules_dir} ${deployment_log_expression}",
     user    => "${bahmni_user}",
-    require => File["${openmrs_modules_dir}"],
+    require => [File["${openmrs_modules_dir}"], Exec["unzip_distro"]],
     path => "${os_path}"
   }
 
