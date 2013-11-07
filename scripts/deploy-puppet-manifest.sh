@@ -8,8 +8,6 @@ usage() {
 	echo "<manifest-file> is the name of a manifest file present in ${BASE_DIR}/puppet/manifests directory"
 }
 
-echo $FACTER_openmrs_distro_file_name_prefix > /tmp/name
-
 MODULE_NAME=$1
 if [ "${MODULE_NAME}a" = "a" ]
 then
