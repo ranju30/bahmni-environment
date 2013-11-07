@@ -79,7 +79,7 @@ class openmrs {
   }
 
   exec { "openmrs_data" :
-    command     => "${temp_dir}/run-liquibase.sh ${build_output_dir} ${deployment_log_expression}",
+    command     => "${temp_dir}/run-liquibase.sh ${build_output_dir}/${openmrs_distro_file_name_prefix} ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
     cwd         => "${tomcatInstallationDirectory}/webapps",
