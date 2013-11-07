@@ -44,7 +44,7 @@ class bahmni-webapps {
        ensure      => present,
        owner       => "${bahmni_user}",
        group       => "${bahmni_user}",
-       mode        => 554
+       mode        => 777
   }
 
   exec { "openelis-atomfeed-beanshell" :
