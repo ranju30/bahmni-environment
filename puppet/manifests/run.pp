@@ -7,5 +7,6 @@ import "configurations/deployment-configuration"
 # export FACTER_module_name="bahmni-data"
 # puppet apply puppet/manifests/run.pp  --modulepath=puppet/modules/
 node default {
-	include $module_name
+	notice "Running $module_to_run"
+	include $module_to_run
 }
