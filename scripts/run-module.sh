@@ -24,4 +24,7 @@ if [ $RETURN_CODE -ne 0 ] && [ $RETURN_CODE -ne 2 ]
 then
 	echo "Error running script. Return code = ${RETURN_CODE}. Exiting"
 	exit 1
+else 
+	echo "All fine. Return code = ${RETURN_CODE}. Exiting"
+	exit 0
 fi
