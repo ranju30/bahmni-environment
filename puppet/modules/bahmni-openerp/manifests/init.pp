@@ -9,17 +9,10 @@ class bahmni-openerp {
 
 	exec { "bahmni_openerp_codebase" :
     provider => "shell",	
-		command => "git clone https://github.com/Bhamni/openerp-modules.git ${bahmni_openerp_temp_dir} ${deployment_log_expression}",
+		command => "cp -R  ${build_output_dir}/openerp-modules ${bahmni_openerp_temp_dir} ${deployment_log_expression}",
 		path => "${os_path}",
 		require => File["${bahmni_openerp_temp_dir}"]
 	}
-
-	# exec { "bahmni_openerp_codebase_version" :
-	# 	command => "git checkout --track -b ${bahmni_openerp_branch} remotes/origin/${bahmni_openerp_branch} ${deployment_log_expression}",
-	# 	path => "${os_path}",
-	# 	cwd => "${bahmni_openerp_temp_dir}",
-	# 	require => Exec["bahmni_openerp_codebase"]
-	# }
 
     ## Mujir/Sush - Using puppet's {recurse => true} takes > 13 hours to complete!!!!!!
 	exec { "change_group_rights_for_openerp_temp_folders_current_content" :
@@ -37,7 +30,7 @@ class bahmni-openerp {
 	}
 	
 	exec { "bahmni_openerp" :
-	  provider => "shell",
+	  	provider => "shell",
 		command => "cp -r ${bahmni_openerp_temp_dir}/* ${openerp_install_location}/openerp/addons ${deployment_log_expression}",
 		path => "${os_path}",
 		user => "${openerpShellUser}",
@@ -45,13 +38,13 @@ class bahmni-openerp {
 		require => Exec["change_group_rights_for_openerp_folders_current_content"],
 	}
 
-  exec { "latest_openerp_atomfeed_webapp" :
-    command   => "unzip -o -q ${build_output_dir}/${openerp_atomfeed_war_file_name}.war -d ${tomcatInstallationDirectory}/webapps/openerp-atomfeed-service ${deployment_log_expression}",
-    provider  => shell,
-    path      => "${os_path}",
-    require   => [Exec["bahmni_openerp"]],
-    user      => "${bahmni_user}"
-  }
+    exec { "latest_openerp_atomfeed_webapp" :
+	    command   => "unzip -o -q ${build_output_dir}/${openerp_atomfeed_war_file_name}.war -d ${tomcatInstallationDirectory}/webapps/openerp-atomfeed-service ${deployment_log_expression}",
+	    provider  => shell,
+	    path      => "${os_path}",
+	    require   => [Exec["bahmni_openerp"]],
+	    user      => "${bahmni_user}"
+	}
 
   file { "${temp_dir}/bahmni-openerp/run-liquibase.sh" :
     ensure      => present,
@@ -70,13 +63,22 @@ class bahmni-openerp {
     require     => [File["${temp_dir}/bahmni-openerp/run-liquibase.sh"]]
   }
 
-  file { "${log4j_xml_file}" :
-    ensure      => present,
-    content     => template("bahmni-openerp/log4j.xml.erb"),
-    owner       => "${bahmni_user}",
-    group       => "${bahmni_user}",
-    require     => Exec["latest_openerp_atomfeed_webapp"],
-    mode        => 664,
-  }
+	file { "${log4j_xml_file}" :
+		ensure      => present,
+		content     => template("bahmni-openerp/log4j.xml.erb"),
+		owner       => "${bahmni_user}",
+		group       => "${bahmni_user}",
+		require     => Exec["latest_openerp_atomfeed_webapp"],
+		mode        => 664,
+	}
 
+	#Hack: OpenERP module is not idempotent. Because of this, I can't add
+	#a notify to Exec["bahmni_openerp"] and get on with it. 
+	#Needs to be fixed someday. 
+    exec { "restart-openerp" :
+	    command   => "service openerp restart",
+	    provider  => shell,
+	    path      => "${os_path}",
+	    require   => [Exec["bahmni_openerp"]]
+	}
 }
