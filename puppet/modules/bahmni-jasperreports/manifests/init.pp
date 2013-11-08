@@ -4,7 +4,7 @@ class bahmni-jasperreports {
 	
 	exec { "bahmni-jasperserver-deploy-reports" :
     provider => "shell",	
-		command => "scripts/deploy.sh -j $jasperHome -p ../conf/${properties_file} ${deployment_log_expression}",
+		command => "scripts/deploy.sh -j $jasperHome -p conf/${properties_file} ${deployment_log_expression}",
 		path    => "${os_path}",
     	cwd     => "${build_output_dir}/jss-reports",
 	}
