@@ -23,11 +23,9 @@ BRANCH=master
 
 rm -f *
 
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-2.5-SNAPSHOT-distro.zip
+wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-1.0-SNAPSHOT-distro.zip
 wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/registration.zip
 wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/opd.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/home.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/bahmni_config.zip
 wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-2.5-SNAPSHOT-jar-with-dependencies.jar
 wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/openmrs-data-jars.zip
 wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/elisatomfeedclient-omod-beanshell.zip
@@ -38,5 +36,5 @@ wget $BASE_URL/go/files/OpenElis_$BRANCH/Latest/Build/Latest/build/openelis.war
 wget $BASE_URL/go/files/OpenElis_$BRANCH/Latest/Build/Latest/build/OpenElis.zip
 
 
-unzip distro-2.5-SNAPSHOT-distro.zip
+unzip distro-1.0-SNAPSHOT-distro.zip
 cp distro-2.5-SNAPSHOT/* .
