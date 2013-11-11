@@ -18,7 +18,6 @@ fi
 
 FACTER_module_to_run=$MODULE_NAME puppet apply $BASE_DIR/puppet/manifests/run.pp  --modulepath=$BASE_DIR/puppet/modules/  --detailed-exitcodes
 RETURN_CODE=$?
-echo Return code is $RETURN_CODE
 if [ $RETURN_CODE -ne 0 ] && [ $RETURN_CODE -ne 2 ]
 then
 	echo "Error running script. Return code = ${RETURN_CODE}. Exiting"
