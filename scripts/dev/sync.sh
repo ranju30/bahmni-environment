@@ -15,6 +15,6 @@ remote=$2
 path=$3
 user=${4:-root}
 
-sync_command="date +%H:%M:%S && rsync -iru --exclude .git --exclude target  --exclude .svn  --exclude dist --exclude out --progress --itemize-changes --update --delete --chmod=Du=r,Dg=rwx,Do=rwx,Fu=rwx,Fg=rwx,Fo=rwx -p $local -e ssh $user@$remote:$path"
+sync_command="date +%H:%M:%S && rsync -iru --exclude .git --exclude target  --exclude .svn  --exclude dist --exclude out --progress --itemize-changes --update --delete --chmod=Du=rwx,Dg=rwx,Do=rwx,Fu=rwx,Fg=rwx,Fo=rwx -p $local -e ssh $user@$remote:$path"
 sh -c "$sync_command"
 fswatch $local "$sync_command"
