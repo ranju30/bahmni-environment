@@ -44,9 +44,10 @@
     </appender>
 
     <root>
-        <priority value="INFO"/>
+        <priority value="WARN"/>
         <appender-ref ref="fileAppender"/>
-        <appender-ref ref="asyncSMTPAppender" />
+        <% if @add_email_appender == true -%>
+          <appender-ref ref="asyncSMTPAppender" />
+        <% end -%>
     </root>
-
 </log4j:configuration>

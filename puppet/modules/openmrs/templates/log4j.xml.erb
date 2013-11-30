@@ -94,8 +94,9 @@
     <root>
         <level value="WARN" />
         <appender-ref ref="CONSOLE" />
-        <appender-ref ref="asyncSMTPAppender" />
+        <% if @add_email_appender == true -%>
+          <appender-ref ref="asyncSMTPAppender" />
+        <% end -%>
         <appender-ref ref="MEMORY_APPENDER" />
     </root>
-
 </log4j:configuration>

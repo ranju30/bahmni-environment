@@ -18,7 +18,7 @@ class jss-migration {
 	}
 
 	exec { "jss_data" :
-		command => "java -cp ${build_output_dir}/jss-old-data-${bahmni_version}-jar-with-dependencies.jar org.bahmni.jss.JSSMigrator ${package_dir}/data-dump/jss ${jss_registration_csv} ${number_of_migrator_threads} ${jss_data_log_file_expression}",
+		command => "java -cp ${build_output_dir}/jss-old-data-${$bahmni_openmrs_data_version}-jar-with-dependencies.jar org.bahmni.jss.JSSMigrator ${package_dir}/data-dump/jss ${jss_registration_csv} ${number_of_migrator_threads} ${jss_data_log_file_expression}",
 		path => "${os_path}",
 		require => File["${jss_data_temp}"],
 		cwd			=> "${jss_data_temp}",

@@ -19,6 +19,7 @@ class go-setup {
     require     => Package["go-agent"],
   }
 
+  # ensure that you have copied the latest cruise-config file as the erb has not been kept in sync
   file { "/etc/go/cruise-config.xml" :
     ensure    => present,
     content   => template("go-setup/cruise-config.xml.erb"),

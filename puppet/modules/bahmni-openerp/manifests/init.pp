@@ -9,7 +9,7 @@ class bahmni-openerp {
 
 	exec { "bahmni_openerp_codebase" :
     provider => "shell",	
-		command => "cp -R  ${build_output_dir}/openerp-modules ${bahmni_openerp_temp_dir} ${deployment_log_expression}",
+		command => "unzip -o -q ${build_output_dir}/openerp-modules.zip -d ${bahmni_openerp_temp_dir} ${deployment_log_expression}",
 		path => "${os_path}",
 		require => File["${bahmni_openerp_temp_dir}"]
 	}

@@ -87,7 +87,7 @@ class openmrs {
   }
 
    exec { "bahmni_java_utils_jars" :
-    command => "cp ${build_output_dir}/*.jar ${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/lib ${deployment_log_expression}",
+    command => "cp ${build_output_dir}/${openmrs_distro_file_name_prefix}/mail-appender-${bahmni_openmrs_version}.jar ${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/lib ${deployment_log_expression}",
     user    => "${bahmni_user}",
     require => Exec["latest_openmrs_webapp"],
     path => "${os_path}"

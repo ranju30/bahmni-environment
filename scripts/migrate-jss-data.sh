@@ -1,1 +1,0 @@
-java -Dopenmrs.user.password=%1 -Ddatabase.user.password=%2 -jar /packages/build/jss-old-data-0.2-SNAPSHOT.jar --classpath= /packages/build/csv
