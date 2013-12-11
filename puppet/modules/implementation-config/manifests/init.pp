@@ -22,20 +22,20 @@ class implementation-config($implementationName) {
     require   => [File["${implementationZipFile}"], File["${build_output_dir}/${implementationName}_config"]]
   }
   
-  file { "${temp_dir}/run-liquibase.sh" :
+  file { "${temp_dir}/run-implementation-liquibase.sh" :
     ensure      => present,
-    content     => template("implementation-config/run-liquibase.sh"),
+    content     => template("implementation-config/run-implementation-liquibase.sh"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     mode        => 554
   }
 
   exec { "run_implementation_liquibase_migration" :
-    command     => "${temp_dir}/run-liquibase.sh ${build_output_dir}/${openmrs_distro_file_name_prefix} ${build_output_dir}/$migrationsDirectory ${deployment_log_expression}",
+    command     => "${temp_dir}/run-implementation-liquibase.sh ${build_output_dir}/${openmrs_distro_file_name_prefix} ${build_output_dir}/$migrationsDirectory ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
     cwd         => "${tomcatInstallationDirectory}/webapps",
-    require     => [Exec["unzip_${implementationName}"],File["${temp_dir}/run-liquibase.sh"]]
+    require     => [Exec["unzip_${implementationName}"],File["${temp_dir}/run-implementation-liquibase.sh"]]
   }
 
   exec { "copy_implementation_config" :
