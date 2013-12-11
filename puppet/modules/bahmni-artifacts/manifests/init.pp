@@ -14,10 +14,10 @@ class bahmni-artifacts {
   }
 
   exec { "download_build" :
-    command   => "sh ${scripts_dir}/download-build.sh ${deployment_log_expression}",
+    command		=> "sh ${scripts_dir}/download-build.sh ${deployment_log_expression}",
     provider  => shell,
     user      => "root",
-    require   => File["$download-build-file"],
+    require 	=> File["$download-build-file"],
     cwd       => "${build_dir}"
   }
 }
