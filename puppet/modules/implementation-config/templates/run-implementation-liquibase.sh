@@ -1,0 +1,1 @@
+java -Dliquibase.databaseChangeLogTableName=liquibasechangelog -Dliquibase.databaseChangeLogLockTableName=liquibasechangeloglock -jar $1/openmrs/WEB-INF/lib/liquibase-core-2.0.5.jar --driver=com.mysql.jdbc.Driver --classpath=$2/<%= openmrs_war_file_name %>.war --changeLogFile=liquibase.xml --url=jdbc:mysql://localhost:3306/openmrs --username=root --password=password update
