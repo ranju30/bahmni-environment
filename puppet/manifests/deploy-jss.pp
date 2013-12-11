@@ -7,11 +7,14 @@ import "configurations/openmrs-versions-configuration.pp"
 # pre-condition
 # bahmni-stop must have been run before this
 node default {
-	include bahmni-configuration
-	include bahmni-webapps
-	  class {'implementation-config':
-          implementationName => "jss",
-          require           => [Class["openmrs"],Class["bahmni-webapps"]]
-        }
- 	include bahmni-ui-apps
+  include openmrs
+  include bahmni-configuration
+  include bahmni-webapps
+  class {'implementation-config':
+      implementationName => "jss",
+      require           => [Class["openmrs"],Class["bahmni-webapps"]]
+    }
+  include bahmni-ui-apps
+  include bahmni-openerp
+  include openelis
 }
