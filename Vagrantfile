@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
   config.ssh.username = "root"
 
   config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--memory", 3024, "--cpus", 2, "--name", "Bahmni"]
+    v.customize ["modifyvm", :id, "--memory", 2024, "--cpus", 2, "--name", "Bahmni"]
   end
 
 #  config.vm.synced_folder "packages", "/packages", :owner => "root"
