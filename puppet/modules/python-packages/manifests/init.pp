@@ -1,12 +1,12 @@
 class python-packages {
-  $download-python-packages-file = "${scripts_dir}/download_python_packages.sh"
+  $download_python_packages_file = "${scripts_dir}/download_python_packages.sh"
 
   file { "${scripts_dir}" :
     ensure => directory,
     owner   => "root",
   }
 
-  file { "${download-python-packages-file}" :
+  file { "${download_python_packages_file}" :
     ensure      => present,
     content     => template("python-packages/download_python_packages.sh.erb"),
     mode        => 664,
@@ -14,10 +14,10 @@ class python-packages {
   }
 
   exec { "download_build" :
-    command     => "sh ${download-python-packages-file} ${deployment_log_expression}",
+    command     => "sh ${download_python_packages_file} ${deployment_log_expression}",
     provider  => shell,
     user      => "root",
-    require     => File["$download-python-packages-file"],
+    require     => File["$download_python_packages_file"],
     cwd       => "${python_package_dir}"
   }
 }
