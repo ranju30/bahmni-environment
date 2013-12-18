@@ -2,23 +2,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-
     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern"
-                   value="%p - %C{1}.%M(%L) |%d{ISO8601}| %m%n" />
-        </layout>
-    </appender>
-
-    <appender name="MEMORY_APPENDER" class="org.openmrs.util.MemoryAppender">
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern"
-                   value="%p - %C{1}.%M(%L) |%d{ISO8601}| %m%n" />
-        </layout>
-    </appender>
-
-    <appender name="OPENERP_APPENDER" class="org.apache.log4j.FileAppender">
-        <param name="File" value="<%= tomcatInstallationDirectory %>/logs/openmrs-openerp-integration.log" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
                    value="%p - %C{1}.%M(%L) |%d{ISO8601}| %m%n" />
@@ -84,11 +68,6 @@
     <!-- Hide the useless MissingResourceException -->
     <logger name="org.springframework.context.support.ResourceBundleMessageSource">
         <level value="ERROR" />
-    </logger>
-
-    <logger name="org.bahmni.openerp.web.service">
-        <level value="ERROR" />
-        <appender-ref ref="OPENERP_APPENDER" />
     </logger>
 
     <root>

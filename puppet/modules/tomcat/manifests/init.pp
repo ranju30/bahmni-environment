@@ -61,6 +61,23 @@ class tomcat {
     group  => "${bahmni_user}",
     require => Exec["tomcat_untar"]
   }
+
+  file { "${tomcatInstallationDirectory}/docs" :
+    ensure    => absent,
+    recurse   => true,
+    force     => true,
+    purge     => true,
+    require => File["${tomcatInstallationDirectory}"],
+  }
+
+  file { "${tomcatInstallationDirectory}/examples" :
+    ensure    => absent,
+    recurse   => true,
+    force     => true,
+    purge     => true,
+    require => File["${tomcatInstallationDirectory}"],
+  }
+
   exec { "change_group_rights_for_tomcatInstallationDirectory" :
     provider => "shell",
     command => "chown -R ${bahmni_user}:${bahmni_user} ${tomcatInstallationDirectory}; chmod -R 776 ${tomcatInstallationDirectory}; ",
@@ -72,5 +89,5 @@ class tomcat {
     enable    => true,
     ensure => running,
     require   => File["${tomcatInstallationDirectory}"],
-  }  
+  }
 }
