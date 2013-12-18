@@ -39,7 +39,7 @@ class implementation-config($implementationName) {
   }
 
   exec { "copy_implementation_config" :
-    command     => "cp -r ${build_output_dir}/$configDirectory ${httpd_deploy_dir}/bahmni-config",
+    command     => "cp -r ${build_output_dir}/$configDirectory ${httpd_deploy_dir}/bahmni_config",
     provider    => "shell",
     path        => "${os_path}",
     user       => "${bahmni_user}",
