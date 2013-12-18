@@ -15,5 +15,5 @@ class bahmni-ui-apps {
 
   bahmni-ui-app {"registration": appName => "registration"}
   bahmni-ui-app {"home": appName => "home"}
-  bahmni-ui-app {"opd": appName => "opd"}
+  bahmni-ui-app {"clinical": appName => "clinical"}
 }

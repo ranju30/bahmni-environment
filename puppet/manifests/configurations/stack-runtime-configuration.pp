@@ -45,7 +45,7 @@ $deployablesDirectory="/home/${bahmni_user}/deployables"
 $httpd_deploy_dir="/var/www"
 
 $registrationAppDirectory="${httpd_deploy_dir}/registration"
-$opdAppDirectory="${httpd_deploy_dir}/opd"
+$clinicalAppDirectory="${httpd_deploy_dir}/clinical"
 $homeAppDirectory="${httpd_deploy_dir}/home"
 $bahmniConfigDirectory="${httpd_deploy_dir}/bahmni_config"
 
@@ -65,12 +65,12 @@ $httpsRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/o
                    {path => "/openelis", redirectPath => "http://localhost:8080/openelis"}]
 #Static webapps
 $httpsStaticWebapps = [{path => "/registration", directory => "${registrationAppDirectory}"},
-                       {path => "/opd", directory => "${opdAppDirectory}"},
+                       {path => "/clinical", directory => "${clinicalAppDirectory}"},
 					   {path => "/patient_images", directory => "${httpd_deploy_dir}/patient_images"},
                        {path => "/home", directory => "${homeAppDirectory}"},
                        {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"}]
 $httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib"]                    
-$httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules", "${opdAppDirectory}/modules", "${homeAppDirectory}/modules"]
+$httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules", "${clinicalAppDirectory}/modules", "${homeAppDirectory}/modules"]
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
 ######################## HTTPD CONFIG END################################################
 
