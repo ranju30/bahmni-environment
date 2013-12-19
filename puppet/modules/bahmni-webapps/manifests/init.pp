@@ -2,6 +2,7 @@ class bahmni-webapps {
   require openmrs
   require bahmni-configuration
   require bahmni-distro
+  require bahmni-data
 
   $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
   $openmrs_modules_dir = "/home/${bahmni_user}/.OpenMRS/modules"

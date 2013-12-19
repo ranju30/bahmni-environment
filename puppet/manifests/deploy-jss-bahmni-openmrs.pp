@@ -8,10 +8,10 @@ import "configurations/openmrs-versions-configuration.pp"
 # bahmni-stop must have been run before this
 node default {
 	include bahmni-configuration
+	include bahmni-data 
 	include bahmni-webapps
-    class {'implementation-config':
-          implementationName => "jss",
-          require           => Class["bahmni-webapps"]
-        }
- 	include bahmni-ui-apps
-}   
+	include bahmni-ui-apps
+	class { 'implementation-config':
+       implementationName => "jss", require => Class['bahmni-ui-apps']
+    }
+}

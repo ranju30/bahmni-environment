@@ -38,6 +38,13 @@ class implementation-config($implementationName) {
     require     => [Exec["unzip_${implementationName}"],File["${temp_dir}/run-implementation-liquibase.sh"]]
   }
 
+  file { "${httpd_deploy_dir}/bahmni_config" :
+    ensure    => absent,
+    recurse   => true,
+    force     => true,
+    purge     => true
+  }
+  
   exec { "copy_implementation_config" :
     command     => "cp -r ${build_output_dir}/$configDirectory ${httpd_deploy_dir}/bahmni_config",
     provider    => "shell",

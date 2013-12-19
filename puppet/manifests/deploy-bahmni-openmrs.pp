@@ -9,6 +9,5 @@ import "configurations/openmrs-versions-configuration.pp"
 node default {
 	include bahmni-configuration
 	include bahmni-webapps
-	include bahmni-data
-	include bahmni-ui-apps
+	include bahmni-ui-apps 
 }
