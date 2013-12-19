@@ -51,6 +51,6 @@ class implementation-config($implementationName) {
     path        => "${os_path}",
     user       => "${bahmni_user}",
     group       => "${bahmni_user}",
-    require     => Exec["unzip_${implementationName}"]
+    require     => [Exec["unzip_${implementationName}"], File["${httpd_deploy_dir}/bahmni_config" ]]
   }
 }
