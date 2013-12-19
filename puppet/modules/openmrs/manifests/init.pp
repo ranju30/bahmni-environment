@@ -70,6 +70,20 @@ class openmrs {
     require     => File["${temp_dir}/create-openmrs-db-and-user.sql"]
   }
 
+  file { "${temp_dir}/openmrs-predeploy.sql" :
+    ensure      => present,
+    content     => template("openmrs/predeploy.sql"),
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}"
+  }
+
+  exec { "openmrs_predeploy" :
+    command     => "mysql -uroot -p${mysqlRootPassword} < ${temp_dir}/openmrs-predeploy.sql ${deployment_log_expression}",
+    path        => "${os_path}",
+    provider    => shell,
+    require     => [Exec["openmrs_database"],File["${temp_dir}/openmrs-predeploy.sql"]]
+  }
+
   file { "${temp_dir}/run-liquibase.sh" :
     ensure      => present,
     content     => template("openmrs/run-liquibase.sh"),
@@ -83,7 +97,7 @@ class openmrs {
     path        => "${os_path}",
     provider    => shell,
     cwd         => "${tomcatInstallationDirectory}/webapps",
-    require     => [Exec["openmrs_database"], File["${temp_dir}/run-liquibase.sh"], Exec["latest_openmrs_webapp"]]
+    require     => [Exec["openmrs_predeploy"], File["${temp_dir}/run-liquibase.sh"], Exec["latest_openmrs_webapp"]]
   }
 
    exec { "bahmni_java_utils_jars" :
