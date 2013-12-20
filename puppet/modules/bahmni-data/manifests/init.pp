@@ -1,7 +1,7 @@
 class bahmni-data {
 	$bahmni_data_temp = "${temp_dir}/bahmni-data"
 
-	file { "${bahmni_data_temp}" :
+  file { "${bahmni_data_temp}" :
     ensure    => directory,
     recurse   => true,
     force     => true,
@@ -20,10 +20,10 @@ class bahmni-data {
 	  require			=> File["${bahmni_data_temp}"]
 	}
 
-  file { "${bahmni_data_temp}/flyway-migration.sh" :
-    path    => "${bahmni_data_temp}/flyway-migration.sh",
+  file { "${bahmni_data_temp}/bahmni-data-migration.sh" :
+    path    => "${bahmni_data_temp}/bahmni-data-migration.sh",
     ensure      => present,
-    content     => template("bahmni-data/flyway-migration.erb"),
+    content     => template("bahmni-data/bahmni-data-migration.erb"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     mode        => 554,
@@ -54,10 +54,10 @@ class bahmni-data {
     mode        => 554,
     require     => File["${bahmni_data_temp}"]
   }
-
+  
   exec { "bahmni db upgrade" :
-  	command		=> "sh flyway-migration.sh flyway.properties ${build_output_dir}/openmrs-data-jars.zip ${ant_home} ${deployment_log_expression}",
-  	require 	=> [File["${bahmni_data_temp}/bahmni-flyway-ant.xml"], File["${bahmni_data_temp}/flyway-migration.sh"], File["${bahmni_data_temp}/flyway.properties"], File["${bahmni_data_temp}/logging.properties"]],
+  	command		=> "sh bahmni-data-migration.sh flyway.properties ${build_output_dir}/openmrs-data-jars.zip ${ant_home} ${build_output_dir}/${openmrs_distro_file_name_prefix} ${openmrs_modules_dir} ${deployment_log_expression}",
+  	require 	=> [File["${bahmni_data_temp}/bahmni-flyway-ant.xml"], File["${bahmni_data_temp}/bahmni-data-migration.sh"], File["${bahmni_data_temp}/flyway.properties"], File["${bahmni_data_temp}/logging.properties"]],
   	path 			=> "${os_path}",
   	cwd				=> "${bahmni_data_temp}"
   }

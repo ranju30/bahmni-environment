@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+if [ $# -lt 5 ]; then
+   echo "Usage: $0 properties-file openmrs-data-jars-zip-path ant-home distro-path modules-path"
+   exit 1
+fi
+
+SCRIPTS_DIR=`dirname $0`
+PROPERTIES_FILE=$1
+OPENMRS_DATA_ZIP_FILE=$2
+export OPENMRS_PROP_FILE=$1
+
+if ! [ -f $1 ]; then
+	echo "Could not find properties file $1"
+	exit 1
+fi
+
+java -Dliquibase.databaseChangeLogTableName=liquibasechangelog -Dliquibase.databaseChangeLogLockTableName=liquibasechangeloglock -jar openmrs/WEB-INF/lib/liquibase-core-2.0.5.jar --driver=com.mysql.jdbc.Driver --classpath=$5/<%= bahmni_core %>.omod:$4/<%= openmrs_war_file_name %>.war --changeLogFile=migrations/dependent-modules/liquibase.xml --url=jdbc:mysql://localhost:3306/openmrs --username=root --password=password update
+
+unzip -q -o $OPENMRS_DATA_ZIP_FILE -d ./lib
+
+set +e
+$3/bin/ant db.init -propertyfile $PROPERTIES_FILE -f bahmni-flyway-ant.xml
+set -e
+
+$3/bin/ant db.repair db.migrate -propertyfile $PROPERTIES_FILE -f bahmni-flyway-ant.xml
