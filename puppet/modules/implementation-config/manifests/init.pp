@@ -34,7 +34,7 @@ class implementation-config($implementationName) {
     command     => "${temp_dir}/run-implementation-liquibase.sh ${tomcatInstallationDirectory}/webapps ${build_output_dir}/${openmrs_distro_file_name_prefix} ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
-    cwd         => "${build_output_dir}/$migrationsDirectory",
+    cwd         => "${build_output_dir}/${migrationsDirectory}",
     require     => [Exec["unzip_${implementationName}"],File["${temp_dir}/run-implementation-liquibase.sh"]]
   }
 
