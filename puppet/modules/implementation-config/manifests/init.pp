@@ -39,18 +39,16 @@ class implementation-config($implementationName) {
   }
 
   file { "${httpd_deploy_dir}/bahmni_config" :
-    ensure    => absent,
+    ensure    => directory,
     recurse   => true,
     force     => true,
     purge     => true
   }
   
   exec { "copy_implementation_config" :
-    command     => "cp -r ${build_output_dir}/${configDirectory} ${httpd_deploy_dir}/bahmni_config",
+    command     => "unzip -q -o $implementationZipFile openmrs/* -d ${httpd_deploy_dir}/bahmni_config ${deployment_log_expression}",
     provider    => "shell",
     path        => "${os_path}",
-    user       => "${bahmni_user}",
-    group       => "${bahmni_user}",
-    require     => [Exec["unzip_${implementationName}"], File["${httpd_deploy_dir}/bahmni_config" ]]
+    require     => [Exec["unzip_${implementationName}"], File["${httpd_deploy_dir}/bahmni_config"]]
   }
 }
