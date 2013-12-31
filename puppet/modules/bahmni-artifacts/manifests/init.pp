@@ -18,6 +18,7 @@ class bahmni-artifacts {
     provider  => shell,
     user      => "root",
     require 	=> File["$download_build_file"],
-    cwd       => "${build_dir}"
+    cwd       => "${build_dir}",
+    timeout   => 0
   }
 }
