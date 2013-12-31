@@ -1,8 +1,8 @@
-class bahmni-service($status) {
-  service { "tomcat" :
-    ensure => "${status}",
-    name   => "tomcat",
-    path   => "${os_path}"
+class bahmni-service($status, $tomcat_status) {
+  exec { "tomcat" :
+    command => "service tomcat ${tomcat_status} ${deployment_log_expression}",
+    provider => shell,
+    path   => "${os_path}",
   }
 
   service { "openerp" :
@@ -14,6 +14,6 @@ class bahmni-service($status) {
   service { "httpd" :
     ensure      => "${status}",
     enable      => true,
-    require     => Service["tomcat"]
+    require     => Exec["tomcat"],
   }
 }

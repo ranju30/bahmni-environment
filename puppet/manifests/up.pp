@@ -7,6 +7,7 @@ import "configurations/deployment-configuration"
 # Tomcat should be stopped
 node default {
   class {"bahmni-service" :
-    status => "running"
+    status => "running",
+    tomcat_status => "start"
   }
 }
