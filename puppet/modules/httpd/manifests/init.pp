@@ -2,6 +2,7 @@
 # Project specific rules need to be inserted manually into httpd.conf and ssl.conf
 
 class httpd {
+    $apache_user = "apache"
     require yum-repo
     
     package { "httpd" :
@@ -44,4 +45,13 @@ class httpd {
 	   require      => Exec["ssl_conf_backup"],
        notify       => Service["httpd"],
 	}
+
+    file { "${httpdCacheDirectory}" :
+        ensure    => directory,
+        recurse   => true,
+        force     => true,
+        purge     => true,
+        owner => "${apache_user}",
+        group => "${apache_user}",
+    }
 }

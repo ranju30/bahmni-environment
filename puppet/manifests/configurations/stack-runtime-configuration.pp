@@ -72,6 +72,9 @@ $httpsStaticWebapps = [{path => "/registration", directory => "${registrationApp
 $httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib"]                    
 $httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules", "${clinicalAppDirectory}/modules", "${homeAppDirectory}/modules"]
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
+
+$httpdCacheDirectory = "/var/cache/mod_proxy"
+$httpsCacheUrls = [{path => "/openmrs/ws/rest/v1/concept", expireTime => "10 minutes"}]
 ######################## HTTPD CONFIG END################################################
 
 # Nagios

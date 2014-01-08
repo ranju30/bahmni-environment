@@ -10,6 +10,7 @@
 #
 
 LoadModule ssl_module modules/mod_ssl.so
+LoadModule cache_module modules/mod_cache.so
 
 #
 # When we also provide SSL we have to listen to the
@@ -66,6 +67,31 @@ SSLRandomSeed connect builtin
 #
 SSLCryptoDevice builtin
 #SSLCryptoDevice ubsec
+
+# Mod cache Settings
+<IfModule mod_cache.c>
+	LoadModule disk_cache_module modules/mod_disk_cache.so
+	<IfModule mod_disk_cache.c>
+		CacheRoot <%=httpdCacheDirectory%>
+
+		<%- @httpsCacheUrls.each do |httpsCacheUrl| -%>
+		CacheEnable disk <%=httpsCacheUrl["path"]%>
+
+		<Location <%=httpsCacheUrl["path"]%>>
+			ExpiresActive On	
+			ExpiresDefault "access plus <%=httpsCacheUrl["expireTime"]%>"
+		</Location>
+		<% end -%>
+
+	    CacheDirLevels 5
+		CacheDirLength 3
+		CacheDefaultExpire 3600
+		CacheMaxExpire 86400
+		CacheIgnoreCacheControl On
+		CacheIgnoreHeaders Set-Cookie
+	</IfModule>
+
+</IfModule>
 
 ##
 ## SSL Virtual Host Context
