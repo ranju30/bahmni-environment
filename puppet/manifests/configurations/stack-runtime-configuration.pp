@@ -119,6 +119,7 @@ $jasperDbName = "jasperserver"
 # Bahmni core properties
 $imagesDirectory="/home/${bahmni_user}/patient_images"
 $imagesUrl="/patient_images"
+$documentBaseDirectory="/home/${bahmni_user}/document_images"
 
 ##########################################################################
 $ant_version="1.9.1"
