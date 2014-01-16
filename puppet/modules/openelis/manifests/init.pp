@@ -23,7 +23,7 @@ class openelis {
   exec { "openelis_setupdb" :
     provider => "shell",
     cwd => "${bahmni_openelis_temp_dir}",
-    command => "ant setupDB",
+    command => "ant setupDB  ${deployment_log_expression}",
     path => "${os_path}:${ant_home}/bin",
     require => Exec["bahmni_openelis_codebase"]
   }  
