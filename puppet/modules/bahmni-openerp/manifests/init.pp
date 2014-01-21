@@ -1,6 +1,6 @@
 class bahmni-openerp {
     $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openerp_atomfeed_war_file_name}/WEB-INF/classes/log4j.xml"
-
+    $openerp_modules_zip_filename = "openerp-modules"
 
 	file { "${bahmni_openerp_temp_dir}" :
     ensure    => absent,
@@ -9,7 +9,7 @@ class bahmni-openerp {
 
 	exec { "bahmni_openerp_codebase" :
     provider => "shell",	
-		command => "cp -R  ${build_output_dir}/openerp-modules ${bahmni_openerp_temp_dir} ${deployment_log_expression}",
+		command => "unzip -o -q ${build_output_dir}/${openerp_modules_zip_filename}.zip -d ${bahmni_openerp_temp_dir} ${deployment_log_expression}",
 		path => "${os_path}",
 		require => File["${bahmni_openerp_temp_dir}"]
 	}
@@ -31,7 +31,7 @@ class bahmni-openerp {
 	
 	exec { "bahmni_openerp" :
 	  	provider => "shell",
-		command => "cp -r ${bahmni_openerp_temp_dir}/* ${openerp_install_location}/openerp/addons ${deployment_log_expression}",
+		command => "cp -r ${bahmni_openerp_temp_dir}/${openerp_modules_zip_filename}/* ${openerp_install_location}/openerp/addons ${deployment_log_expression}",
 		path => "${os_path}",
 		user => "${openerpShellUser}",
 		group => "${openerpGroup}",
