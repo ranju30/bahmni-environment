@@ -11,10 +11,15 @@ Vagrant.configure("2") do |config|
   config.ssh.username = "root"
 
   config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--memory", 2024, "--cpus", 2, "--name", "Bahmni"]
+    v.customize ["modifyvm", :id, "--memory", 3092, "--cpus", 2, "--name", "Bahmni"]
   end
 
 #  config.vm.synced_folder "packages", "/packages", :owner => "root"
+  config.vm.synced_folder "..", "/Project", :owner => "root"
+  config.vm.synced_folder "../openmrs-module-bahmniclinical/clinical-ui/app", "/var/www/clinical", :owner => "jss"
+  config.vm.synced_folder "../openmrs-module-bahmniregistration/registration-ui/app", "/var/www/registration", :owner => "jss"
+  config.vm.synced_folder "../openmrs-module-bahmnihome/home-ui/app", "/var/www/home", :owner => "jss"
+  config.vm.synced_folder "../jss-config", "/var/www/bahmni_config", :owner => "jss"
 
   if ENV['STAGE'] == nil
     manifest_file = "do-nothing.pp"
