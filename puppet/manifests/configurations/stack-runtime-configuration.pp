@@ -62,7 +62,8 @@ import "httpd-default-configuration"
 ## In case of array, 1st element of the array specifies ProxyPass rule and 2nd element specifies ProxyPassReverse rule.
 $httpRedirects = [{path => "/jasperserver", redirectPath => "http://localhost:8080/jasperserver"}]
 $httpsRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/openmrs"},
-                   {path => "/openelis", redirectPath => "http://localhost:8080/openelis"}]
+                   {path => "/openelis", redirectPath => "http://localhost:8080/openelis"},
+                   {path => "/reference-data", redirectPath => "http://localhost:8080/reference-data"}]
 #Static webapps
 $httpsStaticWebapps = [{path => "/registration", directory => "${registrationAppDirectory}"},
                        {path => "/clinical", directory => "${clinicalAppDirectory}"},
