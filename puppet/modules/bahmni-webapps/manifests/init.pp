@@ -25,12 +25,20 @@ class bahmni-webapps {
     path => "${os_path}"
   }
 
+  exec { "explode_elis_atomfeed_jar" :
+    command     => "unzip -o -d ${temp_dir}/${bahmni_elisatomfeedclient} ${openmrs_modules_dir}/${bahmni_elisatomfeedclient}.omod ${deployment_log_expression}",
+    path        => "${os_path}",
+    provider    => shell,
+    require     => [Exec["bahmni_omods"]]
+  }
+
   file { "${temp_dir}/run-modules-liquibase.sh" :
     ensure      => present,
     content     => template("bahmni-webapps/run-modules-liquibase.sh"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
-    mode        => 554
+    mode        => 554,
+    require     => [Exec["explode_elis_atomfeed_jar"]]
   }
 
   exec { "openmrs_modules_data" :
