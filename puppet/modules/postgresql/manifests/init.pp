@@ -4,15 +4,17 @@ class postgresql {
   $postgresPackageName = "postgresql${postgresMajorVersion}${postgresMinorVersion}"
   $postgresLibsPackageName = "${postgresPackageName}-libs"
   $postgresServerPackageName = "${postgresPackageName}-server"
+  $postgresContribPackageName = "${postgresPackageName}-contrib"
   
 	package { "${postgresLibsPackageName}" : ensure => installed}
 	package { "${postgresServerPackageName}" : ensure => installed, require => Package["${postgresLibsPackageName}"]}
 	package { "${postgresPackageName}" : ensure => installed, require => Package["${postgresServerPackageName}"]}
+  package { "${postgresContribPackageName}" : ensure => installed, require => Package["${postgresPackageName}"]}
 
 	exec { "postgresdb" :
 		command => "service ${postgresServiceName} initdb",
 		path => "${os_path}",
-		require => Package["${postgresPackageName}"]
+		require => Package["${postgresContribPackageName}"]
 	}
 
 	exec { "chkconfig-postgres-server" :
