@@ -54,6 +54,12 @@ $uploadedFilesDirectory="${tomcatParentDirectory}/uploaded-files"
 # Backup config
 $backup_hour = 3 # 3 AM Every day  
 
+# Bahmni core properties
+$imagesDirectory="/home/${bahmni_user}/patient_images"
+$imagesUrl="/patient_images"
+$documentBaseDirectory="/home/${bahmni_user}/document_images"
+
+
 ######################## HTTPD CONFIG START#############################################
 import "httpd-default-configuration"
 
@@ -67,7 +73,8 @@ $httpsRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/o
 #Static webapps
 $httpsStaticWebapps = [{path => "/registration", directory => "${registrationAppDirectory}"},
                        {path => "/clinical", directory => "${clinicalAppDirectory}"},
-					   {path => "/patient_images", directory => "${httpd_deploy_dir}/patient_images"},
+					   {path => "${imagesUrl}", directory => "${imagesDirectory}"},
+					   {path => "/document_images", directory => "${documentBaseDirectory}"},
                        {path => "/home", directory => "${homeAppDirectory}"},
                        {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"}]
 $httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib"]                    
@@ -116,11 +123,6 @@ $jasperDbUsername = "root"
 $jasperDbPassword = "password"
 $jasperDbName = "jasperserver"
 ######################## JASPER CONFIG END##############################################
-
-# Bahmni core properties
-$imagesDirectory="/home/${bahmni_user}/patient_images"
-$imagesUrl="/patient_images"
-$documentBaseDirectory="/home/${bahmni_user}/document_images"
 
 ##########################################################################
 $ant_version="1.9.1"
