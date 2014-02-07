@@ -36,6 +36,24 @@ class tomcat {
     require   => Exec["tomcat_untar"]
   }
 
+  file { "${tomcatInstallationDirectory}/conf/context.xml" :
+    ensure    => present,
+    content   => template("tomcat/context.xml.erb"),
+    owner     => "${bahmni_user}",
+    replace   => true,
+    mode      => 664,
+    require   => Exec["tomcat_untar"]
+  }
+
+  file { "${tomcatInstallationDirectory}/lib/log4j.properties" :
+    ensure    => present,
+    content   => template("tomcat/log4j.properties.erb"),
+    owner     => "${bahmni_user}",
+    replace   => true,
+    mode      => 664,
+    require   => Exec["tomcat_untar"]
+  }
+
   file { "${tomcatInstallationDirectory}/conf/web.xml" :
     ensure      => present,
     content     => template("tomcat/web.xml.erb"),
