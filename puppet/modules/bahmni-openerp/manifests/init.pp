@@ -39,11 +39,19 @@ class bahmni-openerp {
 		require => Exec["change_group_rights_for_openerp_folders_current_content"],
 	}
 
+    exec { "clear_openerp_atomfeed_webapp" :
+	    command   => "rm -rf ${tomcatInstallationDirectory}/webapps/openerp-atomfeed-service",
+	    provider  => shell,
+	    path      => "${os_path}",
+	    require   => [Exec["bahmni_openerp"]],
+	    user      => "${bahmni_user}"
+	}
+
     exec { "latest_openerp_atomfeed_webapp" :
 	    command   => "unzip -o -q ${build_output_dir}/${openerp_atomfeed_war_file_name}.war -d ${tomcatInstallationDirectory}/webapps/openerp-atomfeed-service ${deployment_log_expression}",
 	    provider  => shell,
 	    path      => "${os_path}",
-	    require   => [Exec["bahmni_openerp"]],
+	    require   => [Exec["clear_openerp_atomfeed_webapp"]],
 	    user      => "${bahmni_user}"
 	}
 
