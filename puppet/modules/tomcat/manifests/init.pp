@@ -16,6 +16,13 @@ class tomcat {
     require   => Exec["tomcat_untar"]
   }
 
+  exec { "adds_juli" :
+    command   => "cp ${packages_servers_dir}/tomcat-juli.jar ${tomcatInstallationDirectory}/bin/",
+    user      => "${bahmni_user}",
+    provider  => shell,
+    require   => Exec["tomcat_untar"]
+  }
+
   exec { "adds_log4j" :
     command   => "cp ${packages_servers_dir}/log4j-1.2.17.jar ${tomcatInstallationDirectory}/lib/",
     user      => "${bahmni_user}",
