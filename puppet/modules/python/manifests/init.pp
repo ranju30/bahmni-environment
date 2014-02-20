@@ -1,5 +1,6 @@
 class python {
   require host
+  require python-packages
 
   notify { "Setting up python platform" :}
 
@@ -302,7 +303,7 @@ class python {
   }
 
   exec { "nonblockingloghandler" :
-    command => "sh install-python-package-from-egg.sh ${python_package_dir} nonblockingloghandler ${log_expression}",
+    command => "easy_install nonblockingloghandler",
     path => "${os_path}",
     cwd => "${python_temp_dir}",
     require => Exec["pyOpenSSL"]
