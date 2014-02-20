@@ -9,7 +9,7 @@ class mysql-common {
 }
 
 class mysql {
-	#require yum-repo
+	##require yum-repo
 	require mysql-common
 
 	package { "MySQL-client" :
@@ -18,7 +18,7 @@ class mysql {
 }
 
 class mysqlserver {
-	#require yum-repo
+	##require yum-repo
 	require mysql-common
 	
 	package { "MySQL-server" :

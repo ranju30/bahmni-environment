@@ -1,5 +1,5 @@
 class tools {
-	require yum-repo
+	#require yum-repo
 
 	package {"unzip" : ensure => "installed"}
 	package {"zip" : ensure => "installed"}

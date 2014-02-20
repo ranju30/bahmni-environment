@@ -17,6 +17,6 @@ node default {
  	include python
  	include postgresql
 	class { openerp: require => Class["python", "postgresql"] }
-	include nagios
-	include bahmni-nagios
+#	include nagios
+#	include bahmni-nagios
 }
