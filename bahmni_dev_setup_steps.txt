@@ -1,0 +1,77 @@
+Some steps .... to Get Started ...
+
+
+1. Install CentosOS (Minimal) 
+  http://wiki.centos.org/Manuals/ReleaseNotes/CentOSMinimalCD6.5
+  For example:
+  download "CentOS-6.5-x86_64-minimal.iso" from http://centos.mirror.net.in/centos/6.5
+  - In Virtual Box create a new Virtual Image (Bahmni_CentOS) and give its type as Red Hat Linux with 1.5GB RAM and 20 GB Virtual HDD. Leave other options as default.
+  - Click on "Storage" window and select new CD/DVD drive option, to specify the CentOS ISO Image which you downloaded.
+  - Start the newly created virtual box image. It will show you the INSTALL Wizard for CentOS.
+  - 
+
+2. Check if properly networked.
+    2.1. In VirtualBox, choose bridged network to connect to internet.
+    2.2. Run "ifconfig" and make sure eth0 has proper IP. You should be able to ping google. Else try "ifup eth0". Check ifconfig again.
+   
+3. Install git - "yum install git"
+
+4. Install ruby (187)
+    yum install ruby
+   
+5. Install Puppet - (http://docs.puppetlabs.com/guides/installation.html#red-hat-enterprise-linux-and-derivatives)
+    rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+    yum install puppet
+
+
+6. Clone Bahmni-Environment repo in /root/bahmni -
+    mkdir -p /root/bahmni
+    cd /root/bahmni
+    git clone https://github.com/Bhamni/bahmni-environment.git
+    cd bahmni-environment
+    git submodule init
+    git submodule update
+
+
+7. Install wget
+   yum install wget
+
+8. Mkdir /packages
+
+9. Copy localrepo, servers, tools to /packages/
+  (You could do scp. Like: 'scp -r * root@10.4.31.206:/packages/' from the folder which has all your folders)
+
+10. Provision
+    cd /root/bahmni/bahmni-environment
+    ./scripts/deploy-puppet-manifest.sh provision
+
+11. Create OpenERP DB: 
+    http://<VM_Ip>:8069/
+    NOTE: To switch off IPTables in case your browser can't hit: 'service iptables stop'
+    Enter DB Name: openerp (and some admin password), and click CREATE DB
+
+
+12. Download & install latest BAHMNI build from ci.
+    ./scripts/deploy-puppet-manifest.sh download-build
+    ./scripts/deploy-puppet-manifest.sh deploy-jss
+    (If on deploy you get an error for JDK or tools.jar, ensure your default java is latest 1.7, and not old java1.5. If it is, then rename old java and create new sym link: 'ln -s /usr/java/default/bin/java /usr/bin/java')      
+
+13. OpenERP:  http://<IP>:8069/ (admin/password)
+    OpenMRS:  https://<IP>/openmrs  (admin/test)
+    OpenELIS: http://<IP>:8080/openelis/ (admin/adminADMIN!)
+    Bahmni:   http://<IP>/home (admin/test) --- May need to give roles to user in OpenMRS if you see blank dashboard
+
+......
+.......
+.............
+...................
+
+Some todos we identified
+-----------------------------------------
+TODO:
+- remove local packages dependencies - remove (require yum repo) 
+------ create a new provision.pp file which will install all packages from internet.
+------ Note that mySQL installation requires addition of another yum repo. This will be needed for Internet-mode installation.
+- remove goServer
+- TODO: check how to enable download of packages, currently script downloads through public ip of GO of all current builds. we might not to use GO for package download and/or the bleeding packages 
+* delete - /packages/localrepo ?
