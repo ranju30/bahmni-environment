@@ -1,5 +1,6 @@
 class python {
   require host
+  require python-packages
 
   notify { "Setting up python platform" :}
 
