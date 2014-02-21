@@ -1,5 +1,5 @@
 class artifactory {
-    #require yum-repo
+    require yum-repo
 
     package { "artifactory":
         ensure => present

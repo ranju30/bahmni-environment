@@ -3,7 +3,7 @@
 
 class httpd {
     $apache_user = "apache"
-    #require yum-repo
+    require yum-repo
     
     package { "httpd" :
         ensure => "present"

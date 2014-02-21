@@ -1,5 +1,5 @@
 class nagios {
-    #require yum-repo
+    require yum-repo
     
     package { "nagios" :
         ensure  =>  "present"
