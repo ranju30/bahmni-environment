@@ -6,6 +6,11 @@ class python-packages {
     owner   => "root",
   }
 
+  file { "${python_package_dir}" :
+    ensure => directory,
+    owner  => "root"
+  }
+
   file { "${download_python_packages_file}" :
     ensure      => present,
     content     => template("python-packages/download_python_packages.sh.erb"),
@@ -14,10 +19,11 @@ class python-packages {
   }
 
   exec { "download_build" :
-    command     => "sh ${download_python_packages_file} ${deployment_log_expression}",
+    command   => "sh ${download_python_packages_file} ${deployment_log_expression}",
     provider  => shell,
     user      => "root",
-    require     => File["$download_python_packages_file"],
-    cwd       => "${python_package_dir}"
+    require   => [File["$python_package_dir"], File["$download_python_packages_file"]],
+    cwd       => "${python_package_dir}",
+    timeout   => 0
   }
 }
