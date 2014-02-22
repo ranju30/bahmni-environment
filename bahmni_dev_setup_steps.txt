@@ -56,10 +56,11 @@ Some steps .... to Get Started ...
     ./scripts/deploy-puppet-manifest.sh deploy-jss
     (If on deploy you get an error for JDK or tools.jar, ensure your default java is latest 1.7, and not old java1.5. If it is, then rename old java and create new sym link: 'ln -s /usr/java/default/bin/java /usr/bin/java')      
 
-13. OpenERP:  http://<IP>:8069/ (admin/password)
-    OpenMRS:  https://<IP>/openmrs  (admin/test)
-    OpenELIS: http://<IP>:8080/openelis/ (admin/adminADMIN!)
-    Bahmni:   http://<IP>/home (admin/test) --- May need to give roles to user in OpenMRS if you see blank dashboard
+13. OpenERP:                      http://<IP>:8069/ (admin/password)
+    OpenMRS:                      https://<IP>/openmrs  (admin/test)
+    OpenELIS:                     http://<IP>:8080/openelis/ (admin/adminADMIN!)
+    Bahmni:                       http://<IP>/home (admin/test) --- May need to give roles to user in OpenMRS if you see blank dashboard
+    Reference Data (Grails app):  http://<IP>/reference-data/
 
 ......
 .......
