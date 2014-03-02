@@ -6,28 +6,30 @@ OpenERP_Build_Name=<%= erp_go_build_name %>
 OpenELIS_Build_Name=<%= elis_go_build_name %>
 reference_data_go_build_name=<%= reference_data_go_build_name %>
 BRANCH=<%= source_code_branch %>
+GO_USER=<%= go_server_user %>
+GO_PWD=<%= go_server_pwd %>
 
 rm -f *
 
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-<%= bahmni_release_version %>-distro.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/registration.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/clinical.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/home.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss_config.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-<%= bahmni_release_version %>-jar-with-dependencies.jar
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/openmrs-data-jars.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/elisatomfeedclient-omod-beanshell.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-<%= bahmni_release_version %>-distro.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/registration.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/clinical.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/home.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss_config.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-<%= bahmni_release_version %>-jar-with-dependencies.jar
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/openmrs-data-jars.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/elisatomfeedclient-omod-beanshell.zip
 
-wget $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
-wget $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/runFunctionalTestsJob/openerp-modules.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/runFunctionalTestsJob/openerp-modules.zip
 
-wget $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/openelis.war
-wget $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/OpenElis.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/openelis.war
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/OpenElis.zip
 
-wget $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables/<%= reference_data_war_file_name %>.war
-wget $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables/reference-data-scripts.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables/<%= reference_data_war_file_name %>.war
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables/reference-data-scripts.zip
 
 #Download ui-modules
 mkdir ui-modules
 cd ui-modules
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/ui-modules/bahmniregistration-<%= bahmni_release_version %>.omod 
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/ui-modules/bahmniregistration-<%= bahmni_release_version %>.omod 
