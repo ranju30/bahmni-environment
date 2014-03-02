@@ -28,6 +28,12 @@ $postgresMasterDbFileBackup="/tmp/pg_master_db_file_backup.tar" # The path of ma
 $postgresServiceName = "postgresql-${postgresMajorVersion}.${postgresMinorVersion}"
 $postgresDataFolder = "/var/lib/pgsql/${postgresMajorVersion}.${postgresMinorVersion}/data"
 
+#Go Server for Downloading Builds
+#$build_source_dir = "http://172.18.2.11:8153"
+$build_source_dir = "https://ci-bahmni.thoughtworks.com"
+$go_server_user = "guest"
+$go_server_pwd = "p@ssw0rd"
+
 #Tomcat 7
 $tomcatManagerUserName = "tomcat"
 $tomcatManagerPassword = "p@ssw0rd"
