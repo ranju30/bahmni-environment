@@ -29,10 +29,15 @@ $postgresServiceName = "postgresql-${postgresMajorVersion}.${postgresMinorVersio
 $postgresDataFolder = "/var/lib/pgsql/${postgresMajorVersion}.${postgresMinorVersion}/data"
 
 #Go Server for Downloading Builds
-#$build_source_dir = "http://172.18.2.11:8153"
-$build_source_dir = "https://ci-bahmni.thoughtworks.com"
+$build_source_dir = "http://172.18.2.11:8153"
+#$build_source_dir = "https://ci-bahmni.thoughtworks.com"
 $go_server_user = "guest"
 $go_server_pwd = "p@ssw0rd"
+$mrs_go_build_name = "Latest"
+$erp_go_build_name = "Latest"
+$elis_go_build_name = "Latest"
+$reference_data_go_build_name = "Latest"
+$source_code_branch = "master"
 
 #Tomcat 7
 $tomcatManagerUserName = "tomcat"
