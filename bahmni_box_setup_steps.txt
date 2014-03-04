@@ -45,10 +45,9 @@ Some steps .... to Get Started ...
     cd /root/bahmni/bahmni-environment
     ./scripts/deploy-puppet-manifest.sh provision
 
-11. Create OpenERP DB: 
-    http://<VM_Ip>:8069/
-    NOTE: To switch off IPTables in case your browser can't hit: 'service iptables stop'
-    Enter DB Name: openerp (and some admin password), and click CREATE DB
+11. 
+    Create openmrs db (user root/password): openmrs
+    Create OpenERP DB: (psql with user postgres and then grant owner to openerp): openerp
 
 
 12. Download & install latest BAHMNI build from ci.
@@ -62,6 +61,8 @@ Some steps .... to Get Started ...
     OpenELIS:                     http://<IP>:8080/openelis/ (admin/adminADMIN!)
     Bahmni:                       http://<IP>/home (admin/test) --- May need to give roles to user in OpenMRS if you see blank dashboard
     Reference Data (Grails app):  http://<IP>/reference-data/
+
+    NOTE: To switch off IPTables in case your browser can't hit: 'service iptables stop'
 
 ......
 .......
