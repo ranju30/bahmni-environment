@@ -63,6 +63,7 @@ start() {
     "/usr/bin/setsid /usr/bin/openerp-server \
     -c /etc/openerp-server.conf \
     --update all \
+    --without-demo all \
     --pidfile=$PIDFILE \
     --logfile=$LOGFILE &"
 
