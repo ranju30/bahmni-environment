@@ -21,7 +21,7 @@ $postgresMachine = "master" ## [master | slave]
 $postgresMaster = $primary_machine_ip
 $postgresSlave = $secondary_machine_ip
 
-$postgresFirstTimeSetup=true # Use this for first time setup of master and slave
+$postgresFirstTimeSetup=false # Use this for first time setup of master and slave
 $postgresMasterDbFileBackup="/tmp/pg_master_db_file_backup.tar" # The path of master db backup tar file on slave
 
 #Postgres calculated variables

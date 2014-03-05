@@ -1,33 +1,24 @@
-rm -rf *
+set -o verbose
 
-BASE_URL=<%= build_source_dir %>
-MRS_Build_Name=<%= mrs_go_build_name %>
-OpenERP_Build_Name=<%= erp_go_build_name %>
-OpenELIS_Build_Name=<%= elis_go_build_name %>
-reference_data_go_build_name=<%= reference_data_go_build_name %>
-BRANCH=<%= source_code_branch %>
+wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_release-3/Latest/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-2.5-SNAPSHOT-distro.zip
+wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_release-3/Latest/BuildStage/Latest/FunctionalTests/deployables/registration.zip
+wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_release-3/Latest/BuildStage/Latest/FunctionalTests/deployables/clinical.zip
+wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_release-3/Latest/BuildStage/Latest/FunctionalTests/deployables/home.zip
+wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_release-3/Latest/BuildStage/Latest/FunctionalTests/deployables/jss_config.zip
+wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_release-3/Latest/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-2.5-SNAPSHOT-jar-with-dependencies.jar
+wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_release-3/Latest/BuildStage/Latest/FunctionalTests/deployables/openmrs-data-jars.zip
+wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_release-3/Latest/BuildStage/Latest/FunctionalTests/deployables/elisatomfeedclient-omod-beanshell.zip
 
-rm -f *
+wget https://ci-bahmni.thoughtworks.com/go/files/OpenERP_release-3/Latest/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
+wget https://ci-bahmni.thoughtworks.com/go/files/OpenERP_release-3/Latest/runFunctionalTestsStage/Latest/runFunctionalTestsJob/openerp-modules.zip
 
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-2.5-SNAPSHOT-distro.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/registration.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/clinical.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/home.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss_config.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-2.5-SNAPSHOT-jar-with-dependencies.jar
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/openmrs-data-jars.zip
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/elisatomfeedclient-omod-beanshell.zip
+wget https://ci-bahmni.thoughtworks.com/go/files/OpenElis_release-3/Latest/Build/Latest/build/openelis.war
+wget https://ci-bahmni.thoughtworks.com/go/files/OpenElis_release-3/3/Build/1/build/OpenElis.zip
 
-wget $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
-wget $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/runFunctionalTestsJob/openerp-modules.zip
-
-wget $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/openelis.war
-wget $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/OpenElis.zip
-
-wget $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables/<%= reference_data_war_file_name %>.war
-wget $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables/reference-data-scripts.zip
+wget https://ci-bahmni.thoughtworks.com/go/files/ReferenceData_release-3/Latest/Build/Latest/build/deployables/reference-data-0.1.war
+wget https://ci-bahmni.thoughtworks.com/go/files/ReferenceData_release-3/Latest/Build/Latest/build/deployables/reference-data-scripts.zip
 
 #Download ui-modules
 mkdir ui-modules
 cd ui-modules
-wget $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/ui-modules/bahmniregistration-1.0-SNAPSHOT.omod 
+wget https://ci-bahmni.thoughtworks.com/go/files/Bahmni_MRS_release-3/Latest/BuildStage/Latest/FunctionalTests/deployables/ui-modules/bahmniregistration-1.0-SNAPSHOT.omod 
