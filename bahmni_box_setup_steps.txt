@@ -1,4 +1,5 @@
-Some steps .... to Get Started ...
+Guide To INSTALL Bahmni Software on a CentOS Minimal System
+===============================================================
 
 
 1. Install CentosOS (Minimal) 
@@ -8,7 +9,12 @@ Some steps .... to Get Started ...
   - In Virtual Box create a new Virtual Image (Bahmni_CentOS) and give its type as Red Hat Linux with 1.5GB RAM and 20 GB Virtual HDD. Leave other options as default.
   - Click on "Storage" window and select new CD/DVD drive option, to specify the CentOS ISO Image which you downloaded.
   - Start the newly created virtual box image. It will show you the INSTALL Wizard for CentOS.
-  - 
+  
+  NOTE: 
+  a) It is mandatory to choose CentOS MINIMAL, so that no older versions of software like PostGRES or JAVA get installed. These will otherwise conflict 
+  with the current puppet scripts. Its best to have just a basic system, and let the puppet scripts do all the installations.
+  b) If you need to have a UI / Browser also running on this machine, then choose CentOS MINIMAL + DESKTOP. 
+
 
 2. Check if properly networked.
     2.1. In VirtualBox, choose bridged network to connect to internet.
@@ -48,14 +54,21 @@ Some steps .... to Get Started ...
 11. 
     Create openmrs db (user root/password): openmrs
     Create OpenERP DB: (psql with user postgres and then grant owner to openerp): openerp
+    (Alter database openerp owner to openerp)
 
 
 12. Download & install latest BAHMNI build from ci.
     ./scripts/deploy-puppet-manifest.sh download-build
+    
+
+13. Deploy the JSS Build (Note this has some JSS specific configuration)   
     ./scripts/deploy-puppet-manifest.sh deploy-jss
     (If on deploy you get an error for JDK or tools.jar, ensure your default java is latest 1.7, and not old java1.5. If it is, then rename old java and create new sym link: 'ln -s /usr/java/default/bin/java /usr/bin/java')      
 
-13. (May need to restart the box once)
+
+14. 
+    Check if the following URLs are accessible:
+    (May need to restart the box once)
     OpenERP:                      http://<IP>:8069/ (admin/password)
     OpenMRS:                      https://<IP>/openmrs  (admin/test)
     OpenELIS:                     http://<IP>:8080/openelis/ (admin/adminADMIN!)
@@ -63,6 +76,41 @@ Some steps .... to Get Started ...
     Reference Data (Grails app):  http://<IP>/reference-data/
 
     NOTE: To switch off IPTables in case your browser can't hit: 'service iptables stop'
+
+15. Misc Configuration Steps:
+    -------------------------
+    - OpenELIS needs an Organization to be defined. Right now its JSS, but will need to be different per implementation. Do this in "Administration" screen.
+    - The ATOM Feed properties file for elis needs organization entry. Set this to appropriate value:
+    reference.data.default.organization=JSS
+    (openelis/WEB-INF/classes/atomfeed.properties)
+    - There is an issue with Address Hierarchy, so if you don't see the Registration Screen, then in OpenMRS, navigate to Address Hierarchy Screen. This will fix the issue.
+    - You may also need to add "Diagnostics" data.
+
+16. For OpenERP, follow these steps post-install:
+   
+      1) Install the following Modules:  
+        - Warehouse Module
+        - Sales Module
+        - Purchase Module
+        - Account and Finance Module
+
+      When asked about the Financial Account system choose: (INR, 0, 0, Indian Account System)
+
+      2) Setting, config, warehouse -> Track Serial Number, Expiry Date on Serial Number, Manage Multiple Location, And Manage diff UOProducts
+      3) Settings, config, General Settings -> Allow user to import data from csv files
+      4) Settings, users, Administrator choose (Edit) — access rights, select Technical Features. 
+
+      5) Logout from OpenERP and then re-Login
+      6) Install Bahmni Module Install (which installs all Bahmni OpenERP dependent modules)
+      7) Ensure these are also installed: 
+        - Bahmni Purchase flow enhancement
+        - Bahmni Print Bill
+        - Bahmni Seed Data install 
+        - Don’t install Lab seed data
+        - Don’t install DHIS2 stock export
+      8) Uninstall Bahmni Logger   
+
+
 
 ......
 .......
