@@ -16,9 +16,7 @@ Vagrant.configure("2") do |config|
 
 #  config.vm.synced_folder "packages", "/packages", :owner => "root"
   config.vm.synced_folder "..", "/Project", :owner => "root"
-  config.vm.synced_folder "../openmrs-module-bahmniclinical/clinical-ui/app", "/var/www/clinical", :owner => "jss", :disabled => true
-  config.vm.synced_folder "../openmrs-module-bahmniregistration/registration-ui/app", "/var/www/registration", :owner => "jss", :disabled => true
-  config.vm.synced_folder "../openmrs-module-bahmnihome/home-ui/app", "/var/www/home", :owner => "jss", :disabled => true
+  config.vm.synced_folder "../openmrs-module-bahmniapps/ui/app", "/var/www/bahmni", :owner => "jss", :disabled => true
   config.vm.synced_folder "../jss-config", "/var/www/bahmni_config", :owner => "jss", :disabled => true
 
   if ENV['STAGE'] == nil

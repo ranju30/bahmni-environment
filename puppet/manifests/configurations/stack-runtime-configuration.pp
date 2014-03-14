@@ -55,9 +55,7 @@ $deployablesDirectory="/home/${bahmni_user}/deployables"
 # Set host name or ip address
 $httpd_deploy_dir="/var/www"
 
-$registrationAppDirectory="${httpd_deploy_dir}/registration"
-$clinicalAppDirectory="${httpd_deploy_dir}/clinical"
-$homeAppDirectory="${httpd_deploy_dir}/home"
+$bahmniAppsDirectory="${httpd_deploy_dir}/bahmni"
 $bahmniConfigDirectory="${httpd_deploy_dir}/bahmni_config"
 
 $uploadedFilesDirectory="${tomcatParentDirectory}/uploaded-files"
@@ -82,14 +80,23 @@ $httpsRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/o
                    {path => "/openelis", redirectPath => "http://localhost:8080/openelis"},
                    {path => "/reference-data", redirectPath => "http://localhost:8080/reference-data"}]
 #Static webapps
-$httpsStaticWebapps = [{path => "/registration", directory => "${registrationAppDirectory}"},
-                       {path => "/clinical", directory => "${clinicalAppDirectory}"},
+$httpsStaticWebapps = [
+					   {path => "/home", directory => "${bahmniAppsDirectory}/home"},
+					   {path => "/adt", directory => "${bahmniAppsDirectory}/adt"},
+					   {path => "/clinical", directory => "${bahmniAppsDirectory}/clinical"},
+					   {path => "/registration", directory => "${bahmniAppsDirectory}/registration"},
+					   {path => "/common", directory => "${bahmniAppsDirectory}/common"},
+					   {path => "/components", directory => "${bahmniAppsDirectory}/components"},
+					   {path => "/document-upload", directory => "${bahmniAppsDirectory}/document-upload"},
+					   {path => "/images", directory => "${bahmniAppsDirectory}/images"},
+					   {path => "/lib", directory => "${bahmniAppsDirectory}/lib"},
+					   {path => "/orders", directory => "${bahmniAppsDirectory}/orders"},
+					   {path => "/trends", directory => "${bahmniAppsDirectory}/trends"},
 					   {path => "${imagesUrl}", directory => "${imagesDirectory}"},
 					   {path => "/document_images", directory => "${documentBaseDirectory}"},
-                       {path => "/home", directory => "${homeAppDirectory}"},
                        {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"}]
-$httpsCachedDirectories = ["${registrationAppDirectory}/lib", "${registrationAppDirectory}/css/lib"]                    
-$httpsAggressiveCacheDisabledDirectories = ["${registrationAppDirectory}/modules", "${clinicalAppDirectory}/modules", "${homeAppDirectory}/modules"]
+$httpsCachedDirectories = []                    
+$httpsAggressiveCacheDisabledDirectories = []
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
 
 $httpdCacheDirectory = "/var/cache/mod_proxy"

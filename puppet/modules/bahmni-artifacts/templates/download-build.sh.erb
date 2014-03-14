@@ -12,9 +12,7 @@ GO_PWD=<%= go_server_pwd %>
 rm -f *
 
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-<%= bahmni_release_version %>-distro.zip
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/registration.zip
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/clinical.zip
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/home.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/bahmni.zip
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss_config.zip
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-<%= bahmni_release_version %>-jar-with-dependencies.jar
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/openmrs-data-jars.zip
@@ -32,4 +30,4 @@ wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/
 #Download ui-modules
 mkdir ui-modules
 cd ui-modules
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/ui-modules/bahmniregistration-<%= bahmni_release_version %>.omod 
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/ui-modules/bahmniapps-<%= bahmni_release_version %>.omod 
