@@ -89,6 +89,7 @@ $httpsStaticWebapps = [
 					   {path => "/components", directory => "${bahmniAppsDirectory}/components"},
 					   {path => "/document-upload", directory => "${bahmniAppsDirectory}/document-upload"},
 					   {path => "/images", directory => "${bahmniAppsDirectory}/images"},
+					   {path => "/styles", directory => "${bahmniAppsDirectory}/styles"},
 					   {path => "/lib", directory => "${bahmniAppsDirectory}/lib"},
 					   {path => "/orders", directory => "${bahmniAppsDirectory}/orders"},
 					   {path => "/trends", directory => "${bahmniAppsDirectory}/trends"},
