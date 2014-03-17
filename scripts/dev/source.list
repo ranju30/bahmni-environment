@@ -1,5 +1,10 @@
-https://github.com/Bhamni/openerp-modules.git openepr-modules
+https://github.com/Bhamni/openerp-modules.git openerp-modules
 https://github.com/Bhamni/openerp-functional-tests.git openerp-functional-tests
 https://github.com/Bhamni/openmrs-distro-bahmni.git openmrs-distro-bahmni
 https://github.com/Bhamni/bahmni-reports-data.git bahmni-reports-data
 https://github.com/Bhamni/reference-data.git referece-data
+https://github.com/Bhamni/OpenElis.git OpenElis
+https://github.com/Bhamni/openmrs-module-bahmniapps.git bahmniapps_mod
+https://github.com/Bhamni/bahmni-core.git bahmni_core
+https://github.com/Bhamni/openerp-atomfeed-service.git openerp_atomfeed_service
+https://github.com/Bhamni/bahmni-apps.git bahmni_apps
