@@ -55,7 +55,7 @@ $deployablesDirectory="/home/${bahmni_user}/deployables"
 # Set host name or ip address
 $httpd_deploy_dir="/var/www"
 
-$bahmniAppsDirectory="${httpd_deploy_dir}/bahmni"
+$bahmniAppsDirectory="${httpd_deploy_dir}/bahmniapps"
 $bahmniConfigDirectory="${httpd_deploy_dir}/bahmni_config"
 
 $uploadedFilesDirectory="${tomcatParentDirectory}/uploaded-files"

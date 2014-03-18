@@ -13,5 +13,5 @@ class bahmni-ui-apps {
     require => File["${httpd_deploy_dir}"],
   }
 
-  bahmni-ui-app {"bahmni": appName => "bahmni"}
+  bahmni-ui-app {"bahmniapps": appName => "bahmniapps"}
 }
