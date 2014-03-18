@@ -9,7 +9,6 @@ Vagrant.configure("2") do |config|
   config.vm.network :private_network, ip: "192.168.33.10"
   config.vm.network :public_network
   config.ssh.username = "vagrant"
-  config.ssh.password = "vagrant"
 
   config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--memory", 3092, "--cpus", 2, "--name", "Bahmni"]
