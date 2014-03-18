@@ -23,7 +23,7 @@ RUN_AS_USER=<%= bahmni_user %> # Adjust run user here
 start() {
         echo "Starting Tomcat: "
         if [ "x$USER" != "x$RUN_AS_USER" ]; then
-          su - $RUN_AS_USER -c "export JAVA_OPTS='-XX:MaxPermSize=512M';$INSTALLATION_DIRECTORY/bin/startup.sh"
+          sudo su - $RUN_AS_USER -c "export JAVA_OPTS='-XX:MaxPermSize=512M';$INSTALLATION_DIRECTORY/bin/startup.sh"
         else
           $INSTALLATION_DIRECTORY/bin/startup.sh
         fi
@@ -32,7 +32,7 @@ start() {
 stop() {
         echo "Shutting down Tomcat: "
         if [ "x$USER" != "x$RUN_AS_USER" ]; then
-          su - $RUN_AS_USER -c "$INSTALLATION_DIRECTORY/bin/shutdown.sh"
+          sudo su - $RUN_AS_USER -c "$INSTALLATION_DIRECTORY/bin/shutdown.sh"
         else
           $INSTALLATION_DIRECTORY/bin/shutdown.sh
         fi
