@@ -8,14 +8,15 @@ Vagrant.configure("2") do |config|
 
   config.vm.network :private_network, ip: "192.168.33.10"
   config.vm.network :public_network
-  config.ssh.username = "root"
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
 
   config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--memory", 3092, "--cpus", 2, "--name", "Bahmni"]
   end
 
-#  config.vm.synced_folder "packages", "/packages", :owner => "root"
-  config.vm.synced_folder "..", "/Project", :owner => "root"
+#  config.vm.synced_folder "packages", "/packages", :owner => "vagrant"
+  config.vm.synced_folder "..", "/Project", :owner => "vagrant"
   config.vm.synced_folder "../openmrs-module-bahmniapps/ui/app", "/var/www/bahmni", :owner => "jss", :disabled => true
   config.vm.synced_folder "../jss-config", "/var/www/bahmni_config", :owner => "jss", :disabled => true
 
