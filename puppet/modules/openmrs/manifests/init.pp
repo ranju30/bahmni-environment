@@ -85,7 +85,7 @@ class openmrs {
     require     => [Exec["openmrs_database"],File["${temp_dir}/openmrs-predeploy.sql"]]
   }
 
-  file { "${temp_dir}/run-liquibase.sh" :
+  file { "${temp_dir}/run-liquibase-openmrs.sh" :
     ensure      => present,
     content     => template("openmrs/run-liquibase.sh"),
     owner       => "${bahmni_user}",
@@ -94,11 +94,11 @@ class openmrs {
   }
 
   exec { "openmrs_data" :
-    command     => "${temp_dir}/run-liquibase.sh ${build_output_dir}/${openmrs_distro_file_name_prefix} ${deployment_log_expression}",
+    command     => "${temp_dir}/run-liquibase-openmrs.sh  ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
     cwd         => "${tomcatInstallationDirectory}/webapps",
-    require     => [Exec["openmrs_predeploy"], File["${temp_dir}/run-liquibase.sh"], Exec["latest_openmrs_webapp"]]
+    require     => [Exec["openmrs_predeploy"], File["${temp_dir}/run-liquibase-openmrs.sh"], Exec["latest_openmrs_webapp"]]
   }
 
    exec { "bahmni_java_utils_jars" :

@@ -65,7 +65,7 @@ class bahmni-openerp {
   }
 
   exec { "bahmni_openerp_data" :
-    command     => "${temp_dir}/bahmni-openerp/run-liquibase.sh ${build_output_dir} ${deployment_log_expression}",
+    command     => "${temp_dir}/bahmni-openerp/run-liquibase.sh ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
     cwd         => "${tomcatInstallationDirectory}/webapps",

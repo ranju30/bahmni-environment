@@ -31,7 +31,7 @@ class implementation-config($implementationName) {
   }
 
   exec { "run_implementation_liquibase_migration" :
-    command     => "${temp_dir}/run-implementation-liquibase.sh ${tomcatInstallationDirectory}/webapps ${build_output_dir}/${openmrs_distro_file_name_prefix} ${deployment_log_expression}",
+    command     => "${temp_dir}/run-implementation-liquibase.sh  ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
     cwd         => "${build_output_dir}/${migrationsDirectory}",
