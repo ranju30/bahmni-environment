@@ -7,9 +7,6 @@ import "configurations/openmrs-versions-configuration.pp"
 node default {
   include bahmni-configuration
   include httpd
-  class { 'bahmni-data' :
-    require => Class["openmrs"],
-  }
   include bahmni-webapps
   include bahmni-ui-apps
   class { 'implementation-config':

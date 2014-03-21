@@ -37,7 +37,6 @@ node default {
   class { "openmrs" : stage => "deploy"; }
   class { "bahmni-configuration" : stage => "deploy"; }
   class { "bahmni-webapps" : stage => "deploy"; }
-  class { "bahmni-data" : stage => "deploy"; }
   class { "bahmni-openerp" : stage => "deploy"; }
   class { "registration" : stage => "deploy"; }
 
