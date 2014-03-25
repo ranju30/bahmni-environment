@@ -112,6 +112,9 @@ $support_email="bahmni-jss-support@googlegroups.com" # configured to allow devs 
 $nagios_openmrs_user=admin
 $nagios_openmrs_user_password=test
 
+$smtp_host="gmail-smtp-in.l.google.com"
+$from_email = "jss.bahmni@gmail.com"
+
 $openelis_username="admin"
 $openelis_password="adminADMIN\!"
 

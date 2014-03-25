@@ -180,17 +180,17 @@
               </exec>
               <exec command="cp">
                 <arg>deployables/openmrs.war</arg>
-                <arg>/home/jss/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/sh">
                 <arg>-c</arg>
-                <arg>rm -rf /home/jss/.OpenMRS/modules/*.omod</arg>
+                <arg>rm -rf /home/<%= bahmni_user %>/.OpenMRS/modules/*.omod</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/bash">
                 <arg>-c</arg>
-                <arg>find deployables/omod/ -type f -name "*.omod" -exec cp {} /home/jss/.OpenMRS/modules/ \;</arg>
+                <arg>find deployables/omod/ -type f -name "*.omod" -exec cp {} /home/<%= bahmni_user %>/.OpenMRS/modules/ \;</arg>
                 <runif status="passed" />
               </exec>
               <exec command="unzip">
@@ -233,17 +233,17 @@
               </exec>
               <exec command="cp">
                 <arg>deployables/openmrs.war</arg>
-                <arg>/home/jss/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/sh">
                 <arg>-c</arg>
-                <arg>rm -rf /home/jss/.OpenMRS/modules/*.omod</arg>
+                <arg>rm -rf /home/<%= bahmni_user %>/.OpenMRS/modules/*.omod</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/bash">
                 <arg>-c</arg>
-                <arg>find deployables/omod/ -type f -name "*.omod" -exec cp {} /home/jss/.OpenMRS/modules/ \;</arg>
+                <arg>find deployables/omod/ -type f -name "*.omod" -exec cp {} /home/<%= bahmni_user %>/.OpenMRS/modules/ \;</arg>
                 <runif status="passed" />
               </exec>
               <exec command="unzip">
@@ -459,17 +459,17 @@
               </exec>
               <exec command="cp">
                 <arg>deployables/mrs/deployables/openmrs.war</arg>
-                <arg>/home/jss/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/bash">
                 <arg>-c</arg>
-                <arg>find deployables/mrs/deployables/omod/ -type f -name "*.omod" -exec cp {} /home/jss/.OpenMRS/modules/ \;</arg>
+                <arg>find deployables/mrs/deployables/omod/ -type f -name "*.omod" -exec cp {} /home/<%= bahmni_user %>/.OpenMRS/modules/ \;</arg>
                 <runif status="passed" />
               </exec>
               <exec command="cp">
                 <arg>deployables/openelis/openelis.war</arg>
-                <arg>/home/jss/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="rm">
