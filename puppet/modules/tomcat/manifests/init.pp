@@ -48,6 +48,17 @@ class tomcat {
       require     => Exec["tomcat_untar"],
   }
 
+  file { "catalina.sh_with_log4j_properties_path_info" :
+      path        => "${tomcatInstallationDirectory}/bin/catalina.sh",
+      ensure      => present,
+      content     => template("tomcat/catalina.sh.erb"),
+      owner       => "${bahmni_user}",
+      replace     => true,
+      mode        => 664,
+      require     => Exec["tomcat_untar"],
+  }
+
+
   file { "${tomcatInstallationDirectory}/conf/server.xml" :
     ensure    => present,
     content   => template("tomcat/server.xml.erb"),
@@ -66,12 +77,19 @@ class tomcat {
     require   => Exec["tomcat_untar"]
   }
 
-  file { "${tomcatInstallationDirectory}/lib/log4j.properties" :
+  file { "log4j_properties_file_for_tomcat" :
+    path      => "${tomcatInstallationDirectory}/lib/log4j.properties", 
     ensure    => present,
     content   => template("tomcat/log4j.properties.erb"),
     owner     => "${bahmni_user}",
     replace   => true,
     mode      => 664,
+    require   => Exec["tomcat_untar"]
+  }
+
+ file { "delete_original_tomcat_logging_properties_file" :
+    path      => "${tomcatInstallationDirectory}/conf/logging.properties",
+    ensure    => absent,
     require   => Exec["tomcat_untar"]
   }
 
