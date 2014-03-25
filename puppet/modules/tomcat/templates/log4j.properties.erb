@@ -2,8 +2,7 @@ log4j.rootLogger=INFO, CATALINA
 
 # Define all appenders
 
-# CATALINA Appender configured for Max File Size rolling
-
+# CATALINA Appender configured for Max File Size rolling (preferred in QA/Dev)
 log4j.appender.CATALINA=org.apache.log4j.RollingFileAppender
 log4j.appender.CATALINA.File=${catalina.base}/logs/catalina.out
 log4j.appender.CATALINA.MaxFileSize=10MB
@@ -12,6 +11,18 @@ log4j.appender.CATALINA.Append=true
 log4j.appender.CATALINA.Encoding=UTF-8
 log4j.appender.CATALINA.layout = org.apache.log4j.PatternLayout
 log4j.appender.CATALINA.layout.ConversionPattern = %d [%t] %-5p %c- %m%n
+
+
+# CATALINA Appender configured for Daily Rolling (preferred in Production)
+# log4j.appender.CATALINA=org.apache.log4j.DailyRollingFileAppender
+# log4j.appender.CATALINA.File=${catalina.base}/logs/catalina.
+# log4j.appender.CATALINA.MaxBackupIndex=20
+# log4j.appender.CATALINA.Append=true
+# log4j.appender.CATALINA.Encoding=UTF-8
+# log4j.appender.LOCALHOST.DatePattern='.'yyyy-MM-dd'.log'
+# log4j.appender.CATALINA.layout = org.apache.log4j.PatternLayout
+# log4j.appender.CATALINA.layout.ConversionPattern = %d [%t] %-5p %c- %m%n
+
 
 log4j.appender.LOCALHOST=org.apache.log4j.DailyRollingFileAppender
 log4j.appender.LOCALHOST.File=${catalina.base}/logs/localhost.
