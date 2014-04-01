@@ -54,7 +54,7 @@ class tomcat {
       content     => template("tomcat/catalina.sh.erb"),
       owner       => "${bahmni_user}",
       replace     => true,
-      mode        => 664,
+      mode        => 774,
       require     => Exec["tomcat_untar"],
   }
 
