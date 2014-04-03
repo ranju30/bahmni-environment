@@ -17,8 +17,8 @@
 source /etc/environment
 source /etc/init.d/functions
 
-INSTALLATION_DIRECTORY=<%= tomcatInstallationDirectory %>
-RUN_AS_USER=<%= bahmni_user %> # Adjust run user here
+INSTALLATION_DIRECTORY=<%= @tomcatInstallationDirectory %>
+RUN_AS_USER=<%= @bahmni_user %> # Adjust run user here
 
 start() {
         echo "Starting Tomcat: "

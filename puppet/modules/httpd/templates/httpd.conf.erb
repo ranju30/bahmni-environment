@@ -274,8 +274,8 @@ ServerAdmin root@localhost
 # redirections work in a sensible way.
 #
 #ServerName www.example.com:80
-<% if !serverName.nil? &&  !serverName.empty? %>
-ServerName <%= serverName %>
+<% if !@serverName.nil? &&  !@serverName.empty? %>
+ServerName <%= @serverName %>
 <% end %>
 
 #

@@ -72,7 +72,7 @@ SSLCryptoDevice builtin
 <IfModule mod_cache.c>
 	LoadModule disk_cache_module modules/mod_disk_cache.so
 	<IfModule mod_disk_cache.c>
-		CacheRoot <%=httpdCacheDirectory%>
+		CacheRoot <%=@httpdCacheDirectory%>
 
 		<%- @httpsCacheUrls.each do |httpsCacheUrl| -%>
 		CacheEnable disk <%=httpsCacheUrl["path"]%>
@@ -103,8 +103,8 @@ SSLCryptoDevice builtin
 # General setup for the virtual host, inherited from global configuration
 #DocumentRoot "/var/www/html"
 #ServerName www.example.com:443
-<% if !serverName.nil? &&  !serverName.empty? %>
-ServerName <%= serverName %>
+<% if !@serverName.nil? &&  !@serverName.empty? %>
+ServerName <%= @serverName %>
 <% end %>
 
 ProxyPreserveHost On
@@ -150,7 +150,7 @@ SSLCertificateKeyFile <%= @sslCertificateKeyFile %>
 #   the referenced file can be the same as SSLCertificateFile
 #   when the CA certificates are directly appended to the server
 #   certificate for convinience.
-<% if !sslCertificateChainFile.nil? &&  !sslCertificateChainFile.empty? %>
+<% if !@sslCertificateChainFile.nil? &&  !@sslCertificateChainFile.empty? %>
 SSLCertificateChainFile <%= @sslCertificateChainFile %>
 <% else %>
 #SSLCertificateChainFile /etc/pki/tls/certs/server-chain.crt
@@ -160,7 +160,7 @@ SSLCertificateChainFile <%= @sslCertificateChainFile %>
 #   Set the CA certificate verification path where to find CA
 #   certificates for client authentication or alternatively one
 #   huge file containing all of them (file must be PEM encoded)
-<% if !sslCACertificateFile.nil? &&  !sslCACertificateFile.empty? %>
+<% if !@sslCACertificateFile.nil? &&  !@sslCACertificateFile.empty? %>
 SSLCACertificateFile <%= @sslCACertificateFile %>
 <% else %>
 #SSLCACertificateFile /etc/pki/tls/certs/ca-bundle.crt

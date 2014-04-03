@@ -16,7 +16,7 @@
         <jobs>
           <job name="OpenMRSDataJob">
             <tasks>
-              <exec command="<%= maven_home %>/bin/mvn" workingdir="openmrsdata">
+              <exec command="<%= @maven_home %>/bin/mvn" workingdir="openmrsdata">
                 <arg>clean</arg>
                 <arg>package</arg>
                 <arg>-U</arg>
@@ -32,7 +32,7 @@
           </job>
           <job name="BahmniCore">
             <tasks>
-              <exec command="<%= maven_home %>/bin/mvn" workingdir="bahmnicore">
+              <exec command="<%= @maven_home %>/bin/mvn" workingdir="bahmnicore">
                 <arg>clean</arg>
                 <arg>install</arg>
                 <arg>-U</arg>
@@ -108,13 +108,13 @@
           </job>
           <job name="FunctionalTests">
             <tasks>
-              <exec command="<%= maven_home %>/bin/mvn" workingdir="openmrsdata">
+              <exec command="<%= @maven_home %>/bin/mvn" workingdir="openmrsdata">
                 <arg>clean</arg>
                 <arg>package</arg>
                 <arg>-DskipTests</arg>
                 <runif status="passed" />
               </exec>
-              <exec command="<%= maven_home %>/bin/mvn" workingdir="bahmnicore">
+              <exec command="<%= @maven_home %>/bin/mvn" workingdir="bahmnicore">
                 <arg>clean</arg>
                 <arg>package</arg>
                 <arg>-DskipTests</arg>
@@ -180,17 +180,17 @@
               </exec>
               <exec command="cp">
                 <arg>deployables/openmrs.war</arg>
-                <arg>/home/<%= bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= @bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/sh">
                 <arg>-c</arg>
-                <arg>rm -rf /home/<%= bahmni_user %>/.OpenMRS/modules/*.omod</arg>
+                <arg>rm -rf /home/<%= @bahmni_user %>/.OpenMRS/modules/*.omod</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/bash">
                 <arg>-c</arg>
-                <arg>find deployables/omod/ -type f -name "*.omod" -exec cp {} /home/<%= bahmni_user %>/.OpenMRS/modules/ \;</arg>
+                <arg>find deployables/omod/ -type f -name "*.omod" -exec cp {} /home/<%= @bahmni_user %>/.OpenMRS/modules/ \;</arg>
                 <runif status="passed" />
               </exec>
               <exec command="unzip">
@@ -233,17 +233,17 @@
               </exec>
               <exec command="cp">
                 <arg>deployables/openmrs.war</arg>
-                <arg>/home/<%= bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= @bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/sh">
                 <arg>-c</arg>
-                <arg>rm -rf /home/<%= bahmni_user %>/.OpenMRS/modules/*.omod</arg>
+                <arg>rm -rf /home/<%= @bahmni_user %>/.OpenMRS/modules/*.omod</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/bash">
                 <arg>-c</arg>
-                <arg>find deployables/omod/ -type f -name "*.omod" -exec cp {} /home/<%= bahmni_user %>/.OpenMRS/modules/ \;</arg>
+                <arg>find deployables/omod/ -type f -name "*.omod" -exec cp {} /home/<%= @bahmni_user %>/.OpenMRS/modules/ \;</arg>
                 <runif status="passed" />
               </exec>
               <exec command="unzip">
@@ -271,7 +271,7 @@
     <pipeline name="OpenERP_Pipeline">
       <environmentvariables>
         <variable name="OPENERP_LOCATION">
-          <value><%= openerp_install_location %></value>
+          <value><%= @openerp_install_location %></value>
         </variable>
       </environmentvariables>
       <materials>
@@ -308,7 +308,7 @@
         <jobs>
           <job name="defaultJob">
             <tasks>
-              <exec command="<%= maven_home %>/bin/mvn">
+              <exec command="<%= @maven_home %>/bin/mvn">
                 <arg>initialize</arg>
                 <arg>clean</arg>
                 <arg>install</arg>
@@ -324,7 +324,7 @@
     <pipeline name="Bahmni_Deploy_QA" template="Bhamni_Deploy">
       <environmentvariables>
         <variable name="OPENERP_LOCATION">
-          <value><%= openerp_install_location %></value>
+          <value><%= @openerp_install_location %></value>
         </variable>
       </environmentvariables>
       <materials>
@@ -357,7 +357,7 @@
     <pipeline name="Bahmni_Deploy_Integration" template="Bhamni_Deploy">
       <environmentvariables>
         <variable name="OPENERP_LOCATION">
-          <value><%= openerp_install_location %></value>
+          <value><%= @openerp_install_location %></value>
         </variable>
       </environmentvariables>
       <materials>
@@ -381,7 +381,7 @@
         <jobs>
           <job name="Address_Hierarchy">
             <tasks>
-              <exec command="<%= maven_home %>/bin/mvn" workingdir="address_hierarchy">
+              <exec command="<%= @maven_home %>/bin/mvn" workingdir="address_hierarchy">
                 <arg>clean</arg>
                 <arg>install</arg>
                 <arg>-U</arg>
@@ -394,7 +394,7 @@
           </job>
           <job name="OpenMRS_Core">
             <tasks>
-              <exec command="<%= maven_home %>/bin/mvn" workingdir="openmrs_core">
+              <exec command="<%= @maven_home %>/bin/mvn" workingdir="openmrs_core">
                 <arg>clean</arg>
                 <arg>install</arg>
                 <arg>-DskipTests</arg>
@@ -407,7 +407,7 @@
           </job>
           <job name="idgen">
             <tasks>
-              <exec command="<%= maven_home %>/bin/mvn" workingdir="idgen">
+              <exec command="<%= @maven_home %>/bin/mvn" workingdir="idgen">
                 <arg>clean</arg>
                 <arg>install</arg>
                 <arg>-DskipTests</arg>
@@ -420,7 +420,7 @@
           </job>
           <job name="mrs_rest_services">
             <tasks>
-              <exec command="<%= maven_home %>/bin/mvn" workingdir="mrs_rest_services">
+              <exec command="<%= @maven_home %>/bin/mvn" workingdir="mrs_rest_services">
                 <arg>clean</arg>
                 <arg>install</arg>
                 <arg>-DskipTests</arg>
@@ -459,17 +459,17 @@
               </exec>
               <exec command="cp">
                 <arg>deployables/mrs/deployables/openmrs.war</arg>
-                <arg>/home/<%= bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= @bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/bash">
                 <arg>-c</arg>
-                <arg>find deployables/mrs/deployables/omod/ -type f -name "*.omod" -exec cp {} /home/<%= bahmni_user %>/.OpenMRS/modules/ \;</arg>
+                <arg>find deployables/mrs/deployables/omod/ -type f -name "*.omod" -exec cp {} /home/<%= @bahmni_user %>/.OpenMRS/modules/ \;</arg>
                 <runif status="passed" />
               </exec>
               <exec command="cp">
                 <arg>deployables/openelis/openelis.war</arg>
-                <arg>/home/<%= bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= @bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="rm">

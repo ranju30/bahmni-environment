@@ -25,13 +25,13 @@
           </snapshots>
           <id>central</id>
           <name>libs-release</name>
-          <url><%= artifactory_server_base_url%>/libs-release</url>
+          <url><%= @artifactory_server_base_url%>/libs-release</url>
         </repository>
         <repository>
           <snapshots />
           <id>snapshots</id>
           <name>libs-snapshot</name>
-          <url><%= artifactory_server_base_url%>/libs-snapshot</url>
+          <url><%= @artifactory_server_base_url%>/libs-snapshot</url>
         </repository>
       </repositories>
       <pluginRepositories>
@@ -41,13 +41,13 @@
           </snapshots>
           <id>central</id>
           <name>plugins-release</name>
-          <url><%= artifactory_server_base_url%>/plugins-release</url>
+          <url><%= @artifactory_server_base_url%>/plugins-release</url>
         </pluginRepository>
         <pluginRepository>
           <snapshots />
           <id>snapshots</id>
           <name>plugins-snapshot</name>
-          <url><%= artifactory_server_base_url%>/plugins-snapshot</url>
+          <url><%= @artifactory_server_base_url%>/plugins-snapshot</url>
         </pluginRepository>
       </pluginRepositories>
       <id>artifactory</id>
