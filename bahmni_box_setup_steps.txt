@@ -20,27 +20,27 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     2.1. In VirtualBox, choose bridged network to connect to internet.
     2.2. Run "ifconfig" and make sure eth0 has proper IP. You should be able to ping google. Else try "ifup eth0". Check ifconfig again.
    
-3. Install git - "yum install git"
+3. Install git - "sudo yum install git"
 
 4. Install ruby (187)
-    yum install ruby
+    sudo yum install ruby
    
-5. Install Puppet - (http://docs.puppetlabs.com/guides/installation.html#red-hat-enterprise-linux-and-derivatives)
-    rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
-    yum install puppet
+5.  a) Install Puppet - (http://docs.puppetlabs.com/guides/installation.html#red-hat-enterprise-linux-and-derivatives)
+       sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+       sudo yum install puppet
 
+    b) (Optional step): Edit the /etc/puppet/puppet.conf file and make an entry (This will ensure that manifest are executed sequentially):
+       ordering = manifest 
 
 6. Clone Bahmni-Environment repo in /root/bahmni -
     mkdir -p /root/bahmni
     cd /root/bahmni
     git clone https://github.com/Bhamni/bahmni-environment.git
     cd bahmni-environment
-    git submodule init
-    git submodule update
 
 
 7. Install wget
-   yum install wget
+   sudo yum install wget
 
 8. Mkdir /packages
 
@@ -111,22 +111,16 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
       8) Uninstall Bahmni Logger   
 
 
-
-......
-.......
-.............
-...................
-
+===================================================================================================
 Some todos we identified
------------------------------------------
+===================================================================================================
 TODO:
 
-- The sequence in which local repo is created is arbitrary. MySQL install fails first time when you provision, and the repo gets created later.
+- [Fixed] The sequence in which local repo is created is arbitrary. MySQL install fails first time when you provision, and the repo gets created later.
 Need to ensure that local repo is created first. 
-- Git Submodule command does not bring nodejs/rvm down. Why is it needed? 
 - remove local packages dependencies - remove (require yum repo) 
 ------ create a new provision.pp file which will install all packages from internet.
 ------ Note that mySQL installation requires addition of another yum repo. This will be needed for Internet-mode installation.
 - remove goServer
-- TODO: check how to enable download of packages, currently script downloads through public ip of GO of all current builds. we might not to use GO for package download and/or the bleeding packages 
+- Check how to enable download of packages, currently script downloads through public ip of GO of all current builds. we might not to use GO for package download and/or the bleeding packages 
 * delete - /packages/localrepo ?
