@@ -116,7 +116,7 @@ $smtp_host="gmail-smtp-in.l.google.com"
 $from_email = "jss.bahmni@gmail.com"
 
 $openelis_username="admin"
-$openelis_password="adminADMIN\!"
+$openelis_password="adminADMIN!"
 
 # OpenMRS
 $openmrs_database_user = "openmrs-user"
