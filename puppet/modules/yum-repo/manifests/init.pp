@@ -1,5 +1,8 @@
 class yum-repo {
   require bootstrap
+
+  notice("yum-repo manifest being executed... ")
+
 	file { "local_repo" :
 		path 			=> "/etc/yum.repos.d/local.repo",
     ensure    => present,
@@ -21,6 +24,8 @@ class yum-repo {
 
   if ($keep_linux_repos_enabled == "true") {
 
+    notice("keep_linux_repos_enabled = true")
+
     file { "/etc/yum.repos.d/CentOS-Base.repo" :
       source => "puppet:///modules/yum-repo/CentOS-Base.repo",
       require => Exec["touch"]
@@ -37,6 +42,8 @@ class yum-repo {
     }
 
 } else {
+
+    notice("keep_linux_repos_enabled = false")
 
   #  file {'/etc/yum.repos.d/local.repo':
   #    source => "puppet:///modules/bootstrap/local.repo"
