@@ -12,6 +12,6 @@ node default {
   include bahmni-webapps
   include bahmni-ui-apps
   class { 'implementation-config':
-    implementationName => "jss", require => Class['bahmni-webapps'],
+    implementationName => "search", require => Class['bahmni-webapps'],
   }
 }
