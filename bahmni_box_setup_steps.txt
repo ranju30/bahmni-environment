@@ -20,53 +20,55 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     2.1. In VirtualBox, choose bridged network to connect to internet.
     2.2. Run "ifconfig" and make sure eth0 has proper IP. You should be able to ping google. Else try "ifup eth0". Check ifconfig again.
    
-3. Install git - "sudo yum install git"
 
-4. Install ruby (187)
+3. Install ruby (187)
     sudo yum install ruby
    
-5.  a) Install Puppet - (http://docs.puppetlabs.com/guides/installation.html#red-hat-enterprise-linux-and-derivatives)
+4.  a) Install Puppet - (http://docs.puppetlabs.com/guides/installation.html#red-hat-enterprise-linux-and-derivatives)
        sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
        sudo yum install puppet
 
     b) (Optional step): Edit the /etc/puppet/puppet.conf file and make an entry (This will ensure that manifest are executed sequentially):
        ordering = manifest 
 
-6. Clone Bahmni-Environment repo in /root/bahmni -
-    mkdir -p /root/bahmni
-    cd /root/bahmni
-    git clone https://github.com/Bhamni/bahmni-environment.git
-    cd bahmni-environment
+5.  Get Bahmni-Environment which contains Puppet provision scripts:
+
+    a) Install git - "sudo yum install git"    
+    b) Clone Bahmni-Environment repo in /root/bahmni -
+        mkdir -p /root/bahmni
+        cd /root/bahmni
+        git clone https://github.com/Bhamni/bahmni-environment.git
+        cd bahmni-environment
 
 
-7. Install wget
+6. Install wget (if its not already present)
    sudo yum install wget
 
-8. Mkdir /packages
+7. Mkdir /packages
 
-9. Copy localrepo, servers, tools to /packages/
+8. Copy localrepo, servers, tools, Python-packages folders to /packages/ (to avoid download of these from internet)
   (You could do scp. Like: 'scp -r * root@10.4.31.206:/packages/' from the folder which has all your folders)
 
-10. Provision
+9. Run Provision Command (note: ensure that bahmni_user variable is set to bahmni/jss as you prefer)
     cd /root/bahmni/bahmni-environment
-    ./scripts/deploy-puppet-manifest.sh provision
+    ./scripts/run-puppet-manifest.sh provision
 
-11. 
+10. 
     Create openmrs db (user root/password): openmrs
     Create OpenERP DB: (psql with user postgres and then grant owner to openerp): openerp
     (Alter database openerp owner to openerp)
 
 
-12. Download & install latest BAHMNI build from ci.
-    ./scripts/deploy-puppet-manifest.sh download-build
+11. Download & install latest BAHMNI build from CI.
+    ./scripts/run-puppet-manifest.sh download-build
     
 
-13. Deploy the JSS Build (Note this has some JSS specific configuration)   
-    ./scripts/deploy-puppet-manifest.sh deploy-jss
+12. Deploy the JSS Build (Note this has some JSS specific configuration)   
+    ./scripts/run-puppet-manifest.sh deploy-jss
     (If on deploy you get an error for JDK or tools.jar, ensure your default java is latest 1.7, and not old java1.5. If it is, then rename old java and create new sym link: 'ln -s /usr/java/default/bin/java /usr/bin/java')      
 
 
-14. 
+13. 
     Check if the following URLs are accessible:
     (May need to restart the box once)
     OpenERP:                      http://<IP>:8069/ (admin/password)
@@ -77,7 +79,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 
     NOTE: To switch off IPTables in case your browser can't hit: 'service iptables stop'
 
-15. Misc Configuration Steps:
+14. Misc Configuration Steps:
     -------------------------
     - OpenELIS needs an Organization to be defined. Right now its JSS, but will need to be different per implementation. Do this in "Administration" screen.
     - The ATOM Feed properties file for elis needs organization entry. Set this to appropriate value:
@@ -86,7 +88,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     - There is an issue with Address Hierarchy, so if you don't see the Registration Screen, then in OpenMRS, navigate to Address Hierarchy Screen. This will fix the issue.
     - You may also need to add "Diagnostics" data.
 
-16. For OpenERP, follow these steps post-install:
+15. For OpenERP, follow these steps post-install:
    
       1) Install the following Modules:  
         - Warehouse Module
