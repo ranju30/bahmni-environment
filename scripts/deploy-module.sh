@@ -8,6 +8,28 @@ usage() {
 	echo "<module-name> is the name of a puppet module present in ${BASE_DIR}/puppet/modules directory"
 }
 
+####################################################################
+# Checking if env variable BAHMNI_USER_NAME is set
+echo "Current value of BAHMNI_USER_NAME = ${BAHMNI_USER_NAME}"
+
+if [ "${BAHMNI_USER_NAME}a" = "a" ]
+then
+	# If not, then setting it to second parameter passed
+	BAHMNI_USER_NAME=$2
+fi
+
+# If still not set.... 
+if [ "${BAHMNI_USER_NAME}a" = "a" ]
+then
+	echo "No BAHMNI_USER_NAME specified. Assuming jss for backward compatability"
+	BAHMNI_USER_NAME=jss
+fi
+
+export FACTER_bahmni_user_new=$BAHMNI_USER_NAME
+echo "Setting bahmni_user=${FACTER_bahmni_user_new}"
+####################################################################
+
+
 MODULE_NAME=$1
 if [ "${MODULE_NAME}a" = "a" ]
 then
