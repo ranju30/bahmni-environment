@@ -38,10 +38,12 @@ class host {
   	require	=> [Package["ntp"], File["${temp_dir}/logs"]]
   }
 
+  # Execute ntpdate if pool.ntp.org is pingable (have internet) 
   exec { "time_clock_synchronized" :
   	command => "ntpdate -u pool.ntp.org ${host_log_expression}",
   	path 		=> "${os_path}",
-  	require	=> [Exec["ntp_service"], File["${temp_dir}/logs"]]
+  	require	=> [Exec["ntp_service"], File["${temp_dir}/logs"]],
+    onlyif  => "ping -c1 pool.ntp.org"
   }
 
   service { "ntpd" :
