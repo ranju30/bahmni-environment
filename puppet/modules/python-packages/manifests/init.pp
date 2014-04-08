@@ -108,6 +108,10 @@ class python-packages {
       remote_location => "https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.1.tar.gz",
   }
 
+  wget_remote_file{"${python_package_dir}/psycopg2-2.5.tar.gz":
+      remote_location => "https://pypi.python.org/packages/source/p/psycopg2/psycopg2-2.5.tar.gz",
+  }
+
   wget_remote_file{"${python_package_dir}/pydot-1.0.28.tar.gz":
       remote_location => "http://pydot.googlecode.com/files/pydot-1.0.28.tar.gz",
   }
