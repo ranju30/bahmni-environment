@@ -49,6 +49,10 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 8. Copy localrepo, servers, tools, Python-packages folders to /packages/ (to avoid download of these from internet)
   (You could do scp. Like: 'scp -r * root@10.4.31.206:/packages/' from the folder which has all your folders)
 
+  - Note: If you are going to run the provisioning without internet, then ensure that all exisinting yum repos are disabled 
+    including, base, updates and extra repos by editing the files in /etc/yum.repos.d/ and adding enabled=0 line to each repo.
+    Then run the command yum repolist enabled to see that none are enabled (except local which will be created by the provision command)
+
 9. Run Provision Command (note: ensure that bahmni_user variable is set to bahmni/jss as you prefer)
     cd /root/bahmni/bahmni-environment
     ./scripts/run-puppet-manifest.sh provision
