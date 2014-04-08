@@ -6,4 +6,4 @@
 
 echo "Attempting to run puppet manifest: $@ "
 SCRIPTS_DIR=`dirname $0`
-sudo $SCRIPTS_DIR/deploy-puppet-manifest.sh "$@" 
+sudo -E $SCRIPTS_DIR/deploy-puppet-manifest.sh "$@" 
