@@ -5,6 +5,9 @@ import "configurations/deployment-configuration"
 import "configurations/openmrs-versions-configuration.pp"
 
 node default {
+  
+  warning "This manifest 'deploy-jss' is deprecated. Instead consider using 'deploy-implementation'"
+
   include bahmni-configuration
   include httpd
   include bahmni-webapps

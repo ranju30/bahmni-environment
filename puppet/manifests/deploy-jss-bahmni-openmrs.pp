@@ -7,6 +7,9 @@ import "configurations/openmrs-versions-configuration.pp"
 # pre-condition
 # bahmni-stop must have been run before this
 node default {
+
+  warning "This manifest 'deploy-jss-bahmni-openmrs' is deprecated. Instead consider using 'deploy-impl-bahmni-openmrs'"
+
   include bahmni-configuration
   include httpd
   include bahmni-webapps
