@@ -17,25 +17,30 @@ then
 fi
 
 ####################################################################
+# Note that you should invoke this script with sudo -E (so that environment variables are passed to this script)
 # Checking if env variable BAHMNI_USER_NAME is set
-echo "Current value of BAHMNI_USER_NAME = ${BAHMNI_USER_NAME}"
 
-if [ "${BAHMNI_USER_NAME}a" = "a" ]
+if [ "${BAHMNI_USER_NAME}a" != "a" ]
 then
-	# If not, then setting it to second parameter passed
-	BAHMNI_USER_NAME=$2
+	export FACTER_bahmni_user_name=$BAHMNI_USER_NAME
+	echo "Setting bahmni_user_name=${FACTER_bahmni_user_name}"
+else
+	echo "Not setting bahmni_user_name. Puppet default will be used."
 fi
 
-# If still not set.... 
-if [ "${BAHMNI_USER_NAME}a" = "a" ]
-then
-	echo "No BAHMNI_USER_NAME specified. Assuming jss for backward compatability"
-	BAHMNI_USER_NAME=jss
-fi
-
-export FACTER_bahmni_user_new=$BAHMNI_USER_NAME
-echo "Setting bahmni_user=${FACTER_bahmni_user_new}"
 ####################################################################
+# Checking if env variable IMPLEMENTATION_NAME is set
+
+if [ "${IMPLEMENTATION_NAME}a" != "a" ]
+then
+	export FACTER_implementation_name=$IMPLEMENTATION_NAME
+	echo "Setting implementation_name=${FACTER_implementation_name}"
+else
+	echo "Not setting implementation_name. Puppet default will be used."
+fi
+
+####################################################################
+
 
 puppet apply $BASE_DIR/puppet/manifests/$1.pp --modulepath=$BASE_DIR/puppet/modules/ --detailed-exitcodes
 RETURN_CODE=$?

@@ -2,7 +2,21 @@
 
 # user
 # to generate password hash use 'echo "password" | openssl passwd -1 -stdin'
-$bahmni_user = "jss"
+
+
+# Set bahmni_user to $bahmni_user_name if specified, else set default to jss for backward compatibility
+$bahmni_user = $bahmni_user_name ? {
+      undef			=> "jss",
+      default       => $bahmni_user_name 	 
+}
+
+# Set the implementation to $implementation_name if specified, else set default to jss for backward compatibility
+$implementation = $implementation_name ? {
+      undef			=> "jss",
+      default       => $implementation_name 	 
+}
+
+
 $bahmni_user_password_hash = '$1$IW4OvlrH$Kui/55oif8W3VZIrnX6jL1' #p@ssw0rd
 $ssh_port=22
 
