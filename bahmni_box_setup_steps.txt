@@ -53,6 +53,14 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     including, base, updates and extra repos by editing the files in /etc/yum.repos.d/ and adding enabled=0 line to each repo.
     Then run the command yum repolist enabled to see that none are enabled (except local which will be created by the provision command)
 
+
+9. Set the following environment variables (which will be used by Puppet during provisioning). 
+   For future, it might be best to set this permananently in your ~/.bashrc file.
+  
+    export BAHMNI_USER_NAME=bahmni  (default is jss)
+    export IMPLEMENTATION_NAME=<your-implementation-name> (default is jss)
+
+
 9. Run Provision Command (note: ensure that bahmni_user variable is set to bahmni/jss as you prefer)
     cd /root/bahmni/bahmni-environment
     ./scripts/run-puppet-manifest.sh provision
@@ -67,15 +75,15 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     ./scripts/run-puppet-manifest.sh download-build
     
 
-12. Deploy the JSS Build (Note this has some JSS specific configuration)   
-    ./scripts/run-puppet-manifest.sh deploy-jss
+12. Deploy the Implementation Specific Builds (will read your implementation_name variable to decide which one to install)
+    ./scripts/run-puppet-manifest.sh deploy-implementation
     (If on deploy you get an error for JDK or tools.jar, ensure your default java is latest 1.7, and not old java1.5. If it is, then rename old java and create new sym link: 'ln -s /usr/java/default/bin/java /usr/bin/java')      
 
 
 13. 
     Check if the following URLs are accessible:
     (May need to restart the box once)
-    OpenERP:                      http://<IP>:8069/ (admin/password)
+    OpenERP:                      http://<IP>:8069/ (admin/password  or admin/admin)
     OpenMRS:                      https://<IP>/openmrs  (admin/test)
     OpenELIS:                     http://<IP>:8080/openelis/ (admin/adminADMIN!)
     Bahmni:                       http://<IP>/home (admin/test) --- May need to give roles to user in OpenMRS if you see blank dashboard
@@ -95,16 +103,22 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 15. For OpenERP, follow these steps post-install:
    
       1) Install the following Modules:  
-        - Warehouse Module
-        - Sales Module
-        - Purchase Module
-        - Account and Finance Module
+        - Warehouse Management Module
+        - Sales Management Module
+        - Purchase Management Module
+        - Accounting and Finance Module
 
       When asked about the Financial Account system choose: (INR, 0, 0, Indian Account System)
 
-      2) Setting, config, warehouse -> Track Serial Number, Expiry Date on Serial Number, Manage Multiple Location, And Manage diff UOProducts
-      3) Settings, config, General Settings -> Allow user to import data from csv files
-      4) Settings, users, Administrator choose (Edit) — access rights, select Technical Features. 
+      2) Setting -> config -> warehouse -> Enable the following:
+        
+        - Track Serial Number on Products, 
+        - Expiry Date on Serial Number, 
+        - Manage Multiple Location, 
+        - Manage different  unit of measures on Products
+      
+      3) Settings -> config -> General Settings -> Allow user to import data from csv files
+      4) Settings -> Users -> Administrator choose (Edit) — Access rights -> enable Technical Features. 
 
       5) Logout from OpenERP and then re-Login
       6) Install Bahmni Module Install (which installs all Bahmni OpenERP dependent modules)
