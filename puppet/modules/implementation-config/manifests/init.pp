@@ -61,7 +61,7 @@ class implementation-config($implementationName) {
 
   exec { "set_permissions_of_bahmni_config" :
     provider => "shell",
-    command => "chmod -R 775 ${httpd_deploy_dir}/bahmni_config",
+    command => "chmod -R  u+rwx,g+rwx,o+rw ${httpd_deploy_dir}/bahmni_config",
     path => "${os_path}",
     require => Exec["copy_implementation_config"]
   }
