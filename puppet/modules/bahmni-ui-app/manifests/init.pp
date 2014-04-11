@@ -15,4 +15,11 @@ define bahmni-ui-app($appName) {
     path      => "${os_path}",
     require   => File["${appDirectory}"]
   }
+
+  exec { "change_rights_for_app_directory_${appDirectory}" :
+    provider => "shell",
+    command => "chown -R ${bahmni_user}:${bahmni_user} ${appDirectory}; chmod -R ug+w,a+r ${appDirectory}",
+    path => "${os_path}",
+    require => Exec["deploy_bahmni_ui_app_${appName}"],
+  }
 }

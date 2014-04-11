@@ -51,4 +51,19 @@ class implementation-config($implementationName) {
     path        => "${os_path}",
     require     => [Exec["unzip_${implementationName}"], File["${httpd_deploy_dir}/bahmni_config"]]
   }
+
+  exec { "set_owner_of_bahmni_config" :
+    provider => "shell",
+    command => "chown -R ${bahmni_user}:${bahmni_user} ${httpd_deploy_dir}/bahmni_config",
+    path => "${os_path}",
+    require => Exec["copy_implementation_config"]
+  }
+
+  exec { "set_permissions_of_bahmni_config" :
+    provider => "shell",
+    command => "chmod -R 775 ${httpd_deploy_dir}/bahmni_config",
+    path => "${os_path}",
+    require => Exec["copy_implementation_config"]
+  }
+
 }
