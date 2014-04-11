@@ -18,7 +18,7 @@ define bahmni-ui-app($appName) {
 
   exec { "change_rights_for_app_directory_${appDirectory}" :
     provider => "shell",
-    command => "chown -R ${bahmni_user}:${bahmni_user} ${appDirectory}; chmod -R 775 ${appDirectory}",
+    command => "chown -R ${bahmni_user}:${bahmni_user} ${appDirectory}; chmod -R 777 ${appDirectory}",
     path => "${os_path}",
     require => Exec["deploy_bahmni_ui_app_${appName}"],
   }
