@@ -95,7 +95,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     -------------------------
     - OpenELIS needs an Organization to be defined. Right now its JSS, but will need to be different per implementation. Do this in "Administration" screen.
     - The ATOM Feed properties file for elis needs organization entry. Set this to appropriate value:
-    reference.data.default.organization=JSS
+    reference.data.default.organization=JSS (or set environment variable ELIS_DEFAULT_ORGANIZATION_NAME to appropriate value to override this.)
     (openelis/WEB-INF/classes/atomfeed.properties)
     - There is an issue with Address Hierarchy, so if you don't see the Registration Screen, then in OpenMRS, navigate to Address Hierarchy Screen. This will fix the issue.
     - You may also need to add "Diagnostics" data.
@@ -121,14 +121,20 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
       4) Settings -> Users -> Administrator choose (Edit) — Access rights -> enable Technical Features. 
 
       5) Logout from OpenERP and then re-Login
-      6) Install Bahmni Module Install (which installs all Bahmni OpenERP dependent modules)
-      7) Ensure these are also installed: 
-        - Bahmni Purchase flow enhancement
-        - Bahmni Print Bill
-        - Bahmni Seed Data install 
-        - Don’t install Lab seed data
-        - Don’t install DHIS2 stock export
-      8) Uninstall Bahmni Logger   
+      6) Go to Settings -> Modules -> Update Module List (Updated)
+      7) Restart OpenERP ('sudo service openerp stop',  and then 'sudo service openerp start')
+      8) Go to Settings -> Modules -> Installed Modules and in search box type "Bahmni"
+          - Install 'Bahmni Module Install' (which installs all Bahmni OpenERP dependent modules)
+          
+          Ensure these are also installed: 
+            - Bahmni Purchase flow enhancement
+            - Bahmni Print Bill
+            - Bahmni Seed Data install 
+          
+          - Don’t install Lab seed data
+          - Don’t install DHIS2 stock export
+      9) Uninstall Bahmni Logger   
+      10) Go to Settings->Companies (Edit and add your hospital details: name, logo, address, etc).
 
 
 ===================================================================================================
