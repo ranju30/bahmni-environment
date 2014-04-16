@@ -69,7 +69,7 @@
     -->
     <Connector port="<%= @tomcatHttpPort %>" protocol="HTTP/1.1"
                connectionTimeout="20000" 
-               redirectPort="<%= @tomcatRedirectPort %>" />
+               redirectPort="<%= @tomcatRedirectPort %>" URIEncoding="UTF-8" />
     <!-- A "Connector" using the shared thread pool-->
     <!--
     <Connector executor="tomcatThreadPool"
@@ -88,7 +88,7 @@
     -->
 
     <!-- Define an AJP 1.3 Connector on port 8009 -->
-    <Connector port="<%= @tomcatAjpPort %>" protocol="AJP/1.3" redirectPort="<%= @tomcatRedirectPort %>" />
+    <Connector port="<%= @tomcatAjpPort %>" protocol="AJP/1.3" redirectPort="<%= @tomcatRedirectPort %>" URIEncoding="UTF-8" />
 
 
     <!-- An Engine represents the entry point (within Catalina) that processes
