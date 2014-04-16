@@ -80,10 +80,16 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     (If on deploy you get an error for JDK or tools.jar, ensure your default java is latest 1.7, and not old java1.5. If it is, then rename old java and create new sym link: 'ln -s /usr/java/default/bin/java /usr/bin/java')      
 
 
-13. 
+13. Login to OpenERP using URL: http://<IP>:8069/ 
+    Use credentials admin/admin or admin/password.
+    NOTE: If credentials are admin/admin, then CHANGE THEM to admin/password.
+    (Settings->User->More->Change Password)
+    This is required, because default ATOM Feed expects admin/password as credentials.
+
+14. 
     Check if the following URLs are accessible:
     (May need to restart the box once)
-    OpenERP:                      http://<IP>:8069/ (admin/password  or admin/admin)
+    OpenERP:                      http://<IP>:8069/ (admin/password)
     OpenMRS:                      https://<IP>/openmrs  (admin/test)
     OpenELIS:                     http://<IP>:8080/openelis/ (admin/adminADMIN!)
     Bahmni:                       http://<IP>/home (admin/test) --- May need to give roles to user in OpenMRS if you see blank dashboard
@@ -91,7 +97,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 
     NOTE: To switch off IPTables in case your browser can't hit: 'service iptables stop'
 
-14. Misc Configuration Steps:
+15. Misc Configuration Steps:
     -------------------------
     - OpenELIS needs an Organization to be defined. Right now its JSS, but will need to be different per implementation. Do this in "Administration" screen.
     - The ATOM Feed properties file for elis needs organization entry. Set this to appropriate value:
@@ -100,7 +106,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     - There is an issue with Address Hierarchy, so if you don't see the Registration Screen, then in OpenMRS, navigate to Address Hierarchy Screen. This will fix the issue.
     - You may also need to add "Diagnostics" data.
 
-15. For OpenERP, follow these steps post-install:
+16. For OpenERP, follow these steps post-install:
    
       1) Install the following Modules:  
         - Warehouse Management Module
