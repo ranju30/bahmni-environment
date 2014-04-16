@@ -61,32 +61,32 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     export IMPLEMENTATION_NAME=<your-implementation-name> (default is jss)
 
 
-9. Run Provision Command (note: ensure that bahmni_user variable is set to bahmni/jss as you prefer)
+10. Run Provision Command (note: ensure that bahmni_user variable is set to bahmni/jss as you prefer)
     cd /root/bahmni/bahmni-environment
     ./scripts/run-puppet-manifest.sh provision
 
-10. 
+11. 
     Create openmrs db (user root/password): openmrs
     Create OpenERP DB: (psql with user postgres and then grant owner to openerp): openerp
     (Alter database openerp owner to openerp)
 
 
-11. Download & install latest BAHMNI build from CI.
+12. Download & install latest BAHMNI build from CI.
     ./scripts/run-puppet-manifest.sh download-build
     
 
-12. Deploy the Implementation Specific Builds (will read your implementation_name variable to decide which one to install)
+13. Deploy the Implementation Specific Builds (will read your implementation_name variable to decide which one to install)
     ./scripts/run-puppet-manifest.sh deploy-implementation
     (If on deploy you get an error for JDK or tools.jar, ensure your default java is latest 1.7, and not old java1.5. If it is, then rename old java and create new sym link: 'ln -s /usr/java/default/bin/java /usr/bin/java')      
 
 
-13. Login to OpenERP using URL: http://<IP>:8069/ 
+14. Login to OpenERP using URL: http://<IP>:8069/ 
     Use credentials admin/admin or admin/password.
     NOTE: If credentials are admin/admin, then CHANGE THEM to admin/password.
-    (Settings->User->More->Change Password)
+    (Click on Administrator name on top right corner -> Preferences -> Change password)
     This is required, because default ATOM Feed expects admin/password as credentials.
 
-14. 
+15. 
     Check if the following URLs are accessible:
     (May need to restart the box once)
     OpenERP:                      http://<IP>:8069/ (admin/password)
@@ -97,7 +97,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 
     NOTE: To switch off IPTables in case your browser can't hit: 'service iptables stop'
 
-15. Misc Configuration Steps:
+16. Misc Configuration Steps:
     -------------------------
     - OpenELIS needs an Organization to be defined. Right now its JSS, but will need to be different per implementation. Do this in "Administration" screen.
     - The ATOM Feed properties file for elis needs organization entry. Set this to appropriate value:
@@ -106,7 +106,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     - There is an issue with Address Hierarchy, so if you don't see the Registration Screen, then in OpenMRS, navigate to Address Hierarchy Screen. This will fix the issue.
     - You may also need to add "Diagnostics" data.
 
-16. For OpenERP, follow these steps post-install:
+17. For OpenERP, follow these steps post-install:
    
       1) Install the following Modules:  
         - Warehouse Management Module
