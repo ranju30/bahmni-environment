@@ -94,6 +94,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     OpenELIS:                     http://<IP>:8080/openelis/ (admin/adminADMIN!)
     Bahmni:                       http://<IP>/home (admin/test) --- May need to give roles to user in OpenMRS if you see blank dashboard
     Reference Data (Grails app):  http://<IP>/reference-data/
+    Jasper Reports:               http://<IP>:8080/jasperserver/ (jasperadmin/jasperadmin)
 
     NOTE: To switch off IPTables in case your browser can't hit: 'service iptables stop'
 
