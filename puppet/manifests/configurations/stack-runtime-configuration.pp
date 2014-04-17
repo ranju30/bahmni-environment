@@ -158,8 +158,15 @@ $jasperDbHost = "localhost"
 $jasperDbUsername = "root"
 $jasperDbPassword = "password"
 $jasperDbName = "jasperserver"
+
+# Set the Jasper Reports URL to download from:
+$report_zip_source_url = $implementation ? {
+	  undef			 => "https://github.com/jss-emr/jss-reports/archive/master.zip",
+      "jss"			 => "https://github.com/jss-emr/jss-reports/archive/master.zip",
+      "search"       => "https://github.com/Bhamni/search-reports/archive/master.zip" 	 
+}
+
 ######################## JASPER CONFIG END##############################################
 
-##########################################################################
 $ant_version="1.9.1"
 $ant_home="/home/${bahmni_user}/apache-ant-${ant_version}"
