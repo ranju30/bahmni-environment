@@ -23,4 +23,5 @@ node default {
 	class { 'openerp': require => Class["python", "postgresql"] }
 #	include nagios
 #	include bahmni-nagios
+	include cron-tab
 }
