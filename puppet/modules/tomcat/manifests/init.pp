@@ -142,9 +142,17 @@ class tomcat {
     require => File["${tomcatInstallationDirectory}"],
   }
 
+  exec { "register_tomcat_as_a_service" :
+    command   => "chkconfig --add /etc/init.d/tomcat",
+    user      => "${bahmni_user}",
+    provider  => shell,
+    require   => File["${tomcatInstallationDirectory}"],
+  }
+
+
   service { "tomcat":
     enable    => true,
     ensure => running,
-    require   => File["${tomcatInstallationDirectory}"],
+    require   => Exec["register_tomcat_as_a_service"],
   }
 }
