@@ -144,7 +144,7 @@ class tomcat {
 
   exec { "register_tomcat_as_a_service" :
     command   => "chkconfig --add /etc/init.d/tomcat",
-    user      => "${bahmni_user}",
+    user      => "root",
     provider  => shell,
     require   => File["${tomcatInstallationDirectory}"],
   }

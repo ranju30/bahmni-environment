@@ -43,8 +43,11 @@ $postgresServiceName = "postgresql-${postgresMajorVersion}.${postgresMinorVersio
 $postgresDataFolder = "/var/lib/pgsql/${postgresMajorVersion}.${postgresMinorVersion}/data"
 
 #Go Server for Downloading Builds
-$build_source_dir = "http://172.18.2.11:8153"
-#$build_source_dir = "https://ci-bahmni.thoughtworks.com"
+$build_source_dir = $build_source_dir ? {
+      undef			=> "http://172.18.2.11:8153",
+      default       => $build_source_dir 	 
+}
+
 $go_server_user = "guest"
 $go_server_pwd = "p@ssw0rd"
 $mrs_go_build_name = "Latest"
