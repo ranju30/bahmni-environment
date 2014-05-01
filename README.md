@@ -1,3 +1,12 @@
+Bahmni Environment
+===================
+This repo contains puppet scripts and other utilities for setting up Bahmni on Dev or Production environment.
+
+
+Bahmni BOX Setup Steps
+-------------------------
+See this file: [Box Setup Steps](https://github.com/Bhamni/bahmni-environment/blob/master/bahmni_box_setup_steps.txt)
+
 virtual box and vagrant tips
 ----------------------------
 1. Ensure you have 4.2.* version of virtual box and 1.2.* of vagrant
