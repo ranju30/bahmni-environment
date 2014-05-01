@@ -1,5 +1,7 @@
 Bahmni Environment
 ===================
+[![Build Status](https://travis-ci.org/Bhamni/bahmni-environment.svg?branch=master)](https://travis-ci.org/Bhamni/bahmni-environment)
+
 This repo contains puppet scripts and other utilities for setting up Bahmni on Dev or Production environment.
 
 
@@ -7,7 +9,7 @@ Bahmni BOX Setup Steps
 -------------------------
 See this file: [Box Setup Steps](https://github.com/Bhamni/bahmni-environment/blob/master/bahmni_box_setup_steps.txt)
 
-virtual box and vagrant tips
+Virtual box and vagrant tips
 ----------------------------
 1. Ensure you have 4.2.* version of virtual box and 1.2.* of vagrant
 2. To get the vagrant ssh command to connect without asking for password - copy https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub to VM's /root/.ssh/authorized_keys file. Make sure that the contents are copied exactly or just use wget. If is likely that the vagrant up command hangs because of this. Also copy the vagrant's private key to your machine ~/.ssh/ folder, from here https://raw.github.com/mitchellh/vagrant/master/keys/vagrant. Keep in mind that this makes your vm insecure, so do not keep anything personal on your VM.
