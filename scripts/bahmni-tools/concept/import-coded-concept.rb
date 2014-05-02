@@ -36,7 +36,9 @@ def import_from_csv
   question_concept_id = get_concept_by_name_or_insert(question_concept_name, question_concept_name, nil, question_concept_class_id, coded_datatype_id, false, nil)
   rows.each_with_index do |row, index|
     @current_row_number = index + 1
-    answer_concept_name = row[0]
+    answer_concept_name = row[0].strip
+    next if answer_concept_name.empty?
+
     answer_concept_id = get_concept_by_name_or_insert(answer_concept_name, answer_concept_name, nil, misc_concept_class_id, na_datatype_id, false, nil)
     get_or_add_concept_answer(question_concept_id, answer_concept_id, index)
   end
