@@ -24,7 +24,7 @@ module ConceptHelper
 	def insert_concept_without_duplicate(concept_name, concept_shortname, concept_description, class_id, datatype_id, is_set, synonyms)
 	  if(has_concept_by_name(concept_name))
 	    show_error("Concept with name #{concept_name} already Exists")
-	    return -1
+	    return nil
 	  end
 	  insert_concept(concept_name, concept_shortname, concept_description, class_id, datatype_id, is_set, synonyms)
 	end
@@ -66,6 +66,13 @@ module ConceptHelper
 	def add_to_concept_set(concept_id,concept_set_id)
 	  @openmrs_conn.query("INSERT INTO concept_set (concept_id, concept_set,sort_weight,creator,date_created,uuid)
 	  values (#{concept_id}, #{concept_set_id},1,1, now(),uuid())")
+	end
+
+	def add_to_concept_set_if_not_preset(concept_id, concept_set_id)
+		result = get_first_row_first_column("SELECT count(*) from concept_set where concept_id = #{concept_id} and concept_set = #{concept_set_id}")
+		if(result == "0")
+			@openmrs_conn.query("INSERT INTO concept_set (concept_id, concept_set,sort_weight,creator,date_created,uuid) values (#{concept_id}, #{concept_set_id},1,1, now(),uuid())")
+		end
 	end
 
 	def get_concept_source_by_name(source_name)

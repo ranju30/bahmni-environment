@@ -67,21 +67,22 @@ def import_from_csv
     if(is_valid_row(diagnosis_details))
 
       parent_concept_id = get_concept_by_name(parent_concept)
-      if parent_concept_id ==-1
+      if parent_concept_id ==nil
         parent_concept_id = insert_concept_without_duplicate(parent_concept,nil,nil,conv_concept_class_id,na_datatype_id,true,nil)
       end
-
-      concept_id = insert_concept_without_duplicate(diag_name, diag_short_name, diag_desc, diagnosis_concept_class_id, na_datatype_id, false, synonyms)
-
-      if concept_id != -1
-        add_to_concept_set(concept_id,parent_concept_id)
-        mappings_created = create_icd_code_mappings(source,map_type,icd_code,icd_code_name,concept_id)
-
-        if mappings_created
-          show_success ("inserted : #{diagnosis_details.to_s}")
-        end
+      add_to_concept_set_if_not_preset(parent_concept_id,diag_concept_set_id)
+      
+      concept_id = get_concept_by_name(diag_name)
+      if concept_id == nil
+        concept_id = insert_concept_without_duplicate(diag_name, diag_short_name, diag_desc, diagnosis_concept_class_id, na_datatype_id, false, synonyms)
       end
 
+      add_to_concept_set_if_not_preset(concept_id,parent_concept_id)
+      mappings_created = create_icd_code_mappings(source,map_type,icd_code,icd_code_name,concept_id)
+
+      if mappings_created
+          show_success ("inserted : #{diagnosis_details.to_s}")
+      end
     end
   end
   update_global_property(diag_concept_set_id)
@@ -95,7 +96,7 @@ def create_diagnosis_concept_set (conv_concept_class_id, na_datatype_id)
   diagnosis_set_of_sets = "Diagnosis Set of Sets"
   diagnosis_concept_set_id  = get_concept_by_name(diagnosis_set_of_sets)
 
-  if diagnosis_concept_set_id != -1
+  if diagnosis_concept_set_id != nil
     return diagnosis_concept_set_id
   end
   return insert_concept_without_duplicate(diagnosis_set_of_sets, nil, nil, conv_concept_class_id, na_datatype_id, true, nil)
@@ -111,23 +112,26 @@ def create_icd_code_mappings(source,map_type,icd_code,icd_code_name,concept_id)
   source_id = get_concept_source_by_name(source)
   map_type_id = get_concept_map_type_id_by_name(map_type)
 
-  if source_id
+  if source_id == nil
     show_error("Concept reference source #{source} doesn't exist")
     return false
   end
 
-  if map_type_id
+  if map_type_id == nil
     show_error("Concept reference term mapping type #{map_type} doesn't exist")
     return false
   end
 
-  @openmrs_conn.query("INSERT INTO concept_reference_term (concept_source_id,code,name,creator,date_created,uuid)
-                      VALUES (#{source_id},'#{icd_code}',#{icd_code_name},1,now(),uuid())")
-  map_term_id = @openmrs_conn.insert_id
+  map_term_id = get_first_row_first_column("Select concept_reference_term_id from concept_reference_term where concept_source_id = #{source_id} and code = '#{icd_code}'")
+  if(map_term_id == nil)
+    @openmrs_conn.query("INSERT INTO concept_reference_term (concept_source_id,code,name,creator,date_created,uuid) VALUES (#{source_id},'#{icd_code}',#{icd_code_name},1,now(),uuid())")
+    map_term_id = @openmrs_conn.insert_id
+  end
 
-  @openmrs_conn.query("INSERT INTO concept_reference_map(concept_reference_term_id,concept_map_type_id,creator,date_created,concept_id,uuid)
-                      VALUES(#{map_term_id}, #{map_type_id}, 1, now(), #{concept_id}, uuid())")
-
+  concept_reference_map_count = get_first_row_first_column("SELECT count(*) from concept_reference_map where concept_reference_term_id = #{map_term_id} and concept_map_type_id = #{map_type_id} and concept_id = #{concept_id}")
+  if(concept_reference_map_count == "0")
+    @openmrs_conn.query("INSERT INTO concept_reference_map(concept_reference_term_id,concept_map_type_id,creator,date_created,concept_id,uuid) VALUES(#{map_term_id}, #{map_type_id}, 1, now(), #{concept_id}, uuid())")
+  end
   return true
 end
 
