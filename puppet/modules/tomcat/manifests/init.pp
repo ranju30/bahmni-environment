@@ -146,7 +146,7 @@ class tomcat {
     command   => "chkconfig --add /etc/init.d/tomcat",
     user      => "root",
     provider  => shell,
-    require   => File["${tomcatInstallationDirectory}"],
+    require   => [File["${tomcatInstallationDirectory}"], File["/etc/init.d/tomcat"]],
   }
 
 
