@@ -167,6 +167,7 @@ $jasperDbName = "jasperserver"
 $report_zip_source_url = $implementation ? {
 	  undef			 => "https://github.com/jss-emr/jss-reports/archive/master.zip",
       "jss"			 => "https://github.com/jss-emr/jss-reports/archive/master.zip",
+      default        => "https://github.com/jss-emr/jss-reports/archive/master.zip",
       "search"       => "https://github.com/Bhamni/search-reports/archive/master.zip" 	 
 }
 
