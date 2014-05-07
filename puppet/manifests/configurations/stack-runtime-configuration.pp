@@ -118,7 +118,8 @@ $httpsAggressiveCacheDisabledDirectories = []
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
 
 $httpdCacheDirectory = "/var/cache/mod_proxy"
-$httpsCacheUrls = [{path => "/openmrs/ws/rest/v1/concept", expireTime => "20 minutes"}]
+# Example entry: {path => "/openmrs/ws/rest/v1/concept", expireTime => "20 minutes"}
+$httpsCacheUrls = []
 ######################## HTTPD CONFIG END################################################
 
 # Nagios
