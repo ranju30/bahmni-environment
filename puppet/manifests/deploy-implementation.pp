@@ -10,7 +10,7 @@ node default {
   include bahmni-webapps
   include bahmni-ui-apps
   class { 'implementation-config':
-    implementationName => "${implementation}", require => Class['bahmni-webapps'],
+    implementationName => "${implementation}", require => [ Class['bahmni-webapps'], Class['openelis']],
   }
   include bahmni-openerp
   include openelis

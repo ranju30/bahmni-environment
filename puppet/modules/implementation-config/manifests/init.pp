@@ -21,6 +21,22 @@ class implementation-config($implementationName) {
     path      => "${os_path}",
     require   => [File["${implementationZipFile}"], File["${build_output_dir}/${implementationName}_config"]]
   }
+
+  exec { "copyLogoToOpenelis" :
+    command   => "cp ${build_output_dir}/${implementationName}_config/openelis/images/labLogo.jpg ${tomcatInstallationDirectory}/webapps/${openelis_war_file_name}/WEB-INF/reports/images",
+    provider  => shell,
+    path      => "${os_path}",
+    require   => Exec["unzip_${implementationName}"],
+    onlyif    => "test -f ${build_output_dir}/${implementationName}_config/openelis/images/labLogo.jpg"
+  }
+
+  exec { "copyLogoToOpenelisForReportConfig" :
+    command   => "cp ${build_output_dir}/${implementationName}_config/openelis/images/labLogo.jpg ${tomcatInstallationDirectory}/webapps/${openelis_war_file_name}/images",
+    provider  => shell,
+    path      => "${os_path}",
+    require   => Exec["unzip_${implementationName}"],
+    onlyif    => "test -f ${build_output_dir}/${implementationName}_config/openelis/images/labLogo.jpg"
+  }
   
   file { "${temp_dir}/run-implementation-liquibase.sh" :
     ensure      => present,
