@@ -3,7 +3,6 @@ class bahmni-webapps {
   require bahmni-configuration
   require bahmni-distro
 
-  $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
   $openmrs_modules_dir = "/home/${bahmni_user}/.OpenMRS/modules"
   $ui_modules_dir = "${build_output_dir}/ui-modules"
 
@@ -48,16 +47,4 @@ class bahmni-webapps {
     require     => [Exec["bahmni_omods"], File["${temp_dir}/run-modules-liquibase.sh"]]
   }
 
-  file { "${build_output_dir}/elisatomfeedclient-omod-beanshell.zip" :
-       ensure      => present,
-       owner       => "${bahmni_user}",
-       group       => "${bahmni_user}",
-       mode        => 777
-  }
-
-  exec { "openelis-atomfeed-beanshell" :
-     command => "unzip -o ${build_output_dir}/elisatomfeedclient-omod-beanshell.zip -d $openmrs_dir/beanshell",
-     path        => "${os_path}",
-     provider    => shell
-   }
 }

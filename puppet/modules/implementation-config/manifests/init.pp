@@ -3,6 +3,7 @@ class implementation-config($implementationName) {
   $implementationZipFile = "${build_output_dir}/${implementationName}_config.zip"
   $migrationsDirectory = "${implementationName}_config/migrations"
   $configDirectory = "${implementationName}_config/openmrs"
+  $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
 
   file { "${implementationZipFile}" :
     ensure    => present
@@ -38,6 +39,13 @@ class implementation-config($implementationName) {
     onlyif    => "test -f ${build_output_dir}/${implementationName}_config/openelis/images/labLogo.jpg"
   }
   
+  exec { "copyBeanshellToOpenMRSFolder" :
+    command   => "cp -rf ${build_output_dir}/${implementationName}_config/openmrs/beanshell ${openmrs_dir}",
+    provider  => shell,
+    path      => "${os_path}",
+    require   => Exec["unzip_${implementationName}"]
+  }
+
   file { "${temp_dir}/run-implementation-liquibase.sh" :
     ensure      => present,
     content     => template("implementation-config/run-implementation-liquibase.sh"),
