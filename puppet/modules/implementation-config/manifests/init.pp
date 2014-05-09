@@ -62,6 +62,30 @@ class implementation-config($implementationName) {
     require     => [Exec["unzip_${implementationName}"],File["${temp_dir}/run-implementation-liquibase.sh"]]
   }
 
+  exec { "bahmni_openelis_codebase_for_liquibase_jar" :
+    provider => "shell",
+    command  => "rm -rf ${bahmni_openelis_temp_dir} && unzip -o -q ${build_output_dir}/OpenElis.zip -d ${temp_dir} ${deployment_log_expression}",
+    path     => "${os_path}",
+    onlyif    => "test -f ${build_output_dir}/${implementationName}_config/migrations/openelis/liquibase.xml"
+  }
+
+  file { "${temp_dir}/run-implementation-openelis-config-liquibase.sh" :
+    ensure      => present,
+    content     => template("implementation-config/run-implementation-openelis-config-liquibase.sh"),
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+    mode        => 554
+  }
+
+  exec { "run_implementation_openelis_config_liquibase_migration" :
+    command     => "${temp_dir}/run-implementation-openelis-config-liquibase.sh  ${deployment_log_expression}",
+    path        => "${os_path}",
+    provider    => shell,
+    cwd         => "${build_output_dir}/${migrationsDirectory}",
+    require     => [Exec["unzip_${implementationName}"],File["${temp_dir}/run-implementation-openelis-config-liquibase.sh"],Exec["bahmni_openelis_codebase_for_liquibase_jar"]],
+    onlyif    => "test -f ${build_output_dir}/${implementationName}_config/migrations/openelis/liquibase.xml"
+  }
+
   file { "${httpd_deploy_dir}/bahmni_config" :
     ensure    => directory,
     recurse   => true,
