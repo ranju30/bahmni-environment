@@ -78,11 +78,11 @@ def import_from_csv
       end
 
       add_to_concept_set_if_not_preset(concept_id,parent_concept_id)
-      mappings_created = create_icd_code_mappings(source,map_type,icd_code,icd_code_name,concept_id)
+      create_icd_code_mappings(source,map_type,icd_code,icd_code_name,concept_id)
 
-      if mappings_created
-          show_success ("inserted : #{diagnosis_details.to_s}")
-      end
+      #if mappings_created
+      show_success ("inserted : #{diagnosis_details.to_s}")
+      #end
     end
   end
   update_global_property(diag_concept_set_id)
@@ -103,6 +103,10 @@ def create_diagnosis_concept_set (conv_concept_class_id, na_datatype_id)
 end
 
 def create_icd_code_mappings(source,map_type,icd_code,icd_code_name,concept_id)
+  if !icd_code || icd_code == nil
+    return nil
+  end
+
   if icd_code_name
     icd_code_name  = "'#{icd_code_name}'"
   else
@@ -113,8 +117,11 @@ def create_icd_code_mappings(source,map_type,icd_code,icd_code_name,concept_id)
   map_type_id = get_concept_map_type_id_by_name(map_type)
 
   if source_id == nil
-    show_error("Concept reference source #{source} doesn't exist")
-    return false
+    source_id = add_concept_reference_source(source)
+    if source_id == nil
+      show_error("Concept reference source #{source} doesn't exist and cannot be created")
+      return false
+    end
   end
 
   if map_type_id == nil
@@ -155,19 +162,21 @@ def is_valid_row(diagnosis_details)
     return false
   end
 
-  if !source || source.empty?
+  if !(icd_code == nil ) && (!source || source.empty?)
     show_error("Concept reference Source cannot be empty \n\t #{diagnosis_details.to_s}")
     return false
   end
 
-  if !map_type || map_type.empty?
+  if !(icd_code == nil ) && (!map_type || map_type.empty?)
     show_error("Concept mapping type cannot be empty \n\t #{diagnosis_details.to_s}")
     return false
   end
+=begin
   if !icd_code || icd_code.empty?
     show_error("ICD code cannot be empty \n\t #{diagnosis_details.to_s}")
     return false
   end
+=end
 
   if !parent_concept || parent_concept.empty?
     show_error("Parent concept set cannot be empty \n\t #{diagnosis_details.to_s}")

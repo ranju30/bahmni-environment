@@ -103,6 +103,14 @@ module ConceptHelper
 		end
 	end
 
+  def add_concept_reference_source(name)
+    max_id = get_first_row_first_column("select MAX(concept_source_id)+1 FROM concept_reference_source");
+    @openmrs_conn.query(
+        "INSERT INTO concept_reference_source (concept_source_id,description,name,hl7_code,creator,date_created,retired,uuid)
+          VALUES (#{max_id},'','#{name}','#{name}',1,now(),0,uuid());")
+    return @openmrs_conn.insert_id
+  end
+
 	def get_concept_map_type_id_by_name(map_type)
 	  get_first_row_first_column("SELECT concept_map_type_id FROM concept_map_type WHERE name like '#{map_type}'")
 	end
