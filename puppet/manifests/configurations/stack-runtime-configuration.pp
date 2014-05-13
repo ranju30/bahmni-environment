@@ -121,6 +121,7 @@ $httpsStaticWebapps = [
 					   {path => "/document_images", directory => "${documentBaseDirectory}"},
                        {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"},
                        {path => "/uploaded_results", directory => "${uploadedResultsDirectory}"}]
+                       {path => "/uploaded-files", directory => "${uploadedFilesDirectory}"}]
 $httpsCachedDirectories = []                    
 $httpsAggressiveCacheDisabledDirectories = []
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
