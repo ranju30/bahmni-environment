@@ -77,12 +77,11 @@ SSLCryptoDevice builtin
 		<%- @httpsCacheUrls.each do |httpsCacheUrl| -%>
 		CacheEnable disk <%=httpsCacheUrl["path"]%>
 
-		<Location ~ ^<%=httpsCacheUrl["path"]%>.*>
+		<Directory <%=httpsCacheUrl["path"]%>>
 			Header unset Pragma
-			FileETag None
-			Header unset ETag
-			Header set Cache-Control "public, max-age=<%=httpsCacheUrl["expireTime"]%>"
-		</Location>
+			Options Indexes FollowSymLinks
+			Header set Cache-Control "max-age=<%=httpsCacheUrl["expireTime"]%>"
+		</Directory>
 		<% end -%>
 
 	    CacheDirLevels 5
