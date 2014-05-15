@@ -297,23 +297,15 @@ RequestHeader set "X-Forwarded-Proto" "https"
 	      ProxyPass <%=redirectionRule[0]["path"]%> <%=redirectionRule[0]["redirectPath"]%>
 	      ProxyPassReverse <%=redirectionRule[1]["path"]%> <%=redirectionRule[1]["redirectPath"]%>
 	  <%- else -%>
-	  	  <%- if redirectionRule["matches"] != nil -%>
-		    ProxyPassMatch <%=redirectionRule["matches"]%> <%=redirectionRule["redirectPath"]%>
-	  	  <%- else -%>
-		    ProxyPass <%=redirectionRule["path"]%> <%=redirectionRule["redirectPath"]%>
-		    ProxyPassReverse <%=redirectionRule["path"]%> <%=redirectionRule["redirectPath"]%>
-	      <%- end -%>
+	      ProxyPass <%=redirectionRule["path"]%> <%=redirectionRule["redirectPath"]%>
+	      ProxyPassReverse <%=redirectionRule["path"]%> <%=redirectionRule["redirectPath"]%>
 	  <%- end -%>
 	<% end -%>
 <% end -%>
 
 <% if @httpsStaticWebapps!=nil and  @httpsStaticWebapps.length > 0 -%>
 	<%- @httpsStaticWebapps.each do |httpsStaticWebapp| -%>
-	  <%- if httpsStaticWebapp["matches"] != nil -%>
-		AliasMatch <%=httpsStaticWebapp["matches"]%> <%=httpsStaticWebapp["directory"]%>
-	  <%- else -%>
-		Alias <%=httpsStaticWebapp["path"]%> <%=httpsStaticWebapp["directory"]%>
-	  <%- end -%>
+			Alias <%=httpsStaticWebapp["path"]%> <%=httpsStaticWebapp["directory"]%>
 	<% end -%>
 <% end -%>
 
