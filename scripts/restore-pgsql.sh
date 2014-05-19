@@ -7,8 +7,8 @@ if [ -z $dumpfile ]; then
 	exit 1
 fi	
 
-psql -Upostgres -c "drop database openerp;";
-psql -Upostgres -c "drop database lab;";
-psql -Upostgres -c "drop database clinlims;";
-psql -Upostgres -c "drop database reference_data;";
+psql -Upostgres -c "drop database if exists openerp;";
+psql -Upostgres -c "drop database if exists lab;";
+psql -Upostgres -c "drop database if exists clinlims;";
+psql -Upostgres -c "drop database if exists reference_data;";
 psql -Upostgres < $1
