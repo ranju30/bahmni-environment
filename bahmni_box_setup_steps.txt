@@ -68,7 +68,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 11. 
     Create openmrs db (user root/password): openmrs
     Create OpenERP DB: (psql with user postgres and then grant owner to openerp): openerp
-    (Alter database openerp owner to openerp)
+    (ALTER DATABASE OPENERP OWNER TO OPENERP)
 
 
 12. Download & install latest BAHMNI build from CI.
@@ -118,6 +118,8 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     - You may also need to add "Health Centers" in ELIS, with appropriate ID prefixes. 
 
 18. For OpenERP, follow these steps post-install:
+    
+    >> Remove the line "update --all" from "sudo vi /etc/init.d/openerp" file.
    
       1) Install the following Modules:  
         - Warehouse Management Module
