@@ -75,13 +75,15 @@ SSLCryptoDevice builtin
 		CacheRoot <%=@httpdCacheDirectory%>
 
 		<%- @httpsCacheUrls.each do |httpsCacheUrl| -%>
-		CacheEnable disk <%=httpsCacheUrl["path"]%>
+			CacheEnable disk <%=httpsCacheUrl["path"]%>
 
-		<Directory <%=httpsCacheUrl["path"]%>>
-			Header unset Pragma
-			Options Indexes FollowSymLinks
-			Header set Cache-Control "max-age=<%=httpsCacheUrl["expireTime"]%>"
-		</Directory>
+			<% if(httpsCacheUrl["type"] == "Directory") -%>
+				<Directory <%=httpsCacheUrl["path"]%>>
+					Header unset Pragma
+					Options Indexes FollowSymLinks
+					Header set Cache-Control "max-age=<%=httpsCacheUrl["expireTime"]%>"
+				</Directory>
+			<% end -%>
 		<% end -%>
 
 	    CacheDirLevels 5
