@@ -50,7 +50,7 @@ $build_source_dir = $build_source_dir ? {
 
 $go_server_user = "guest"
 $go_server_pwd = "p@ssw0rd"
-$mrs_go_build_name = "Latest"
+$mrs_go_build_name = "88"
 $erp_go_build_name = "Latest"
 $elis_go_build_name = "Latest"
 $reference_data_go_build_name = "Latest"
