@@ -78,7 +78,7 @@ $bahmniConfigDirectory="${httpd_deploy_dir}/bahmni_config"
 $uploadedFilesDirectory="${tomcatParentDirectory}/uploaded-files"
 
 # Backup config
-$backup_hour = 3 # 3 AM Every day  
+$backup_hour = 3 # 4 AM Every day  
 
 # Bahmni core properties
 $imagesDirectory="/home/${bahmni_user}/patient_images"
