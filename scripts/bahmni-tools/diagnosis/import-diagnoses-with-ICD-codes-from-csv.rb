@@ -10,7 +10,7 @@ include ConceptHelper
 parser = Parser.new do |p|
    p.banner = "Usage: ruby #{__FILE__} csv_file [options]"
    p.option :host, "Host name or IP", :default => "127.0.0.1", :short => 'H'
-   p.option :user, "Mysql user", :default => "openmrs-user"
+   p.option :user, "Mysql user", :default => "root"
    p.option :password, "Mysql password", :default => "password"
    p.option :verbose, "Verbose mode", :default => false
 end
@@ -50,18 +50,22 @@ def import_from_csv
     return
   end
 
+  def escape_string(str)
+    return str == nil ? str : Mysql.escape_string(str)
+  end
+
   CSV.foreach(@csv_file, {:headers => true, :encoding => 'utf-8'}) do |row|
     @current_row_number = @current_row_number +1
     diagnosis_details = CSV.parse_line(row.to_s)
-    diag_name =get_col(diagnosis_details, "diagnosis_name")
-    diag_short_name =get_col(diagnosis_details, "short_name")
-    diag_desc =get_col(diagnosis_details, "description")
-    synonyms_string =get_col(diagnosis_details, "synonym")
-    source =get_col(diagnosis_details, "source")
-    map_type =get_col(diagnosis_details, "map_type")
-    icd_code =get_col(diagnosis_details, "icd10code")
-    icd_code_name =get_col(diagnosis_details, "icd10name")
-    parent_concept = get_col(diagnosis_details,"parent_concept_set")
+    diag_name =escape_string(get_col(diagnosis_details, "diagnosis_name"))
+    diag_short_name =escape_string(get_col(diagnosis_details, "short_name"))
+    diag_desc =escape_string(get_col(diagnosis_details, "description"))
+    synonyms_string =escape_string(get_col(diagnosis_details, "synonym"))
+    source =escape_string(get_col(diagnosis_details, "source"))
+    map_type =escape_string(get_col(diagnosis_details, "map_type"))
+    icd_code =escape_string(get_col(diagnosis_details, "icd10code"))
+    icd_code_name =escape_string(get_col(diagnosis_details, "icd10name"))
+    parent_concept = escape_string(get_col(diagnosis_details, "parent_concept_set"))
     synonyms = synonyms_string ? synonyms_string.split(@synonym_separator) : []
 
     if(is_valid_row(diagnosis_details))

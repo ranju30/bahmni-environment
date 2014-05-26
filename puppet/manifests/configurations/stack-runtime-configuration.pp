@@ -50,11 +50,11 @@ $build_source_dir = $build_source_dir ? {
 
 $go_server_user = "guest"
 $go_server_pwd = "p@ssw0rd"
-$mrs_go_build_name = "Latest"
+$mrs_go_build_name = "88"
 $erp_go_build_name = "Latest"
 $elis_go_build_name = "Latest"
 $reference_data_go_build_name = "Latest"
-$source_code_branch = "master"
+$source_code_branch = "Release"
 
 #Tomcat 7
 $tomcatManagerUserName = "tomcat"
@@ -118,8 +118,8 @@ $httpsAggressiveCacheDisabledDirectories = []
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
 
 $httpdCacheDirectory = "/var/cache/mod_proxy"
-# Example entry: {path => "/openmrs/ws/rest/v1/concept", expireTime => "20 minutes"}
-$httpsCacheUrls = []
+$httpsCacheUrls = [{path => "var/www/patient_images", type => 'Directory', expireTime => "86400"},
+ 				   {path => "/openmrs/ws/rest/v1/concept"}]
 ######################## HTTPD CONFIG END################################################
 
 # Nagios
@@ -134,7 +134,7 @@ $smtp_host="gmail-smtp-in.l.google.com"
 $from_email = "jss.bahmni@gmail.com"
 
 $openelis_username="admin"
-$openelis_password="adminADMIN!"
+$openelis_password="adminADMIN\!"
 
 # OpenMRS
 $openmrs_database_user = "openmrs-user"
