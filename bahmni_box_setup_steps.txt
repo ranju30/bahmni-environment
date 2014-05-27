@@ -155,7 +155,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
       9) Uninstall Bahmni Logger   
       10) Go to Settings->Companies (Edit and add your hospital details: name, logo, address, etc.
       11) Go to Warehouse -> Configurations/Warehouses -> Edit/Add a warehouse (keep settings default).
-      12) Go to Sales -> Shop -> Edit/Add your shop  (and choose Warehouse)
+      12) Go to Sales -> Shop -> Edit/Add your shop  (and choose Warehouse) -- Shop name must be "Pharmacy".
 
 
 BACKUP/REPLICATION
