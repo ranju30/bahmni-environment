@@ -126,6 +126,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
         - Sales Management Module
         - Purchase Management Module
         - Accounting and Finance Module
+        - SEARCH Reports Module (if you want these Accounting reports)
 
       When asked about the Financial Account system choose: (INR, 0, 0, Indian Account System)
 
