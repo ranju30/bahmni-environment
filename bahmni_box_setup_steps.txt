@@ -24,12 +24,9 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 3. Install ruby (187)
     sudo yum install ruby
    
-4.  a) Install Puppet - (http://docs.puppetlabs.com/guides/installation.html#red-hat-enterprise-linux-and-derivatives)
+4.  Install Puppet - (http://docs.puppetlabs.com/guides/installation.html#red-hat-enterprise-linux-and-derivatives)
        sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
        sudo yum install puppet
-
-    b) (Optional step): Edit the /etc/puppet/puppet.conf file and make an entry (This will ensure that manifest are executed sequentially):
-       ordering = manifest 
 
 5.  Get Bahmni-Environment which contains Puppet provision scripts:
 
@@ -171,8 +168,6 @@ Some todos we identified
 ===================================================================================================
 TODO:
 
-- [Fixed] The sequence in which local repo is created is arbitrary. MySQL install fails first time when you provision, and the repo gets created later.
-Need to ensure that local repo is created first. 
 - remove local packages dependencies - remove (require yum repo) 
 ------ create a new provision.pp file which will install all packages from internet.
 ------ Note that mySQL installation requires addition of another yum repo. This will be needed for Internet-mode installation.
