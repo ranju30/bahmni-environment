@@ -5,9 +5,9 @@
 PATH_OF_CURRENT_SCRIPT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HOME=$PATH_OF_CURRENT_SCRIPT/../../..
 
-function checkout_repo() {
+function clean_repo() {
      echo "Checking out "$1
-     git checkout .
+     git clean -fdx
      return 1
 }
 
@@ -18,7 +18,7 @@ do
      cd $directory
      echo "Checking: $directory"
      echo "------------------------------"
-     checkout_repo $directory
+     clean_repo $directory
 
   fi
 done
