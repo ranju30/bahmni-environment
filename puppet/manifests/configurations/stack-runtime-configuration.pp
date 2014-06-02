@@ -24,6 +24,12 @@ $ssh_port=22
 $primary_machine_ip = "192.168.0.152"
 $secondary_machine_ip = "192.168.0.115"
 
+$primary_machine_host_name = "jssemr01"
+$primary_machine_alias = "emr01.gan.jssbilaspur.org"
+
+$secondary_machine_host_name = "jssemr02"
+$secondary_machine_alias = "emr02.gan.jssbilaspur.org"
+
 # mysql
 $mysqlRootPassword = "password"
 

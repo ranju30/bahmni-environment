@@ -24,7 +24,7 @@ class bahmni-nagios-cfg {
     }
 
     file { "/etc/nagios/objects/localhost.cfg":
-        content     => template("bahmni-nagios/localhost.cfg"),
+        content     => template("bahmni-nagios/localhost-${implementation_name}.cfg"),
         ensure      => present,
         owner       => "${nagios_user}",
         notify      => Service["nagios"],
