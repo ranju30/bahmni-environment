@@ -39,17 +39,17 @@ class nagios {
         ensure  =>  "present"
     }
 
-    file { "${nagios_plugins_dir}":
-        ensure  => directory,
-        require => Package["nagios"]
-    }
-
-    file { "/usr/lib64/nagios/plugins/":
-        source      => "${nagios_plugins_dir}",
-        recurse     => true,
+    file { "/usr/lib64/nagios/plugins/check_postgres.pl":
+        source      => "puppet:///modules/nagios/nagios-plugins/check_postgres.pl",
         owner       => "${nagios_user}",
         group       => "${nagios_user}",
         mode        =>  555,
-        require     => File["${nagios_plugins_dir}"]
     }
+    
+    file { "/usr/lib64/nagios/plugins/check_scheduled_tasks.py":
+        source      => "puppet:///modules/nagios/nagios-plugins/check_scheduled_tasks.py",
+        owner       => "${nagios_user}",
+        group       => "${nagios_user}",
+        mode        =>  555,
+    }    
 }
