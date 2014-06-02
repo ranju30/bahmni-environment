@@ -57,6 +57,8 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     export BAHMNI_USER_NAME=bahmni  (default is jss)
     export IMPLEMENTATION_NAME=<your-implementation-name> (default is jss)
 
+    Also set the $support_email and $from_email variables in stack-runtime.properties file to appropriate value if you don't like the defaults.
+
 
 10. Run Provision Command (note: ensure that bahmni_user variable is set to bahmni/jss as you prefer)
     cd /root/bahmni/bahmni-environment
