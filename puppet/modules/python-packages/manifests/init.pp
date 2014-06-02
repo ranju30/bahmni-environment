@@ -172,4 +172,8 @@ class python-packages {
       remote_location => "https://pypi.python.org/packages/2.7/n/nonblockingloghandler/nonblockingloghandler-1.1.2-py2.7.egg",
   }
 
+  wget_remote_file{"${python_package_dir}/num2words-0.5.1.tar.gz":
+    remote_location => "https://pypi.python.org/packages/source/n/num2words/num2words-0.5.1.tar.gz",
+  }
+
 }

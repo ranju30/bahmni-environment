@@ -301,7 +301,15 @@ class python {
     require => Exec["xlwt"]
   }
 
-  exec { "nonblockingloghandler" :
+  exec { "num2words" :
+    command => "sh install-python-package-from-gzip.sh ${python_package_dir} num2words-0.5.1.tar num2words ${log_expression}",
+    path => "${os_path}",
+    cwd => "${python_temp_dir}",
+    require => Exec["xlwt"]
+  }
+
+
+exec { "nonblockingloghandler" :
     command => "easy_install nonblockingloghandler",
     path => "${os_path}",
     cwd => "${python_temp_dir}",
