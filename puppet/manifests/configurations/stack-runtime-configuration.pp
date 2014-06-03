@@ -60,7 +60,7 @@ $mrs_go_build_name = "Latest"
 $erp_go_build_name = "Latest"
 $elis_go_build_name = "Latest"
 $reference_data_go_build_name = "Latest"
-$source_code_branch = "Release"
+$source_code_branch = "master"
 
 #Tomcat 7
 $tomcatManagerUserName = "tomcat"
