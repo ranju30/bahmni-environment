@@ -41,12 +41,12 @@ def export_environment_variables(home_directory, environment_variable_name, envi
     return
 
 
-def add_yum_repo(repo_name, repo_url):
-    repo_name = "[" + repo_name + "]\n"
-    name = "name=" + repo_name + "\n"
+def add_yum_repo(repo, repo_url):
+    repo_name = "[" + repo + "]\n"
+    name = "name=" + repo + "\n"
     baseurl = "baseurl=" + repo_url + "\n"
     extras = "enabled=1\ngpgcheck=0"
-    file_handle = open("/etc/yum.repos.d/" + repo_name + ".repo", "w")
+    file_handle = open("/etc/yum.repos.d/" + repo + ".repo", "w")
     file_handle.truncate()
     file_handle.write(repo_name + name + baseurl + extras)
     file_handle.close()
@@ -60,11 +60,10 @@ def controller():
     export_environment_variables("/root", "IMPLEMENTATION_NAME", implementation_name)
     export_environment_variables("/home/" + username, "IMPLEMENTATION_NAME", implementation_name)
     change_directory("/root")
-    install_package("git")
     add_yum_repo("tw-bahmni", "http://172.18.2.14/localrepo")
+    install_package("git")
     install_package("wget")
     install_package("ruby")
     install_package("puppet")
-    clone_package("https://github.com/bhamni/bahmni-environment")
 
 controller()
