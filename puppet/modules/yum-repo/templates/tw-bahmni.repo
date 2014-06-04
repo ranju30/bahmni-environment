@@ -1,5 +1,5 @@
 [tw-bahmni]
 name=Bahmni TW Repository for RHEL/ CentOS $releasever - $basearch
-baseurl=http://172.18.2.14/localrepo
+baseurl=<%= @bahmni_yum_repo_url %>
 enabled=1
 gpgcheck=0
