@@ -17,6 +17,19 @@ then
 fi
 
 ####################################################################
+# Checking if env variable ENV_CREATE_LOCAL_REPO is set
+
+if [ "${ENV_CREATE_LOCAL_REPO}a" != "a" ]
+then
+	export FACTER_env_create_local_repo=$ENV_CREATE_LOCAL_REPO
+	echo "Setting env_create_local_repo=${FACTER_env_create_local_repo}"
+else
+	echo "Not setting env_create_local_repo. Puppet default will be used."
+fi
+
+####################################################################
+
+####################################################################
 # Note that you should invoke this script with sudo -E (so that environment variables are passed to this script)
 # Checking if env variable BAHMNI_USER_NAME is set
 
@@ -48,7 +61,7 @@ if [ $RETURN_CODE -ne 0 ] && [ $RETURN_CODE -ne 2 ]
 then
 	echo "Error running script. Return code = ${RETURN_CODE}. Exiting"
 	exit 1
-else 
+else
 	echo "All fine. Return code = ${RETURN_CODE}. Exiting"
 	exit 0
 fi
