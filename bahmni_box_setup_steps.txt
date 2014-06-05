@@ -6,20 +6,24 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
   http://wiki.centos.org/Manuals/ReleaseNotes/CentOSMinimalCD6.5
   For example:
   download "CentOS-6.5-x86_64-minimal.iso" from http://centos.mirror.net.in/centos/6.5
-  - In Virtual Box create a new Virtual Image (Bahmni_CentOS) and give its type as Red Hat Linux with 1.5GB RAM and 20 GB Virtual HDD. Leave other options as default.
-  - Click on "Storage" window and select new CD/DVD drive option, to specify the CentOS ISO Image which you downloaded.
-  - Start the newly created virtual box image. It will show you the INSTALL Wizard for CentOS.
+  
+  IF YOU ARE INSTALLING IN A VM THEN: 
+    - In Virtual Box create a new Virtual Image (Bahmni_CentOS) and give its type as Red Hat Linux with 1.5GB RAM and 20 GB Virtual HDD. Leave other options as default.
+    - Click on "Storage" window and select new CD/DVD drive option, to specify the CentOS ISO Image which you downloaded.
+    - Start the newly created virtual box image. It will show you the INSTALL Wizard for CentOS.
   
   NOTE: 
-  a) It is mandatory to choose CentOS MINIMAL, so that no older versions of software like PostGRES or JAVA get installed. These will otherwise conflict 
-  with the current puppet scripts. Its best to have just a basic system, and let the puppet scripts do all the installations.
-  b) If you need to have a UI / Browser also running on this machine, then choose CentOS MINIMAL + DESKTOP. 
+  a) It is mandatory to choose CentOS MINIMAL, so that no older versions of software like PostGRES or JAVA get installed. These will otherwise conflict with the current puppet scripts. Its best to have just a basic system, and let the puppet scripts do all the installations.
+  b) If you need to have a UI / Browser also running on this machine, then choose CentOS MINIMAL + DESKTOP. Note in this case "Java" might get selected. De-select JAVA while installing CentOS, so that it doesn't conflict with Bahmni version of Java.
 
 
 2. Check if properly networked.
     2.1. In VirtualBox, choose bridged network to connect to internet.
     2.2. Run "ifconfig" and make sure eth0 has proper IP. You should be able to ping google. Else try "ifup eth0". Check ifconfig again.
    
+
+NOTE: Step 3, 4, 5, 6 and 9 can be done by running the "bootstrap.py" script in bahmni-environment. Or you can do them manually
+as mentioned below.
 
 3. Install ruby (187)
     sudo yum install ruby
@@ -156,6 +160,20 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
       10) Go to Settings->Companies (Edit and add your hospital details: name, logo, address, etc.
       11) Go to Warehouse -> Configurations/Warehouses -> Edit/Add a warehouse (keep settings default).
       12) Go to Sales -> Shop -> Edit/Add your shop  (and choose Warehouse) -- Shop name must be "Pharmacy".
+      13) To add a Billing User, go to Settings -> Users -> Add User. Give access rights: 
+           Sales: Manager
+           Warehouse: None or User (One of the authorization: Warehouse or Purchases Needs to be User to make bills)
+           Account & Finance: Accountant
+           Purchases: None or User (One of the authorization: Warehouse or Purchases Needs to be User to make bills)
+           Human Resources: Employee
+           Sharing: Blank
+           Adminstration: Blank
+
+           In Technical settings give:
+           Manage Multiple Units of Measure
+           Manage Serial Numbers
+           Enabled adding final SaleOrder charge
+           Manage Multiple Locations and Warehouses
 
 
 BACKUP/REPLICATION
