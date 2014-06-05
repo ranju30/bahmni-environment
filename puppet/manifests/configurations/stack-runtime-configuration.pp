@@ -90,6 +90,7 @@ $backup_hour = 3 # 3 AM Every day
 $imagesDirectory="/home/${bahmni_user}/patient_images"
 $imagesUrl="/patient_images"
 $documentBaseDirectory="/home/${bahmni_user}/document_images"
+$uploadedResultsDirectory="/home/${bahmni_user}/uploaded_results"
 
 
 ######################## HTTPD CONFIG START#############################################
@@ -118,7 +119,8 @@ $httpsStaticWebapps = [
 					   {path => "/trends", directory => "${bahmniAppsDirectory}/trends"},
 					   {path => "${imagesUrl}", directory => "${imagesDirectory}"},
 					   {path => "/document_images", directory => "${documentBaseDirectory}"},
-                       {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"}]
+                       {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"},
+                       {path => "/uploaded_results", directory => "${uploadedResultsDirectory}"}]
 $httpsCachedDirectories = []                    
 $httpsAggressiveCacheDisabledDirectories = []
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]

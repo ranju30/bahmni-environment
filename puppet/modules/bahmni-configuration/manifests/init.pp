@@ -9,6 +9,12 @@ class bahmni-configuration {
     group       => "${bahmni_user}",
   }
 
+  file {"${uploadedResultsDirectory}" :
+    ensure      => directory,
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+  }
+
  file { "${httpd_deploy_dir}/patient_images" :
    ensure => "link",
    target => "${imagesDirectory}",
