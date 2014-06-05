@@ -15,7 +15,6 @@ cd $WEBAPPS_DIR
 
 java  $CHANGE_LOG_TABLE -jar $LIQUIBASE_JAR --driver=$DRIVER --classpath=$OPENMRS_MODULE_DIR/<%= @bahmni_core %>.omod:$COMMON_CLASSPATH --changeLogFile=migrations/dependent-modules/liquibase.xml $CREDS update
 
-java $CHANGE_LOG_TABLE -jar $LIQUIBASE_JAR --driver=$DRIVER --classpath=$OPENMRS_MODULE_DIR/<%= @openmrs_module_idgen %>.omod:$COMMON_CLASSPATH --changeLogFile=liquibase.xml $CREDS update
 java $CHANGE_LOG_TABLE -jar $LIQUIBASE_JAR --driver=$DRIVER --classpath=$OPENMRS_MODULE_DIR/<%= @openmrs_atomfeed %>.omod:$COMMON_CLASSPATH --changeLogFile=liquibase.xml $CREDS update
 java $CHANGE_LOG_TABLE -jar $LIQUIBASE_JAR --driver=$DRIVER --classpath=$OPENMRS_MODULE_DIR/<%= @openmrs_appframework %>.omod:$COMMON_CLASSPATH --changeLogFile=liquibase.xml $CREDS update
 java $CHANGE_LOG_TABLE -jar $LIQUIBASE_JAR --driver=$DRIVER --classpath=$OPENMRS_MODULE_DIR/<%= @openmrs_calculation %>.omod:$COMMON_CLASSPATH --changeLogFile=liquibase.xml $CREDS update
