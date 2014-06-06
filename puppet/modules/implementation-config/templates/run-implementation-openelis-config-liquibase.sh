@@ -2,7 +2,7 @@
 set -e -x
 
 CHANGE_LOG_TABLE="-Dliquibase.databaseChangeLogTableName=databasechangelog -Dliquibase.databaseChangeLogLockTableName=databasechangeloglock"
-LIQUIBASE_JAR="<%= @tomcatInstallationDirectory %>/webapps/openmrs/WEB-INF/lib/liquibase-core-2.0.5.jar"
+LIQUIBASE_JAR="<%= @temp_dir %>/OpenElis/liquibase/lib/liquibase-1.9.5.jar"
 CREDS="--url=jdbc:postgresql://localhost:5432/clinlims --username=clinlims --password=clinlims"
 CLASSPATH="<%= @build_output_dir %>/<%= @openelis_war_file_name %>.war"
 WORKING_DIR="<%= @build_output_dir %>/<%= @migrationsDirectory %>/openelis"
