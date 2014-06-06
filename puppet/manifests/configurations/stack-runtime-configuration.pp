@@ -120,7 +120,7 @@ $httpsStaticWebapps = [
 					   {path => "${imagesUrl}", directory => "${imagesDirectory}"},
 					   {path => "/document_images", directory => "${documentBaseDirectory}"},
                        {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"},
-                       {path => "/uploaded_results", directory => "${uploadedResultsDirectory}"}]
+                       {path => "/uploaded_results", directory => "${uploadedResultsDirectory}"},
                        {path => "/uploaded-files", directory => "${uploadedFilesDirectory}"}]
 $httpsCachedDirectories = []                    
 $httpsAggressiveCacheDisabledDirectories = []
