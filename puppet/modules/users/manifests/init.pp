@@ -10,10 +10,17 @@ class users ( $userName, $password_hash ) {
 
   exec { "${userName} homedir" :
     provider    => "shell",
-    command     => "cp -R /etc/skel /home/$userName; chown -R $userName:$userName /home/$userName;chmod g+rwx -R /home/$userName",
+    command     => "cp -R /etc/skel /home/$userName",
     creates     => "/home/$userName",
     onlyif      => "test ! -f /home/${userName}/.bashrc",
     require     => User["${userName}"]
+  }
+
+  exec { "set-permissions-to-${userName}-home" :
+    command     => "chown -R $userName:$userName /home/$userName;chmod g+rwx -R /home/$userName",
+    provider    => "shell",
+    onlyif      => "test -f /home/${userName}/.bashrc",
+    require     => Exec["${userName} homedir"]
   }
 
   file { "add-user-to-sudoers" :
