@@ -3,9 +3,9 @@
 
 
 BASE_URL=https://ci-bahmni.thoughtworks.com
-MRS_Build_Name=1398
-OpenERP_Build_Name=181
-OpenELIS_Build_Name=170
+MRS_Build_Name=1416
+OpenERP_Build_Name=182
+OpenELIS_Build_Name=171
 reference_data_go_build_name=52
 BRANCH=master
 GO_USER=guest
@@ -19,9 +19,9 @@ echo "--------------------------------------------------------------------------
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/bahmniapps.zip
 
 
-echo "Downloading artifact (2 of 12): distro-4.0-SNAPSHOT-distro.zip"
+echo "Downloading artifact (2 of 12): distro-5.0-SNAPSHOT-distro.zip"
 echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-4.0-SNAPSHOT-distro.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-5.0-SNAPSHOT-distro.zip
 
 
 echo "Downloading artifact (3 of 12): jss_config.zip"
@@ -30,7 +30,7 @@ wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/
 
 echo "Downloading artifact (4 of 12): jss-old-data-4.0-SNAPSHOT-jar-with-dependencies.jar"
 echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-4.0-SNAPSHOT-jar-with-dependencies.jar
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-5.0-SNAPSHOT-jar-with-dependencies.jar
 
 echo "Downloading artifact (5 of 12): search_config.zip"
 echo "--------------------------------------------------------------------------------------------------"
@@ -64,6 +64,6 @@ wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/
 mkdir ui-modules
 cd ui-modules
 
-echo "Downloading artifact (12 of 12): bahmniapps-4.0-SNAPSHOT.omod"
+echo "Downloading artifact (12 of 12): bahmniapps-5.0-SNAPSHOT.omod"
 echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/ui-modules/bahmniapps-4.0-SNAPSHOT.omod 
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/ui-modules/bahmniapps-5.0-SNAPSHOT.omod 
