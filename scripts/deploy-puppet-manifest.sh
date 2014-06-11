@@ -32,7 +32,6 @@ fi
 ####################################################################
 # Note that you should invoke this script with sudo -E (so that environment variables are passed to this script)
 # Checking if env variable BAHMNI_USER_NAME is set
-
 if [ "${BAHMNI_USER_NAME}a" != "a" ]
 then
 	export FACTER_bahmni_user_name=$BAHMNI_USER_NAME
@@ -43,7 +42,6 @@ fi
 
 ####################################################################
 # Checking if env variable IMPLEMENTATION_NAME is set
-
 if [ "${IMPLEMENTATION_NAME}a" != "a" ]
 then
 	export FACTER_implementation_name=$IMPLEMENTATION_NAME
@@ -54,6 +52,16 @@ fi
 
 ####################################################################
 
+# Checking if env variable BUILD_SOURCE_DIR is set
+if [ "${BUILD_SOURCE_DIR}a" != "a" ]
+then
+	export FACTER_build_source_dir=$BUILD_SOURCE_DIR
+	echo "Setting implementation_name=${FACTER_build_source_dir}"
+else
+	echo "Not setting build_source_dir. Puppet default will be used."
+fi
+
+####################################################################
 
 puppet apply $BASE_DIR/puppet/manifests/$1.pp --modulepath=$BASE_DIR/puppet/modules/ --detailed-exitcodes
 RETURN_CODE=$?

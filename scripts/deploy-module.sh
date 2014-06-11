@@ -46,18 +46,6 @@ fi
 
 ####################################################################
 
-# Checking if env variable BUILD_SOURCE_DIR is set
-
-if [ "${BUILD_SOURCE_DIR}a" != "a" ]
-then
-	export FACTER_build_source_dir=$BUILD_SOURCE_DIR
-	echo "Setting implementation_name=${FACTER_build_source_dir}"
-else
-	echo "Not setting build_source_dir. Puppet default will be used."
-fi
-
-####################################################################
-
 
 MODULE_NAME=$1
 if [ "${MODULE_NAME}a" = "a" ]
