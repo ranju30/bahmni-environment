@@ -14,6 +14,7 @@ class node-npm{
     }
 
     exec { "nodejs-archive-extract":
+        cwd         => "/opt",
         command     => "/bin/tar xzf /opt/node-v0.10.28.tar.gz",
         path        => ["/bin"],
         creates     => "/opt/node-v0.10.28",
@@ -34,8 +35,9 @@ class node-npm{
     }
 
 	exec{"make-nodejs":
-    	cwd	    => "/opt/node-v0.10.28/",
+    	cwd	        => "/opt/node-v0.10.28/",
     	command		=> "/usr/bin/make",
+        timeout     => 0,
     	require		=> Exec["configure-nodejs"]
     }
 
