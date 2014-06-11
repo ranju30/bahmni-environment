@@ -22,3 +22,9 @@ Virtual box and vagrant tips
 9. If you want to do ssh into the VM (this is different from being able to do vagrant ssh into the VM) without having to provide password, copy your public key content (in ~/.ssh/) to the VMs ~/.ssh/authorized_keys file.
 10. If you get an error like 'Nonexistent host networking vboxnet0', try restartying VirtualBox. Mac command -> sudo /Library/StartupItems/VirtualBox/VirtualBox restart. 
 
+Commands
+--------
+rm /etc/udev/rules.d/70-persistent-net.rules
+wget https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub --no-check-certificate
+mv vagrant.pub .ssh/authorized_keys
+vagrant plugin update vagrant-vbguest
