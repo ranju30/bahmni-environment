@@ -1,6 +1,6 @@
 rm -rf *
 
-BASE_URL=<%= @build_source_dir %>
+BASE_URL=<%= @build_source %>
 MRS_Build_Name=<%= @mrs_go_build_name %>
 OpenERP_Build_Name=<%= @erp_go_build_name %>
 OpenELIS_Build_Name=<%= @elis_go_build_name %>
@@ -63,4 +63,4 @@ cd ui-modules
 
 echo "Downloading artifact (12 of 12): bahmniapps-<%= @bahmni_release_version %>.omod"
 echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/ui-modules/bahmniapps-<%= @bahmni_release_version %>.omod 
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/ui-modules/bahmniapps-<%= @bahmni_release_version %>.omod

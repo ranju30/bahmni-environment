@@ -7,13 +7,13 @@
 # Set bahmni_user to $bahmni_user_name if specified, else set default to jss for backward compatibility
 $bahmni_user = $bahmni_user_name ? {
       undef			=> "jss",
-      default       => $bahmni_user_name 	 
+      default       => $bahmni_user_name
 }
 
 # Set the implementation to $implementation_name if specified, else set default to jss for backward compatibility
 $implementation = $implementation_name ? {
       undef			=> "jss",
-      default       => $implementation_name 	 
+      default       => $implementation_name
 }
 
 
@@ -49,9 +49,9 @@ $postgresServiceName = "postgresql-${postgresMajorVersion}.${postgresMinorVersio
 $postgresDataFolder = "/var/lib/pgsql/${postgresMajorVersion}.${postgresMinorVersion}/data"
 
 #Go Server for Downloading Builds
-$build_source_dir = $build_source_dir ? {
+$build_source = $build_source_dir ? {
       undef			=> "http://172.18.2.11:8153",
-      default       => $build_source_dir 	 
+      default       => $build_source_dir
 }
 
 $go_server_user = "guest"
@@ -84,7 +84,7 @@ $bahmniConfigDirectory="${httpd_deploy_dir}/bahmni_config"
 $uploadedFilesDirectory="${tomcatParentDirectory}/uploaded-files"
 
 # Backup config
-$backup_hour = 3 # 4 AM Every day  
+$backup_hour = 3 # 4 AM Every day
 
 # Bahmni core properties
 $imagesDirectory="/home/${bahmni_user}/patient_images"
@@ -122,7 +122,7 @@ $httpsStaticWebapps = [
                        {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"},
                        {path => "/uploaded_results", directory => "${uploadedResultsDirectory}"},
                        {path => "/uploaded-files", directory => "${uploadedFilesDirectory}"}]
-$httpsCachedDirectories = []                    
+$httpsCachedDirectories = []
 $httpsAggressiveCacheDisabledDirectories = []
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
 
@@ -177,7 +177,7 @@ $report_zip_source_url = $implementation ? {
 	  undef			 => "https://github.com/jss-emr/jss-reports/archive/master.zip",
       "jss"			 => "https://github.com/jss-emr/jss-reports/archive/master.zip",
       default        => "https://github.com/jss-emr/jss-reports/archive/master.zip",
-      "search"       => "https://github.com/Bhamni/search-reports/archive/master.zip" 	 
+      "search"       => "https://github.com/Bhamni/search-reports/archive/master.zip"
 }
 
 ######################## JASPER CONFIG END##############################################
