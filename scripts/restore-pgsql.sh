@@ -11,4 +11,13 @@ psql -Upostgres -c "drop database if exists openerp;";
 psql -Upostgres -c "drop database if exists lab;";
 psql -Upostgres -c "drop database if exists clinlims;";
 psql -Upostgres -c "drop database if exists reference_data;";
-psql -Upostgres < $1
+
+if [ ${dumpfile: -3} == ".gz" ]
+then
+	gunzip < $dumpfile | psql -Upostgres 
+else
+	psql -Upostgres < $dumpfile
+fi	
+
+
+
