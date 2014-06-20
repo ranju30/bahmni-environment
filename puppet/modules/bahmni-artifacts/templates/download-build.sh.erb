@@ -1,9 +1,11 @@
 rm -rf *
 
-BASE_URL=<%= @build_source_dir %>
+BASE_URL=<%= @build_source %>
 MRS_Build_Name=<%= @mrs_go_build_name %>
+Config_Build_Name=<%= config_go_build_name %>
 OpenERP_Build_Name=<%= @erp_go_build_name %>
 OpenELIS_Build_Name=<%= @elis_go_build_name %>
+IMPLEMENTATION_NAME=<%= @implementation %>
 reference_data_go_build_name=<%= @reference_data_go_build_name %>
 BRANCH=<%= @source_code_branch %>
 GO_USER=<%= @go_server_user %>
@@ -13,47 +15,39 @@ rm -f *
 
 echo "CI SERVER: $BASE_URL"
 
-echo "Downloading artifact (1 of 12): distro-<%= @bahmni_release_version %>-distro.zip"
+echo "Downloading artifact (1 of 11): distro-<%= @bahmni_release_version %>-distro.zip"
 echo "--------------------------------------------------------------------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-<%= @bahmni_release_version %>-distro.zip
 
-echo "Downloading artifact (2 of 12): bahmniapps.zip"
+echo "Downloading artifact (2 of 11): bahmniapps.zip"
 echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/bahmniapps.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables/bahmniapps.zip
 
-echo "Downloading artifact (3 of 12): jss_config.zip"
+echo "Downloading artifact (3 of 11): jss-old-data-<%= @bahmni_release_version %>-jar-with-dependencies.jar"
 echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss_config.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables/jss-old-data-<%= @bahmni_release_version %>-jar-with-dependencies.jar
 
-echo "Downloading artifact (4 of 12): jss-old-data-<%= @bahmni_release_version %>-jar-with-dependencies.jar"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/jss-old-data-<%= @bahmni_release_version %>-jar-with-dependencies.jar
-
-echo "Downloading artifact (5 of 12): search_config.zip"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/search_config.zip
-
-echo "Downloading artifact (6 of 12): openerp-atomfeed-service.war"
+echo "Downloading artifact (4 of 11): openerp-atomfeed-service.war"
 echo "--------------------------------------------------------------------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
 
-echo "Downloading artifact (7 of 12): openerp-modules.zip"
+echo "Downloading artifact (5 of 11): openerp-modules.zip"
 echo "--------------------------------------------------------------------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/runFunctionalTestsJob/openerp-modules.zip
 
-echo "Downloading artifact (8 of 12): openelis.war"
+echo "Downloading artifact (6 of 11): openelis.war"
 echo "--------------------------------------------------------------------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/openelis.war
 
-echo "Downloading artifact (9 of 12): OpenElis.zip"
+echo "Downloading artifact (7 of 11): OpenElis.zip"
 echo "--------------------------------------------------------------------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/OpenElis.zip
 
-echo "Downloading artifact (10 of 12): <%= @reference_data_war_file_name %>.war"
+echo "Downloading artifact (8 of 11): <%= @reference_data_war_file_name %>.war"
 echo "--------------------------------------------------------------------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables/<%= @reference_data_war_file_name %>.war
 
-echo "Downloading artifact (11 of 12): reference-data-scripts.zip"
+echo "Downloading artifact (9 of 11): reference-data-scripts.zip"
 echo "--------------------------------------------------------------------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables/reference-data-scripts.zip
 
@@ -61,6 +55,10 @@ wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/
 mkdir ui-modules
 cd ui-modules
 
-echo "Downloading artifact (12 of 12): bahmniapps-<%= @bahmni_release_version %>.omod"
+echo "Downloading artifact (10 of 11): bahmniapps-<%= @bahmni_release_version %>.omod"
 echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildStage/Latest/FunctionalTests/deployables/ui-modules/bahmniapps-<%= @bahmni_release_version %>.omod 
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables/ui-modules/bahmniapps-<%= @bahmni_release_version %>.omod
+
+echo "Downloading artifact (11 of 11): <%= @implementation %>_config.zip"
+echo "--------------------------------------------------------------------------------------------------"
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Build_${IMPLEMENTATION_NAME}_config_$BRANCH/$Config_Build_Name/BuildStage/Latest/Build/${IMPLEMENTATION_NAME}_config.zip
