@@ -2,6 +2,7 @@ class implementation-config($implementationName) {
 
   $implementationZipFile = "${build_output_dir}/${implementationName}_config.zip"
   $migrationsDirectory = "${implementationName}_config/migrations"
+  $openerpMigrationsDirectory = "${implementationName}_config/openerp/migrations"
   $configDirectory = "${implementationName}_config/openmrs"
   $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
 
@@ -53,6 +54,23 @@ class implementation-config($implementationName) {
     provider    => shell,
     cwd         => "${build_output_dir}/${migrationsDirectory}",
     require     => [Exec["unzip_${implementationName}"],File["${temp_dir}/run-implementation-liquibase.sh"]]
+  }
+
+  file { "${temp_dir}/run-implementation-openerp-liquibase.sh" :
+    ensure      => present,
+    content     => template("implementation-config/run-implementation-openerp-liquibase.sh"),
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+    mode        => 554
+  }
+
+  exec { "run_openerp_implementation_liquibase_migration" :
+    command     => "${temp_dir}/run-implementation-openerp-liquibase.sh  ${deployment_log_expression}",
+    path        => "${os_path}",
+    provider    => shell,
+    cwd         => "${build_output_dir}/${openerpMigrationsDirectory}",
+    require     => [Exec["unzip_${implementationName}"],File["${temp_dir}/run-implementation-openerp-liquibase.sh"]],
+    onlyif      => "test -f ${build_output_dir}/${implementationName}_config/openerp/migrations/liquibase.xml"
   }
 
   exec { "bahmni_openelis_codebase_for_liquibase_jar" :

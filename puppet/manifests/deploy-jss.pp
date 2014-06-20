@@ -12,10 +12,10 @@ node default {
   include httpd
   include bahmni-webapps
   include bahmni-ui-apps
-  class { 'implementation-config':
-    implementationName => "jss", require => [ Class['bahmni-webapps'], Class['openelis']]
-  }
   include bahmni-openerp
+  class { 'implementation-config':
+    implementationName => "jss", require => [ Class['bahmni-webapps'], Class['openelis'], Class['bahmni-openerp']]
+  }
   include openelis
   include reference-data
 }
