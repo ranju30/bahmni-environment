@@ -51,18 +51,19 @@ echo "Downloading artifact (9 of 12): reference-data-scripts.zip"
 echo "--------------------------------------------------------------------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables/reference-data-scripts.zip
 
+echo "Downloading artifact (10 of 12): default_config.zip"
+echo "--------------------------------------------------------------------------------------------------"
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables/default_config.zip
+
+echo "Downloading artifact (11 of 12): <%= @implementation %>_config.zip"
+echo "--------------------------------------------------------------------------------------------------"
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Build_${IMPLEMENTATION_NAME}_config_$BRANCH/$Config_Build_Name/BuildStage/Latest/Build/${IMPLEMENTATION_NAME}_config.zip
+
 #Download ui-modules
 mkdir ui-modules
 cd ui-modules
 
-echo "Downloading artifact (10 of 12): bahmniapps-<%= @bahmni_release_version %>.omod"
+echo "Downloading artifact (12 of 12): bahmniapps-<%= @bahmni_release_version %>.omod"
 echo "--------------------------------------------------------------------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables/ui-modules/bahmniapps-<%= @bahmni_release_version %>.omod
 
-echo "Downloading artifact (11 of 12): default_config.zip"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables/default_config.zip
-
-echo "Downloading artifact (12 of 12): <%= @implementation %>_config.zip"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Build_${IMPLEMENTATION_NAME}_config_$BRANCH/$Config_Build_Name/BuildStage/Latest/Build/${IMPLEMENTATION_NAME}_config.zip
