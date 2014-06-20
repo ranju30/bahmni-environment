@@ -2,14 +2,9 @@ class bahmni-jasperreports {
 
 	$properties_file = 'reports_default.properties'
 	
-
-
-	file { "delete_reports_dir" :
-	    path      => "${build_output_dir}/${implementation}-reports",
-	    ensure    => absent,
-	    recurse   => true,
-	    force     => true,
-	    purge     => true,
+	exec { "delete_reports_dir" :
+		command => "rm -rf ${build_output_dir}/${implementation}-reports",
+		path 		=> "${os_path}"
 	}
 
 	file { "delete_reports_zip" :
@@ -21,7 +16,7 @@ class bahmni-jasperreports {
     exec { "download_reports_zip":
         command => "/usr/bin/wget --no-check-certificate ${report_zip_source_url} -O ${implementation}-reports.zip",
         cwd     => "${build_output_dir}",
-        require => [File["delete_reports_dir"], File["delete_reports_zip"]],
+        require => [Exec["delete_reports_dir"], File["delete_reports_zip"]],
     }
 
 	exec { "unzip_report" :

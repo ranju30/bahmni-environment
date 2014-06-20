@@ -11,14 +11,11 @@ class bahmni-webapps {
    owner  => "${bahmni_user}",
    group  =>  "${bahmni_user}",   
    mode   => 664,
-   ensure    => directory,
-   recurse   => true,
-   force     => true,
-   purge     => true
+   ensure    => directory
   }
 
   exec { "bahmni_omods" :
-    command => "cp ${build_output_dir}/${openmrs_distro_file_name_prefix}/*.omod ${openmrs_modules_dir} ${deployment_log_expression}",
+    command => "rm -rf ${openmrs_modules_dir}/* && cp ${build_output_dir}/${openmrs_distro_file_name_prefix}/*.omod ${openmrs_modules_dir} ${deployment_log_expression}",
     user    => "${bahmni_user}",
     require => [File["${openmrs_modules_dir}"], Exec["unzip_distro"]],
     path => "${os_path}"

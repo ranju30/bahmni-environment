@@ -46,12 +46,15 @@ class httpd {
        notify       => Service["httpd"],
 	}
 
+    exec { "clean_${httpdCacheDirectory}" :
+        command => "rm -rf ${httpdCacheDirectory}",
+        path    => "${os_path}"
+    }
+
     file { "${httpdCacheDirectory}" :
-        ensure    => directory,
-        recurse   => true,
-        force     => true,
-        purge     => true,
+        ensure => directory,
         owner => "${apache_user}",
         group => "${apache_user}",
+        require => Exec["clean_${httpdCacheDirectory}"]
     }
 }

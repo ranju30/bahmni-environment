@@ -9,18 +9,11 @@ class implementation-config($implementationName) {
     ensure    => present
   }
 
-  file { "${build_output_dir}/${implementationName}_config" :
-    ensure    => absent,
-    recurse   => true,
-    force     => true,
-    purge     => true
-  }
-
   exec { "unzip_${implementationName}" :
-    command   => "unzip -q -o $implementationZipFile -d ${build_output_dir}/${implementationName}_config ${deployment_log_expression}",
+    command   => "rm -rf ${build_output_dir}/${implementationName}_config && unzip -q -o $implementationZipFile -d ${build_output_dir}/${implementationName}_config ${deployment_log_expression}",
     provider  => shell,
     path      => "${os_path}",
-    require   => [File["${implementationZipFile}"], File["${build_output_dir}/${implementationName}_config"]]
+    require   => [File["${implementationZipFile}"]]
   }
 
   exec { "copyLogoToOpenelis" :
@@ -86,18 +79,11 @@ class implementation-config($implementationName) {
     onlyif    => "test -f ${build_output_dir}/${implementationName}_config/migrations/openelis/liquibase.xml"
   }
 
-  file { "${httpd_deploy_dir}/bahmni_config" :
-    ensure    => directory,
-    recurse   => true,
-    force     => true,
-    purge     => true
-  }
-  
   exec { "copy_implementation_config" :
-    command     => "unzip -q -o $implementationZipFile openmrs/* -d ${httpd_deploy_dir}/bahmni_config ${deployment_log_expression}",
+    command     => "rm -rf ${httpd_deploy_dir}/bahmni_config && unzip -q -o $implementationZipFile openmrs/* -d ${httpd_deploy_dir}/bahmni_config ${deployment_log_expression}",
     provider    => "shell",
     path        => "${os_path}",
-    require     => [Exec["unzip_${implementationName}"], File["${httpd_deploy_dir}/bahmni_config"]]
+    require     => [Exec["unzip_${implementationName}"]]
   }
 
   exec { "set_owner_of_bahmni_config" :
