@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
-
+yellow='\e[33m'
+white='\e[97m'
+red='\e[91m'
+green='\e[92m'
 
 PATH_OF_CURRENT_SCRIPT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -10,23 +13,22 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 
-
 function is_service_running() {
-	if (( $(ps -ef | grep -v grep | grep $1 | wc -l) > 0 ))
-	then
-		return 0
-	else
-		return 1
-	fi
+    if (( $(ps -ef | grep -v grep | grep $1 | wc -l) > 0 ))
+    then
+        return 0
+    else
+        return 1
+    fi
 }
 
 function start_service() {
-	echo "Starting up $1 service..."
-	if(!(is_service_running $1)) then
-		sudo service $1 start 
-	else
-		echo -e "Service $1 is already up"
-	fi
+    echo "Starting up $1 service..."
+    if(!(is_service_running $1)) then
+        sudo service $1 start
+    else
+        echo -e "Service $1 is already up"
+    fi
 }
 
 function start_pgsql() {
@@ -40,19 +42,19 @@ function start_pgsql() {
 
 
 function stop_service() {
-	echo "Shutting down $1 service..."
-	if(is_service_running $1) then
-		sudo service $1 stop 
-	fi
+    echo "Shutting down $1 service..."
+    if(is_service_running $1) then
+        sudo service $1 stop
+    fi
 
 }
 
 # stops all services
 stop() {
-	echo "=================================================================="
-	echo "[WARNING] All services required for Bahmni will be shut down"
-	echo "Make sure you run [bahmni start] before you use Bahmni"
-	echo "=================================================================="
+    echo "=================================================================="
+    echo -e "$yellow[WARNING] All services required for Bahmni will be shut down$white"
+    echo -e "$yellow Make sure you run [bahmni start] before you use Bahmni$white"
+    echo "=================================================================="
 
 	stop_service openerp
 	
@@ -65,6 +67,33 @@ stop() {
 	stop_service mysql
 	stop_service postgresql-9.2
 	stop_service httpd
+}
+
+status() {
+    bahmni_services=("httpd" "openerp-server" "tomcat" "mysql" "pgsql-9.2")
+    up_count=0
+    down_count=0
+    for service in "${bahmni_services[@]}"
+    do
+        if(is_service_running $bahmni_services) then
+            echo "$service...... Running"
+            let up_count=$up_count+1
+        else
+            echo "$service...... Not running"
+            let down_count=$down_count+1
+        fi
+    done
+    services_count=${#bahmni_services[@]}
+    if (("$services_count" != "$up_count")); then
+        echo "=================================================================="
+        echo -e "$red[ERROR] $down_count out of $services_count services are not running$white"
+        echo -e "$red[ERROR] Please run [bahmni start] to bring up all services.$white"
+        echo "=================================================================="
+    else
+        echo "=================================================================="
+        echo -e "$green Bahmni is ready to be used$white"
+        echo "=================================================================="
+    fi
 }
 
 # starts all services
@@ -94,22 +123,6 @@ restart() {
 	stop
 	sleep 3
 	start
-}
-
-status() {
-	services=("httpd" "openerp-server" "tomcat" "mysql" "pgsql-9.2")
-	# up_count=0
-	# down_count=0
-	for service in "${services[@]}" 
-	do
-   		if(is_service_running $service) then
-   			echo "$service...... Running"
-   			# up_count++
-		else
-			echo "$service...... Not running"
-			# down_count++
-		fi
-	done
 }
 
 backup() {
