@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 yellow='\e[33m'
-white='\e[97m'
+white='\e[0m'
 red='\e[91m'
 green='\e[92m'
 
