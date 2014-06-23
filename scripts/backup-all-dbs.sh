@@ -3,6 +3,10 @@ set -e
 
 # This script performs backup of all the databases (OpenMRS, ERP, ELIS, Reference Data)
 
+yellow='\e[33m'
+original='\e[0m'
+red='\e[91m'
+green='\e[92m'
 
 # checks if service is running
 function is_service_running() {
@@ -85,7 +89,7 @@ chown postgres:postgres $BACKUP_PATH
 # Perform backup of PostgreSQL DB
 su - postgres -c "pg_dumpall | gzip -c > $BACKUP_PATH/pgsql_backup_$TIME.sql.gz"
 
-echo ">> Backups created at: $BACKUP_PATH"
+echo -e "$yellow >> Backups created at:  $green $BACKUP_PATH $original"
 ################################## START ALL ###############################################################
 # Start APACHE
 if is_service_running httpd 

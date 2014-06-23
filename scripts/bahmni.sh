@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
 yellow='\e[33m'
-white='\e[0m'
+original='\e[0m'
 red='\e[91m'
 green='\e[92m'
 
 PATH_OF_CURRENT_SCRIPT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [[ $EUID -ne 0 ]]; then
-   echo "[Error] This script must be run as root or with sudo!" 1>&2
+   echo -e "$red[Error]$original This script must be run as root or with sudo!" 1>&2
    exit 1
 fi
 
@@ -23,7 +23,7 @@ function is_service_running() {
 }
 
 function start_service() {
-    echo "Starting up $1 service..."
+    echo -e "Starting up $green $1 $original service..."
     if(!(is_service_running $1)) then
         sudo service $1 start
     else
@@ -32,7 +32,7 @@ function start_service() {
 }
 
 function start_pgsql() {
-	echo "Starting up postgresql-9.2..."
+	echo -e "Starting up $green postgresql-9.2 $original ..."
 	if(!(is_service_running pgsql-9.2 )) then
 		sudo service postgresql-9.2 start 
 	else
@@ -42,7 +42,7 @@ function start_pgsql() {
 
 
 function stop_service() {
-    echo "Shutting down $1 service..."
+    echo -e "Shutting down $yellow $1 $original service..."
     if(is_service_running $1) then
         sudo service $1 stop
     fi
@@ -51,14 +51,14 @@ function stop_service() {
 
 # stops all services
 stop() {
-    echo "=================================================================="
-    echo -e "$yellow[WARNING] All services required for Bahmni will be shut down$white"
-    echo -e "$yellow Make sure you run [bahmni start] before you use Bahmni$white"
-    echo "=================================================================="
+    echo -e "=================================================================="
+    echo -e "$yellow[WARNING]$original All services required for Bahmni will be shut down"
+    echo -e "Make sure you run [bahmni start] before you use Bahmni"
+    echo -e "=================================================================="
 
 	stop_service openerp
 	
-	echo "Shutting down tomcat service..."
+	echo -e "Shutting down $yellow tomcat $original service..."
 	if(is_service_running tomcat) then
 		ps aux | grep [t]omcat | awk '{print $2}' | xargs -I PID sudo kill -9 PID
 	fi
@@ -76,56 +76,60 @@ status() {
     for service in "${bahmni_services[@]}"
     do
         if(is_service_running $bahmni_services) then
-            echo "$service...... Running"
+            echo -e "$service...... $green[Running] $original"
             let up_count=$up_count+1
         else
-            echo "$service...... Not running"
+            echo -e "$service...... $yellow[Not Running]$original"
             let down_count=$down_count+1
         fi
     done
     services_count=${#bahmni_services[@]}
     if (("$services_count" != "$up_count")); then
-        echo "=================================================================="
-        echo -e "$red[ERROR] $down_count out of $services_count services are not running$white"
-        echo -e "$red[ERROR] Please run [bahmni start] to bring up all services.$white"
-        echo "=================================================================="
+        echo -e "=================================================================="
+        echo -e "$red[ERROR]$original $down_count out of $services_count services are not running"
+        echo -e "$red[ERROR]$original Please run [bahmni start] to bring up all services."
+        echo -e "=================================================================="
     else
-        echo "=================================================================="
-        echo -e "$green Bahmni is ready to be used$white"
-        echo "=================================================================="
+        echo -e "=================================================================="
+        echo -e "$green Bahmni is ready to be used $original"
+        echo -e "=================================================================="
     fi
 }
 
 # starts all services
 start() {
-	echo "=================================================================="
-	echo "All services required for Bahmni will be starting up"
-	echo "Run [bahmni status] to check the status"
-	echo "=================================================================="
+	echo -e "=================================================================="
+	echo -e "All services required for Bahmni will be starting up"
+	echo -e "Run [bahmni status] to check the status"
+	echo -e "=================================================================="
 	start_service mysql
 	start_pgsql
 	start_service httpd
 	sleep 3
 	start_service openerp
 	start_service tomcat
-	echo "=================================================================="
-	echo "Bahmni services started... "
-	echo "Tomcat will take upto 5 mins to fully come up...."
-	echo "=================================================================="
+	echo -e "=================================================================="
+	echo -e "$green Bahmni services started... $original"
+	echo -e "$yellow Tomcat will take upto 5 mins to fully come up.... $original"
+	echo -e "=================================================================="
 }
 
 # restarts all services
 restart() {
-	echo "=================================================================="
-	echo "Restarting all services required for Bahmni"
-	echo "Run [bahmni status] to check the status"
-	echo "=================================================================="
+	echo -e "=================================================================="
+	echo -e "Restarting all services required for Bahmni"
+	echo -e "Run [bahmni status] to check the status"
+	echo -e "=================================================================="
 	stop
 	sleep 3
 	start
 }
 
 backup() {
+	# Ensure DBs are running if they are down
+	start_service mysql
+	start_pgsql
+	sleep 3
 	sudo $PATH_OF_CURRENT_SCRIPT/backup-all-dbs.sh -b /backup
 }
 
@@ -184,7 +188,11 @@ case "$1" in
 		status
 		;;
 	* )
-		echo "[ERROR] Invalid option $1"
+		echo -e "$red[ERROR]$original Invalid option $1"
 		printUsage
 		;;
 esac
+
+tput sgr0
+
+echo ""
