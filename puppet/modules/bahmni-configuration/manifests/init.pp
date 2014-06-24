@@ -3,7 +3,7 @@
 class bahmni-configuration {
   $bahmnicore_properties = "/home/${bahmni_user}/.OpenMRS/bahmnicore.properties"
 
-  file { "${imagesDirectory}" :
+  file { "${patientImagesDirectory}" :
     ensure      => directory,
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
@@ -17,8 +17,8 @@ class bahmni-configuration {
 
  file { "${httpd_deploy_dir}/patient_images" :
    ensure => "link",
-   target => "${imagesDirectory}",
-   require => File["${imagesDirectory}"],
+   target => "${patientImagesDirectory}",
+   require => File["${patientImagesDirectory}"],
  }
 
  file { "${bahmnicore_properties}" :

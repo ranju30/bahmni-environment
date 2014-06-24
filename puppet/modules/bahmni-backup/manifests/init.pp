@@ -1,12 +1,12 @@
 class bahmni-backup {
     exec { "create_patient_images_dir_on_secondary_machine":
-        command => "ssh root@${secondary_machine_ip} 'mkdir -p ${imagesDirectory}'",
+        command => "ssh root@${secondary_machine_ip} 'mkdir -p ${patientImagesDirectory}'",
         path        => "${os_path}",
     }
 
     #--delete option is taken out from rsync intentionally. As slave folder acts as backup.
     cron { "sync_patient_image_cron" :
-        command => "rsync -rh --progress -i --itemize-changes --update --chmod=Du=r,Dg=rwx,Do=rwx,Fu=rwx,Fg=rwx,Fo=rwx -p ${imagesDirectory} -e ssh root@${secondary_machine_ip}:${imagesDirectory}/../",
+        command => "rsync -rh --progress -i --itemize-changes --update --chmod=Du=r,Dg=rwx,Do=rwx,Fu=rwx,Fg=rwx,Fo=rwx -p ${patientImagesDirectory} -e ssh root@${secondary_machine_ip}:${patientImagesDirectory}/../",
         user    => "root",
         minute  => "*/1"
     }

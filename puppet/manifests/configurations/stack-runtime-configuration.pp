@@ -88,8 +88,8 @@ $uploadedFilesDirectory="${tomcatParentDirectory}/uploaded-files"
 $backup_hour = 3 # 4 AM Every day
 
 # Bahmni core properties
-$imagesDirectory="/home/${bahmni_user}/patient_images"
-$imagesUrl="/patient_images"
+$patientImagesDirectory="/home/${bahmni_user}/patient_images"
+$patientImagesUrl="/patient_images"
 $documentBaseDirectory="/home/${bahmni_user}/document_images"
 $uploadedResultsDirectory="/home/${bahmni_user}/uploaded_results"
 
@@ -107,7 +107,7 @@ $httpsRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/o
 #Static webapps
 $httpsStaticWebapps = [
 					   {path => "/bahmni", directory => "${bahmniAppsDirectory}"},
-					   {path => "${imagesUrl}", directory => "${imagesDirectory}"},
+					   {path => "${patientImagesUrl}", directory => "${patientImagesDirectory}"},
 					   {path => "/document_images", directory => "${documentBaseDirectory}"},
                        {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"},
                        {path => "/uploaded_results", directory => "${uploadedResultsDirectory}"},
@@ -117,7 +117,8 @@ $httpsAggressiveCacheDisabledDirectories = []
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
 
 $httpdCacheDirectory = "/var/cache/mod_proxy"
-$httpsCacheUrls = [{path => "/var/www/patient_images", type => 'Directory', expireTime => "86400"}, #86400s => 1day
+$httpsCacheUrls = [{path => "${patientImagesDirectory}", type => 'Directory', expireTime => "86400"}, #86400s => 1day
+				   {path => "${documentBaseDirectory}", type => 'Directory', expireTime => "86400"},
 				   {path => "${bahmniAppsDirectory}", type => 'Directory', expireTime => "1"}, #1s
  				   {path => "/openmrs/ws/rest/v1/concept"}]
 ######################## HTTPD CONFIG END################################################
