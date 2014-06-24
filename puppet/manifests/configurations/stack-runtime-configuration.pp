@@ -117,7 +117,8 @@ $httpsAggressiveCacheDisabledDirectories = []
 $httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
 
 $httpdCacheDirectory = "/var/cache/mod_proxy"
-$httpsCacheUrls = [{path => "var/www/patient_images", type => 'Directory', expireTime => "86400"},
+$httpsCacheUrls = [{path => "/var/www/patient_images", type => 'Directory', expireTime => "86400"}, #86400s => 1day
+				   {path => "${bahmniAppsDirectory}", type => 'Directory', expireTime => "1"}, #1s
  				   {path => "/openmrs/ws/rest/v1/concept"}]
 ######################## HTTPD CONFIG END################################################
 
