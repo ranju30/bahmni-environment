@@ -106,18 +106,7 @@ $httpsRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/o
                    {path => "/reference-data", redirectPath => "http://localhost:8080/reference-data"}]
 #Static webapps
 $httpsStaticWebapps = [
-					   {path => "/home", directory => "${bahmniAppsDirectory}/home"},
-					   {path => "/adt", directory => "${bahmniAppsDirectory}/adt"},
-					   {path => "/clinical", directory => "${bahmniAppsDirectory}/clinical"},
-					   {path => "/registration", directory => "${bahmniAppsDirectory}/registration"},
-					   {path => "/common", directory => "${bahmniAppsDirectory}/common"},
-					   {path => "/components", directory => "${bahmniAppsDirectory}/components"},
-					   {path => "/document-upload", directory => "${bahmniAppsDirectory}/document-upload"},
-					   {path => "/images", directory => "${bahmniAppsDirectory}/images"},
-					   {path => "/styles", directory => "${bahmniAppsDirectory}/styles"},
-					   {path => "/lib", directory => "${bahmniAppsDirectory}/lib"},
-					   {path => "/orders", directory => "${bahmniAppsDirectory}/orders"},
-					   {path => "/trends", directory => "${bahmniAppsDirectory}/trends"},
+					   {path => "/bahmni", directory => "${bahmniAppsDirectory}"},
 					   {path => "${imagesUrl}", directory => "${imagesDirectory}"},
 					   {path => "/document_images", directory => "${documentBaseDirectory}"},
                        {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"},
