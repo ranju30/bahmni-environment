@@ -31,9 +31,3 @@ truncate table result_signature,
 	organization_contact;
 
 delete from person where not exists (select p.person_id from provider p where p.person_id = person.id);
-
-delete from event_records where id != (select min(id) from event_records where category='patient');
-
-update markers set last_read_entry_id='tag:atomfeed.ict4h.org:c1051da6-8ed9-4f6e-a576-bbe8186ea5f4', feed_uri_for_last_read_entry='http://localhost:8080/openmrs/ws/atomfeed/patient/1' where feed_uri='http://localhost:8080/openmrs/ws/atomfeed/patient/recent';	
-
-update markers set last_read_entry_id='tag:atomfeed.ict4h.org:c8b00764-197b-4195-8ffe-81c01b398f4a', feed_uri_for_last_read_entry='http://localhost:8080/openmrs/ws/atomfeed/encounter/1' where feed_uri='http://localhost:8080/openmrs/ws/atomfeed/encounter/recent';	

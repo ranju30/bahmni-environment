@@ -57,12 +57,3 @@ truncate table
 	 res_partner_category;
 
 delete from res_partner where not exists (select ru.partner_id from res_users ru where ru.partner_id = res_partner.id) and id != 1;
-
-delete from event_records where id != (select min(id) from event_records where category='sale_order');
-
-update markers set last_read_entry_id='tag:atomfeed.ict4h.org:c1051da6-8ed9-4f6e-a576-bbe8186ea5f4', feed_uri_for_last_read_entry='http://localhost:8080/openmrs/ws/atomfeed/patient/1' where feed_uri='http://localhost:8080/openmrs/ws/atomfeed/patient/recent';	
-
-update markers set last_read_entry_id='tag:atomfeed.ict4h.org:c8b00764-197b-4195-8ffe-81c01b398f4a', feed_uri_for_last_read_entry='http://localhost:8080/openmrs/ws/atomfeed/encounter/1' where feed_uri='http://localhost:8080/openmrs/ws/atomfeed/encounter/recent';	
-
-update markers set last_read_entry_id='tag:atomfeed.ict4h.org:d354cbe0-5619-478d-82e5-3b42c7a0ca47', feed_uri_for_last_read_entry='http://localhost:8080/openelis/ws/feed/patient/1' where feed_uri='http://localhost:8080/openelis/ws/feed/patient/recent';	
-
