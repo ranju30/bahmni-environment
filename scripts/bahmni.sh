@@ -42,9 +42,10 @@ function start_pgsql() {
 
 
 function stop_service() {
-    echo -e "Shutting down $yellow $1 $original service..."
+    echo -e "Checking $yellow $1 $original service..."
     if(is_service_running $1) then
         sudo service $1 stop
+        echo -e "Stopped $yellow $1 $original"
     fi
 
 }
@@ -56,26 +57,27 @@ stop() {
     echo -e "Make sure you run [bahmni start] before you use Bahmni"
     echo -e "=================================================================="
 
-	stop_service openerp
+	echo -e "Checking $yellow openerp-server $original service..."
+	if(is_service_running openerp-server) then
+		stop_service openerp
+    fi 
 	
-	echo -e "Shutting down $yellow tomcat $original service..."
+	echo -e "Checking $yellow tomcat $original service..."
 	if(is_service_running tomcat) then
 		ps aux | grep [t]omcat | awk '{print $2}' | xargs -I PID sudo kill -9 PID
+		echo -e "Killed $yellow tomcat $original"
 	fi
 
     sleep 3
-	stop_service mysql
-	stop_service postgresql-9.2
 	stop_service httpd
 }
 
 status() {
-    bahmni_services=("httpd" "openerp-server" "tomcat" "mysql" "pgsql-9.2")
     up_count=0
     down_count=0
-    for service in "${bahmni_services[@]}"
+    for service in httpd openerp-server tomcat mysql pgsql-9.2
     do
-        if(is_service_running $bahmni_services) then
+        if(is_service_running $service) then
             echo -e "$service...... $green[Running] $original"
             let up_count=$up_count+1
         else
@@ -83,7 +85,7 @@ status() {
             let down_count=$down_count+1
         fi
     done
-    services_count=${#bahmni_services[@]}
+    services_count="5"
     if (("$services_count" != "$up_count")); then
         echo -e "=================================================================="
         echo -e "$red[ERROR]$original $down_count out of $services_count services are not running"
@@ -100,7 +102,7 @@ status() {
 start() {
 	echo -e "=================================================================="
 	echo -e "All services required for Bahmni will be starting up"
-	echo -e "Run [bahmni status] to check the status"
+	echo -e "Run [bahmni.sh status] to check the status"
 	echo -e "=================================================================="
 	start_service mysql
 	start_pgsql
