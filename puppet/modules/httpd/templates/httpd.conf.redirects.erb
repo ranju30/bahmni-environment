@@ -6,8 +6,8 @@
 	<% if @sslExcludeList!=nil and @sslExcludeList.length > 0 -%>
 		RewriteCond %{REMOTE_HOST} !(<%= @sslExcludeList.join("|") %>)
 	<% end -%>
-	<% if @httpRedirects!=nil and @httpRedirects.length > 0 -%>
-		<%- @httpRedirects.each do |redirectionRule| -%>
+	<% if @httpProxyRedirects!=nil and @httpProxyRedirects.length > 0 -%>
+		<%- @httpProxyRedirects.each do |redirectionRule| -%>
 				<%- pathToIgonre =  redirectionRule.is_a?(Array) ? redirectionRule[0]["path"] : redirectionRule["path"]  -%>
 				RewriteCond %{REQUEST_URI} !(^<%=pathToIgonre%>)
 		<% end -%>
@@ -21,8 +21,8 @@
   <% end -%>
 <% end -%>
 
-<% if @httpRedirects!=nil and @httpRedirects.length > 0 -%>
-	<%- @httpRedirects.each do |redirectionRule| -%>
+<% if @httpProxyRedirects!=nil and @httpProxyRedirects.length > 0 -%>
+	<%- @httpProxyRedirects.each do |redirectionRule| -%>
 			<%- if redirectionRule.is_a?(Array) -%>
 	        ProxyPass <%=redirectionRule[0]["path"]%> <%=redirectionRule[0]["redirectPath"]%>
 	        ProxyPassReverse <%=redirectionRule[1]["path"]%> <%=redirectionRule[1]["redirectPath"]%>

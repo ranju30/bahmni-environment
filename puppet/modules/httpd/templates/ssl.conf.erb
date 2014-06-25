@@ -292,8 +292,8 @@ RequestHeader set "X-Forwarded-Proto" "https"
 <% end -%>
 
 
-<% if @httpsRedirects!=nil and  @httpsRedirects.length > 0 -%>
-	<%- @httpsRedirects.each do |redirectionRule| -%>
+<% if @httpsProxyRedirects!=nil and  @httpsProxyRedirects.length > 0 -%>
+	<%- @httpsProxyRedirects.each do |redirectionRule| -%>
 		<%- if redirectionRule.is_a?(Array) -%>
 	      ProxyPass <%=redirectionRule[0]["path"]%> <%=redirectionRule[0]["redirectPath"]%>
 	      ProxyPassReverse <%=redirectionRule[1]["path"]%> <%=redirectionRule[1]["redirectPath"]%>
@@ -307,6 +307,12 @@ RequestHeader set "X-Forwarded-Proto" "https"
 <% if @httpsStaticWebapps!=nil and  @httpsStaticWebapps.length > 0 -%>
 	<%- @httpsStaticWebapps.each do |httpsStaticWebapp| -%>
 			Alias <%=httpsStaticWebapp["path"]%> <%=httpsStaticWebapp["directory"]%>
+	<% end -%>
+<% end -%>
+
+<% if @httpsRedirects!=nil and  @httpsRedirects.length > 0 -%>
+	<%- @httpsRedirects.each do |redirectionRule| -%>
+			Redirect permanent <%=redirectionRule["path"]%> <%=redirectionRule["redirectPath"]%>
 	<% end -%>
 <% end -%>
 

@@ -100,8 +100,9 @@ import "httpd-default-configuration"
 ## The following redirects can contain either a string or an array;
 ## If it is a string, the same is used for both ProxyPass and ProxyPassReverse rules;
 ## In case of array, 1st element of the array specifies ProxyPass rule and 2nd element specifies ProxyPassReverse rule.
-$httpRedirects = [{path => "/jasperserver", redirectPath => "http://localhost:8080/jasperserver"}]
-$httpsRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/openmrs"},
+$httpsRedirects = [{path => "/home", redirectPath => "/bahmni/home/"}]
+$httpProxyRedirects = [{path => "/jasperserver", redirectPath => "http://localhost:8080/jasperserver"}]
+$httpsProxyRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/openmrs"},
                    {path => "/openelis", redirectPath => "http://localhost:8080/openelis"},
                    {path => "/reference-data", redirectPath => "http://localhost:8080/reference-data"}]
 #Static webapps
