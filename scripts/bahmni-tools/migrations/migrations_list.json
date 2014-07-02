@@ -96,5 +96,15 @@
                 "to": "resources"
             }
         ]
+    },
+    {
+        "create": "atomfeed",
+        "download": "https://github.com/ICT4H/atomfeed/archive/master.zip",
+        "then": [
+            {
+                "copy": "atomfeed-client/src/main/resources/sql",
+                "to": "sql"
+            }
+        ]
     }
 ]
