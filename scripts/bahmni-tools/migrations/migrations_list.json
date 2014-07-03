@@ -82,8 +82,8 @@
         "download": "https://github.com/Bhamni/openmrs-module-bahmniapps/archive/master.zip",
         "then": [
             {
-                "copy": "omod/src/main/resources/liquibase.xml",
-                "to": ""
+                "copy": "omod/src/main/resources",
+                "to": "resources"
             }
         ]
     },

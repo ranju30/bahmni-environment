@@ -3,9 +3,9 @@ import os
 import urllib2
 import shutil
 import zipfile
-import sys
 
 from MigrationConfig import MigrationConfig
+
 
 temp_directory_path = '/tmp/migrations'
 
@@ -85,7 +85,7 @@ def download_unzip_copy(migration_config):
     create_directory(migration_config.destination_path)
     print "\nCopying sub modules"
     map(lambda source: copy_sub_migrations(migration_config, source), migration_config.src_list)
-    print "\n******** :) :) ********"
+    print "\n******** :-) :-) ********"
 
 
 
