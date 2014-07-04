@@ -3,29 +3,7 @@
 PATH_OF_CURRENT_SCRIPT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HOME=$PATH_OF_CURRENT_SCRIPT/../../..
 
-
-function git_pull_rebase() {
-  echo "git pull --rebase"	
-  cd $HOME
-  cd $1
-  git pull --rebase
-}
-
-function check_if_changes_pending() {
-	cd $1
-     if [ -n "$(git status --porcelain)" ]; then
-       echo "Uncommited changes in "$1
-       git status
-       return 0
-     fi
-     if [ -n "$(git status | grep 'ahead of')" ]; then
-       echo "Unpushed changes in "$1
-       git status
-       return 0
-     fi
-
-     return 1
-}
+source $PATH_OF_CURRENT_SCRIPT/git_functions.sh
 
 function pull_sources {
   while read source; do
@@ -39,7 +17,7 @@ function pull_sources {
     	if check_if_changes_pending $output_folder_name ; then 
     		echo ".." 	
     	else
-    		git_pull_rebase $output_folder_name
+    		git_pull_rebase $HOME/$output_folder_name
     	fi	
     fi
     echo "----------------------------------------------------------------------------------------------------------"
