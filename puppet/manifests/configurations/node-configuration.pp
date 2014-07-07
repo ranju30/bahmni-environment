@@ -10,7 +10,7 @@ $local_repo_name = "local"
 $scripts_dir = "/root/scripts"
 $build_dir = "${package_dir}/build"
 $create_local_repo = $env_create_local_repo ? {
-      undef			=> 'false',
+      undef			=> 'true',
       default       => $env_create_local_repo
 }
 $bahmni_yum_repo_url = 'http://172.18.2.14/localrepo'
