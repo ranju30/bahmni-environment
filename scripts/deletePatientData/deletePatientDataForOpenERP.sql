@@ -57,3 +57,5 @@ truncate table
 	 res_partner_category;
 
 delete from res_partner where not exists (select ru.partner_id from res_users ru where ru.partner_id = res_partner.id) and id != 1;
+
+truncate table event_records_offset_marker;

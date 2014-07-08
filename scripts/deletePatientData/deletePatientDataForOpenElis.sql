@@ -31,3 +31,5 @@ truncate table result_signature,
 	organization_contact;
 
 delete from person where not exists (select p.person_id from provider p where p.person_id = person.id);
+
+truncate table event_records_offset_marker;

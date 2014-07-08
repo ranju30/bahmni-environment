@@ -10,6 +10,7 @@ truncate table encounter;
 truncate table visit;
 truncate table patient_identifier;
 truncate table patient;
+
 delete from person_address where person_id <> 1;
 delete from person_attribute where person_id <> 1;
 delete from person_name where not exists 
@@ -18,5 +19,7 @@ delete from person_name where not exists
 delete from person where not exists 
 	(select u.person_id from users u where person.person_id = u.person_id or person.person_id = 1) 
 	and not exists (select p.person_id from provider p where person.person_id = p.person_id or person.person_id = 1);
+
+truncate table event_records_offset_marker;
 
 set foreign_key_checks=1;
