@@ -1,0 +1,1 @@
+env | egrep "GO_REVISION|PIPELINE_LABEL" | sed "s/GO_//g"
