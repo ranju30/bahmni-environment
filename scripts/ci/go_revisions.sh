@@ -1,1 +1,1 @@
-env | egrep "GO_REVISION|PIPELINE_LABEL" | sed "s/GO_//g"
+env | egrep "GO_REVISION|PIPELINE_LABEL" | sed "s/GO_//g" | tr '[:upper:]' '[:lower:]'
