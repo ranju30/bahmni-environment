@@ -12,24 +12,24 @@ class bahmni-jasperreports {
 	    purge     => true,
 	}
 
-	# file { "delete_reports_zip" :
-	#     path      => "${build_output_dir}/${implementation}-reports.zip",
-	#     ensure    => absent,
-	#     force     => true,
-	# }
+	file { "delete_reports_zip" :
+	    path      => "${build_output_dir}/${implementation}-reports.zip",
+	    ensure    => absent,
+	    force     => true,
+	}
 
- #    exec { "download_reports_zip":
- #        command => "/usr/bin/wget --no-check-certificate ${report_zip_source_url} -O ${implementation}-reports.zip",
- #        cwd     => "${build_output_dir}",
- #        require => [File["delete_reports_dir"], File["delete_reports_zip"]],
- #    }
+    exec { "download_reports_zip":
+        command => "/usr/bin/wget --no-check-certificate ${report_zip_source_url} -O ${implementation}-reports.zip",
+        cwd     => "${build_output_dir}",
+        require => [File["delete_reports_dir"], File["delete_reports_zip"]],
+    }
 
 	exec { "unzip_report" :
 	    command   => "unzip -q -o ${implementation}-reports.zip -d ${build_output_dir}/${implementation}-reports ${deployment_log_expression}",
 	    provider  => shell,
 	    path      => "${os_path}",
 	    cwd       => "${build_output_dir}",
-	    require   => File["delete_reports_dir"]
+	    require   => Exec["download_reports_zip"]
 	  }
 
 	exec { "bahmni-jasperserver-deploy-reports" :
