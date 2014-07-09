@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-# This script performs backup of all the databases (OpenMRS, ERP, ELIS, Reference Data)
+# This script performs restore of mysql and pgsql from dump files
 
-yellow='\e[33m'
-original='\e[0m'
-red='\e[91m'
-green='\e[92m'
+PATH_OF_CURRENT_SCRIPT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+
+
 
 # checks if service is running
 function is_service_running() {
@@ -22,7 +22,7 @@ function is_service_running() {
 ############################### CHECK INPUTS ############################################################
 
 echo ""
-echo "Running backup DB script at $(date)"
+echo "Running restore DB script at $(date)"
 echo "=================================================================="
 
 if [[ $EUID -ne 0 ]]; then
@@ -31,20 +31,45 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 
-while getopts b: option
+while getopts m:p: option
 do
         case "${option}"
         in
-                b) BACKUP_PATH=${OPTARG};;
+                m) MY_SQL_BACKUP_PATH=${OPTARG};;
+				p) PG_SQL_BACKUP_PATH=${OPTARG};;
         esac
 done
 
-if [ -z $BACKUP_PATH ]; 
+
+if [  -z $MY_SQL_BACKUP_PATH ]; 
 then
-	echo "[Error] You must specify a backup folder path using the -b switch"
+	echo "[Error] You must specify full paths of mysql and pgsql dumps"
 	echo "Example:"
-	echo "sudo ./backup-all-dbs.sh -b /tmp/backup"
+	echo "sudo ./restore-all-dbs.sh -m /backup/mysql-dump.sql -p /backup/pgsql-dump.sql"
 	exit 1
+fi
+
+if [  -z $PG_SQL_BACKUP_PATH ]; 
+then
+	echo "[Error] You must specify full paths of mysql and pgsql dumps"
+	echo ""
+	echo "Example:"
+	echo ""
+	echo "sudo ./restore-all-dbs.sh -m /backup/mysql-dump.sql -p /backup/pgsql-dump.sql"
+	echo ""
+	echo "You can also pass files with .gz extension. They will be gunzip-ped." 
+	exit 1
+fi
+
+
+if [ ! -f "$MY_SQL_BACKUP_PATH" ]; then
+  	echo "Could not find backup file: $MY_SQL_BACKUP_PATH"
+	exit 1  	
+fi
+
+if [ ! -f "$PG_SQL_BACKUP_PATH" ]; then
+  	echo "Could not find backup file: $PG_SQL_BACKUP_PATH"
+	exit 1  	
 fi
 
 
@@ -71,26 +96,22 @@ if is_service_running openerp-server
 then
 	echo "Shutting down openerp service..."
 	sudo service openerp stop
+	sleep 3
 fi	
 
-################################ PERFORM BACKUP ###########################################################
+################################ PERFORM RESTORE ###########################################################
 
-if [ ! -d "$BACKUP_PATH" ]; then
-  	echo "Attempting to create backup folder: $BACKUP_PATH"
-  	sudo mkdir -pv $BACKUP_PATH
-fi
 
-# Perform backup of MYSQL DB
-TIME=`date +%Y%m%d_%H%M%S`
-sudo mysqldump -uroot -ppassword --all-databases --routines | gzip > $BACKUP_PATH/mysql_backup_$TIME.sql.gz
-
-chown postgres:postgres $BACKUP_PATH
+# Perform restore of MYSQL DB
+bash $PATH_OF_CURRENT_SCRIPT/restore-mysql.sh $MY_SQL_BACKUP_PATH 
 
 # Perform backup of PostgreSQL DB
-su - postgres -c "pg_dumpall | gzip -c > $BACKUP_PATH/pgsql_backup_$TIME.sql.gz"
+bash $PATH_OF_CURRENT_SCRIPT/restore-pgsql.sh $PG_SQL_BACKUP_PATH
 
-echo -e "$yellow >> Backups created at:  $green $BACKUP_PATH $original"
-echo -e ">> You can use 'restore-all-dbs.sh' script to restore these dumps."
+echo "========================================="
+echo ">> DB RESTORED. CHECK LOGS ABOVE."
+echo "========================================="
+
 ################################## START ALL ###############################################################
 # Start APACHE
 if is_service_running httpd 
@@ -105,15 +126,18 @@ if is_service_running openerp-server
 then
 	echo "Warning: OpenERP is already running!!"
 else 
-	sudo service openerp start
+	echo ""
+	echo "EXECUTE THIS COMMAND TO START OpenERP: sudo service openerp start"
+	echo "" 
 fi	
-
 
 # Start Tomcat
 if is_service_running tomcat
 then
 	echo "Warning: Tomcat is already running!!"
 else 
-	sudo service tomcat start
+	echo ""
+	echo "EXECUTE THIS COMMAND TO START TOMCAT: sudo service tomcat start"
+	echo "" 
 fi	
 

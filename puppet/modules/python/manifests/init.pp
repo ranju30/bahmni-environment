@@ -11,19 +11,7 @@ class python {
   file { "${log_file}" : ensure => absent, purge => true}
   file { "${python_temp_dir}" : ensure => directory, mode => 744}
 
-	package { "epel-release" :
-    provider => rpm,
-    ensure => installed,
-    source => "http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm"
- 	}
-
-	package { "pgdg-centos92-9.2-6.noarch" :
-    provider => yum,
-    ensure => installed,
-    require => Package["epel-release"]
- 	}
-
-  package { "python-psycopg2" : ensure => installed, require => Package["pgdg-centos92-9.2-6.noarch"] }
+  package { "python-psycopg2" : ensure => installed }
   package { "python-lxml" : ensure => installed, require => Package["python-psycopg2"] }
   package { "PyXML" : ensure => installed, require => Package["python-lxml"] }
   package { "python-setuptools" : ensure => installed, require => Package["PyXML"] }
@@ -310,7 +298,7 @@ class python {
 
 
 exec { "nonblockingloghandler" :
-    command => "easy_install nonblockingloghandler",
+  command => "sh install-python-package-from-gzip.sh ${python_package_dir} nonblockingloghandler-1.1.2.tar nonblockingloghandler ${log_expression}",
     path => "${os_path}",
     cwd => "${python_temp_dir}",
     require => Exec["pyOpenSSL"]

@@ -168,7 +168,7 @@ class python-packages {
       remote_location => "https://pypi.python.org/packages/source/p/pyOpenSSL/pyOpenSSL-0.13.tar.gz",
   }
 
-  wget_remote_file{"${python_package_dir}/nonblockingloghandler-1.1.2-py2.7.egg":
+  wget_remote_file{"${python_package_dir}/nonblockingloghandler-1.1.2.tar.gz":
       remote_location => "https://pypi.python.org/packages/2.7/n/nonblockingloghandler/nonblockingloghandler-1.1.2-py2.7.egg",
   }
 

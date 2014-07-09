@@ -60,11 +60,10 @@ def controller():
     export_environment_variables("/root", "IMPLEMENTATION_NAME", implementation_name)
     export_environment_variables("/home/" + username, "IMPLEMENTATION_NAME", implementation_name)
     change_directory("/root")
-    install_package("git")
     add_yum_repo("tw-bahmni", "http://172.18.2.14/localrepo")
+    install_package("git")
     install_package("wget")
     install_package("ruby")
     install_package("puppet")
-    clone_package("https://github.com/bhamni/bahmni-environment")
 
 controller()
