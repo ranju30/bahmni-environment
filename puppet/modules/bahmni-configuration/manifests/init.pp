@@ -15,6 +15,19 @@ class bahmni-configuration {
     group       => "${bahmni_user}",
   }
 
+  file {"${bahmniRevisionsDirectory}" :
+    ensure      => directory,
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+    mode        => 755
+  }
+
+  exec { "copy_bahmni_revision_files" :
+    command     => "cp ${build_output_dir}/bahmni_*_revision.txt ${bahmniRevisionsDirectory}",
+    path        => "${os_path}",
+    require     => [File["${bahmniRevisionsDirectory}"]]
+  }
+
  file { "${httpd_deploy_dir}/patient_images" :
    ensure => "link",
    target => "${patientImagesDirectory}",

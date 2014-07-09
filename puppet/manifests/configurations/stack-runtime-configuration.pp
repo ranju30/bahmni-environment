@@ -81,6 +81,7 @@ $httpd_deploy_dir="/var/www"
 
 $bahmniAppsDirectory="${httpd_deploy_dir}/bahmniapps"
 $bahmniConfigDirectory="${httpd_deploy_dir}/bahmni_config"
+$bahmniRevisionsDirectory="${httpd_deploy_dir}/bahmni_revisions"
 
 $uploadedFilesDirectory="${tomcatParentDirectory}/uploaded-files"
 
@@ -111,6 +112,7 @@ $httpsStaticWebapps = [
 					   {path => "${patientImagesUrl}", directory => "${patientImagesDirectory}"},
 					   {path => "/document_images", directory => "${documentBaseDirectory}"},
                        {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"},
+                       {path => "/bahmni_revisions", directory => "${bahmniRevisionsDirectory}"},
                        {path => "/uploaded_results", directory => "${uploadedResultsDirectory}"},
                        {path => "/uploaded-files", directory => "${uploadedFilesDirectory}"}]
 $httpsCachedDirectories = []
