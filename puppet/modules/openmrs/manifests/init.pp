@@ -1,7 +1,8 @@
 class openmrs {
   require bahmni-distro
   require tomcat::clean
-  
+  include bahmni-snapshot-migrations
+
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/classes/log4j.xml"
   $openmrs_webapp_location =  "${tomcatInstallationDirectory}/webapps/openmrs"
   $web_xml_file = "${openmrs_webapp_location}/WEB-INF/web.xml"
@@ -86,7 +87,8 @@ class openmrs {
     content     => template("openmrs/run-liquibase.sh"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
-    mode        => 554
+    mode        => 554,
+    require     => [Class['bahmni-snapshot-migrations'], Exec['run-snapshot-migrations']]
  }
 
   exec { "openmrs_data" :
