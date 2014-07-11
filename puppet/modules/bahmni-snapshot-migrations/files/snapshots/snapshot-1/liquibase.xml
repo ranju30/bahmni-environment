@@ -90,4 +90,11 @@
             @global_property_uuid);
         </sql>
     </changeSet>
+    <changeSet id="bahmni-snapshot-1-upgrade-8" author="Vinay, Mihir, Dinesh" runAlways="true">
+        <comment>Update startdate in orders for all orders</comment>
+        <sql>
+            update orders o, encounter e set o.start_date = e.encounter_datetime
+            where o.encounter_id = e.encounter_id and o.start_date is null;
+        </sql>
+    </changeSet>
 </databaseChangeLog>
