@@ -97,4 +97,19 @@
             where o.encounter_id = e.encounter_id and o.start_date is null;
         </sql>
     </changeSet>
+    <changeSet id="bahmni-snapshot-1-upgrade-9" author="Vinay, Mihir, Dinesh" runAlways="true">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                select count(*) from concept_set where concept_set in (
+                    select concept_id from concept where uuid in (
+                        select property_value from global_property where property = 'order.drugDispensingUnitsConceptUuid'
+                    )
+                )
+            </sqlCheck>
+        </preConditions>
+        <comment>Insert concept set members for Dose Quantity Units</comment>
+        <sql>
+            insert into concept_set(concept_id, concept_set, sort_weight, creator, date_created, uuid) (select c2.concept_id as concept_id, c1.concept_id as concept_set, 0 as sort_weight, 1 as creator, now() as date_created, uuid() as uuid from concept c1, concept c2, global_property gp where gp.property = 'order.drugDispensingUnitsConceptUuid' and c1.uuid = gp.property_value and c2.concept_id in (select distinct dosage_form from drug));
+        </sql>
+    </changeSet>
 </databaseChangeLog>
