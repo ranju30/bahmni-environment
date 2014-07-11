@@ -11,75 +11,31 @@ BRANCH=<%= @source_code_branch %>
 GO_USER=<%= @go_server_user %>
 GO_PWD=<%= @go_server_pwd %>
 
-rm -f *
-
 echo "CI SERVER: $BASE_URL"
 
-echo "Downloading artifact: distro-<%= @bahmni_release_version %>-distro.zip"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/BuildDistroStage/Latest/BahmniDistro/openmrs-distro-bahmni-artifacts/distro-<%= @bahmni_release_version %>-distro.zip
+echo "Downloading openmrs artifacts"
+echo "--------------------------------------"
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables.zip && unzip -jqo deployables.zip && rm deployables.zip
 
-echo "Downloading artifact: bahmniapps.zip"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables/bahmniapps.zip
+mkdir ui-modules
+mv bahmniapps-<%= @bahmni_release_version %>.omod ui-modules/
 
-echo "Downloading artifact: bahmni_openmrs_revision.txt"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/bahmni_openmrs_revision.txt
-
-echo "Downloading artifact: jss-old-data-<%= @bahmni_release_version %>-jar-with-dependencies.jar"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables/jss-old-data-<%= @bahmni_release_version %>-jar-with-dependencies.jar
-
-echo "Downloading artifact: openerp-atomfeed-service.war"
-echo "--------------------------------------------------------------------------------------------------"
+echo "Downloading openerp artifacts"
+echo "-------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
 
-echo "Downloading artifact: openerp-modules.zip"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/runFunctionalTestsJob/openerp-modules.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/runFunctionalTestsJob/deployables.zip && unzip -jqo deployables.zip && rm deployables.zip
 
-echo "Downloading artifact: bahmni_openerp_revision.txt"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/runFunctionalTestsJob/bahmni_openerp_revision.txt
+echo "Downloading openelis artifacts"
+echo "-------------------------------"
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/deployables.zip && unzip -jqo deployables.zip && rm deployables.zip
 
-echo "Downloading artifact: openelis.war"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/openelis.war
+echo "Downloading reference_data artifacts"
+echo "-------------------------------------"
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables.zip && unzip -jqo deployables.zip && rm deployables.zip
 
-echo "Downloading artifact: OpenElis.zip"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/OpenElis.zip
-
-echo "Downloading artifact: bahmni_openelis_revision.txt"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/bahmni_openelis_revision.txt
-
-echo "Downloading artifact: <%= @reference_data_war_file_name %>.war"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables/<%= @reference_data_war_file_name %>.war
-
-echo "Downloading artifact: reference-data-scripts.zip"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables/reference-data-scripts.zip
-
-echo "Downloading artifact: bahmni_reference_data_revision.txt"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/bahmni_reference_data_revision.txt
-
-echo "Downloading artifact: default_config.zip"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables/default_config.zip
-
-echo "Downloading artifact: <%= @implementation %>_config.zip"
-echo "--------------------------------------------------------------------------------------------------"
+echo "Downloading config artifacts"
+echo "-----------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Build_${IMPLEMENTATION_NAME}_config_$BRANCH/$Config_Build_Name/BuildStage/Latest/Build/${IMPLEMENTATION_NAME}_config.zip
 
-#Download ui-modules
-mkdir ui-modules
-cd ui-modules
-
-echo "Downloading artifact: bahmniapps-<%= @bahmni_release_version %>.omod"
-echo "--------------------------------------------------------------------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables/ui-modules/bahmniapps-<%= @bahmni_release_version %>.omod
-
+rm -f *_md5.checksum
