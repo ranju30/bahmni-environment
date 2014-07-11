@@ -1,4 +1,5 @@
 class bahmni-openerp {
+	include bahmni-revisions
     $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openerp_atomfeed_war_file_name}/WEB-INF/classes/log4j.xml"
     $openerp_modules_zip_filename = "openerp-modules"
 

@@ -8,14 +8,11 @@ node default {
   
   warning "This manifest 'deploy-jss' is deprecated. Instead consider using 'deploy-implementation'"
 
-  include bahmni-configuration
-  include httpd
-  include bahmni-webapps
-  include bahmni-ui-apps
+  include bahmni-openmrs
   include bahmni-openerp
+  include openelis
+  include reference-data
   class { 'implementation-config':
     implementationName => "jss", require => [ Class['bahmni-webapps'], Class['openelis'], Class['bahmni-openerp']]
   }
-  include openelis
-  include reference-data
 }

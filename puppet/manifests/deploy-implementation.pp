@@ -5,14 +5,11 @@ import "configurations/deployment-configuration"
 import "configurations/openmrs-versions-configuration.pp"
 
 node default {
-  include bahmni-configuration
-  include httpd
-  include bahmni-webapps
-  include bahmni-ui-apps
+  include bahmni-openmrs
   include bahmni-openerp
+  include openelis
+  include reference-data
   class { 'implementation-config':
     implementationName => "${implementation}", require => [ Class['bahmni-webapps'], Class['openelis'], Class['bahmni-openerp']],
   }
-  include openelis
-  include reference-data
 }

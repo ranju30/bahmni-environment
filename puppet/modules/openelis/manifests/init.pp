@@ -1,6 +1,7 @@
 class openelis {
   require ant
   require tomcat::clean
+  include bahmni-revisions
 
   $openelis_webapp_location =  "${tomcatInstallationDirectory}/webapps/openelis"
   $bahmni_openelis_temp_dir = "${temp_dir}/OpenElis"

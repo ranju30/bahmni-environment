@@ -1,5 +1,6 @@
 class reference-data {
   require tomcat::clean
+  include bahmni-revisions
   $reference_data_war =  "${build_output_dir}/${reference_data_war_file_name}.war"
   $reference_data_webapp_location =  "${tomcatInstallationDirectory}/webapps/reference-data"
   $reference_data_scripts_zip =  "${build_output_dir}/reference-data-scripts.zip"

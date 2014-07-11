@@ -10,10 +10,7 @@ node default {
 
   warning "This manifest 'deploy-jss-bahmni-openmrs' is deprecated. Instead consider using 'deploy-impl-bahmni-openmrs'"
 
-  include bahmni-configuration
-  include httpd
-  include bahmni-webapps
-  include bahmni-ui-apps
+  include bahmni-openmrs
   class { 'implementation-config':
     implementationName => "jss", require => Class['bahmni-webapps'],
   }
