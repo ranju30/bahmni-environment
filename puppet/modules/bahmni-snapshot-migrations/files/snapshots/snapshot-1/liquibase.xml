@@ -112,4 +112,15 @@
             insert into concept_set(concept_id, concept_set, sort_weight, creator, date_created, uuid) (select c2.concept_id as concept_id, c1.concept_id as concept_set, 0 as sort_weight, 1 as creator, now() as date_created, uuid() as uuid from concept c1, concept c2, global_property gp where gp.property = 'order.drugDispensingUnitsConceptUuid' and c1.uuid = gp.property_value and c2.concept_id in (select distinct dosage_form from drug));
         </sql>
     </changeSet>
+    <changeSet id="bahmni-snapshot-1-upgrade-10" author="Vinay" runAlways="true">
+        <comment>Set dosing type and dosing instructions</comment>
+        <sql>
+            update drug_order
+            inner join drug on drug_order.drug_inventory_id = drug.drug_id
+            inner join concept_name on drug.dosage_form = concept_name.concept_id and 
+                concept_name.concept_name_type = 'FULLY_SPECIFIED' 
+            set drug_order.dosing_instructions = concat(drug_order.dose, ' ', concept_name.name),
+            drug_order.dosing_type = 'FREE_TEXT';
+        </sql>
+    </changeSet>
 </databaseChangeLog>
