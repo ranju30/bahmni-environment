@@ -40,6 +40,13 @@ class implementation-config($implementationName) {
     require   => Exec["unzip_${implementationName}"]
   }
 
+  exec { "copyObsCalculatorToOpenMRSFolder" :
+    command   => "cp -rf ${build_output_dir}/${implementationName}_config/openmrs/obscalculator ${openmrs_dir}",
+    provider  => shell,
+    path      => "${os_path}",
+    require   => Exec["unzip_${implementationName}"]
+  }
+
   file { "${temp_dir}/run-implementation-liquibase.sh" :
     ensure      => present,
     content     => template("implementation-config/run-implementation-liquibase.sh"),
