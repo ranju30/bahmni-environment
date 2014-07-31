@@ -64,7 +64,7 @@ def squash_multiple_active_drug_orders
             SET auto_expire_date = date_add(start_date, INTERVAL #{total_number_of_days} DAY)
             WHERE order_id = #{first_order[:order_id]};")
       update_query("UPDATE drug_order
-            SET dose = #{last_order[:dose]}, dosing_instructions = '#{last_order[:dosing_instructions]}'
+            SET dose = #{last_order[:dose].nil? ? 'NULL' : last_order[:dose]}, dosing_instructions = '#{last_order[:dosing_instructions]}'
             WHERE order_id = #{first_order[:order_id]};")
       update_query("UPDATE orders 
             SET voided = true, void_reason = 'To Merge Active Orders', voided_by = 1
