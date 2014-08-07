@@ -38,7 +38,7 @@
         <comment>drop table visit_migration for OpenMRS 1.9 -> 1.10</comment>
         <dropTable tableName="visit_migration"/>
     </changeSet>
-    <changeSet id="bahmni-snapshot-1-upgrade-4" author="Vinay, Mihir, Dinesh" runAlways="true">
+    <changeSet id="bahmni-snapshot-1-upgrade-4" author="Vinay, Mihir, Dinesh">
         <comment>Update startdate in orders. Keep running until migrated to OpeMRS 1.10</comment>
         <sql>
             update orders o, encounter e, order_type ot set o.start_date = e.encounter_datetime
@@ -46,7 +46,7 @@
             ot.order_type_id=o.order_type_id;
         </sql>
     </changeSet>
-    <changeSet id="bahmni-snapshot-1-upgrade-5" author="Vinay, Mihir, Lokesh" runAlways="true">
+    <changeSet id="bahmni-snapshot-1-upgrade-5" author="Vinay, Mihir, Lokesh">
         <comment>Update providers in orders. Keep running until migrated to OpeMRS 1.10</comment>
         <sql>
             update orders o, encounter_provider ep, users u, provider p set o.orderer = u.user_id where
@@ -90,14 +90,14 @@
             @global_property_uuid);
         </sql>
     </changeSet>
-    <changeSet id="bahmni-snapshot-1-upgrade-8" author="Vinay, Mihir, Dinesh" runAlways="true">
+    <changeSet id="bahmni-snapshot-1-upgrade-8" author="Vinay, Mihir, Dinesh">
         <comment>Update startdate in orders for all orders</comment>
         <sql>
             update orders o, encounter e set o.start_date = e.encounter_datetime
             where o.encounter_id = e.encounter_id and o.start_date is null;
         </sql>
     </changeSet>
-    <changeSet id="bahmni-snapshot-1-upgrade-9" author="Vinay, Mihir, Dinesh" runAlways="true">
+    <changeSet id="bahmni-snapshot-1-upgrade-9" author="Vinay, Mihir, Dinesh">
         <preConditions onFail="MARK_RAN">
             <sqlCheck expectedResult="0">
                 select count(*) from concept_set where concept_set in (
