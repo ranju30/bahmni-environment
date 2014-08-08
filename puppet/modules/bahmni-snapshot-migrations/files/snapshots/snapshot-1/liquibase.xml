@@ -112,7 +112,7 @@
             insert into concept_set(concept_id, concept_set, sort_weight, creator, date_created, uuid) (select c2.concept_id as concept_id, c1.concept_id as concept_set, 0 as sort_weight, 1 as creator, now() as date_created, uuid() as uuid from concept c1, concept c2, global_property gp where gp.property = 'order.drugDispensingUnitsConceptUuid' and c1.uuid = gp.property_value and c2.concept_id in (select distinct dosage_form from drug));
         </sql>
     </changeSet>
-    <changeSet id="bahmni-snapshot-1-upgrade-10" author="Rohan, Bharti" runAlways="true">
+    <changeSet id="bahmni-snapshot-1-upgrade-10" author="Rohan, Bharti">
         <comment>Update auto expire date of previous lab orders</comment>
         <sql>
             update orders set auto_expire_date = start_date where auto_expire_date is null and order_type_id=(select order_type_id from order_type where name='Lab Order') ;
