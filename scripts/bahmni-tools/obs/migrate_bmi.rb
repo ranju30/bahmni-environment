@@ -53,13 +53,13 @@ def calculate_bmi_for_adults(bmi)
 end
 
 def calculate_bmi_status_for_minor(bmi, gender, age_in_month)
-  if bmi < @bmi_chart[gender][age_in_month][:third]
+  if bmi < @bmi_chart[gender][age_in_month][:third].to_i
     return "Severely Underweight"
-  elsif bmi < @bmi_chart[gender][age_in_month][:fifteenth]
+  elsif bmi < @bmi_chart[gender][age_in_month][:fifteenth].to_i
     return "Underweight"
-  elsif bmi < @bmi_chart[gender][age_in_month][:eightyfifth]
+  elsif bmi < @bmi_chart[gender][age_in_month][:eightyfifth].to_i
     return "Normal"
-  elsif bmi < @bmi_chart[gender][age_in_month][:ninetyseventh]
+  elsif bmi < @bmi_chart[gender][age_in_month][:ninetyseventh].to_i
     return "Overweight"
   else
     return "Obese"
@@ -68,8 +68,7 @@ end
 
 def calculate_bmi_status(bmi, gender, birthdate, encounter_datetime)
   return nil if bmi.nil?
-  age_in_month = age_in_month(birthdate, encounter_datetime)
-
+  age_in_month = age_in_month(birthdate, encounter_datetime).to_s
   return calculate_bmi_status_for_minor(bmi, gender, age_in_month) unless @bmi_chart[gender][age_in_month].nil?
   return calculate_bmi_for_adults(bmi)
 end
@@ -77,6 +76,7 @@ end
 def age_in_month(birthdate, encounter_datetime)
   encounter_datetime = encounter_datetime.nil? ? DateTime.now : DateTime.strptime(encounter_datetime.to_s, "%Y-%m-%d %H:%M:%S %z")
   age_in_month = (encounter_datetime - birthdate) / 30.4
+  age_in_month.to_i
 end
 
 def is_minor(birthdate, encounter_datetime)
