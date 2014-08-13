@@ -108,18 +108,19 @@ end
 
   obs_data.each do |obs_datum|
     if obs_datum[:name] == "HEIGHT"
-      latest_height = obs_datum[:value_numeric]
       latest_height_in_visit[obs_datum[:visit_id]] = obs_datum[:value_numeric]
       latest_height_in_encounter[obs_datum[:encounter_id]] = obs_datum[:value_numeric]
     end
   end
 
   obs_data.each do |obs_datum|
+    latest_height = obs_datum[:value_numeric] if obs_datum[:name] == "HEIGHT"
     encounter_datetime = obs_datum[:encounter_datetime]
     encounter_obs[obs_datum[:encounter_id]] ||= {:encounter_datetime => encounter_datetime}
     encounter_obs[obs_datum[:encounter_id]][:weight] = obs_datum[:value_numeric] if obs_datum[:name] == "WEIGHT"
     encounter_obs[obs_datum[:encounter_id]][:weight_time] = obs_datum[:obs_datetime] if obs_datum[:name] == "WEIGHT"
-    encounter_obs[obs_datum[:encounter_id]][:height] = is_minor(patient[:birthdate], encounter_datetime) ? latest_height_in_visit[obs_datum[:visit_id]]: latest_height_in_encounter[obs_datum[:encounter_id]] || latest_height
+    encounter_obs[obs_datum[:encounter_id]][:height] = latest_height_in_encounter[obs_datum[:encounter_id]] || latest_height_in_visit[obs_datum[:visit_id]]
+    encounter_obs[obs_datum[:encounter_id]][:height] ||= is_minor(patient[:birthdate], encounter_datetime) ? nil : latest_height
     encounter_obs[obs_datum[:encounter_id]][:bmi] = obs_datum[:value_numeric] if obs_datum[:name] == "BMI"
     encounter_obs[obs_datum[:encounter_id]][:bmi_status] = obs_datum[:value_text] if obs_datum[:name] == "BMI STATUS"
   end
