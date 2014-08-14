@@ -88,6 +88,7 @@ end
 
 @new_bmi_obs = []
 @new_bmi_status_obs = []
+@void_obs_id = []
 
 @patients.each do |patient|
   encounter_obs = {}
@@ -122,11 +123,20 @@ end
     encounter_obs[obs_datum[:encounter_id]][:height] = latest_height_in_encounter[obs_datum[:encounter_id]] || latest_height_in_visit[obs_datum[:visit_id]]
     encounter_obs[obs_datum[:encounter_id]][:height] ||= is_minor(patient[:birthdate], encounter_datetime) ? nil : latest_height
     encounter_obs[obs_datum[:encounter_id]][:bmi] = obs_datum[:value_numeric] if obs_datum[:name] == "BMI"
-    encounter_obs[obs_datum[:encounter_id]][:bmi_status] = obs_datum[:value_text] if obs_datum[:name] == "BMI STATUS"
+    encounter_obs[obs_datum[:encounter_id]][:bmi_status] = {:id => obs_datum[:obs_id], :value => obs_datum[:value_text]} if obs_datum[:name] == "BMI STATUS"
   end
 
   encounter_obs.each do |key, enc_data|
     # puts "#{patient[:patient_id]} =>> #{enc_data}"
+    if(!enc_data[:bmi].nil? && !enc_data[:bmi_status].nil? && is_minor(patient[:birthdate], enc_data[:encounter_datetime]))
+      bmi_status = calculate_bmi_status(enc_data[:bmi], patient[:gender], patient[:birthdate], enc_data[:encounter_datetime])
+      if(bmi_status != enc_data[:bmi_status][:value])
+        @void_obs_id.push(enc_data[:bmi_status][:id])
+        comments = "[height:#{enc_data[:height]}, weight:#{enc_data[:weight]}, bmi:#{enc_data[:bmi]}]"
+        @new_bmi_status_obs.push({:encounter_id => key, :concept_id => @concept_ids["BMI STATUS"], :value_text => bmi_status, :person_id => patient[:patient_id], :obs_datetime => enc_data[:weight_time], :comments => comments, :creator => 1, :date_created => DateTime.now})
+      end
+    end
+
     if(enc_data[:height] != nil && enc_data[:height] > 0.0 && enc_data[:weight] != nil)
       if(enc_data[:bmi].nil?)
         enc_data[:bmi] = calculate_bmi(enc_data[:height], enc_data[:weight])
@@ -145,5 +155,7 @@ end
 
 # puts @new_bmi_obs.size
 # puts @new_bmi_status_obs.size
+# puts @void_obs_id
+@openmrs_conn[:obs].where(:obs_id => @void_obs_id).update(:voided => true)
 @openmrs_conn[:obs].multi_insert(@new_bmi_obs, :commit_every => 100)
 @openmrs_conn[:obs].multi_insert(@new_bmi_status_obs, :commit_every => 100)
