@@ -53,13 +53,13 @@ def calculate_bmi_for_adults(bmi)
 end
 
 def calculate_bmi_status_for_minor(bmi, gender, age_in_month)
-  if bmi < @bmi_chart[gender][age_in_month][:third].to_i
+  if bmi < @bmi_chart[gender][age_in_month][:third].to_f
     return "Severely Underweight"
-  elsif bmi < @bmi_chart[gender][age_in_month][:fifteenth].to_i
+  elsif bmi < @bmi_chart[gender][age_in_month][:fifteenth].to_f
     return "Underweight"
-  elsif bmi < @bmi_chart[gender][age_in_month][:eightyfifth].to_i
+  elsif bmi < @bmi_chart[gender][age_in_month][:eightyfifth].to_f
     return "Normal"
-  elsif bmi < @bmi_chart[gender][age_in_month][:ninetyseventh].to_i
+  elsif bmi < @bmi_chart[gender][age_in_month][:ninetyseventh].to_f
     return "Overweight"
   else
     return "Obese"
