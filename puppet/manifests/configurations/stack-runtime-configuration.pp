@@ -10,10 +10,8 @@ $bahmni_user = $bahmni_user_name ? {
       default       => $bahmni_user_name
 }
 
-# Set the implementation to $implementation_name if specified, else set default to jss for backward compatibility
-$implementation = $implementation_name ? {
-      undef			=> "jss",
-      default       => $implementation_name
+if $implementation_name == undef {
+  $implementation_name = "jss"
 }
 
 
@@ -168,7 +166,7 @@ $jasperDbPassword = "password"
 $jasperDbName = "jasperserver"
 
 # Set the Jasper Reports URL to download from:
-$report_zip_source_url = $implementation ? {
+$report_zip_source_url = $implementation_name ? {
 	  undef			 => "https://github.com/jss-emr/jss-reports/archive/master.zip",
       "jss"			 => "https://github.com/jss-emr/jss-reports/archive/master.zip",
       default        => "https://github.com/jss-emr/jss-reports/archive/master.zip",
