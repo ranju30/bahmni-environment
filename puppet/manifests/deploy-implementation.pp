@@ -9,7 +9,7 @@ node default {
   include bahmni-openerp
   include openelis
   include reference-data
-  class { 'implementation-config':
+  class { 'implementation_config':
     implementation_name => "${implementation_name}", require => [ Class['bahmni-webapps'], Class['openelis'], Class['bahmni-openerp']],
   }
 }

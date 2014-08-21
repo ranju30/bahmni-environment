@@ -1,5 +1,5 @@
-class implementation-config::openmrs($implementation_name = $implementation_name) {
-  require implementation-config::setup
+class implementation_config::openmrs($implementation_name = $implementation_name) {
+  require implementation_config::setup
 
   $migrations_directory = "${build_output_dir}/${implementation_name}_config/migrations"
   $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
@@ -18,7 +18,7 @@ class implementation-config::openmrs($implementation_name = $implementation_name
 
   file { "${temp_dir}/run-implementation-liquibase.sh" :
     ensure      => present,
-    content     => template("implementation-config/run-implementation-liquibase.sh"),
+    content     => template("implementation_config/run-implementation-liquibase.sh"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     mode        => 554
@@ -33,7 +33,7 @@ class implementation-config::openmrs($implementation_name = $implementation_name
   }
 
   exec { "copy_implementation_config" :
-    command     => "rm -rf ${httpd_deploy_dir}/bahmni_config && unzip -q -o ${implementation-config::setup::implementation_zip_file} openmrs/* -d ${httpd_deploy_dir}/bahmni_config ${deployment_log_expression}",
+    command     => "rm -rf ${httpd_deploy_dir}/bahmni_config && unzip -q -o ${implementation_config::setup::implementation_zip_file} openmrs/* -d ${httpd_deploy_dir}/bahmni_config ${deployment_log_expression}",
     provider    => "shell",
     path        => "${os_path}"
   }

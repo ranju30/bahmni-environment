@@ -1,5 +1,5 @@
-class implementation-config::openelis($implementation_name = $implementation_name) {
-  require implementation-config::setup
+class implementation_config::openelis($implementation_name = $implementation_name) {
+  require implementation_config::setup
   $migrations_directory = "${build_output_dir}/${implementation_name}_config/migrations"
 
   exec { "copyLogoToOpenelis" :
@@ -25,7 +25,7 @@ class implementation-config::openelis($implementation_name = $implementation_nam
 
   file { "${temp_dir}/run-implementation-openelis-config-liquibase.sh" :
     ensure      => present,
-    content     => template("implementation-config/run-implementation-openelis-config-liquibase.sh"),
+    content     => template("implementation_config/run-implementation-openelis-config-liquibase.sh"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     mode        => 554
