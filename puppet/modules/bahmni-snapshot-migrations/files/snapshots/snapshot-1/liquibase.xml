@@ -113,6 +113,9 @@
         </sql>
     </changeSet>
     <changeSet id="bahmni-snapshot-1-upgrade-10" author="Rohan, Bharti">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="orders" columnName="start_date"/>
+        </preConditions>
         <comment>Update auto expire date of previous lab orders</comment>
         <sql>
             update orders set auto_expire_date = start_date where auto_expire_date is null and order_type_id=(select order_type_id from order_type where name='Lab Order') ;
