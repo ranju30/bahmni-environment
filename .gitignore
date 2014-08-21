@@ -23,6 +23,7 @@ test-output/
 *.log*
 *.box
 *.pyc
+packages
 packages/build/*
 packages/localrepo/*
 packages/python-packages/*
