@@ -16,6 +16,12 @@ class implementation_config::openmrs($implementation_name = $implementation_name
     path      => "${os_path}"
   }
 
+  exec { "copyPatientMatchingAlgorithmToOpenMRSFolder" :
+    command   => "cp -rf ${build_output_dir}/${implementation_name}_config/openmrs/patientMatchingAlgorithm ${openmrs_dir}",
+    provider  => shell,
+    path      => "${os_path}"
+  }
+
   file { "${temp_dir}/run-implementation-liquibase.sh" :
     ensure      => present,
     content     => template("implementation_config/run-implementation-liquibase.sh"),
