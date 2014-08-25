@@ -1,4 +1,4 @@
-# This class only has the configuration setup for bahmni core and registation
+# This class only has the configuration setup for bahmni core and registration
 # The module installation is in /deploy folder
 class bahmni-configuration {
   $bahmnicore_properties = "/home/${bahmni_user}/.OpenMRS/bahmnicore.properties"
@@ -9,19 +9,34 @@ class bahmni-configuration {
     group       => "${bahmni_user}",
   }
 
-  file {"${uploadedResultsDirectory}" :
+  file { "${uploadedResultsDirectory}" :
     ensure      => directory,
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
   }
 
- file { "${httpd_deploy_dir}/patient_images" :
-   ensure => "link",
-   target => "${patientImagesDirectory}",
-   require => File["${patientImagesDirectory}"],
- }
+  file { "${uploadedFilesDirectory}" :
+    ensure => directory,
+    mode   => 774,
+    owner  => "${bahmni_user}",
+    group  => "${bahmni_user}",
+  }
 
- file { "${bahmnicore_properties}" :
+  file { ["${uploadedFilesDirectory}/mrs/", "${uploadedFilesDirectory}/mrs/encounter"] :
+    ensure => directory,
+    mode   => 774,
+    owner  => "${bahmni_user}",
+    group  => "${bahmni_user}",
+    require => File["${uploadedFilesDirectory}"],
+  }
+
+  file { "${httpd_deploy_dir}/patient_images" :
+    ensure  => "link",
+    target  => "${patientImagesDirectory}",
+    require => File["${patientImagesDirectory}"],
+  }
+
+  file { "${bahmnicore_properties}" :
     ensure      => present,
     content     => template("bahmni-configuration/bahmnicore.properties.erb"),
     owner       => "${bahmni_user}",

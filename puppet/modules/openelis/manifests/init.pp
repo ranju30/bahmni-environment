@@ -2,7 +2,8 @@ class openelis {
   require ant
   require tomcat::clean
   include bahmni-revisions
-
+  include bahmni-configuration
+  
   $openelis_webapp_location =  "${tomcatInstallationDirectory}/webapps/openelis"
   $bahmni_openelis_temp_dir = "${temp_dir}/OpenElis"
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openelis_war_file_name}/WEB-INF/classes/log4j.xml"
@@ -27,7 +28,7 @@ class openelis {
     command => "ant setupDB  ${deployment_log_expression}",
     path => "${os_path}:${ant_home}/bin",
     require => Exec["bahmni_openelis_codebase"]
-  }  
+  }
 
   file { "${log4j_xml_file}" :
     ensure      => present,
@@ -36,13 +37,6 @@ class openelis {
     group       => "${bahmni_user}",
     require     => Exec["latest_openelis_webapp"],
     mode        => 664,
-  }
-
-  file { "${uploadedFilesDirectory}" :
-    ensure => directory,
-    mode => 774,
-    owner => "${bahmni_user}",
-    group => "${bahmni_user}",
   }
 
   file { "${uploadedFilesDirectory}/elis" :
@@ -55,5 +49,5 @@ class openelis {
 
 ## tomcat file change
   ##<Context path="/uploaded-files" docBase="/home/jss/uploaded-files"/>
-  
+
 }
