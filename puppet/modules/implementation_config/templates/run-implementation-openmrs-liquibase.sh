@@ -1,8 +1,6 @@
 #!/bin/sh
 set -e -x
 
- 
-
 CHANGE_LOG_TABLE="-Dliquibase.databaseChangeLogTableName=liquibasechangelog -Dliquibase.databaseChangeLogLockTableName=liquibasechangeloglock"
 LIQUIBASE_JAR="<%= @tomcatInstallationDirectory %>/webapps/openmrs/WEB-INF/lib/liquibase-core-2.0.5.jar"
 DRIVER="com.mysql.jdbc.Driver"

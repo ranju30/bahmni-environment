@@ -1,7 +1,6 @@
 class implementation_config::openmrs($implementation_name = $implementation_name) {
   require implementation_config::setup
 
-  $migrations_directory = "${build_output_dir}/${implementation_name}_config/openmrs/migrations"
   $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
   
   exec { "copyBeanshellToOpenMRSFolder" :
@@ -22,20 +21,9 @@ class implementation_config::openmrs($implementation_name = $implementation_name
     path      => "${os_path}"
   }
 
-  file { "${temp_dir}/run-implementation-openmrs-liquibase.sh" :
-    ensure      => present,
-    content     => template("implementation_config/run-implementation-openmrs-liquibase.sh"),
-    owner       => "${bahmni_user}",
-    group       => "${bahmni_user}",
-    mode        => 554
-  }
-
-  exec { "run_implementation_liquibase_migration" :
-    command     => "${temp_dir}/run-implementation-openmrs-liquibase.sh  ${deployment_log_expression}",
-    path        => "${os_path}",
-    provider    => shell,
-    cwd         => "${migrations_directory}",
-    require     => File["${temp_dir}/run-implementation-openmrs-liquibase.sh"]
+  implementation_config::migrations { "implementation_config_migrations_openmrs":
+    implementation_name => "${implementation_name}",
+    app_name            => "openmrs"
   }
 
   exec { "copy_implementation_config" :
