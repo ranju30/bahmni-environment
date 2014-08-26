@@ -1,7 +1,7 @@
 class implementation_config::openmrs($implementation_name = $implementation_name) {
   require implementation_config::setup
 
-  $migrations_directory = "${build_output_dir}/${implementation_name}_config/migrations"
+  $migrations_directory = "${build_output_dir}/${implementation_name}_config/openmrs/migrations"
   $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
   
   exec { "copyBeanshellToOpenMRSFolder" :

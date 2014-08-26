@@ -5,7 +5,7 @@ CHANGE_LOG_TABLE="-Dliquibase.databaseChangeLogTableName=databasechangelog -Dliq
 LIQUIBASE_JAR="<%= @temp_dir %>/OpenElis/liquibase/lib/liquibase-1.9.5.jar"
 CREDS="--url=jdbc:postgresql://localhost:5432/clinlims --username=clinlims --password=clinlims"
 CLASSPATH="<%= @build_output_dir %>/<%= @openelis_war_file_name %>.war"
-WORKING_DIR="<%= @migrations_directory %>/openelis"
+WORKING_DIR="<%= @migrations_directory %>"
 DRIVER="org.postgresql.Driver"
 CHANGE_LOG_FILE="liquibase.xml"
 SCHEMA_NAME=clinlims

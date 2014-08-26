@@ -7,7 +7,7 @@ DRIVER="org.postgresql.Driver"
 CREDS="--url=jdbc:postgresql://localhost:5432/openerp --username=postgres --password=postgres"
 CLASSPATH="<%= @build_output_dir %>/<%= @openerp_atomfeed_war_file_name %>.war"
 CHANGE_LOG_FILE="liquibase.xml"
-WORKING_DIR="<%= @openerp_migrations_directory %>"
+WORKING_DIR="<%= @migrations_directory %>"
 
 cd $WORKING_DIR
 java $CHANGE_LOG_TABLE  -jar $LIQUIBASE_JAR --driver=$DRIVER --classpath=$CLASSPATH --changeLogFile=$CHANGE_LOG_FILE $CREDS update

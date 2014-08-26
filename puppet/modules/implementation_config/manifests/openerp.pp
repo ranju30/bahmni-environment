@@ -1,7 +1,7 @@
 class implementation_config::openerp($implementation_name = $implementation_name) {
   require implementation_config::setup
   
-  $openerp_migrations_directory = "${build_output_dir}/${implementation_name}_config/openerp/migrations"
+  $migrations_directory = "${build_output_dir}/${implementation_name}_config/openerp/migrations"
 
   file { "${temp_dir}/run-implementation-openerp-liquibase.sh" :
     ensure      => present,
@@ -15,8 +15,8 @@ class implementation_config::openerp($implementation_name = $implementation_name
     command     => "${temp_dir}/run-implementation-openerp-liquibase.sh  ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
-    cwd         => "${openerp_migrations_directory}",
+    cwd         => "${migrations_directory}",
     require     => File["${temp_dir}/run-implementation-openerp-liquibase.sh"],
-    onlyif      => "test -f ${openerp_migrations_directory}/liquibase.xml"
+    onlyif      => "test -f ${migrations_directory}/liquibase.xml"
   }
 }

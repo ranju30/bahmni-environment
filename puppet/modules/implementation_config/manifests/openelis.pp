@@ -1,6 +1,6 @@
 class implementation_config::openelis($implementation_name = $implementation_name) {
   require implementation_config::setup
-  $migrations_directory = "${build_output_dir}/${implementation_name}_config/migrations"
+  $migrations_directory = "${build_output_dir}/${implementation_name}_config/openelis/migrations"
 
   exec { "copyLogoToOpenelis" :
     command   => "cp ${build_output_dir}/${implementation_name}_config/openelis/images/labLogo.jpg ${tomcatInstallationDirectory}/webapps/${openelis_war_file_name}/WEB-INF/reports/images",
@@ -37,6 +37,6 @@ class implementation_config::openelis($implementation_name = $implementation_nam
     provider    => shell,
     cwd         => "${migrations_directory}",
     require     => [File["${temp_dir}/run-implementation-openelis-liquibase.sh"],Exec["bahmni_openelis_codebase_for_liquibase_jar"]],
-    onlyif    => "test -f ${build_output_dir}/${implementation_name}_config/migrations/openelis/liquibase.xml"
+    onlyif    => "test -f ${migrations_directory}/liquibase.xml"
   }
 }
