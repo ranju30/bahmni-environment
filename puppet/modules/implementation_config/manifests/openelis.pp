@@ -23,20 +23,20 @@ class implementation_config::openelis($implementation_name = $implementation_nam
     onlyif    => "test -f ${build_output_dir}/${implementation_name}_config/migrations/openelis/liquibase.xml"
   }
 
-  file { "${temp_dir}/run-implementation-openelis-config-liquibase.sh" :
+  file { "${temp_dir}/run-implementation-openelis-liquibase.sh" :
     ensure      => present,
-    content     => template("implementation_config/run-implementation-openelis-config-liquibase.sh"),
+    content     => template("implementation_config/run-implementation-openelis-liquibase.sh"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     mode        => 554
   }
 
   exec { "run_implementation_openelis_config_liquibase_migration" :
-    command     => "${temp_dir}/run-implementation-openelis-config-liquibase.sh  ${deployment_log_expression}",
+    command     => "${temp_dir}/run-implementation-openelis-liquibase.sh  ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
     cwd         => "${migrations_directory}",
-    require     => [File["${temp_dir}/run-implementation-openelis-config-liquibase.sh"],Exec["bahmni_openelis_codebase_for_liquibase_jar"]],
+    require     => [File["${temp_dir}/run-implementation-openelis-liquibase.sh"],Exec["bahmni_openelis_codebase_for_liquibase_jar"]],
     onlyif    => "test -f ${build_output_dir}/${implementation_name}_config/migrations/openelis/liquibase.xml"
   }
 }

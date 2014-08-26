@@ -22,20 +22,20 @@ class implementation_config::openmrs($implementation_name = $implementation_name
     path      => "${os_path}"
   }
 
-  file { "${temp_dir}/run-implementation-liquibase.sh" :
+  file { "${temp_dir}/run-implementation-openmrs-liquibase.sh" :
     ensure      => present,
-    content     => template("implementation_config/run-implementation-liquibase.sh"),
+    content     => template("implementation_config/run-implementation-openmrs-liquibase.sh"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     mode        => 554
   }
 
   exec { "run_implementation_liquibase_migration" :
-    command     => "${temp_dir}/run-implementation-liquibase.sh  ${deployment_log_expression}",
+    command     => "${temp_dir}/run-implementation-openmrs-liquibase.sh  ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
     cwd         => "${migrations_directory}",
-    require     => File["${temp_dir}/run-implementation-liquibase.sh"]
+    require     => File["${temp_dir}/run-implementation-openmrs-liquibase.sh"]
   }
 
   exec { "copy_implementation_config" :
