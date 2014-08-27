@@ -95,7 +95,7 @@ class openmrs {
     command     => "${temp_dir}/run-liquibase-openmrs.sh  ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
-    timeout     => 600,
+    timeout     => 0,
     cwd         => "${tomcatInstallationDirectory}/webapps",
     require     => [Exec["openmrs_predeploy"], File["${temp_dir}/run-liquibase-openmrs.sh"], Exec["latest_openmrs_webapp"]]
   }

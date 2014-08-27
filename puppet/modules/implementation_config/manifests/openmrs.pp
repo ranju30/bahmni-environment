@@ -33,7 +33,7 @@ class implementation_config::openmrs($implementation_name = $implementation_name
   }
 
   exec { "copy_implementation_config" :
-    command     => "rm -rf ${httpd_deploy_dir}/bahmni_config && unzip -q -o ${implementation_config::setup::implementation_zip_file} openmrs/* -d ${httpd_deploy_dir}/bahmni_config ${deployment_log_expression}",
+    command     => "rm -rf ${httpd_deploy_dir}/bahmni_config && unzip -q -o ${implementation_config::setup::implementation_zip_file} 'openmrs/*' -d ${httpd_deploy_dir}/bahmni_config ${deployment_log_expression}",
     provider    => "shell",
     path        => "${os_path}"
   }
