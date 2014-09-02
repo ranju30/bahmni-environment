@@ -2,23 +2,29 @@ class implementation_config::openmrs($implementation_name = $implementation_name
   require implementation_config::setup
 
   $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
+  $beanshell_dir = "${build_output_dir}/${implementation_name}_config/openmrs/beanshell"
+  $obscalculator_dir = "${build_output_dir}/${implementation_name}_config/openmrs/obscalculator"
+  $patient_matching_algorithm_dir = "${build_output_dir}/${implementation_name}_config/openmrs/patientMatchingAlgorithm"
   
   exec { "copyBeanshellToOpenMRSFolder" :
-    command   => "cp -rf ${build_output_dir}/${implementation_name}_config/openmrs/beanshell ${openmrs_dir}",
+    command   => "cp -rf ${beanshell_dir} ${openmrs_dir}",
     provider  => shell,
-    path      => "${os_path}"
+    path      => "${os_path}",
+    onlyif    => "test -d ${beanshell_dir}"
   }
 
   exec { "copyObsCalculatorToOpenMRSFolder" :
-    command   => "cp -rf ${build_output_dir}/${implementation_name}_config/openmrs/obscalculator ${openmrs_dir}",
+    command   => "cp -rf ${obscalculator_dir} ${openmrs_dir}",
     provider  => shell,
-    path      => "${os_path}"
+    path      => "${os_path}",
+    onlyif    => "test -d ${obscalculator_dir}"
   }
 
   exec { "copyPatientMatchingAlgorithmToOpenMRSFolder" :
-    command   => "cp -rf ${build_output_dir}/${implementation_name}_config/openmrs/patientMatchingAlgorithm ${openmrs_dir}",
+    command   => "cp -rf ${patient_matching_algorithm_dir} ${openmrs_dir}",
     provider  => shell,
-    path      => "${os_path}"
+    path      => "${os_path}",
+    onlyif    => "test -d ${patient_matching_algorithm_dir}"
   }
 
   implementation_config::migrations { "implementation_config_migrations_openmrs":
