@@ -98,89 +98,33 @@ where
 	death_date is not null;
 
 --
--- Randomize the encounter and obs dates
+-- Randomize the visit, encounter and obs dates
 --
-drop table if exists random_enc_dates;
 
-CREATE TABLE `random_enc_dates` (
-	`eid` int(11) NOT NULL auto_increment,
-	`orig_encounter_datetime` datetime NOT NULL,
-	`rand_encounter_datetime` datetime NOT NULL,
-	PRIMARY KEY  (`eid`),
-	UNIQUE KEY `rid` (`eid`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+ALTER TABLE visit ADD COLUMN rand_increment int;
 
-insert into 
-	random_enc_dates
-	(eid, orig_encounter_datetime, rand_encounter_datetime)
-	select
-		encounter_id,
-		encounter_datetime,
-		adddate(encounter_datetime, cast(rand()*91-91 as signed))
-	from
-		encounter;
-		
--- change all encounter_datetime values to the random value
-update 
-  encounter e
-  join random_enc_dates rand on e.encounter_id = rand.eid
-set 
-	e.encounter_datetime = rand_encounter_datetime,
-	e.date_created = rand_encounter_datetime;
+UPDATE visit
+SET rand_increment = cast(rand()*91-91 as signed),
+	date_started = adddate(date_started, rand_increment),
+	date_stopped = IF(date_stopped IS NULL, NULL, adddate(date_stopped, rand_increment)),
+	date_voided = IF(date_voided IS NULL, NULL, adddate(date_voided, rand_increment)),
+	date_created = adddate(date_created, rand_increment);
 
--- move the datetime of all obs that have that DO NOT have the same datetime as the 
--- encounter to the encounter's new datetime
--- THIS MUST BE RUN BEFORE THE "change all obs that have hte same datetime" query is run
-update
-	obs o
-	join random_enc_dates rand on o.encounter_id = rand.eid
-set
-	o.obs_datetime = adddate(o.obs_datetime, datediff(rand_encounter_datetime, orig_encounter_datetime)),
-	o.date_created = o.obs_datetime
-where
-	o.obs_datetime <> orig_encounter_datetime;
-	
--- change all obs that have that have the same datetime as the 
--- encounter to the encounter's new datetime
-update
-	obs o
-	join random_enc_dates rand on o.encounter_id = rand.eid
-set
-	o.obs_datetime = rand.rand_encounter_datetime,
-	o.date_created = o.obs_datetime
-where
-	o.obs_datetime = rand.orig_encounter_datetime;
+UPDATE encounter e
+JOIN visit v on e.visit_id = v.visit_id
+SET e.encounter_datetime = adddate(e.encounter_datetime, v.rand_increment),
+	e.date_voided = IF(e.date_voided IS NULL, NULL, adddate(e.date_voided, v.rand_increment)),
+	e.date_created = adddate(e.date_created, v.rand_increment);
 
--- randomize all obs that have no encounter
-update
-	obs o
-set
-	o.obs_datetime = adddate(obs_datetime, cast(rand()*90-90 as signed)),
-	o.date_created = o.obs_datetime
-where
-	o.encounter_id is null;
+UPDATE obs o
+JOIN encounter e ON e.encounter_id = o.encounter_id
+JOIN visit v ON e.visit_id = v.visit_id
+SET o.obs_datetime = adddate(o.obs_datetime, v.rand_increment),
+	o.date_created = adddate(o.date_created, v.rand_increment),
+	o.date_voided = IF(o.date_voided IS NULL, NULL, adddate(o.date_voided, v.rand_increment)),
+	o.value_datetime = IF(o.value_datetime IS NULL, NULL, adddate(o.value_datetime, v.rand_increment));
 
--- move all value_datetime according to how the obs_datetime was moved
-update
-	obs o
-	join random_enc_dates rand on o.encounter_id = rand.eid
-set
-	o.value_datetime = adddate(o.value_datetime, datediff(rand_encounter_datetime, orig_encounter_datetime))
-where
-	o.value_datetime is not null;
-
--- simply randomize all non-encounter based obs value_datetimes
-update
-	obs o
-set
-	o.value_datetime = adddate(obs_datetime, cast(rand()*91-91 as signed))
-where
-	o.value_datetime is not null
-	and
-	encounter_id is null;
-
-
-drop table if exists random_enc_dates;
+ALTER TABLE visit DROP COLUMN rand_increment;
 
 --
 -- Rename location to something nonsensical

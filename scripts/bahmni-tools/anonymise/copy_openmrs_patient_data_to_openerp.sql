@@ -1,7 +1,6 @@
 \set ON_ERROR_STOP true
 
 DROP TABLE IF EXISTS temp_openmrs_patient;
-
 CREATE TABLE temp_openmrs_patient
 (uuid varchar UNIQUE, old_identifier varchar, identifier varchar,
 given_name varchar, middle_name varchar, family_name varchar,
@@ -12,6 +11,7 @@ FROM '/tmp/openmrs_patient.csv'
 NULL As '\N'
 DELIMITER ',' CSV;
 
+DROP TABLE IF EXISTS temp_res_partner_ref;
 CREATE TABLE temp_res_partner_ref AS
 SELECT id, ref
 FROM res_partner;
