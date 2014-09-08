@@ -20,3 +20,16 @@ SET password_crypt = '$1$lw8k34ec$xOY5xkPtTgTw/gN6nHiZq.',
 UPDATE event_records
 SET object = regexp_replace(object, '"customerId": "(.+?)"', '"customerId": "XXX123456"') 
 WHERE category = 'sale_order';
+
+TRUNCATE mail_message CASCADE;
+TRUNCATE mail_followers CASCADE;
+UPDATE mail_alias SET alias_name = concat('alias-', id);
+
+UPDATE res_partner
+SET name = concat('User ', res_users.id)
+FROM res_users
+WHERE res_users.partner_id = res_partner.id;
+
+UPDATE res_partner
+SET image_medium = NULL, image_small = NULL
+where image_medium IS NOT NULL OR image_small IS NOT NULL;
