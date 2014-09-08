@@ -191,20 +191,29 @@ SELECT
 FROM
 	patient;
 
+CREATE table temp_person_uuid_old(person_id int, uuid varchar(256), PRIMARY KEY(person_id));
+
+INSERT INTO temp_person_uuid_old 
+SELECT person_id, uuid FROM person;
+
+UPDATE person SET uuid=uuid();
 
 	-- If you change columns here, edit copy_openmrs_patient_data_to_*.sql files
-SELECT p.uuid, pio.identifier old_identifier, pi.identifier, pn.given_name,  pn.middle_name,  pn.family_name,
+SELECT p.uuid, pui.uuid old_uuid, pio.identifier old_identifier, pi.identifier, pn.given_name,  pn.middle_name,  pn.family_name,
 	   p.birthdate, p.death_date, p.gender
-FROM person p JOIN patient_identifier pi on p.person_id = pi.patient_id and pi.preferred = 1 and pi.voided = 0 
+FROM person p 
+JOIN patient_identifier pi on p.person_id = pi.patient_id and pi.preferred = 1 and pi.voided = 0 
 JOIN person_name pn on p.person_id = pn.person_id and pn.voided = 0 and pn.preferred = 1 
 JOIN person_address pad ON pad.person_id = p.person_id 
 JOIN temp_patient_identifier_old pio on pio.patient_id = pi.patient_id
+JOIN temp_person_uuid_old pui ON pui.person_id = p.person_id
 INTO OUTFILE '/tmp/openmrs_patient.csv' 
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"' 
 LINES TERMINATED BY '\n';
 
 DROP TABLE temp_patient_identifier_old;
+DROP TABLE temp_person_uuid_old;
 
 --
 -- Bahmni specific

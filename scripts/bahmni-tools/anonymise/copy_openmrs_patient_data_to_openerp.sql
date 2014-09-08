@@ -2,7 +2,7 @@
 
 DROP TABLE IF EXISTS temp_openmrs_patient;
 CREATE TABLE temp_openmrs_patient
-(uuid varchar UNIQUE, old_identifier varchar, identifier varchar,
+(uuid varchar, old_uuid varchar UNIQUE, old_identifier varchar, identifier varchar,
 given_name varchar, middle_name varchar, family_name varchar,
 birthdate date, death_date date, gender varchar);
 
