@@ -14,10 +14,23 @@ FROM patient_identity_type
 WHERE patient_identity_type.id = patient_identity.identity_type_id 
 AND patient_identity_type.identity_type = 'PRIMARYRELATIVE';
 
+UPDATE system_user
+SET login_name = concat('user-', login_user.id)
+FROM login_user
+WHERE login_user.login_name = system_user.login_name AND system_user.login_name NOT IN ('admin');
+
 UPDATE login_user
 SET login_name = concat('user-', id)
 WHERE login_name NOT IN ('admin');
 
--- Set every one's password as Admin123
+-- Set every one's password as adminADMIN!
 UPDATE login_user
 SET password = 'n2OrWHXVm/BQsgd1YZJoCA==';
+
+UPDATE system_user
+SET login_name = concat('userwologin-', id)
+WHERE login_name NOT IN (Select login_name from login_user);
+
+UPDATE system_user
+SET first_name = login_name,
+	last_name = login_name;
