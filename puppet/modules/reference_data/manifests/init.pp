@@ -1,4 +1,4 @@
-class reference-data {
+class reference_data {
   require tomcat::clean
   include bahmni-revisions
   $reference_data_war =  "${build_output_dir}/${reference_data_war_file_name}.war"
@@ -30,7 +30,7 @@ class reference-data {
 
   file { "${temp_dir}/run-reference-data-liquibase.sh" :
     ensure      => present,
-    content     => template("reference-data/run-liquibase.sh"),
+    content     => template("reference_data/run-liquibase.sh"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     mode        => 554

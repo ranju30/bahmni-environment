@@ -1,4 +1,4 @@
-class bahmni-openerp {
+class bahmni_openerp {
 	include bahmni-revisions
     $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openerp_atomfeed_war_file_name}/WEB-INF/classes/log4j.xml"
     $openerp_modules_zip_filename = "openerp-modules"
@@ -58,7 +58,7 @@ class bahmni-openerp {
 
   file { "${temp_dir}/bahmni-openerp/run-liquibase.sh" :
     ensure      => present,
-    content     => template("bahmni-openerp/run-liquibase.sh"),
+    content     => template("bahmni_openerp/run-liquibase.sh"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     require   => Exec["latest_openerp_atomfeed_webapp"],
@@ -75,11 +75,15 @@ class bahmni-openerp {
 
 	file { "${log4j_xml_file}" :
 		ensure      => present,
-		content     => template("bahmni-openerp/log4j.xml.erb"),
+		content     => template("bahmni_openerp/log4j.xml.erb"),
 		owner       => "${bahmni_user}",
 		group       => "${bahmni_user}",
 		require     => Exec["latest_openerp_atomfeed_webapp"],
 		mode        => 664,
+	}
+
+	class { "implementation_config::openerp":
+		implementation_name => "${implementation_name}", require => Exec['bahmni_openerp_data']
 	}
 
 	#Hack: OpenERP module is not idempotent. Because of this, I can't add

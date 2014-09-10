@@ -46,8 +46,4 @@ class openelis {
     group => "${bahmni_user}",
     require => File["${uploadedFilesDirectory}"],
   }
-
-## tomcat file change
-  ##<Context path="/uploaded-files" docBase="/home/jss/uploaded-files"/>
-
 }

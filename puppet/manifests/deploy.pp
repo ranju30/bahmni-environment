@@ -5,16 +5,14 @@ import "configurations/deployment-configuration"
 import "configurations/openmrs-versions-configuration.pp"
 
 node default {
-  stage {"last" :}
-  Stage ['main'] -> Stage['last']
+  include bahmni_openmrs
+  include reference_data
 
-  include bahmni-openmrs
-  include bahmni-openerp
-  include openelis
-  include reference-data
+  if $deploy_bahmni_openelis == "true" {
+    include bahmni_openelis
+  }
 
-  class { 'implementation_config':
-    implementation_name => "${implementation_name}",
-    stage =>'last'
+  if $deploy_bahmni_openerp == "true" {
+    include bahmni_openerp
   }
 }

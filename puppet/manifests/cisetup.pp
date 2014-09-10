@@ -37,7 +37,7 @@ node default {
   class { "openmrs" : stage => "deploy"; }
   class { "bahmni-configuration" : stage => "deploy"; }
   class { "bahmni_omods" : stage => "deploy"; }
-  class { "bahmni-openerp" : stage => "deploy"; }
+  class { "bahmni_openerp" : stage => "deploy"; }
   class { "registration" : stage => "deploy"; }
 
   class { "nodejs" : stage => "last", version => '0.8.19'; }

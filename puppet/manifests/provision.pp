@@ -18,9 +18,13 @@ node default {
 	include tomcat
 	include httpd
 	class { 'jasperserver': require => Class["tomcat"] }
- 	include python
- 	include postgresql
-	class { 'openerp': require => Class["python", "postgresql"] }
+	if $deploy_bahmni_openelis == "true" or $deploy_bahmni_openerp == "true" {
+		include postgresql		
+	}
+	if $deploy_bahmni_openerp == "true" {
+	 	include python
+		class { 'openerp': require => Class["python", "postgresql"] }
+	}
 #	include nagios
 #	include bahmni-nagios
 	include cron-tab
