@@ -34,12 +34,19 @@ function run-snapshot-migrations {
     run-liquibase-migration $SNAPSHOTS_DIR/$1/openmrs-module-metadatamapping liquibase.xml
     run-liquibase-migration $SNAPSHOTS_DIR/$1/openmrs-module-providermanagement liquibase.xml
     run-liquibase-migration $SNAPSHOTS_DIR/$1/openmrs-module-uiframework liquibase.xml
-    run-liquibase-migration $SNAPSHOTS_DIR/$1/bahmni-core/openerp-atomfeed-client-omod liquibase.xml
-    run-liquibase-migration $SNAPSHOTS_DIR/$1/bahmni-core/openmrs-elis-atomfeed-client-omod liquibase.xml
     run-liquibase-migration $SNAPSHOTS_DIR/$1/bahmni-core/bahmnicore-omod liquibase.xml
     run-liquibase-migration $SNAPSHOTS_DIR/$1/openmrs-module-bahmniapps/resources liquibase.xml
-    run-liquibase-migration $SNAPSHOTS_DIR/$1/atomfeed sql/db_migrations.xml -DschemaName=openmrs
     run-liquibase-migration $SNAPSHOTS_DIR/$1 liquibase.xml
+
+    <% if @deploy_bahmni_openelis == "true" || @deploy_bahmni_openerp == "true" %>
+        run-liquibase-migration $SNAPSHOTS_DIR/$1/atomfeed sql/db_migrations.xml -DschemaName=openmrs
+    <% end %>
+    <% if @deploy_bahmni_openelis == "true" %>
+        run-liquibase-migration $SNAPSHOTS_DIR/$1/bahmni-core/openmrs-elis-atomfeed-client-omod liquibase.xml
+    <% end %>
+    <% if @deploy_bahmni_openerp == "true" %>
+        run-liquibase-migration $SNAPSHOTS_DIR/$1/bahmni-core/openerp-atomfeed-client-omod liquibase.xml
+    <% end %>
 }
 
 for dir in  `ls $SNAPSHOTS_DIR | sort -t- -n`
