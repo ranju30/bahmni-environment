@@ -9,6 +9,6 @@ import "configurations/openmrs-versions-configuration.pp"
 node default {
   include bahmni-openmrs
   class { "implementation_config::openmrs":
-    implementation_name => "${implementation_name}", require => Class['bahmni-webapps'],
+    implementation_name => "${implementation_name}", require => Class['bahmni_omods'],
   }
 }

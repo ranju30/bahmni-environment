@@ -1,5 +1,5 @@
 class bahmni-openmrs {
-	include bahmni-webapps
+	include bahmni_omods
 	include bahmni-ui-apps 
 	include bahmni-revisions
 }
