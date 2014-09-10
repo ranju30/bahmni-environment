@@ -7,7 +7,7 @@ import "configurations/openmrs-versions-configuration"
 # pre-condition
 # bahmni-stop must have been run before this
 node default {
-	# include bahmni-artifacts
+	# include bahmni_artifacts
 	# include httpd
 
 	

@@ -1,5 +1,5 @@
 class java {
-  require yum-repo
+  require yum_repo
   
   if ($install_jdk == "true") {
     $java_home = "/usr/java/jdk1.7.0_21"

@@ -4,5 +4,5 @@ import "configurations/stack-installers-configuration.pp"
 import "configurations/stack-runtime-configuration.pp"
 
 node default {
-  include bahmni-artifacts
+  include bahmni_artifacts
 }

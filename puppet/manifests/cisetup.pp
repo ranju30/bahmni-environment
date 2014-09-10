@@ -15,7 +15,7 @@ node default {
   Stage['first'] -> Stage['main'] -> Stage['deploy'] -> Stage['last']
 
   class { "bootstrap": stage => 'first'; }
-  class { "yum-repo":  stage => 'first'; }
+  class { "yum_repo":  stage => 'first'; }
   class { "host":      stage => 'first'; }
   class { "users":
        stage         => "first",
@@ -35,15 +35,15 @@ node default {
   include openerp
 
   class { "openmrs" : stage => "deploy"; }
-  class { "bahmni-configuration" : stage => "deploy"; }
+  class { "bahmni_configuration" : stage => "deploy"; }
   class { "bahmni_omods" : stage => "deploy"; }
   class { "bahmni_openerp" : stage => "deploy"; }
   class { "registration" : stage => "deploy"; }
 
   class { "nodejs" : stage => "last", version => '0.8.19'; }
-  class { "bahmni-openerp-basedata" : stage => "last"; }
+  class { "bahmni_openerp_basedata" : stage => "last"; }
   class { "maven" : stage => "last"; }
-  class { "ci-tools" : stage => "last"; }
-  class { "go-setup" : stage => "last"; }
+  class { "ci_tools" : stage => "last"; }
+  class { "go_setup" : stage => "last"; }
 }
 

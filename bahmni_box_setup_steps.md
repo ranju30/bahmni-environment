@@ -91,7 +91,7 @@ as mentioned below.
     - If you can't, then from webapps folder in tomcat, delete the 'jasperserver' folder and run the following command (stop tomcat): ./scripts/run-puppet-module.sh jasperserver
     - Now check that after restart of tomcat, the Jasper server URL is accessible.
     - Now deploy appropriate reports (this command reads the IMPLEMENTATION_NAME variable to decide which reports to deploy): 
-    ./scripts/run-puppet-module.sh bahmni-jasperreports
+    ./scripts/run-puppet-module.sh bahmni_jasperreports
 
 15. Login to OpenERP using URL: http://<IP>:8069/ 
     Use credentials admin/admin or admin/password.

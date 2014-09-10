@@ -7,7 +7,7 @@ stage { 'all-repo-creation' : before => Stage['main'] }
 
 node default {
 
-	class { 'yum-repo': stage => 'all-repo-creation' }
+	class { 'yum_repo': stage => 'all-repo-creation' }
 	
 	include host
 	include tools
@@ -26,6 +26,6 @@ node default {
 		class { 'openerp': require => Class["python", "postgresql"] }
 	}
 #	include nagios
-#	include bahmni-nagios
-	include cron-tab
+#	include bahmni_nagios
+	include cron_tab
 }

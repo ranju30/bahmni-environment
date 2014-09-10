@@ -1,7 +1,7 @@
 class openmrs {
-  require bahmni-distro
+  require bahmni_distro
   require tomcat::clean
-  include bahmni-snapshot-migrations
+  include bahmni_snapshot_migrations
 
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/classes/log4j.xml"
   $openmrs_webapp_location =  "${tomcatInstallationDirectory}/webapps/openmrs"
@@ -88,7 +88,7 @@ class openmrs {
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     mode        => 554,
-    require     => [Class['bahmni-snapshot-migrations'], Exec['run-snapshot-migrations']]
+    require     => [Class['bahmni_snapshot_migrations'], Exec['run-snapshot-migrations']]
  }
 
   exec { "openmrs_data" :

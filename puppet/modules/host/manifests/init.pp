@@ -2,7 +2,7 @@ class host {
 	$host_log_file = "${logs_dir}/bahmni_host.log"
 	$host_log_expression = ">> ${host_log_file} 2>> ${host_log_file}"
 
-  require yum-repo
+  require yum_repo
 
   file { "${temp_dir}" :
     ensure    => directory,

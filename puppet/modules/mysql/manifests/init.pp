@@ -12,7 +12,7 @@ class mysql-common {
 }
 
 class mysql {
-	#require yum-repo
+	#require yum_repo
 	require mysql-common
 
 	notice("mysql manifest processing...")
@@ -23,7 +23,7 @@ class mysql {
 }
 
 class mysqlserver {
-	#require yum-repo
+	#require yum_repo
 	require mysql-common
 	
 	notice("mysqlserver manifest processing...")

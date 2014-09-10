@@ -1,5 +1,5 @@
 class artifactory {
-    require yum-repo
+    require yum_repo
     require httpd
 
     package { "artifactory":
