@@ -1,3 +1,9 @@
+#Make sure this directory exists
+bahmnicore.images.directory=<%=@patientImagesDirectory%>
+bahmnicore.urls.patientimages=<%=@patientImagesUrl%>
+bahmnicore.documents.baseDirectory=<%=@documentBaseDirectory%>
+
+<% if @deploy_bahmni_openerp == "true" -%>
 openerp.port=<%=@openERPPort%>
 openerp.host=<%=@openERPHost%>
 openerp.database=<%=@openERPDatabase%>
@@ -5,9 +11,4 @@ openerp.user=<%=@openERPUser%>
 openerp.password=<%=@openERPPassword%>
 openerp.connectionTimeoutInMilliseconds=<%=@openERPConnectTimeout%>
 openerp.replyTimeoutInMilliseconds=<%=@openERPReadTimeout%>
-
-
-#Make sure this directory exists
-bahmnicore.images.directory=<%=@patientImagesDirectory%>
-bahmnicore.urls.patientimages=<%=@patientImagesUrl%>
-bahmnicore.documents.baseDirectory=<%=@documentBaseDirectory%>
+<% end -%>

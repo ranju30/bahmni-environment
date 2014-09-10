@@ -20,15 +20,19 @@ wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/
 mkdir ui-modules
 mv bahmniapps-<%= @bahmni_release_version %>.omod ui-modules/
 
+<% if @deploy_bahmni_openerp == "true" -%>
 echo "Downloading openerp artifacts"
 echo "-------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
 
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/runFunctionalTestsJob/deployables.zip && unzip -jqo deployables.zip && rm deployables.zip
+<% end -%>
 
+<% if @deploy_bahmni_openelis == "true" -%>
 echo "Downloading openelis artifacts"
 echo "-------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/deployables.zip && unzip -jqo deployables.zip && rm deployables.zip
+<% end -%>
 
 echo "Downloading reference_data artifacts"
 echo "-------------------------------------"

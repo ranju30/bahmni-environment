@@ -21,7 +21,9 @@ set -x
 
 service httpd stop
 service tomcat stop
-service openerp stop
+if [ $FACTER_deploy_bahmni_openerp = "true" ]; then
+	service openerp stop
+fi
 
 sh $SCRIPTS_DIR/backup-mysql.sh $mysqlRootPassword $BACKUP_DIR
 sh $SCRIPTS_DIR/backup-pgsql.sh $BACKUP_DIR

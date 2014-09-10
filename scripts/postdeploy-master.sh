@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e -x
 
-service openerp start
+if [ $FACTER_deploy_bahmni_openerp = "true" ]; then
+	service openerp start
+fi
 service tomcat start
 service httpd start
