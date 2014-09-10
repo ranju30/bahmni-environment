@@ -1,5 +1,6 @@
 define bahmni_omods::bahmni_atomfeed_client($atomfeed_client_name) {
-	$atomfeed_client_omod_name = "${atomfeed_client_name}-atomfeed-client-${bahmni_release_version}"
+	  $openmrs_modules_dir = "/home/${bahmni_user}/.OpenMRS/modules"
+    $atomfeed_client_omod_name = "${atomfeed_client_name}-atomfeed-client-${bahmni_release_version}"
 
     exec { "copy_${atomfeed_client_name}_atomfeed_omod" :
       command => "cp ${build_output_dir}/${openmrs_distro_file_name_prefix}/${atomfeed_client_omod_name}.omod ${openmrs_modules_dir} ${deployment_log_expression}",
