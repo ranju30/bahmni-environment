@@ -9,10 +9,10 @@ include ConceptHelper
 # Required Gems : ruby-mysql, micro-optparse
 parser = Parser.new do |p|
   p.banner = "Usage: ruby #{__FILE__} csv_file [options]"
-  p.option :host, "Host name or IP", :default => "192.168.33.10", :short => 'H'
+  p.option :host, "Host name or IP", :default => "127.0.0.1", :short => 'H'
   p.option :user, "Mysql user", :default => "root"
   p.option :password, "Mysql password", :default => "password"
-  p.option :verbose, "Verbose mode", :default => true
+  p.option :verbose, "Verbose mode", :default => false
 end
 options = parser.process!
 
