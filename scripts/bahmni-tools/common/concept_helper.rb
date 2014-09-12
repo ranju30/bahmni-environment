@@ -29,6 +29,14 @@ module ConceptHelper
 	  insert_concept(concept_name, concept_shortname, concept_description, class_id, datatype_id, is_set, synonyms)
 	end
 
+	def insert_concept_without_duplicate_in_any_other_order(concept_name, concept_shortname, concept_description, class_id, datatype_id, is_set, synonyms)
+	  if(has_concept_name_in_any_order(concept_name))
+	    show_error("Concept with name #{concept_name} already Exists")
+	    return nil
+	  end
+	  insert_concept(concept_name, concept_shortname, concept_description, class_id, datatype_id, is_set, synonyms)
+	end
+
 	def create_concept_name (concept_name, concept_id,name_type)
 	  if concept_name && concept_name.length > 0
 	    @openmrs_conn.query("INSERT INTO concept_name (concept_id, name, locale, locale_preferred, creator, date_created, concept_name_type, uuid)
@@ -115,12 +123,26 @@ module ConceptHelper
 	  get_first_row_first_column("SELECT concept_map_type_id FROM concept_map_type WHERE name like '#{map_type}'")
 	end
 
+    def get_concept_by_name(concept_name)
+      get_first_row_first_column("Select concept_id from concept_name where name='#{concept_name}' AND concept_name_type='FULLY_SPECIFIED' AND voided = 0")
+    end
+    
 	def has_concept_by_name(concept_name)
 	  get_concept_by_name(concept_name)
 	end
 
-	def get_concept_by_name(concept_name)
-	  get_first_row_first_column("Select concept_id from concept_name where name='#{concept_name}' AND concept_name_type='FULLY_SPECIFIED' AND voided = 0")
+	def has_concept_name_in_any_order(concept_name)
+	  like_part = concept_name.tr(',', ' ').split().map! { |k| "name like '%#{k}%'" }.join(" or ")
+	  query = "select concept_id, name from concept_name where (" + like_part + ") AND concept_name_type='FULLY_SPECIFIED' AND voided = 0"
+	  results = @openmrs_conn.query(query).to_a
+	  concept_words = concept_name.tr(',', ' ').split()
+	  results.each do |result|
+	    result_words = result[1].tr(',', ' ').split()
+	    if (concept_words.length == result_words.length && (concept_words - result_words).empty?)
+	     return true
+	    end
+	  end
+	  return false
 	end
 
 	def get_first_row_first_column(query_string)

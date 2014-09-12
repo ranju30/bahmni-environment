@@ -9,10 +9,10 @@ include ConceptHelper
 # Required Gems : ruby-mysql, micro-optparse
 parser = Parser.new do |p|
   p.banner = "Usage: ruby #{__FILE__} csv_file [options]"
-  p.option :host, "Host name or IP", :default => "127.0.0.1", :short => 'H'
+  p.option :host, "Host name or IP", :default => "192.168.33.10", :short => 'H'
   p.option :user, "Mysql user", :default => "root"
   p.option :password, "Mysql password", :default => "password"
-  p.option :verbose, "Verbose mode", :default => false
+  p.option :verbose, "Verbose mode", :default => true
 end
 options = parser.process!
 
@@ -68,10 +68,12 @@ def import_from_csv
 
       concept_id = get_concept_by_name(diag_name)
       if concept_id == nil
-        concept_id = insert_concept_without_duplicate(diag_name, diag_short_name, nil, diagnosis_concept_class_id, na_datatype_id, false, synonyms)
+        concept_id = insert_concept_without_duplicate_in_any_other_order(diag_name, diag_short_name, nil, diagnosis_concept_class_id, na_datatype_id, false, synonyms)
       end
 
-      add_to_concept_set_if_not_preset(concept_id,parent_concept_id)
+      if(concept_id != nil)
+        add_to_concept_set_if_not_preset(concept_id,parent_concept_id)
+      end
 
       show_success ("inserted : #{diagnosis_details.to_s}")
     end
