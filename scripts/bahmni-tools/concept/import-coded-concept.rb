@@ -9,10 +9,10 @@ include ConceptHelper
 # Required Gems : ruby-mysql, micro-optparse
 parser = Parser.new do |p|
    p.banner = "Usage: ruby #{__FILE__} csv_file [options]"
-   p.option :host, "Host name or IP", :default => "127.0.0.1", :short => 'H'
+   p.option :host, "Host name or IP", :default => "192.168.33.10", :short => 'H'
    p.option :user, "Mysql user", :default => "root"
    p.option :password, "Mysql password", :default => "password"
-   p.option :verbose, "Verbose mode", :default => false
+   p.option :verbose, "Verbose mode", :default => true
 end
 options = parser.process!
 
@@ -39,8 +39,12 @@ def import_from_csv
     answer_concept_name = row[0] != nil ? row[0].strip : ''
     next if answer_concept_name.empty?
 
-    answer_concept_id = get_concept_by_name_or_insert(answer_concept_name, answer_concept_name, nil, misc_concept_class_id, na_datatype_id, false, nil)
-    get_or_add_concept_answer(question_concept_id, answer_concept_id, index)
+    if(has_concept_name_in_any_order(answer_concept_name))
+        puts "Found concept : name=#{answer_concept_name}" if @verbose
+    else
+        answer_concept_id = insert_concept(answer_concept_name, answer_concept_name, nil, misc_concept_class_id, na_datatype_id, false, nil)
+        get_or_add_concept_answer(question_concept_id, answer_concept_id, index)
+    end
   end
 end
 
