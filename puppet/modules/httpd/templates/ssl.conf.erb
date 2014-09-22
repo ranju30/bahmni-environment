@@ -315,6 +315,15 @@ RequestHeader set "X-Forwarded-Proto" "https"
 			Redirect permanent <%=redirectionRule["path"]%> <%=redirectionRule["redirectPath"]%>
 	<% end -%>
 <% end -%>
+            WSGIDaemonProcess client_side_logging user=apache group=apache threads=1
+            WSGIScriptAlias /log /var/www/client_side_logging/client_side_logging.wsgi
+
+            <Directory /var/www/client_side_logging>
+            WSGIProcessGroup client_side_logging
+            WSGIApplicationGroup %{GLOBAL}
+            Order deny,allow
+            Allow from all
+            </Directory>
 
 <% if @httpsCachedDirectories!=nil and  @httpsCachedDirectories.length > 0 -%>
 	<%- @httpsCachedDirectories.each do |httpsCachedDirectory| -%>
@@ -334,3 +343,4 @@ RequestHeader set "X-Forwarded-Proto" "https"
 	<% end -%>
 <% end -%>
 </VirtualHost>
+WSGISocketPrefix /var/run/wsgi

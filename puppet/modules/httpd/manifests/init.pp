@@ -4,8 +4,10 @@
 class httpd {
     $apache_user = "apache"
     require yum_repo
-    
-    package { "httpd" :
+    include client_side_logging
+
+
+  package { "httpd" :
         ensure => "present"
     }
 
@@ -42,8 +44,8 @@ class httpd {
 
 	file { "/etc/httpd/conf.d/ssl.conf" :
 	   content      => template("httpd/ssl.conf.erb"),
-	   require      => Exec["ssl_conf_backup"],
-       notify       => Service["httpd"],
+	   require      => [Exec["ssl_conf_backup"], Class["client_side_logging"]],
+     notify       => Service["httpd"],
 	}
 
     exec { "clean_${httpdCacheDirectory}" :
@@ -57,4 +59,5 @@ class httpd {
         group => "${apache_user}",
         require => Exec["clean_${httpdCacheDirectory}"]
     }
+
 }

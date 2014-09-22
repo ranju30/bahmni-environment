@@ -55,7 +55,7 @@ $build_source = $build_source_dir ? {
 $go_server_user = "guest"
 $go_server_pwd = "p@ssw0rd"
 $config_go_build_name = "Latest"
-$mrs_go_build_name = "Latest"
+$mrs_go_build_name = "2063"
 $erp_go_build_name = "Latest"
 $elis_go_build_name = "Latest"
 $reference_data_go_build_name = "Latest"
@@ -76,6 +76,7 @@ $deployablesDirectory="/home/${bahmni_user}/deployables"
 
 # Set host name or ip address
 $httpd_deploy_dir="/var/www"
+$httpd_log_directory="/var/log"
 
 $bahmniAppsDirectory="${httpd_deploy_dir}/bahmniapps"
 $bahmniConfigDirectory="${httpd_deploy_dir}/bahmni_config"
