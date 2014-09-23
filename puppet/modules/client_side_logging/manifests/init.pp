@@ -7,7 +7,7 @@ class client_side_logging() {
     cwd => "${temp_dir}",
   }
 
-  file { "${python_site_packages}/${client_side_logging}" :
+  file { "${python_site_packages}${client_side_logging}" :
     ensure  => "directory",
     source  => "${build_dir}/${client_side_logging}",
     owner   => "${bahmni_user}",
