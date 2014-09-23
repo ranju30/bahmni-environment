@@ -35,16 +35,9 @@ class httpd {
 	    require     => File["/etc/httpd/conf/httpd.conf"],
 	}
 
-	exec { "ssl_conf_backup" :
-	    cwd         => "/etc/httpd/conf.d",
-	    command     => "mv ssl.conf ssl.conf.bkup",
-        path        => "${os_path}",
-	    require     => Package["mod_ssl"],
-	}
-
 	file { "/etc/httpd/conf.d/ssl.conf" :
 	   content      => template("httpd/ssl.conf.erb"),
-	   require      => [Exec["ssl_conf_backup"], Class["client_side_logging"]],
+	   require      => [Class["client_side_logging"]],
      notify       => Service["httpd"],
 	}
 

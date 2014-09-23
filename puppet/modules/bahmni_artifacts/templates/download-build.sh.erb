@@ -15,10 +15,7 @@ echo "CI SERVER: $BASE_URL"
 
 echo "Downloading openmrs artifacts"
 echo "--------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables.zip && unzip -jqo deployables.zip && rm deployables.zip
-
-mkdir ui-modules
-mv bahmniapps-<%= @bahmni_release_version %>.omod ui-modules/
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables.zip && unzip -qo deployables.zip && mv deployables/* . && rm -rf deployables deployables.zip
 
 <% if @deploy_bahmni_openerp == "true" -%>
 echo "Downloading openerp artifacts"
@@ -42,8 +39,5 @@ echo "Downloading config artifacts"
 echo "-----------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Build_${IMPLEMENTATION_NAME}_config_$BRANCH/$Config_Build_Name/BuildStage/Latest/Build/${IMPLEMENTATION_NAME}_config.zip
 
-echo "Downloading client side logging"
-echo "-----------------------------"
-wget -O master.zip https://github.com/Bhamni/client_side_logging/archive/master.zip && unzip master.zip && rm -rf master.zip && mv client_side_logging-master client_side_logging
 
 rm -f *_md5.checksum
