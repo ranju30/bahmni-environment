@@ -1,6 +1,10 @@
 class client_side_logging() {
   package { "mod_wsgi" : ensure => "installed" }
 
+  exec { "flask" :
+    command => "easy_install flask",
+  }
+
   file { "${python_site_packages}/${client_side_logging}" :
     ensure  => "directory",
     source  => "${build_dir}/${client_side_logging}",
