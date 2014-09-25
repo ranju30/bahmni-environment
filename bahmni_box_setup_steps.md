@@ -174,6 +174,8 @@ as mentioned below.
            Manage Serial Numbers
            Enabled adding final SaleOrder charge
            Manage Multiple Locations and Warehouses
+           
+      14) Create a product category named "Drug" under "All products / Saleable". Goto to Sales > Configuration > Products (Drop Down) > Product Categories.
 
 
 BACKUP/REPLICATION
