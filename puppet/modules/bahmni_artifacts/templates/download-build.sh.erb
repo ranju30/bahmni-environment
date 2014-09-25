@@ -1,12 +1,9 @@
 rm -rf *
 
 BASE_URL=<%= @build_source %>
-MRS_Build_Name=<%= @mrs_go_build_name %>
+ARTIFACTS_Build_Name=<%= @artifacts_go_build_name %>
 Config_Build_Name=<%= config_go_build_name %>
-OpenERP_Build_Name=<%= @erp_go_build_name %>
-OpenELIS_Build_Name=<%= @elis_go_build_name %>
 IMPLEMENTATION_NAME=<%= @implementation_name %>
-reference_data_go_build_name=<%= @reference_data_go_build_name %>
 BRANCH=<%= @source_code_branch %>
 GO_USER=<%= @go_server_user %>
 GO_PWD=<%= @go_server_pwd %>
@@ -15,25 +12,27 @@ echo "CI SERVER: $BASE_URL"
 
 echo "Downloading openmrs artifacts"
 echo "--------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_MRS_$BRANCH/$MRS_Build_Name/FunctionalTestsStage/Latest/FunctionalTests/deployables.zip && unzip -qo deployables.zip && mv deployables/* . && rm -rf deployables deployables.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_artifacts_$BRANCH/$ARTIFACTS_Build_Name/CollectArtefactsStage/Latest/defaultJob/deployables/mrs.zip && unzip -qo mrs.zip && rm mrs.zip && mv mrs/* . && rm -rf mrs
 
 <% if @deploy_bahmni_openerp == "true" -%>
 echo "Downloading openerp artifacts"
 echo "-------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/openerp-atomfeed-service/openerp-atomfeed-service.war
-
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenERP_$BRANCH/$OpenERP_Build_Name/runFunctionalTestsStage/Latest/runFunctionalTestsJob/deployables.zip && unzip -jqo deployables.zip && rm deployables.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_artifacts_$BRANCH/$ARTIFACTS_Build_Name/CollectArtefactsStage/Latest/defaultJob/deployables/erp.zip && unzip -qo erp.zip && rm erp.zip && mv erp/* . && rm -rf erp
 <% end -%>
 
 <% if @deploy_bahmni_openelis == "true" -%>
 echo "Downloading openelis artifacts"
 echo "-------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/OpenElis_$BRANCH/$OpenELIS_Build_Name/Build/Latest/build/deployables.zip && unzip -jqo deployables.zip && rm deployables.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_artifacts_$BRANCH/$ARTIFACTS_Build_Name/CollectArtefactsStage/Latest/defaultJob/deployables/elis.zip && unzip -qo elis.zip && rm elis.zip && mv elis/* . && rm -rf elis
 <% end -%>
 
 echo "Downloading reference_data artifacts"
 echo "-------------------------------------"
-wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/ReferenceData_$BRANCH/$reference_data_go_build_name/Build/Latest/build/deployables.zip && unzip -jqo deployables.zip && rm deployables.zip
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge $BASE_URL/go/files/Bahmni_artifacts_$BRANCH/$ARTIFACTS_Build_Name/CollectArtefactsStage/Latest/defaultJob/deployables/referencedata.zip && unzip -qo referencedata.zip && rm referencedata.zip && mv referencedata/* . && rm -rf referencedata
+
+echo "Downloading Environment artifacts"
+echo "-------------------------------------"
+wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge $BASE_URL/go/files/Bahmni_artifacts_$BRANCH/$ARTIFACTS_Build_Name/CollectArtefactsStage/Latest/defaultJob/deployables/environment.zip && unzip -qo environment.zip && rm environment.zip && mv environment/* . && rm -rf environment
 
 echo "Downloading config artifacts"
 echo "-----------------------------"

@@ -54,11 +54,8 @@ $build_source = $build_source_dir ? {
 
 $go_server_user = "guest"
 $go_server_pwd = "p@ssw0rd"
+$artifacts_go_build_name = "Latest"
 $config_go_build_name = "Latest"
-$mrs_go_build_name = "Latest"
-$erp_go_build_name = "Latest"
-$elis_go_build_name = "Latest"
-$reference_data_go_build_name = "Latest"
 $source_code_branch = "master"
 
 #Tomcat 7
