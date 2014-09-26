@@ -9,7 +9,7 @@
 
 
    <appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
-        <param name="File" value="/home/<%= @bahmni_user %>/apache-tomcat-7.0.22/logs/openerp-feed-service.log"/>
+        <param name="File" value="/home/<%= @bahmni_user %>/apache-tomcat-<% @tomcat_version %>/logs/openerp-feed-service.log"/>
         <param name="MaxFileSize" value="10MB"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %-5p [openerp-atomfeed-service] [%c] %m%n"/>

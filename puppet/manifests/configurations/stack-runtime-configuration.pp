@@ -58,7 +58,7 @@ $artifacts_go_build_name = "Latest"
 $config_go_build_name = "Latest"
 $source_code_branch = "master"
 
-#Tomcat 7
+#Tomcat 8
 $tomcatManagerUserName = "tomcat"
 $tomcatManagerPassword = "p@ssw0rd"
 $tomcatHttpPort="8080"

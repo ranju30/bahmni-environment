@@ -180,7 +180,7 @@
               </exec>
               <exec command="cp">
                 <arg>deployables/openmrs.war</arg>
-                <arg>/home/<%= @bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= @bahmni_user %>/apache-tomcat-<% @tomcat_version %>/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/sh">
@@ -233,7 +233,7 @@
               </exec>
               <exec command="cp">
                 <arg>deployables/openmrs.war</arg>
-                <arg>/home/<%= @bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= @bahmni_user %>/apache-tomcat-<% @tomcat_version %>/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/sh">
@@ -459,7 +459,7 @@
               </exec>
               <exec command="cp">
                 <arg>deployables/mrs/deployables/openmrs.war</arg>
-                <arg>/home/<%= @bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= @bahmni_user %>/apache-tomcat-<% @tomcat_version %>/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="/bin/bash">
@@ -469,7 +469,7 @@
               </exec>
               <exec command="cp">
                 <arg>deployables/openelis/openelis.war</arg>
-                <arg>/home/<%= @bahmni_user %>/apache-tomcat-7.0.22/webapps</arg>
+                <arg>/home/<%= @bahmni_user %>/apache-tomcat-"<%@tomcat_version%>"/webapps</arg>
                 <runif status="passed" />
               </exec>
               <exec command="rm">

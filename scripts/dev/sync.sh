@@ -4,7 +4,7 @@ if [ $# -lt 3 ]; then
    echo "Eg:"
    echo	"scripts/dev/sync.sh ../registration/app/ 192.168.33.10 /var/www/registration"
    echo "scripts/dev/sync.sh ../clinical/app/ 192.168.33.10 /var/www/clinical"
-   echo "scripts/dev/sync.sh ../OpenElis/openelis/WebContent/pages/ 192.168.33.10 /home/jss/apache-tomcat-7.0.22/webapps/openelis/pages/"
+   echo "scripts/dev/sync.sh ../OpenElis/openelis/WebContent/pages/ 192.168.33.10 /home/jss/apache-tomcat-8.0.12/webapps/openelis/pages/"
    exit 1
 fi
 

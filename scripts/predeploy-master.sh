@@ -7,7 +7,7 @@ if [ -z $mysqlRootPassword ]; then
     echo "Please provide a password for mysql root"
     echo "[USAGE] $0 <mysqlRootPassword>"
     exit 1
-fi  
+fi
 
 SCRIPTS_DIR=`dirname $0`
 
@@ -30,5 +30,5 @@ sh $SCRIPTS_DIR/backup-pgsql.sh $BACKUP_DIR
 
 cp -r /home/jss/.OpenMRS $BACKUP_DIR/
 cp -r /packages/build $BACKUP_DIR/
-cp -r /home/jss/apache-tomcat-7.0.22/webapps $BACKUP_DIR/
+cp -r /home/jss/apache-tomcat-8.0.12/webapps $BACKUP_DIR/
 cp -r /etc/httpd $BACKUP_DIR/
