@@ -15,5 +15,6 @@ mv -f deployables/${IMPLEMENTATION_NAME}_config.zip /packages/build
 
 rm -rf deployables
 
+unzip -qo /packages/build/bahmni-environment.zip -d /packages/build/
 
 rm -f /packages/build/*_md5.checksum
