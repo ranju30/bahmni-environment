@@ -17,6 +17,7 @@ class bahmni_jasperreports {
         command => "/usr/bin/wget --no-check-certificate ${report_zip_source_url} -O ${implementation_name}-reports.zip",
         cwd     => "${build_output_dir}",
         require => [Exec["delete_reports_dir"], File["delete_reports_zip"]],
+        timeout => 0
     }
 
 	exec { "unzip_report" :
@@ -36,7 +37,7 @@ class bahmni_jasperreports {
 	}
 
 	exec { "bahmni-jasperserver-deploy-customserver" :
-    	provider => "shell",	
+    	provider => "shell",
 		command => "scripts/deployCustomJasperServer.sh $jasperHome ${deployment_log_expression}",
 		path    => "${os_path}",
     	cwd     => "${build_output_dir}/${implementation_name}-reports/${implementation_name}-reports-master",

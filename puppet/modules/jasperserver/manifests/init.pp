@@ -2,6 +2,9 @@ class jasperserver {
   $log_file = "${logs_dir}/jasperserver-module.log"
   $log_expression = ">> ${log_file} 2>> ${log_file}"
   $default_master_properties = "${jasperHome}/buildomatic/default_master.properties"
+  $jasper_install_log_file = "${logs_dir}/jasper-install.log"
+  $jasper_installation_log_expression = ">> ${$jasper_install_log_file} 2>> ${$jasper_install_log_file}"
+  $jasper_webapp_location =  "${tomcatInstallationDirectory}/webapps/jasperserver"
   $do_js_setup_script = "${jasperHome}/buildomatic/bin/do-js-setup.sh"
 
   file { "${log_file}" :
@@ -40,7 +43,7 @@ class jasperserver {
   #   require     => [Exec["extracted_jasperserver"], File["${do_js_setup_script}"]],
   #   cwd         => "${jasperHome}",
   #   path        => "${os_path}"
-  # } 
+  # }
 
   exec {"jasper_mysql_connector" :
     command      => "cp ${packages_servers_dir}/mysql-connector-java-${mysql_connector_java_version}.jar ${jasperHome}/buildomatic/conf_source/db/mysql/jdbc",
@@ -71,12 +74,22 @@ class jasperserver {
   }
 
   exec { "make_jasperserver" :
-    command     => "echo y | sh js-install-ce.sh minimal > ${logs_dir}/jasper-install.log &2>1",
+    command     => "echo y | sh js-install-ce.sh minimal > ${logs_dir}/jasper-install.log ${jasper_installation_log_expression}",
     cwd         => "${jasperHome}/buildomatic",
     user        => "${bahmni_user}",
     path        => "${os_path}",
     provider    => "shell",
     require     => [Exec["extracted_jasperserver"], File["${do_js_setup_script}"], File["${default_master_properties}"], Exec["jasper_mysql_connector"], Exec["jasper_postgresql_connector"]]
+  }
+
+#Copy web.xml to change Owasp.CsrfGuard.Config location from WEB-INF/esapi* to /WEB-INF/esapi
+  file { "${jasper_webapp_location}/WEB-INF/web.xml" :
+    ensure      => present,
+    content     => template("jasperserver/web.xml"),
+    group       => "${bahmni_user}",
+    owner       => "${bahmni_user}",
+    replace     => true,
+    require     => Exec["make_jasperserver"],
   }
 
   file { "${temp_dir}/configure_jasper_home.sh" :
