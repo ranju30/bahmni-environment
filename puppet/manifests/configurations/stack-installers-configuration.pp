@@ -2,7 +2,11 @@
 
 $java_installer_file="jre-7u21-linux-x64.gz"
 $jre_name="jre1.7.0_21"
-$tomcat_version="8.0.12"
+
+if $tomcat_version == undef {
+  $tomcat_version="7.0.22"
+}
+
 $openerp_installer_file="openerp-7.0-20130301-002301.tar.gz"
 $mysql_connector_java_version="5.1.28"
 $postgresql_jdbc_connector_jar_file="postgresql-9.2-1003.jdbc4.jar"
