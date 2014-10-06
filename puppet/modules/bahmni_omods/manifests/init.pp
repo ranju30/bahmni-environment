@@ -17,7 +17,7 @@ class bahmni_omods {
   }
 
   exec { "copy_core_bahmni_omods" :
-    command => "rm -rf ${openmrs_modules_dir}/* && find ${build_output_dir}/${openmrs_distro_file_name_prefix} -type f -not -regex '.*atomfeed.*client.*\.omod' -exec cp '{}' '${openmrs_modules_dir}' ';' ${deployment_log_expression}",
+    command => "rm -rf ${openmrs_modules_dir}/* && find ${build_output_dir}/${openmrs_distro_file_name_prefix} -type f -not -regex '.*atomfeed.*client.*\.omod' | grep .omod | xargs -I file cp file ${openmrs_modules_dir} ${deployment_log_expression}",
     user    => "${bahmni_user}",
     require => File["${openmrs_modules_dir}"],
     path => "${os_path}"
