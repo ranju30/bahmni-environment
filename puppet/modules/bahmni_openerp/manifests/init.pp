@@ -58,7 +58,7 @@ class bahmni_openerp {
 
 
 	exec { "fix_liquibasechangelog_filename" :
-	    command   => "psql -Uopenerp -c \"update liquibasechangelog set filename='openerp-atomfeed-service/sql/db_migrations.xml';\"",
+	    command   => "psql -Uopenerp -c \"update liquibasechangelog set filename='openerp-atomfeed-service/sql/db_migrations.xml' where filename like '%openerp-atomfeed-service/sql/db_migrations.xml';\"",
 	    provider  => shell,
 	    path      => "${os_path}",
 	}
