@@ -59,7 +59,7 @@
     },
     {
         "create": "openmrs-module-providermanagement",
-        "download": "https://github.com/openmrs/openmrs-module-providermanagement/archive/master.zip",
+        "download": "https://github.com/openmrs/openmrs-module-providermanagement/archive/2.2.zip",
         "then": [
             {
                 "copy": "api/src/main/resources/liquibase.xml",
