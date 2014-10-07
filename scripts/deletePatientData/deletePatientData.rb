@@ -10,7 +10,7 @@ end
 
 @machine_ip = ARGV.shift
 def deletePatientDataFromOpenMRS
-	mrsSql = File.read("deletePatientDataForOpenMRS.sql");
+	mrsSql = File.read(File.join(File.dirname(__FILE__), "deletePatientDataForOpenMRS.sql"))
 
 	begin
 		conn = Mysql.new(@machine_ip, 'openmrs-user', 'password', 'openmrs',nil,'/var/lib/mysql/mysql.sock') 
@@ -35,7 +35,7 @@ def deletePatientDataFromOpenMRS
 end
 
 def deletePatientDataFromOpenERP
-	erpSql = File.read("deletePatientDataForOpenERP.sql");
+	erpSql = File.read(File.join(File.dirname(__FILE__), "deletePatientDataForOpenERP.sql"))
 	begin 
 		conn = PGconn.new({:host=>@machine_ip,:user=>'openerp',:password=>'password',:dbname=>'openerp'})
 
@@ -54,7 +54,7 @@ def deletePatientDataFromOpenERP
 end
 
 def deletePatientDataFromOpenELIS
-	elisSql = File.read("deletePatientDataForOpenElis.sql");
+	elisSql = File.read(File.join(File.dirname(__FILE__), "deletePatientDataForOpenElis.sql"))
 	begin 
 		conn = PGconn.new({:host=>@machine_ip,:user=>'clinlims',:password=>'clinlims',:dbname=>'clinlims'})
 
