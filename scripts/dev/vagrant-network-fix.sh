@@ -12,4 +12,3 @@ set -ex
 run_in_vagrant "sudo rm -f /etc/udev/rules.d/70-persistent-net.rules"
 run_in_vagrant "sudo rm -f /etc/sysconfig/network-scripts/ifcfg-eth1"
 run_in_vagrant "sudo rm -f /etc/sysconfig/network-scripts/ifcfg-eth2"
-vagrant reload
