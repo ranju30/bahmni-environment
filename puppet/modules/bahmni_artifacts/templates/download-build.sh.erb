@@ -36,9 +36,11 @@ echo "Downloading Environment artifacts"
 echo "-------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge $BASE_URL/go/files/Bahmni_artifacts_$BRANCH/$ARTIFACTS_Build_Name/CollectArtefactsStage/Latest/defaultJob/deployables/environment.zip && unzip -qo environment.zip && rm environment.zip && mv environment/* . && rm -rf environment
 
+<% if @implementation_name != "default" -%>
 echo "Downloading config artifacts"
 echo "-----------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Build_${IMPLEMENTATION_NAME}_config_$BRANCH/$Config_Build_Name/BuildStage/Latest/Build/${IMPLEMENTATION_NAME}_config.zip
+<% end -%>
 
 
 rm -f *_md5.checksum
