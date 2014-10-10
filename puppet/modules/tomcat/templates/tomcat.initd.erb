@@ -89,6 +89,16 @@ stop() {
 
   return 0
 }
+debug() {
+    echo "Starting Tomcat in Debug mode: "
+    if [ "x$USER" != "x$RUN_AS_USER" ]; then
+        su - $RUN_AS_USER -c "export JAVA_OPTS='-XX:MaxPermSize=512M';$INSTALLATION_DIRECTORY/bin/catalina.sh jpda start"
+    else
+        $INSTALLATION_DIRECTORY/bin/catalina.sh jpda start
+    fi
+    echo "done."
+}
+
 
 user_exists(){
         if id -u $1 >/dev/null 2>&1; then
@@ -111,6 +121,10 @@ case $1 in
         restart)
           stop
           start
+        ;;
+
+        debug)
+          debug
         ;;
 
         status)
