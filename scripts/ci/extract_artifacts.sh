@@ -6,6 +6,7 @@ then
 	exit 1
 fi
 
+rm -rf /packages/build/*
 mv -f deployables/mrs/* /packages/build/
 mv -f deployables/erp/* /packages/build/
 mv -f deployables/elis/* /packages/build/
