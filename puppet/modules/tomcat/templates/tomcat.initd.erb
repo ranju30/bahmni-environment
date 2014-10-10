@@ -92,9 +92,9 @@ stop() {
 debug() {
     echo "Starting Tomcat in Debug mode: "
     if [ "x$USER" != "x$RUN_AS_USER" ]; then
-        su - $RUN_AS_USER -c "export JAVA_OPTS='-XX:MaxPermSize=512M';$INSTALLATION_DIRECTORY/bin/catalina.sh jpda start"
+        su - $RUN_AS_USER -c "export JAVA_OPTS='-XX:MaxPermSize=512M';$CATALINA_HOME/bin/catalina.sh jpda start"
     else
-        $INSTALLATION_DIRECTORY/bin/catalina.sh jpda start
+        $CATALINA_HOME/bin/catalina.sh jpda start
     fi
     echo "done."
 }
