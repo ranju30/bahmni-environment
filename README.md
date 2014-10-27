@@ -36,3 +36,4 @@ vagrant plugin update vagrant-vbguest
 ```
 
 * If you get an error like 'Nonexistent host networking vboxnet0', try restartying VirtualBox. Mac -> `sudo /Library/StartupItems/VirtualBox/VirtualBox restart`
+* http://stackoverflow.com/questions/9434313/how-do-i-associate-a-vagrant-project-directory-with-an-existing-virtualbox-vm
