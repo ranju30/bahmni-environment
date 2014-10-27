@@ -3,7 +3,7 @@ class tomcat {
   require java
 
   exec { "tomcat_untar" :
-    command   => "tar -zxf ${packages_servers_dir}/apache-tomcat-${tomcat_version}.tar.gz ${deployment_log_expression} -C ${tomcatParentDirectory}",
+    command   => "tar -zxf ${packages_servers_dir}/apache-tomcat-${tomcat_version}.tar.gz -C ${tomcatParentDirectory} ${deployment_log_expression}",
     user      => "${bahmni_user}",
     creates   => "${tomcatInstallationDirectory}",
     provider  => shell
