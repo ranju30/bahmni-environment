@@ -29,6 +29,9 @@ sh $SCRIPTS_DIR/backup-mysql.sh $mysqlRootPassword $BACKUP_DIR
 sh $SCRIPTS_DIR/backup-pgsql.sh $BACKUP_DIR
 
 cp -r /home/jss/.OpenMRS $BACKUP_DIR/
-cp -r /packages/build $BACKUP_DIR/
-cp -r /home/jss/apache-tomcat-8.0.12/webapps $BACKUP_DIR/
+cp -r /packages $BACKUP_DIR/
+cp -r /home/jss/apache-tomcat-7.0.22/webapps $BACKUP_DIR/
 cp -r /etc/httpd $BACKUP_DIR/
+cp -r /usr/lib/python2.6/site-packages $BACKUP_DIR/
+
+
