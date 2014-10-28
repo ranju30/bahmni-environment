@@ -59,7 +59,7 @@ as mentioned below.
    For future, it might be best to set this permananently in your ~/.bashrc file.
   
     export BAHMNI_USER_NAME=bahmni  (default is jss)
-    export IMPLEMENTATION_NAME=<your-implementation-name> (default is jss)
+    export IMPLEMENTATION_NAME=default (default is jss)
 
     Also set the $support_email and $from_email variables in stack-runtime.properties file to appropriate value if you don't like the defaults.
 
@@ -79,7 +79,7 @@ as mentioned below.
     
 
 13. Deploy the Implementation Specific Builds (will read your implementation_name variable to decide which one to install)
-    ./scripts/run-puppet-manifest.sh deploy-implementation
+    ./scripts/run-puppet-manifest.sh deploy
     
     Note: If on deploy you get an error for JDK or tools.jar, ensure your default java is latest 1.7, and not old java1.5. If it is, then rename old java and create new sym link: 'ln -s /usr/java/default/bin/java /usr/bin/java'.       
 
