@@ -53,19 +53,27 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 
 7. Mkdir /packages
 
-8. Copy localrepo, servers, tools, Python-packages folders to /packages/ (to avoid download of these from internet)
-  (You could do scp. Like: 'scp -r * root@10.4.31.206:/packages/' from the folder which has all your folders)
-
-  - Note: If you are going to run the provisioning without internet, then ensure that all exisinting yum repos are disabled 
+8. Copy localrepo, servers, tools, Python-packages folders to /packages/
+  ```
+  scp -r * root@bahmni-repo.twhosted.com:/packages/
+  ```
+  Change permissions of the packages folder
+  ```
+  chmod 777 -R /packages
+  ```
+    
+  - Note: If you are going to run the provisioning without internet, then ensure that all existing yum repos are disabled 
     including, base, updates and extra repos by editing the files in /etc/yum.repos.d/ and adding enabled=0 line to each repo.
     Then run the command yum repolist enabled to see that none are enabled (except local which will be created by the provision command)
 
 
 9. Set the following environment variables (which will be used by Puppet during provisioning). 
-   For future, it might be best to set this permananently in your ~/.bashrc file.
+   For future, it might be best to set this permananently in your ~/.bashrc file. Configure as per needs.
     ```
     export BAHMNI_USER_NAME=bahmni  (default is jss)
     export IMPLEMENTATION_NAME=default (default is jss)
+    export FACTER_deploy_bahmni_openerp=true (default is false)
+    export FACTER_deploy_bahmni_openelis=true (default is false)
     ```
     Also set the $support_email and $from_email variables in stack-runtime.properties file to appropriate value if you don't like the defaults.
 
