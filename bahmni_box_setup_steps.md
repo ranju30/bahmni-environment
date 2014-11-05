@@ -76,6 +76,12 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     export FACTER_deploy_bahmni_openelis=true (default is false)
     ```
     Also set the $support_email and $from_email variables in stack-runtime.properties file to appropriate value if you don't like the defaults.
+    Run the command 
+    ```
+    hostname
+    ```
+    Copy the output and add it to the /etc/hosts file in the corresponding localhost(127.0.0.1) entry.
+    
 
 
 10. Run Provision Command (note: ensure that bahmni_user variable is set to bahmni/jss as you prefer)
