@@ -70,7 +70,7 @@ class bahmni_openerp {
     path        => "${os_path}",
     provider    => shell,
     cwd         => "${tomcatInstallationDirectory}/webapps",
-    require     => [File["${temp_dir}/bahmni-openerp/run-liquibase.sh"], Exec["fix_liquibasechangelog_filename"]]
+    require     => [File["${temp_dir}/bahmni-openerp/run-liquibase.sh"]]
   }
 
 	file { "${log4j_xml_file}" :
