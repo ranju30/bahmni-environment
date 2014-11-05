@@ -26,7 +26,6 @@ class python {
   package { "python-psycopg2" : ensure => installed, require => Package["pgdg-centos92-9.2-6.noarch"] }
   package { "python-lxml" : ensure => installed, require => Package["python-psycopg2"] }
   package { "PyXML" : ensure => installed, require => Package["python-lxml"] }
-  package { "python-setuptools_openerp" : ensure => installed, name => "python-setuptools", require => Package["PyXML"] }
   package { "libxslt-python" : ensure => installed, require => Package["python-setuptools"] }
   package { "pytz" : ensure => installed, require => Package["libxslt-python"] }
   package { "python-matplotlib" : ensure => installed, require => Package["pytz"] }
