@@ -1,7 +1,5 @@
 Guide To INSTALL Bahmni Software on a CentOS Minimal System
 ===============================================================
-
-
 1. Install CentosOS (Minimal) 
   http://wiki.centos.org/Manuals/ReleaseNotes/CentOSMinimalCD6.5
   For example:
@@ -11,39 +9,47 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     - In Virtual Box create a new Virtual Image (Bahmni_CentOS) and give its type as Red Hat Linux with 1.5GB RAM and 20 GB Virtual HDD. Leave other options as default.
     - Click on "Storage" window and select new CD/DVD drive option, to specify the CentOS ISO Image which you downloaded.
     - Start the newly created virtual box image. It will show you the INSTALL Wizard for CentOS.
-  
-  NOTE: 
-  a) It is mandatory to choose CentOS MINIMAL, so that no older versions of software like PostGRES or JAVA get installed. These will otherwise conflict with the current puppet scripts. Its best to have just a basic system, and let the puppet scripts do all the installations.
-  b) If you need to have a UI / Browser also running on this machine, then choose CentOS MINIMAL + DESKTOP. Note in this case "Java" might get selected. De-select JAVA while installing CentOS, so that it doesn't conflict with Bahmni version of Java.
 
+  NOTE: 
+    1. It is mandatory to choose CentOS MINIMAL, so that no older versions of software like PostGRES or JAVA get installed. These will otherwise conflict with the current puppet scripts. Its best to have just a basic system, and let the puppet scripts do all the installations.
+    2. If you need to have a UI / Browser also running on this machine, then choose CentOS MINIMAL + DESKTOP. Note in this case "Java" might get selected. De-select JAVA while installing CentOS, so that it doesn't conflict with Bahmni version of Java.
 
 2. Check if properly networked.
     2.1. In VirtualBox, choose bridged network to connect to internet.
     2.2. Run "ifconfig" and make sure eth0 has proper IP. You should be able to ping google. Else try "ifup eth0". Check ifconfig again.
-   
 
-NOTE: Step 3, 4, 5, 6 and 9 can be done by running the "bootstrap.py" script in bahmni-environment. Or you can do them manually
-as mentioned below.
+  NOTE: Step 3, 4, 5, 6 and 9 can be done by running the "bootstrap.py" script in bahmni-environment. Or you can do them manually as mentioned below.
 
-3. Install ruby (187)
+3. Install ruby (1.8.7)
+    ```
     sudo yum install ruby
-   
+    ```
+
 4.  Install Puppet - (http://docs.puppetlabs.com/guides/installation.html#red-hat-enterprise-linux-and-derivatives)
-       sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
-       sudo yum install puppet
+    ```
+    sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+    sudo yum install puppet
+    ```
 
 5.  Get Bahmni-Environment which contains Puppet provision scripts:
 
-    a) Install git - "sudo yum install git"    
+    a) Install git
+      ```
+      sudo yum install git
+      ```
     b) Clone Bahmni-Environment repo in /root/bahmni -
-        mkdir -p /root/bahmni
-        cd /root/bahmni
-        git clone https://github.com/Bhamni/bahmni-environment.git
-        cd bahmni-environment
+      ```
+      mkdir -p /root/bahmni
+      cd /root/bahmni
+      git clone https://github.com/Bhamni/bahmni-environment.git
+      cd bahmni-environment
+      ```
 
 
 6. Install wget (if its not already present)
-   sudo yum install wget
+  ```
+  sudo yum install wget
+  ```
 
 7. Mkdir /packages
 
@@ -57,16 +63,18 @@ as mentioned below.
 
 9. Set the following environment variables (which will be used by Puppet during provisioning). 
    For future, it might be best to set this permananently in your ~/.bashrc file.
-  
+    ```
     export BAHMNI_USER_NAME=bahmni  (default is jss)
     export IMPLEMENTATION_NAME=default (default is jss)
-
+    ```
     Also set the $support_email and $from_email variables in stack-runtime.properties file to appropriate value if you don't like the defaults.
 
 
 10. Run Provision Command (note: ensure that bahmni_user variable is set to bahmni/jss as you prefer)
-    cd /root/bahmni/bahmni-environment
-    ./scripts/run-puppet-manifest.sh provision
+  ```
+  cd /root/bahmni/bahmni-environment
+  ./scripts/run-puppet-manifest.sh provision
+  ```
 
 11. 
     Create openmrs db (user root/password): openmrs
@@ -75,23 +83,34 @@ as mentioned below.
 
 
 12. Download & install latest BAHMNI build from CI.
-    ./scripts/run-puppet-manifest.sh download-build
+  ```
+  ./scripts/run-puppet-manifest.sh download-build
+  ```
     
 
 13. Deploy the Implementation Specific Builds (will read your implementation_name variable to decide which one to install)
-    ./scripts/run-puppet-manifest.sh deploy
-    
-    Note: If on deploy you get an error for JDK or tools.jar, ensure your default java is latest 1.7, and not old java1.5. If it is, then rename old java and create new sym link: 'ln -s /usr/java/default/bin/java /usr/bin/java'.       
+  ```
+  ./scripts/run-puppet-manifest.sh deploy
+  ```
+  Note: If on deploy you get an error for JDK or tools.jar, ensure your default java is latest 1.7, and not old java1.5. If it is, then rename old java and create new sym link: 'ln -s /usr/java/default/bin/java /usr/bin/java'.       
 
 
 14. JASPER REPORTS
     ----------------
     To deploy Jasper Reports, perform the following steps from bahmni-environment folder:
-    - Check if you can access jasper reports: http://<IP>:8080/jasperserver/ (jasperadmin/jasperadmin)
-    - If you can't, then from webapps folder in tomcat, delete the 'jasperserver' folder and run the following command (stop tomcat): ./scripts/run-puppet-module.sh jasperserver
+    - Check if you can access jasper reports: 
+    ```
+    http://<IP>:8080/jasperserver/ (jasperadmin/jasperadmin)
+    ```
+    - If you can't, then from webapps folder in tomcat, delete the 'jasperserver' folder and run the following command (stop tomcat):
+    ```
+    ./scripts/run-puppet-module.sh jasperserver
+    ```
     - Now check that after restart of tomcat, the Jasper server URL is accessible.
     - Now deploy appropriate reports (this command reads the IMPLEMENTATION_NAME variable to decide which reports to deploy): 
+    ```
     ./scripts/run-puppet-module.sh bahmni_jasperreports
+    ```
 
 15. Login to OpenERP using URL: http://<IP>:8069/ 
     Use credentials admin/admin or admin/password.
