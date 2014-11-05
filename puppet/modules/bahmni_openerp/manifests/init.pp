@@ -56,14 +56,7 @@ class bahmni_openerp {
 	    user      => "${bahmni_user}"
 	}
 
-
-	exec { "fix_liquibasechangelog_filename" :
-	    command   => "psql -Uopenerp -c \"update liquibasechangelog set filename='openerp-atomfeed-service/sql/db_migrations.xml' where filename like '%openerp-atomfeed-service/sql/db_migrations.xml';\"",
-	    provider  => shell,
-	    path      => "${os_path}",
-	}
-
-  file { "${temp_dir}/bahmni-openerp/run-liquibase.sh" :
+	file { "${temp_dir}/bahmni-openerp/run-liquibase.sh" :
     ensure      => present,
     content     => template("bahmni_openerp/run-liquibase.sh"),
     owner       => "${bahmni_user}",
