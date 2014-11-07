@@ -4,7 +4,7 @@ require 'micro-optparse'
 require 'pg'
 require 'uuid'
 
-# gem install mysql2 micro-optparse uuid
+# gem install mysql2 pg micro-optparse uuid
 parser = Parser.new do |p|
    p.banner = "Usage: ruby #{__FILE__} [options]"
    p.option :host, "Host name or IP", :default => "192.168.33.10", :short => 'H'
