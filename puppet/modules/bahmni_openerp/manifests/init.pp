@@ -82,10 +82,6 @@ class bahmni_openerp {
 		mode        => 664,
 	}
 
-	class { "implementation_config::openerp":
-		implementation_name => "${implementation_name}", require => Exec['bahmni_openerp_data']
-	}
-
 	#Hack: OpenERP module is not idempotent. Because of this, I can't add
 	#a notify to Exec["bahmni_openerp"] and get on with it. 
 	#Needs to be fixed someday. 

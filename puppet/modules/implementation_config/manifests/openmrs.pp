@@ -1,6 +1,4 @@
-class implementation_config::openmrs($implementation_name = $implementation_name) {
-  require implementation_config::setup
-
+class implementation_config::openmrs {
   $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
   $beanshell_dir = "${build_output_dir}/${implementation_name}_config/openmrs/beanshell"
   $obscalculator_dir = "${build_output_dir}/${implementation_name}_config/openmrs/obscalculator"

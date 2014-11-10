@@ -1,5 +1,4 @@
-class implementation_config::openelis($implementation_name = $implementation_name) {
-  require implementation_config::setup
+class implementation_config::openelis {
 
   exec { "copyLogoToOpenelis" :
     command   => "cp ${build_output_dir}/${implementation_name}_config/openelis/images/labLogo.jpg ${tomcatInstallationDirectory}/webapps/${openelis_war_file_name}/WEB-INF/reports/images",

@@ -1,9 +1,14 @@
-class implementation_config($implementation_name = $implementation_name) {
-  class {"implementation_config::openmrs": implementation_name => "$implementation_name"}
+class implementation_config() {
+
+  require implementation_config::setup
+  
+  contain 'implementation_config::openmrs'
+  
   if $deploy_bahmni_openelis == "true" {
-	  class {"implementation_config::openelis": implementation_name => "$implementation_name"}
+	  contain 'implementation_config::openelis'
   }
+  
   if $deploy_bahmni_openerp == "true" {
-	  class {"implementation_config::openerp": implementation_name => "$implementation_name"}
+	  contain 'implementation_config::openerp'
   }
 }

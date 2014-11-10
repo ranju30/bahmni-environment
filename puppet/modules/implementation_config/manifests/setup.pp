@@ -1,4 +1,4 @@
-class implementation_config::setup($implementation_name = $implementation_name) {
+class implementation_config::setup {
   $implementation_zip_file = "${build_output_dir}/${implementation_name}_config.zip"
 
   exec { "unzip_${implementation_name}" :
