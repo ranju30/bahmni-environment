@@ -1,5 +1,7 @@
-class implementation_config() {
+class implementation_config {
 
+  if $implementation_name == undef { fail("'implementation_name' not defined") }
+  
   require implementation_config::setup
   
   contain 'implementation_config::openmrs'
