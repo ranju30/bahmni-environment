@@ -40,18 +40,6 @@ else
 	echo "Not setting bahmni_user_name. Puppet default will be used."
 fi
 
-####################################################################
-# Checking if env variable IMPLEMENTATION_NAME is set
-if [ "${IMPLEMENTATION_NAME}a" != "a" ]
-then
-	export FACTER_implementation_name=$IMPLEMENTATION_NAME
-	echo "Setting implementation_name=${FACTER_implementation_name}"
-else
-	echo "Not setting implementation_name. Puppet default will be used."
-fi
-
-####################################################################
-
 # Checking if env variable BUILD_SOURCE_DIR is set
 if [ "${BUILD_SOURCE_DIR}a" != "a" ]
 then
