@@ -6,13 +6,14 @@ then
 	exit 1
 fi
 
-rm -rf /packages/build/*
+rm -rf /packages/build
+mkdir -p /packages/build
 mv -f deployables/mrs/* /packages/build/
 mv -f deployables/erp/* /packages/build/
 mv -f deployables/elis/* /packages/build/
 mv -f deployables/referencedata/* /packages/build/
 mv -f deployables/environment/* /packages/build/
-mv -f deployables/${IMPLEMENTATION_NAME}_config.zip /packages/build
+mv -f deployables/${IMPLEMENTATION_NAME}_config.zip /packages/build/
 
 rm -rf deployables
 
