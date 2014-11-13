@@ -20,7 +20,7 @@ select
  FROM orders
  WHERE order_type_id in (select order_type_id from order_type where name='Drug Order') $from_id and voided=false;"
 
-#psql -l -Upostgres openerp -f /tmp/drug_order_uuids.sql
+psql -l -Upostgres openerp -f /tmp/drug_order_uuids.sql
 
 
 
