@@ -6,13 +6,19 @@ class bahmni_snapshot_migrations() {
     recurse => "true",
   }
 
+  file { "${temp_dir}/liquibase-core-2.0.5.jar" :
+    ensure => "directory",
+    source => "puppet:///modules/bahmni_snapshot_migrations/liquibase-core-2.0.5.jar",
+    owner => "${bahmni_user}"
+  }
+  
   file { "${temp_dir}/run-snapshot-liquibase.sh" :
     ensure      => present,
     content     => template("bahmni_snapshot_migrations/run-snapshot-liquibase.sh"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
     mode        => 554,
-    require => File["${temp_dir}/snapshots"]
+    require => [File["${temp_dir}/snapshots"], File["${temp_dir}/liquibase-core-2.0.5.jar"]]
   }
 
   exec { "run-snapshot-migrations" :
