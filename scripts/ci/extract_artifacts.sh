@@ -20,3 +20,5 @@ rm -rf deployables
 unzip -qo /packages/build/bahmni-environment.zip -d /packages/build/
 
 rm -f /packages/build/*_md5.checksum
+
+chmod -R a+rwx /packages/build
