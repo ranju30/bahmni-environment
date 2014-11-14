@@ -1,7 +1,7 @@
 class openmrs {
   require bahmni_distro
   require tomcat::clean
-  include bahmni_snapshot_migrations
+  require bahmni_snapshot_migrations
 
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/classes/log4j.xml"
   $openmrs_webapp_location =  "${tomcatInstallationDirectory}/webapps/openmrs"

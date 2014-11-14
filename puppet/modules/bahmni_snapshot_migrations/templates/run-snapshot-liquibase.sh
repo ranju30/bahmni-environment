@@ -4,11 +4,11 @@ set -e -x
 WEBAPPS_DIR="<%= @tomcatInstallationDirectory %>/webapps"
 OPENMRS_MODULE_DIR="<%= @openmrs_modules_dir %>"
 CHANGE_LOG_TABLE="-Dliquibase.databaseChangeLogTableName=liquibasechangelog -Dliquibase.databaseChangeLogLockTableName=liquibasechangeloglock"
-LIQUIBASE_JAR="$WEBAPPS_DIR/openmrs/WEB-INF/lib/liquibase-core-2.0.5.jar"
+TEMP_DIR="<%= @temp_dir %>"
+LIQUIBASE_JAR="${TEMP_DIR}/liquibase-core-2.0.5.jar"
 DRIVER="com.mysql.jdbc.Driver"
 CREDS="--url=jdbc:mysql://localhost:3306/openmrs --username=root --password=password "
 COMMON_CLASSPATH="<%= @build_output_dir %>/<%= @openmrs_distro_file_name_prefix %>/<%= @openmrs_war_file_name %>.war"
-TEMP_DIR="<%= @temp_dir %>"
 SNAPSHOTS_DIR=${TEMP_DIR}/snapshots
 
 
