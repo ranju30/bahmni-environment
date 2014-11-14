@@ -1,7 +1,4 @@
 class bahmni_snapshot_migrations() {
-
-  require openmrs 
-  
   file { "${temp_dir}/snapshots" :
     ensure => "directory",
     source => "puppet:///modules/bahmni_snapshot_migrations/snapshots",
