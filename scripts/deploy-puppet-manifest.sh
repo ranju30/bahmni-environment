@@ -31,14 +31,6 @@ fi
 
 ####################################################################
 # Note that you should invoke this script with sudo -E (so that environment variables are passed to this script)
-# Checking if env variable BAHMNI_USER_NAME is set
-if [ "${BAHMNI_USER_NAME}a" != "a" ]
-then
-	export FACTER_bahmni_user_name=$BAHMNI_USER_NAME
-	echo "Setting bahmni_user_name=${FACTER_bahmni_user_name}"
-else
-	echo "Not setting bahmni_user_name. Puppet default will be used."
-fi
 
 # Checking if env variable BUILD_SOURCE_DIR is set
 if [ "${BUILD_SOURCE_DIR}a" != "a" ]
