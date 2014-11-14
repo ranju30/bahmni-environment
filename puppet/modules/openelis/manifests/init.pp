@@ -7,12 +7,18 @@ class openelis {
   $openelis_webapp_location =  "${tomcatInstallationDirectory}/webapps/openelis"
   $bahmni_openelis_temp_dir = "${temp_dir}/OpenElis"
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openelis_war_file_name}/WEB-INF/classes/log4j.xml"
+  
+  file { "remove_openelis_webapp_dir" :
+    path    => ${openelis_webapp_location},
+    ensure  => absent,
+    force   => true
+  }
 
   exec { "latest_openelis_webapp" :
-    command   => "rm -rf ${openelis_webapp_location} && unzip -o -q ${build_output_dir}/${openelis_war_file_name}.war -d ${openelis_webapp_location} ${deployment_log_expression}",
+    command   => "unzip -o -q ${build_output_dir}/${openelis_war_file_name}.war -d ${openelis_webapp_location} ${deployment_log_expression}",
     provider  => shell,
     path      => "${os_path}",
-    require   => [File["${deployment_log_file}"]],
+    require   => [File["${deployment_log_file}"],File["remove_openelis_webapp_dir"]],
     user      => "${bahmni_user}",
   }
 
