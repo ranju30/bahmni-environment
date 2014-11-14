@@ -6,17 +6,13 @@ class reference_data {
   $reference_data_scripts_zip =  "${build_output_dir}/reference-data-scripts.zip"
   $reference_data_scripts_dir = "${temp_dir}/scripts"
   
-  file {"remove_reference_data_webapp":
-    path    => ${reference_data_webapp_location},
-    ensure  => absent,
-    force   => true
-  }
+  file { "${reference_data_webapp_location}" : ensure => absent, purge => true}
 
   exec { "latest_reference_data_webapp" :
     command   => "unzip -o -q ${reference_data_war} -d ${reference_data_webapp_location} ${deployment_log_expression}",
     provider  => shell,
     path      => "${os_path}",
-    require   => [File["${deployment_log_file}"],File["remove_reference_data_webapp"]],
+    require   => [File["${deployment_log_file}"], File["${reference_data_webapp_location}"]],
     user      => "${bahmni_user}",
   }
 
