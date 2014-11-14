@@ -41,7 +41,7 @@ class bahmni_snapshot_migrations() {
     command     => "${temp_dir}/run-snapshot-liquibase.sh ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
-    require => [[Exec["openmrs_database"]], File["${temp_dir}/run-snapshot-liquibase.sh"]],
+    require => [Exec["openmrs_database"], File["${temp_dir}/run-snapshot-liquibase.sh"]],
     timeout   => 0
   }
 }
