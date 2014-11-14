@@ -1,7 +1,10 @@
 class bahmni_omods {
+  
   require openmrs
   require bahmni_configuration
   require bahmni_distro
+  
+  include bahmni_snapshot_migrations
 
   $openmrs_modules_dir = "/home/${bahmni_user}/.OpenMRS/modules"
   $ui_modules_dir = "${build_output_dir}/ui-modules"
