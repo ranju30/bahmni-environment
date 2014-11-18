@@ -14,7 +14,7 @@ class implementation_config::openelis {
     onlyif    => "test -f ${build_output_dir}/${implementation_name}_config/openelis/images/labLogo.jpg"
   }
   
-  file { "${bahmni_openelis_temp_dir}" : ensure => absent, purge => true}
+  file { "${build_output_dir}/OpenElis.zip " : ensure => absent, purge => true}
 
   exec { "bahmni_openelis_codebase_for_liquibase_jar" :
     provider => "shell",
