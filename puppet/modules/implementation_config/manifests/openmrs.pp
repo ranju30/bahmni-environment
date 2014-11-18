@@ -30,10 +30,13 @@ class implementation_config::openmrs {
     app_name            => "openmrs"
   }
 
+  file { "${httpd_deploy_dir}/bahmni_config" : ensure => absent, purge => true}
+
   exec { "copy_implementation_config" :
-    command     => "rm -rf ${httpd_deploy_dir}/bahmni_config && unzip -q -o ${implementation_config::setup::implementation_zip_file} 'openmrs/apps/*' -d ${httpd_deploy_dir}/bahmni_config ${deployment_log_expression}",
+    command     => "unzip -q -o ${implementation_config::setup::implementation_zip_file} 'openmrs/apps/*' -d ${httpd_deploy_dir}/bahmni_config ${deployment_log_expression}",
     provider    => "shell",
-    path        => "${os_path}"
+    path        => "${os_path}",
+    require   => [File["${httpd_deploy_dir}/bahmni_config"]]
   }
 
   exec { "set_owner_of_bahmni_config" :
