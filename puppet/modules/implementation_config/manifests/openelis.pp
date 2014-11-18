@@ -21,7 +21,7 @@ class implementation_config::openelis {
     command  => "unzip -o -q ${build_output_dir}/OpenElis.zip -d ${temp_dir} ${deployment_log_expression}",
     path     => "${os_path}",
     onlyif    => "test -f ${build_output_dir}/${implementation_name}_config/migrations/openelis/liquibase.xml",
-    require   => [File["${bahmni_openelis_temp_dir}"]]
+    require   => [File["${build_output_dir}/OpenElis.zip"]]
   }
 
   implementation_config::migrations { "implementation_config_migrations_openelis":
