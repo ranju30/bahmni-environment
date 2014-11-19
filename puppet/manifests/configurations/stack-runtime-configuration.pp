@@ -6,7 +6,7 @@
 
 # Set bahmni_user to $bahmni_user_name if specified, else set default to jss for backward compatibility
 $bahmni_user = $bahmni_user_name ? {
-      undef			=> "jss",
+      undef			=> "bahmni",
       default       => $bahmni_user_name
 }
 
