@@ -19,10 +19,13 @@ class openelis {
     user      => "${bahmni_user}",
   }
 
+  file { "${bahmni_openelis_temp_dir}" : ensure => absent, purge => true}
+
   exec { "bahmni_openelis_codebase" :
     provider => "shell",
     command   => "rm -rf ${bahmni_openelis_temp_dir} && unzip -o -q ${build_output_dir}/OpenElis.zip -d ${temp_dir} ${deployment_log_expression}",
-    path => "${os_path}"
+    path => "${os_path}",
+    require   => [File["${bahmni_openelis_temp_dir}"]]
   }
 
   exec { "openelis_setupdb" :

@@ -70,8 +70,8 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 9. Set the following environment variables (which will be used by Puppet during provisioning). 
    For future, it might be best to set this permananently in your ~/.bashrc file. Configure as per needs.
     ```
-    export FACTER_bahmni_user_name=bahmni  (default is jss)
-    export FACTER_implementation_name=default (default is jss)
+    export FACTER_bahmni_user_name=bahmni  (default is bahmni)
+    export FACTER_implementation_name=default (default is default)
     export FACTER_deploy_bahmni_openerp=true (default is false)
     export FACTER_deploy_bahmni_openelis=true (default is false)
     ```
