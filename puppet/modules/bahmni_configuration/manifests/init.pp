@@ -22,7 +22,7 @@ class bahmni_configuration {
     group  => "${bahmni_user}",
   }
 
-  file { ["${uploadedFilesDirectory}/mrs/", "${uploadedFilesDirectory}/mrs/encounter", "${uploadedFilesDirectory}/mrs/concept", "${uploadedFilesDirectory}/mrs/conceptset", "${uploadedFilesDirectory}/mrs/patient"] :
+  file { ["${uploadedFilesDirectory}/mrs] :
     ensure => directory,
     mode   => 774,
     owner  => "${bahmni_user}",
