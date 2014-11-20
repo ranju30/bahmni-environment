@@ -101,6 +101,7 @@ where
 -- Randomize the visit, encounter and obs dates
 --
 
+/**
 ALTER TABLE visit ADD COLUMN rand_increment int;
 
 UPDATE visit
@@ -125,6 +126,7 @@ SET o.obs_datetime = adddate(o.obs_datetime, v.rand_increment),
 	o.value_datetime = IF(o.value_datetime IS NULL, NULL, adddate(o.value_datetime, v.rand_increment));
 
 ALTER TABLE visit DROP COLUMN rand_increment;
+**/
 
 --
 -- Rename location to something nonsensical
@@ -139,13 +141,14 @@ set
 --
 update users
 set	username = concat('username-', user_id)
-where username NOT IN ('admin');
+where username NOT IN ('admin', 'superman');
 
 update users
 set	password = '4a1750c8607dfa237de36c6305715c223415189',
 	salt = 'c788c6ad82a157b712392ca695dfcf2eed193d7f',
 	secret_question = null,
-	secret_answer = null;
+	secret_answer = null
+where username NOT IN ('admin', 'superman');
 
 -- clear out the username/password stored in the db
 update global_property set property_value = 'admin' where property like '%.username';
@@ -182,7 +185,7 @@ INSERT INTO
 SELECT
 	patient_id,
 	concat((Select prefix from idgen_seq_id_gen order by rand() limit 1), patient_id),
-	1,
+	(Select patient_identifier_type_id from patient_identifier_type where name = 'Bahmni Id'),
 	1,
 	1,
 	1,
