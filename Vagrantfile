@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
   else
     manifest_file = ENV['STAGE'] + ".pp"
   end
-#
+
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "puppet/manifests"
     puppet.manifest_file = manifest_file
