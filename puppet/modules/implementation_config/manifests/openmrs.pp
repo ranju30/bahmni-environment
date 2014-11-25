@@ -4,6 +4,8 @@ class implementation_config::openmrs {
   $obscalculator_dir = "${build_output_dir}/${implementation_name}_config/openmrs/obscalculator"
   $patient_matching_algorithm_dir = "${build_output_dir}/${implementation_name}_config/openmrs/patientMatchingAlgorithm"
   
+  require implementation_config::setup
+  
   exec { "copyBeanshellToOpenMRSFolder" :
     command   => "cp -rf ${beanshell_dir} ${openmrs_dir}",
     provider  => shell,
