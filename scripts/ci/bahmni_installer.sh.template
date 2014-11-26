@@ -1,0 +1,38 @@
+#!/bin/bash -e
+OPTIND=1
+OPTERR=0
+
+show_help="usage: ./bahmni_installer [-h] [-c implementation_config_file]"
+
+while getopts ":hc:" opt; do
+    case "$opt" in
+    h)
+        echo $show_help
+        exit 0
+        ;;
+    c)  
+		implementation_config_file=$OPTARG
+		if [ ! -f $implementation_config_file ]; then
+  			echo "Implementation Config not found! Please provide the full path to the config file"
+  			exit 1
+		fi
+        ;;
+    :)
+      	echo "Option -$OPTARG requires an argument."
+      	exit 1
+      	;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "$1" = "--" ] && shift
+
+sed -e '1,/^exit$/d' "$0" | tar xzf - -C /packages/build
+unzip -qo /packages/build/bahmni-environment.zip -d /packages/build
+if [ "${implementation_config_file}a" != "a" ]
+then
+	cp -f $implementation_config_file /packages/build
+fi
+/bin/sh /packages/build/bahmni-environment/{{RUN_DEPLOY_SCRIPT}}
+exit
