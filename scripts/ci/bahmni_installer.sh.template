@@ -12,7 +12,7 @@ fi
 
 if [ $SCRIPT_DIR != "/packages/build" ]
 then
-        mv $SCRIPT_DIR/* /packages/build
+        yes | cp -R $SCRIPT_DIR/* /packages/build
 fi
 
 /bin/sh /packages/build/bahmni-environment/scripts/{{RUN_DEPLOY_SCRIPT}}
