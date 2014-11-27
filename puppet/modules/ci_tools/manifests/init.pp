@@ -47,6 +47,10 @@ class ci_tools {
     path      => "${os_path}"
   }
 
+  package { "makeself" :
+    ensure => present
+  }
+
 }
 
 class node_requirements{
