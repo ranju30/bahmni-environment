@@ -32,25 +32,22 @@ class implementation_config::openmrs {
     app_name            => "openmrs"
   }
 
-  file { "${httpd_deploy_dir}/bahmni_config" : ensure => absent, purge => true}
-
   exec { "copy_implementation_config" :
-    command     => "unzip -q -o ${implementation_config::setup::implementation_zip_file} 'openmrs/apps/*' -d ${httpd_deploy_dir}/bahmni_config ${deployment_log_expression}",
+    command     => "rm -rf ${bahmniConfigDirectory}&& unzip -q -o ${implementation_config::setup::implementation_zip_file} 'openmrs/apps/*' -d ${bahmniConfigDirectory} ${deployment_log_expression}",
     provider    => "shell",
-    path        => "${os_path}",
-    require   => [File["${httpd_deploy_dir}/bahmni_config"]]
+    path        => "${os_path}"
   }
 
   exec { "set_owner_of_bahmni_config" :
     provider => "shell",
-    command => "chown -R ${bahmni_user}:${bahmni_user} ${httpd_deploy_dir}/bahmni_config",
+    command => "chown -R ${bahmni_user}:${bahmni_user} ${bahmniConfigDirectory}",
     path => "${os_path}",
     require => Exec["copy_implementation_config"]
   }
 
   exec { "set_permissions_of_bahmni_config" :
     provider => "shell",
-    command => "chmod -R  777 ${httpd_deploy_dir}/bahmni_config",
+    command => "chmod -R  777 ${bahmniConfigDirectory}",
     path => "${os_path}",
     require => Exec["copy_implementation_config"]
   }
