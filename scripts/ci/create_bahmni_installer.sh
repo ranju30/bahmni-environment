@@ -7,9 +7,8 @@ export ARTIFACTS_DIRECTORY=$1
 export INSTALLER_FILE_NAME=$2
 export INSTALLER_LABEL=$3
 export COMMAND=$4
-export BAHMNI_INSTALLER_FILE=bahmni_installer.sh
-export INSTALLER_FILE=$ARTIFACTS_DIRECTORY/$BAHMNI_INSTALLER_FILE
-export INSTALLER_TEMPLATE=$SCRIPT_DIR/$BAHMNI_INSTALLER_FILE.template
+export BAHMNI_INSTALLER_FILE=bahmni_deploy.sh
+export INSTALLER_FILE=$ARTIFACTS_DIRECTORY/bahmni_deploy.sh
 
 source $SCRIPT_DIR/installer_utils.sh
 
@@ -23,5 +22,4 @@ then
 	exit 1
 fi
 
-replace_installer_template "run-puppet-module.sh $COMMAND"
 create_installer
