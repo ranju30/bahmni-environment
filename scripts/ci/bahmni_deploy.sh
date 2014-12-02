@@ -8,8 +8,16 @@ TEMP_SCRIPT_DIR=`dirname -- "$0"`
 SCRIPT_DIR=`cd $TEMP_SCRIPT_DIR; pwd`
 export SCRIPT_DIR
 
-sh $SCRIPT_DIR/$erp_installer_file --target /packages/build
-sh $SCRIPT_DIR/$elis_installer_file --target /packages/build
+if [ ${FACTER_deploy_bahmni_openerp}a != "falsea" ]
+then
+  sh $SCRIPT_DIR/$erp_installer_file --target /packages/build
+fi
+
+if [ ${FACTER_deploy_bahmni_openelis}a != "falsea" ]
+then
+  sh $SCRIPT_DIR/$elis_installer_file --target /packages/build
+fi
+
 sh $SCRIPT_DIR/$mrs_installer_file --target /packages/build
 
 echo "Installation Complete"
