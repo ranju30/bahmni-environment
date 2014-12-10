@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e -x
 
 GO_USER=guest
 GO_PWD=p@ssw0rd
