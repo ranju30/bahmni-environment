@@ -14,24 +14,28 @@ then
 	exit 1
 fi
 
-declare -a allrepos=("openerp-atomfeed-service" "openmrs-module-bahmniapps" "jss-config"
- "search-config" "OpenElis" "bahmni-core" "bahmni-java-utils" "reference-data"
- "openerp-modules" "openerp-functional-tests" "openmrs-distro-bahmni" "bahmni-environment" 
- "openmrs-module-bedmanagement")
+declare -a allrepos=("openmrs-module-bahmniapps" "jss-config" "openerp-atomfeed-service" "OpenElis"
+ "bahmni-core" "bahmni-java-utils" "openerp-modules" "openerp-functional-tests" "openmrs-distro-bahmni"
+ "bahmni-environment" "emr-functional-tests")
 
-rm -rf allrepos
-mkdir allrepos
-cd allrepos
+rm -rf ~/Project/Bahmni/allrepos
+mkdir ~/Project/Bahmni/allrepos
+cd ~/Project/Bahmni/allrepos
+
+. $3
 
 for repo in "${allrepos[@]}"
 do
+   declare shaKey=$(echo "$repo" | tr '-' '_')
+#   echo ${!shaKey}
+
    echo -e "${Blu}Cloning $repo ${RCol}"
    git clone git@github.com:Bhamni/$repo.git
    cd $repo
    echo -e "${Gre}Creating a branch for $repo - release-"${1/-SNAPSHOT/}"... ${RCol}"
-   git branch release-"${1/-SNAPSHOT/}"
-   find . -name "pom.xml" -exec sed -i '' 's/5.0-SNAPSHOT/5.1-SNAPSHOT/g'  {} \;
-   find . -name "config.xml" -exec sed -i '' 's/5.0-SNAPSHOT/5.1-SNAPSHOT/g'  {} \;
+   git branch release-"${1/-SNAPSHOT/}" ${!shaKey}
+   find . -name "pom.xml" -exec sed -i '' 's/'${1/-SNAPSHOT/}'/'${2/-SNAPSHOT/}'/g'  {} \;
+   find . -name "config.xml" -exec sed -i '' 's/'${1/-SNAPSHOT/}'/'${2/-SNAPSHOT/}'/g'  {} \;
    if [ -n "$(git status --porcelain)" ]; then
    	git diff > ../$repo.diff
    	echo -e "${Gre}Version changes in "$repo:master" ->  ./allrepos/$repo.diff ${RCol} "

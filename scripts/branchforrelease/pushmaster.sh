@@ -2,12 +2,11 @@
 
 RCol='\x1B[0m'; Red='\x1B[0;31m'; Gre='\x1B[0;32m'; Yel='\x1B[0;33m'; Blu='\x1B[0;34m';
 
-declare -a allrepos=("openerp-atomfeed-service" "openmrs-module-bahmniapps" "jss-config"
- "search-config" "OpenElis" "bahmni-core" "bahmni-java-utils" "reference-data"
- "openerp-modules" "openerp-functional-tests" "openmrs-distro-bahmni" "bahmni-environment" 
- "openmrs-module-bedmanagement")
+declare -a allrepos=("openmrs-module-bahmniapps" "jss-config" "openerp-atomfeed-service" "OpenElis"
+ "bahmni-core" "bahmni-java-utils" "openerp-modules" "openerp-functional-tests" "openmrs-distro-bahmni"
+ "bahmni-environment" "emr-functional-tests")
 
-cd allrepos
+cd ~/Project/Bahmni/allrepos/
 
 for repo in "${allrepos[@]}"
 do

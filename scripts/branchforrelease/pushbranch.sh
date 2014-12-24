@@ -12,12 +12,11 @@ then
 	usage
 	exit 1
 fi
-declare -a allrepos=("openerp-atomfeed-service" "openmrs-module-bahmniapps" "jss-config"
- "search-config" "OpenElis" "bahmni-core" "bahmni-java-utils" "reference-data"
- "openerp-modules" "openerp-functional-tests" "openmrs-distro-bahmni" "bahmni-environment" 
- "openmrs-module-bedmanagement")
+declare -a allrepos=("openmrs-module-bahmniapps" "jss-config" "openerp-atomfeed-service" "OpenElis"
+ "bahmni-core" "bahmni-java-utils" "openerp-modules" "openerp-functional-tests" "openmrs-distro-bahmni"
+ "bahmni-environment" "emr-functional-tests")
 
-cd allrepos
+cd ~/Project/Bahmni/allrepos/
 
 for repo in "${allrepos[@]}"
 do
