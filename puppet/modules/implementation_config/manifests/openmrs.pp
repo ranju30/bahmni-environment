@@ -1,8 +1,9 @@
-class implementation_config::openmrs {
+  class implementation_config::openmrs {
   $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
   $beanshell_dir = "${build_output_dir}/${implementation_name}_config/openmrs/beanshell"
   $obscalculator_dir = "${build_output_dir}/${implementation_name}_config/openmrs/obscalculator"
   $patient_matching_algorithm_dir = "${build_output_dir}/${implementation_name}_config/openmrs/patientMatchingAlgorithm"
+  $ordertemplates_dir = "${build_output_dir}/${implementation_name}_config/openmrs/ordertemplates"
   $encounter_modifier_scripts_dir = "${build_output_dir}/${implementation_name}_config/openmrs/encounterModifier"
   
   require implementation_config::setup
@@ -33,6 +34,13 @@ class implementation_config::openmrs {
     provider  => shell,
     path      => "${os_path}",
     onlyif    => "test -d ${encounter_modifier_scripts_dir}"
+  }
+ 
+  exec { "copyordertemplatesToOpenMRSFolder" :
+    command   => "cp -rf ${ordertemplates_dir} ${openmrs_dir}",
+    provider  => shell,
+    path      => "${os_path}",
+    onlyif    => "test -d ${ordertemplates_dir}"
   }
 
   implementation_config::migrations { "implementation_config_migrations_openmrs":
