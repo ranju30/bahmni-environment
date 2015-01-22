@@ -10,6 +10,7 @@ truncate table encounter;
 truncate table visit;
 truncate table patient_identifier;
 truncate table patient;
+truncate table obs_relationship;
 
 delete from person_address where person_id <> 1;
 delete from person_attribute where person_id <> 1;
