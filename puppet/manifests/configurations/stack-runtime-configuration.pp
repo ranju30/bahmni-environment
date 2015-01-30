@@ -3,15 +3,29 @@
 # user
 # to generate password hash use 'echo "password" | openssl passwd -1 -stdin'
 
+$bahmni_user_password_hash = '$1$IW4OvlrH$Kui/55oif8W3VZIrnX6jL1' #p@ssw0rd
+$ssh_port=22
 
-# Set bahmni_user to $bahmni_user_name if specified, else set default to jss for backward compatibility
+# Default values for expected FACTER variables
 $bahmni_user = $bahmni_user_name ? {
-      undef			=> "bahmni",
+      undef     => "bahmni",
       default       => $bahmni_user_name
 }
 
-$bahmni_user_password_hash = '$1$IW4OvlrH$Kui/55oif8W3VZIrnX6jL1' #p@ssw0rd
-$ssh_port=22
+$bahmni_openerp_required = $deploy_bahmni_openerp ? {
+      undef     => "true",
+      default       => $deploy_bahmni_openerp
+}
+
+$bahmni_openelis_required = $deploy_bahmni_openelis ? {
+      undef     => "true",
+      default       => $deploy_bahmni_openelis
+}
+
+$install_server_type = $bahmni_server_type ? {
+      undef     => "active",
+      default       => $bahmni_server_type
+}
 
 # Machines
 $primary_machine_ip = "192.168.0.152"
@@ -30,7 +44,13 @@ $mysqlRootPassword = "password"
 $postgresMajorVersion ="9"
 $postgresMinorVersion = "2"
 $postgresUser="postgres"
-$postgresMachine = "master" ## [master | slave]
+
+$postgresMachine = $install_server_type ? {
+  "active"  => "master",
+  undef     => "master",
+  "passive" => "slave"
+}
+
 $postgresMaster = $primary_machine_ip
 $postgresSlave = $secondary_machine_ip
 

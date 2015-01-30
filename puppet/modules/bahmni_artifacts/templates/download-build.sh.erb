@@ -16,13 +16,13 @@ echo "Downloading openmrs artifacts"
 echo "--------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_artifacts_$BRANCH/$ARTIFACTS_Build_Name/CollectArtefactsStage/Latest/defaultJob/deployables/mrs.zip && unzip -qo mrs.zip && rm mrs.zip && mv mrs/* . && rm -rf mrs
 
-<% if @deploy_bahmni_openerp == "true" -%>
+<% if @bahmni_openerp_required == "true" -%>
 echo "Downloading openerp artifacts"
 echo "-------------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_artifacts_$BRANCH/$ARTIFACTS_Build_Name/CollectArtefactsStage/Latest/defaultJob/deployables/erp.zip && unzip -qo erp.zip && rm erp.zip && mv erp/* . && rm -rf erp
 <% end -%>
 
-<% if @deploy_bahmni_openelis == "true" -%>
+<% if @bahmni_openelis_required == "true" -%>
 echo "Downloading openelis artifacts"
 echo "-------------------------------"
 wget --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_artifacts_$BRANCH/$ARTIFACTS_Build_Name/CollectArtefactsStage/Latest/defaultJob/deployables/elis.zip && unzip -qo elis.zip && rm elis.zip && mv elis/* . && rm -rf elis

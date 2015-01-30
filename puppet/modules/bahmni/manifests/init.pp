@@ -4,11 +4,11 @@ class bahmni {
   require reference_data
   require bahmni_client_side_logging
   
-  if $deploy_bahmni_openelis == "true" {
+  if $bahmni_openelis_required == "true" {
     require bahmni_openelis
   }
   
-  if $deploy_bahmni_openerp == "true" {
+  if $bahmni_openerp_required == "true" {
     require bahmni_openerp
   }
   

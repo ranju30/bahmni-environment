@@ -47,14 +47,14 @@ class bahmni_omods {
     require     => [File["${temp_dir}/run-core-bahmni-modules-liquibase.sh"], File["${temp_dir}/openmrs-liquibase-functions.sh"]]
   }
 
-  if $deploy_bahmni_openelis == "true" {
+  if $bahmni_openelis_required == "true" {
     bahmni_omods::bahmni_atomfeed_client { "deploy_openelis_atomfeed_client":
       atomfeed_client_name => "openelis",
       require => Exec["run_core_bahmni_modules_liquibase"]
     }
   }  
 
-  if $deploy_bahmni_openerp == "true" {
+  if $bahmni_openerp_required == "true" {
     bahmni_omods::bahmni_atomfeed_client { "deploy_openerp_atomfeed_client": 
       atomfeed_client_name => "openerp",
       require => Exec["run_core_bahmni_modules_liquibase"]

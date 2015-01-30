@@ -1,4 +1,12 @@
 class bahmni_openerp {
+	if ($bahmni_openerp_required == "true") {
+		include bahmni_openerp_internal
+	} else {
+		notice ("Not installing OpenERP. ")
+	}
+}
+
+class bahmni_openerp_internal {
 	include bahmni_revisions
     $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openerp_atomfeed_war_file_name}/WEB-INF/classes/log4j.xml"
     $openerp_modules_zip_filename = "openerp-modules"

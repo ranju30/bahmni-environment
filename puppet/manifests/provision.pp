@@ -19,7 +19,7 @@ node default {
 	include tomcat
 	include httpd
 	class { 'jasperserver': require => Class["tomcat"] }
-	if $deploy_bahmni_openerp == "true" {
+	if $bahmni_openerp_required == "true" {
 	 	include python
 		class { 'openerp': require => Class["python", "postgresql"] }
 	}

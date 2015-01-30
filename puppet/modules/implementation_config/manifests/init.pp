@@ -4,11 +4,11 @@ class implementation_config {
   
   contain 'implementation_config::openmrs'
   
-  if $deploy_bahmni_openelis == "true" {
+  if $bahmni_openelis_required == "true" {
 	  contain 'implementation_config::openelis'
   }
   
-  if $deploy_bahmni_openerp == "true" {
+  if $bahmni_openerp_required == "true" {
 	  contain 'implementation_config::openerp'
   }
 }

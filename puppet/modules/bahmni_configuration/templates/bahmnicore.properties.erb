@@ -3,7 +3,7 @@ bahmnicore.images.directory=<%=@patientImagesDirectory%>
 bahmnicore.urls.patientimages=<%=@patientImagesUrl%>
 bahmnicore.documents.baseDirectory=<%=@documentBaseDirectory%>
 
-<% if @deploy_bahmni_openerp == "true" -%>
+<% if @bahmni_openerp_required == "true" -%>
 openerp.port=<%=@openERPPort%>
 openerp.host=<%=@openERPHost%>
 openerp.database=<%=@openERPDatabase%>
