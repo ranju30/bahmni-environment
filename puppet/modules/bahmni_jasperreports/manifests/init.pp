@@ -1,6 +1,6 @@
 class bahmni_jasperreports {
 
-	$properties_file = 'reports_default.properties'
+	$properties_file = "reports_${reports_environment}.properties"
 	
 	exec { "delete_reports_dir" :
 		command => "rm -rf ${build_output_dir}/${implementation_name}-reports",

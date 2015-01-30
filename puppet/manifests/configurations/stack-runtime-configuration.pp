@@ -27,6 +27,11 @@ $install_server_type = $bahmni_server_type ? {
       default       => $bahmni_server_type
 }
 
+$reports_environment = $bahmni_reports_environment ? {
+  undef     => "default",
+  default       => $bahmni_reports_environment
+}
+
 # Machines
 $primary_machine_ip = "192.168.0.152"
 $secondary_machine_ip = "192.168.0.115"
@@ -171,7 +176,11 @@ $openERPReadTimeout=20000
 
 ######################## JASPER CONFIG START##############################################
 $jasperTomcatHome = $tomcatInstallationDirectory
-$jasperHome = "/usr/local/jasperreports-server-cp-5.0.0-bin"
+$jasperHome = $bahmni_jasper_home ? {
+  undef     => "/usr/local/jasperreports-server-cp-5.0.0-bin",
+  default   => $bahmni_jasper_home
+}
+
 $jasperDbType = "mysql"
 $jasperDbHost = "localhost"
 $jasperDbUsername = "root"
