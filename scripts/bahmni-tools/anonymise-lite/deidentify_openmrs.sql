@@ -98,37 +98,6 @@ where
 	death_date is not null;
 
 --
--- Randomize the visit, encounter and obs dates
---
-
-/**
-ALTER TABLE visit ADD COLUMN rand_increment int;
-
-UPDATE visit
-SET rand_increment = cast(rand()*91-91 as signed),
-	date_started = adddate(date_started, rand_increment),
-	date_stopped = IF(date_stopped IS NULL, NULL, adddate(date_stopped, rand_increment)),
-	date_voided = IF(date_voided IS NULL, NULL, adddate(date_voided, rand_increment)),
-	date_created = adddate(date_created, rand_increment);
-
-UPDATE encounter e
-JOIN visit v on e.visit_id = v.visit_id
-SET e.encounter_datetime = adddate(e.encounter_datetime, v.rand_increment),
-	e.date_voided = IF(e.date_voided IS NULL, NULL, adddate(e.date_voided, v.rand_increment)),
-	e.date_created = adddate(e.date_created, v.rand_increment);
-
-UPDATE obs o
-JOIN encounter e ON e.encounter_id = o.encounter_id
-JOIN visit v ON e.visit_id = v.visit_id
-SET o.obs_datetime = adddate(o.obs_datetime, v.rand_increment),
-	o.date_created = adddate(o.date_created, v.rand_increment),
-	o.date_voided = IF(o.date_voided IS NULL, NULL, adddate(o.date_voided, v.rand_increment)),
-	o.value_datetime = IF(o.value_datetime IS NULL, NULL, adddate(o.value_datetime, v.rand_increment));
-
-ALTER TABLE visit DROP COLUMN rand_increment;
-**/
-
---
 -- Rename location to something nonsensical
 --
 update
