@@ -81,22 +81,12 @@ class bahmni_openerp_internal {
     require     => [File["${temp_dir}/bahmni-openerp/run-liquibase.sh"]]
   }
 
-	file { "${log4j_xml_file}" :
-		ensure      => present,
-		content     => template("bahmni_openerp/log4j.xml.erb"),
-		owner       => "${bahmni_user}",
-		group       => "${bahmni_user}",
-		require     => Exec["latest_openerp_atomfeed_webapp"],
-		mode        => 664,
-	}
-
-	#Hack: OpenERP module is not idempotent. Because of this, I can't add
-	#a notify to Exec["bahmni_openerp"] and get on with it. 
-	#Needs to be fixed someday. 
-    exec { "restart-openerp" :
-	    command   => "service openerp restart",
-	    provider  => shell,
-	    path      => "${os_path}",
-	    require   => [Exec["bahmni_openerp"]]
-	}
+  file { "${log4j_xml_file}" :
+  	ensure      => present,
+  	content     => template("bahmni_openerp/log4j.xml.erb"),
+  	owner       => "${bahmni_user}",
+  	group       => "${bahmni_user}",
+  	require     => Exec["latest_openerp_atomfeed_webapp"],
+  	mode        => 664,
+  }
 }
