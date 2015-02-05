@@ -44,6 +44,7 @@ class nagios {
         owner       => "${nagios_user}",
         group       => "${nagios_user}",
         mode        =>  555,
+        require    => Service["nrpe"]
     }
     
     file { "/usr/lib64/nagios/plugins/check_scheduled_tasks.py":
@@ -51,5 +52,6 @@ class nagios {
         owner       => "${nagios_user}",
         group       => "${nagios_user}",
         mode        =>  555,
+        require    => Service["nrpe"]
     }    
 }
