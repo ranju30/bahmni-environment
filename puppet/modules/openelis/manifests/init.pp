@@ -51,6 +51,8 @@ class openelis {
 }
 
 class openelis::database {
+    $bahmni_openelis_temp_dir = "${temp_dir}/OpenElis"
+
     exec { "openelis_setupdb" :
     provider => "shell",
     cwd => "${bahmni_openelis_temp_dir}",
