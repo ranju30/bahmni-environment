@@ -28,14 +28,6 @@ class openelis {
     require   => [File["${bahmni_openelis_temp_dir}"]]
   }
 
-  exec { "openelis_setupdb" :
-    provider => "shell",
-    cwd => "${bahmni_openelis_temp_dir}",
-    command => "ant setupDB  ${deployment_log_expression}",
-    path => "${os_path}:${ant_home}/bin",
-    require => Exec["bahmni_openelis_codebase"]
-  }
-
   file { "${log4j_xml_file}" :
     ensure      => present,
     content     => template("openelis/log4j.xml.erb"),
@@ -51,5 +43,19 @@ class openelis {
     owner => "${bahmni_user}",
     group => "${bahmni_user}",
     require => File["${uploadedFilesDirectory}"],
+  }
+
+  if $install_server_type == "active" {
+    include openelis::database
+  }
+}
+
+class openelis::database {
+    exec { "openelis_setupdb" :
+    provider => "shell",
+    cwd => "${bahmni_openelis_temp_dir}",
+    command => "ant setupDB  ${deployment_log_expression}",
+    path => "${os_path}:${ant_home}/bin",
+    require => Exec["bahmni_openelis_codebase"]
   }
 }
