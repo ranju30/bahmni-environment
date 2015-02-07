@@ -17,12 +17,7 @@ Vagrant.configure("2") do |config|
      v.customize ["modifyvm", :id, "--memory", 3092, "--cpus", 2, "--name", "Bahmni"]
   end
 
-#  config.vm.synced_folder "packages", "/packages", :owner => "vagrant"
-  config.vm.synced_folder ".", "/bahmni-environment", :owner => "vagrant"
-  config.vm.synced_folder "../openmrs-module-bahmniapps", "/openmrs-module-bahmniapps", :owner => "vagrant"
-  config.vm.synced_folder "../default-config", "/default-config", :owner => "vagrant"
-  config.vm.synced_folder "../jss-config", "/jss-config", :owner => "vagrant"
-  config.vm.synced_folder "../possible-config", "/possible-config", :owner => "vagrant"
+  config.vm.synced_folder "..", "/bahmni", :owner => "vagrant"
 
   if ENV['STAGE'] == nil
     manifest_file = "do-nothing.pp"
