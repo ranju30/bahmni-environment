@@ -4,6 +4,10 @@ set -e
 
 implementation_name=$1
 
+export FACTER_bahmni_user_name=${FACTER_bahmni_user_name}
+export FACTER_deploy_bahmni_openelis=${FACTER_deploy_bahmni_openelis}
+export FACTER_deploy_bahmni_openerp=${FACTER_deploy_bahmni_openerp}
+
 if [ -z "$implementation_name" ]
 then
 	echo "Please Provide an implementation name"
