@@ -20,3 +20,4 @@ sudo -E sh ${implementation_name}_config_installer.sh --target /packages/build
 cp /bahmni_temp/logs/bahmni_deploy.log .
 sudo service tomcat start
 sudo service openerp restart
+exit 0;
