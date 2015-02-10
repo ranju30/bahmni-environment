@@ -11,8 +11,8 @@ then
 fi
 
 sudo fuser -k 8080/tcp || :
-sudo sh all_installer.sh --target /packages/build
-sudo sh ${implementation_name}_config_installer.sh --target /packages/build
+sudo -E sh all_installer.sh --target /packages/build
+sudo -E sh ${implementation_name}_config_installer.sh --target /packages/build
 cp /bahmni_temp/logs/bahmni_deploy.log .
 sudo service tomcat start
 sudo service openerp restart
