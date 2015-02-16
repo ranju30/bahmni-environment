@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
 
 use strict;
 use Getopt::Std;
@@ -129,7 +129,6 @@ sub print_help() {
         print << "EOF";
 Check the output or exit status of a script.
 $VERSION
-$AUTHOR
 
 Options:
 -h
