@@ -46,7 +46,15 @@ class nagios {
         mode        =>  555,
         require    => Service["nrpe"]
     }
-    
+
+    file { "/usr/lib64/nagios/plugins/check_exit_status.pl":
+        source      => "puppet:///modules/nagios/nagios-plugins/check_exit_status.pl",
+        owner       => "${nagios_user}",
+        group       => "${nagios_user}",
+        mode        =>  555,
+        require    => Service["nrpe"]
+    }
+
     file { "/usr/lib64/nagios/plugins/check_scheduled_tasks.py":
         source      => "puppet:///modules/nagios/nagios-plugins/check_scheduled_tasks.py",
         owner       => "${nagios_user}",
