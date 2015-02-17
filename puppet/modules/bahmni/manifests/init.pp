@@ -1,5 +1,6 @@
 class bahmni {
 
+  require tomcat_conf
   require bahmni_openmrs
   require reference_data
   require bahmni_client_side_logging
