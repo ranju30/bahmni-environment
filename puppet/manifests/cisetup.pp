@@ -28,7 +28,6 @@ node default {
   include mysql
   include mysqlserver
   include tomcat
-  class { 'tomcat_conf': require => Class["tomcat"] }
   include httpd
   include jasperserver
   include python
