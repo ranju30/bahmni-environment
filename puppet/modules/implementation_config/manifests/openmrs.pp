@@ -43,6 +43,13 @@
     onlyif    => "test -d ${ordertemplates_dir}"
   }
 
+  exec { "changeOwnerAndPermissionForScriptFolders" :
+    provider => "shell",
+    command => "chown -R ${bahmni_user}:${bahmni_user} ${openmrs_dir}; chmod -R 775 ${openmrs_dir}",
+    path => "${os_path}",
+    require => [Exec["copyBeanshellToOpenMRSFolder"], Exec["copyObsCalculatorToOpenMRSFolder"], Exec["copyPatientMatchingAlgorithmToOpenMRSFolder"], Exec["copyEncounterModifierScriptsToOpenMRSFolder"], Exec["copyordertemplatesToOpenMRSFolder"]]
+  }
+
   implementation_config::migrations { "implementation_config_migrations_openmrs":
     implementation_name => "${implementation_name}",
     app_name            => "openmrs"
