@@ -1,19 +1,11 @@
   class implementation_config::openmrs {
   $openmrs_dir = "/home/${bahmni_user}/.OpenMRS"
-  $beanshell_dir = "${build_output_dir}/${implementation_name}_config/openmrs/beanshell"
   $obscalculator_dir = "${build_output_dir}/${implementation_name}_config/openmrs/obscalculator"
   $patient_matching_algorithm_dir = "${build_output_dir}/${implementation_name}_config/openmrs/patientMatchingAlgorithm"
   $ordertemplates_dir = "${build_output_dir}/${implementation_name}_config/openmrs/ordertemplates"
   $encounter_modifier_scripts_dir = "${build_output_dir}/${implementation_name}_config/openmrs/encounterModifier"
   
   require implementation_config::setup
-  
-  exec { "copyBeanshellToOpenMRSFolder" :
-    command   => "cp -rf ${beanshell_dir} ${openmrs_dir}",
-    provider  => shell,
-    path      => "${os_path}",
-    onlyif    => "test -d ${beanshell_dir}"
-  }
 
   exec { "copyObsCalculatorToOpenMRSFolder" :
     command   => "cp -rf ${obscalculator_dir} ${openmrs_dir}",
@@ -47,7 +39,7 @@
     provider => "shell",
     command => "chown -R ${bahmni_user}:${bahmni_user} ${openmrs_dir}; chmod -R 775 ${openmrs_dir}",
     path => "${os_path}",
-    require => [Exec["copyBeanshellToOpenMRSFolder"], Exec["copyObsCalculatorToOpenMRSFolder"], Exec["copyPatientMatchingAlgorithmToOpenMRSFolder"], Exec["copyEncounterModifierScriptsToOpenMRSFolder"], Exec["copyordertemplatesToOpenMRSFolder"]]
+    require => [Exec["copyObsCalculatorToOpenMRSFolder"], Exec["copyPatientMatchingAlgorithmToOpenMRSFolder"], Exec["copyEncounterModifierScriptsToOpenMRSFolder"], Exec["copyordertemplatesToOpenMRSFolder"]]
   }
 
   implementation_config::migrations { "implementation_config_migrations_openmrs":
