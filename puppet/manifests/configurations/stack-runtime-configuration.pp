@@ -121,6 +121,7 @@ $httpsRedirects = [{path => "/home", redirectPath => "/bahmni/home/"}]
 $httpProxyRedirects = [{path => "/jasperserver", redirectPath => "http://localhost:8080/jasperserver"}]
 $httpsProxyRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/openmrs"},
                    {path => "/openelis", redirectPath => "http://localhost:8080/openelis"},
+                   {path => "/bahmnireports", redirectPath => "http://localhost:8080/bahmnireports"},
                    {path => "/reference-data", redirectPath => "http://localhost:8080/reference-data"},
                   {path => "/go", redirectPath => "http://localhost:8153/go"}]
 #Static webapps
