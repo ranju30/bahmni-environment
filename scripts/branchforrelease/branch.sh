@@ -16,11 +16,11 @@ fi
 
 declare -a allrepos=("openmrs-module-bahmniapps" "jss-config" "openerp-atomfeed-service" "OpenElis"
  "bahmni-core" "bahmni-java-utils" "openerp-modules" "openerp-functional-tests" "openmrs-distro-bahmni"
- "bahmni-environment" "emr-functional-tests")
+ "bahmni-environment" "emr-functional-tests" "default-config")
 
-rm -rf ~/Project/Bahmni/allrepos
-mkdir ~/Project/Bahmni/allrepos
-cd ~/Project/Bahmni/allrepos
+rm -rf ~/allrepos
+mkdir ~/allrepos
+cd ~/allrepos
 
 . $3
 
@@ -36,6 +36,7 @@ do
    git branch release-"${1/-SNAPSHOT/}" ${!shaKey}
    find . -name "pom.xml" -exec sed -i '' 's/'${1/-SNAPSHOT/}'/'${2/-SNAPSHOT/}'/g'  {} \;
    find . -name "config.xml" -exec sed -i '' 's/'${1/-SNAPSHOT/}'/'${2/-SNAPSHOT/}'/g'  {} \;
+   find . -name "openmrs-versions-configuration.pp" -exec sed -i '' 's/'${1/-SNAPSHOT/}'/'${2/-SNAPSHOT/}'/g'  {} \;
    if [ -n "$(git status --porcelain)" ]; then
    	git diff > ../$repo.diff
    	echo -e "${Gre}Version changes in "$repo:master" ->  ./allrepos/$repo.diff ${RCol} "
