@@ -17,7 +17,6 @@ sh $SCRIPT_DIR/create_module_installer.sh erp/deployables erp_installer.sh "ERP 
 rm -rf final
 mkdir -p final
 mv mrs_installer.sh final/
-mv $IMPLEMENTATION"_config_installer.sh" final/
 mv elis_installer.sh final/
 mv erp_installer.sh final/
 
