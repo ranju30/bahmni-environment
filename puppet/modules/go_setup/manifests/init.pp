@@ -22,7 +22,7 @@ class go_setup {
   # ensure that you have copied the latest cruise-config file as the erb has not been kept in sync
   file { "/etc/go/cruise-config.xml" :
     ensure    => present,
-    content   => template("go_setup/cruise-config.xml.erb"),
+    content   => template("go_setup/preprod-cruise-config.xml.erb"),
     replace   => true,
     mode      => 666,
     require   => Package["go-server", "go-agent"]

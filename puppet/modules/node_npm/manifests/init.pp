@@ -1,8 +1,9 @@
 class node_npm{
 
-	file{"remove-existing-npm":
-        path        => "/usr/bin/npm",
-        ensure      => absent,
+	exec {"remove-existing-npm":
+        command    => "rm -f /usr/bin/npm",
+        provider   => "shell",
+        onlyif     => "test -f /usr/bin/npm"
     }
 
 	exec {"nodejs-download-archive":
@@ -46,4 +47,11 @@ class node_npm{
     	command		=> "/usr/bin/make install",
     	require		=> Exec["make-nodejs"]
     }
+
+    file { '/usr/bin/npm':
+        ensure => 'link',
+        target => '/usr/local/lib/node_modules/npm/bin/npm-cli.js',
+        require => Exec["make-install-nodejs"]
+    }
+
 }

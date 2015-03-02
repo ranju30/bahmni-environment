@@ -1,6 +1,5 @@
 class ci_tools {
-  require node_requirements
-  require nodejs
+  require node_npm
 
 
   # Mujir - added this dependency so we can start openerp service
@@ -12,7 +11,7 @@ class ci_tools {
 
   package { "firefox" :
     ensure  => present,
-      require => Package["xorg-x11-server-Xvfb"],
+    require => Package["xorg-x11-server-Xvfb"],
   }
 
   exec {"dbus-uuidgen" : 
@@ -21,11 +20,6 @@ class ci_tools {
     require  => Package["firefox"]
   }
   
-  file { '/usr/bin/npm':
-   ensure => 'link',
-   target => '/usr/lib/node_modules/npm/bin/npm-cli.js',
-  }
-
   exec { "phantomjs":
     command   => "npm install -g phantomjs",
     provider  => "shell",
@@ -49,14 +43,5 @@ class ci_tools {
 
   package { "makeself" :
     ensure => present
-  }
-
-}
-
-class node_requirements{
-  file{ "/usr/lib/node_modules": 
-    ensure  => directory,
-    mode    => 755,
-    before  =>  Exec["Inflate"]
   }
 }
