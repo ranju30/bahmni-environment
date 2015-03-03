@@ -10,4 +10,4 @@
 	* Update the replication.properties file with both master and slave information
 	* Use command 'show master status' to get the current position of the server and update in slave replication.properties
 	* cd mysql-replication/$version && sudo ./slave.sh
-	
+	* Note: Need privileges to access the database, Grant privilege to the Slave IP Address
