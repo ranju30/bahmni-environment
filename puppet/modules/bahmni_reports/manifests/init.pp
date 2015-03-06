@@ -1,7 +1,7 @@
 class bahmni_reports {
   $bahmni_reports_dir = "${build_output_dir}/bahmni-enviroment/puppet/modules/bahmni_reports"
   $webapps_dir="${tomcatInstallationDirectory}/webapps"
-  $liquibase_jar="${webapps_dir}/bahmnireports/WEB-INF/lib/liquibase-core-2.0.5.jar"
+  $liquibase_jar="${webapps_dir}/openmrs/WEB-INF/lib/liquibase-core-2.0.5.jar"
   $bahmni_reports_war_path="${build_output_dir}/${bahmni_reports_war_file_name}.war"
   $mysql_driver_path="${packages_servers_dir}/mysql-connector-java-${mysql_connector_java_version}.jar"
 
