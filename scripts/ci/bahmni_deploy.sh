@@ -9,12 +9,15 @@ TEMP_SCRIPT_DIR=`dirname -- "$0"`
 SCRIPT_DIR=`cd $TEMP_SCRIPT_DIR; pwd`
 export SCRIPT_DIR
 
-sh $SCRIPT_DIR/$erp_installer_file --target /packages/build
 
 sh $SCRIPT_DIR/$elis_installer_file --target /packages/build
 
 sh $SCRIPT_DIR/$mrs_installer_file --target /packages/build
 
 sh $SCRIPT_DIR/$bahmni_reports_installer_file --target /packages/build
+
+if [  -z "$FACTER_package_bahmni_openerp" ] || [ "$FACTER_package_bahmni_openerp" != false ]; then
+    sh $SCRIPT_DIR/$erp_installer_file --target /packages/build
+fi
 
 echo "Installation Complete"
