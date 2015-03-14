@@ -5,9 +5,7 @@ export SCRIPT_DIR
 export IMPLEMENTATION=$1
 
 cp bahmni-environment.zip deployables
-cp bahmni-environment.zip erp/deployables
 cp bahmni-environment.zip elis/deployables
-unzip -qo bahmni-environment.zip -d erp/deployables
 
 sh $SCRIPT_DIR/create_module_installer.sh deployables mrs_installer.sh "MRS Installer" bahmni_openmrs
 sh $SCRIPT_DIR/create_module_installer.sh deployables-implementation $IMPLEMENTATION"_config_installer.sh" "Implementation Config Installer" implementation_config
@@ -19,6 +17,8 @@ mv mrs_installer.sh final/
 mv elis_installer.sh final/
 
 if [  -z "$FACTER_package_bahmni_openerp" ] || [ "$FACTER_package_bahmni_openerp" != false ]; then
+    cp bahmni-environment.zip erp/deployables
+    unzip -qo bahmni-environment.zip -d erp/deployables
     sh $SCRIPT_DIR/create_module_installer.sh erp/deployables erp_installer.sh "ERP Installer" bahmni_openerp
     mv erp_installer.sh final/
 fi
