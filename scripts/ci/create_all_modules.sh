@@ -6,6 +6,7 @@ export IMPLEMENTATION=$1
 
 cp bahmni-environment.zip deployables
 cp bahmni-environment.zip elis/deployables
+cp bahmni-environment.zip deployables-implementation
 
 sh $SCRIPT_DIR/create_module_installer.sh deployables mrs_installer.sh "MRS Installer" bahmni_openmrs
 sh $SCRIPT_DIR/create_module_installer.sh deployables-implementation $IMPLEMENTATION"_config_installer.sh" "Implementation Config Installer" implementation_config
