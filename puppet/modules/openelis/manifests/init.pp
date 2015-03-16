@@ -1,5 +1,4 @@
 class openelis {
-  require ant
   require tomcat::clean
   include bahmni_revisions
   include bahmni_configuration
