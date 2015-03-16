@@ -21,4 +21,12 @@ class ant {
 	  mode    => 664,
 	  require => Exec["ant_untar"]
 	}
+
+
+  exec { "set_permissions_of_ant" :
+    provider => "shell",
+    command => "chmod -R  777 /home/${bahmni_user}/apache-ant-${ant_version}",
+    path => "${os_path}",
+    require => Exec["ant_untar"]
+  }
 }
