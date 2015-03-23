@@ -89,4 +89,15 @@ class bahmni_openerp_internal {
   	require     => Exec["latest_openerp_atomfeed_webapp"],
   	mode        => 664,
   }
+
+  if ($install_server_type == "active") {
+    exec { "restart_openerp" :
+      command   => "service openerp restart",
+      provider  => shell,
+      path      => "${os_path}",
+      require   => [File["${log4j_xml_file}"]]
+    }
+  } else {
+    notice ("Not starting OpenERP. ")
+  }
 }
