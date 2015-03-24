@@ -28,10 +28,14 @@ class bahmni_reports {
         mode        => 554
       }
 
-    exec { "run_bahmni_reports_liquibase" :
-      command     => "${temp_dir}/run-bahmni-reports-liquibase.sh ${deployment_log_expression}",
-      path        => "${os_path}",
-      provider    => shell,
-      require     => [Exec["latest_bahmni_reports_webapp"],File["${temp_dir}/run-bahmni-reports-liquibase.sh"]]
+    if $install_server_type == "active" {
+      exec { "run_bahmni_reports_liquibase" :
+        command     => "${temp_dir}/run-bahmni-reports-liquibase.sh ${deployment_log_expression}",
+        path        => "${os_path}",
+        provider    => shell,
+        require     => [Exec["latest_bahmni_reports_webapp"], File["${temp_dir}/run-bahmni-reports-liquibase.sh"]]
+      }
+    } else {
+      notice ("Not running reports migration. ")
     }
 }
