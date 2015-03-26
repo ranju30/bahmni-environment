@@ -14,7 +14,9 @@ node default {
  	include java
 	include mysql
 	include mysqlserver
-	include postgresql		
+    if ($bahmni_openerp_required == "true") or ($bahmni_openelis_required == "true") {
+	    include postgresql
+    }
 	class { 'users' : userName => "${bahmni_user}", password_hash => "${bahmni_user_password_hash}"}
 	include tomcat
 	class { 'tomcat_conf': require => Class["tomcat"] }
