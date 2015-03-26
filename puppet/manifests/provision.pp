@@ -3,12 +3,12 @@ import "configurations/stack-installers-configuration"
 import "configurations/stack-runtime-configuration"
 import "configurations/deployment-configuration"
 
-stage { 'all-repo-creation' : before => Stage['main'] }
+stage { 'first_stage' : before => Stage['main'] }
 
 node default {
 
-	class { 'yum_repo': stage => 'all-repo-creation' }
-	
+	class { 'yum_repo': stage => 'first_stage' }
+    class { 'selinux': stage => 'first_stage' }
 	include host
 	include tools
  	include java
