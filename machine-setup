@@ -39,8 +39,3 @@ service sshd start
 chkconfig ntpd on
 ntpdate pool.ntp.org
 service ntpd start
-
-#Disable SELinux (done via puppet now)
-vi /etc/selinux/config
-ensure the following line 
-SELINUX=enforcing
