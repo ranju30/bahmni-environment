@@ -98,6 +98,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 
 12. Download & install latest BAHMNI build from CI. This will download 2 installers: all_installer.sh (MRS, ELIS & ERP), [implementation_name]_config_installer.sh (the implementation config setup in the environment variable, eg: default)
   ```
+  mkdir -p /packages/build
   ./scripts/download-build.sh
   ```
     
