@@ -55,7 +55,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 
 8. Copy localrepo, servers, tools, Python-packages folders to /packages/
   ```
-  scp -r * root@bahmni-repo.twhosted.com:/packages/
+  scp -r root@bahmni-repo.twhosted.com:/packages/{localrepo,servers,tools,python-packages} /packages
   ```
   Change permissions of the packages folder
   ```
