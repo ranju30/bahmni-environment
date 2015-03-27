@@ -1,6 +1,6 @@
 class selinux {
 
-    if ($selinux)
+    if ($selinux == "true")
     {
         selboolean { 'httpd_read_user_content':
             name       => 'httpd_read_user_content',
