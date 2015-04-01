@@ -11,6 +11,11 @@ class httpd {
         ensure => "present"
     }
 
+    user { $apache_user :
+       groups => [$apache_user, $bahmni_user],
+       require => Package["httpd"]
+    }
+
     exec { "httpd_conf_backup" :
         cwd         => "/etc/httpd/conf",
         command     => "mv httpd.conf httpd.conf.bkup",

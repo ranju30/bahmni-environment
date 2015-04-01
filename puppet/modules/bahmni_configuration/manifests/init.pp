@@ -5,12 +5,14 @@ class bahmni_configuration {
 
   file { "${patientImagesDirectory}" :
     ensure      => directory,
+    mode        => 774,
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
   }
 
   file { "${uploadedResultsDirectory}" :
     ensure      => directory,
+    mode        => 774,
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
   }
