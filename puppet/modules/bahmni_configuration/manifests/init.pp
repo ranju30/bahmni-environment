@@ -17,6 +17,13 @@ class bahmni_configuration {
     group       => "${bahmni_user}",
   }
 
+  file { "${documentBaseDirectory}" :
+    ensure => directory,
+    mode   => 774,
+    owner  => "${bahmni_user}",
+    group  => "${bahmni_user}",
+  }
+
   file { "${uploadedFilesDirectory}" :
     ensure => directory,
     mode   => 774,
