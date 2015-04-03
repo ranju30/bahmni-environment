@@ -24,6 +24,13 @@ class bahmni_configuration {
     group  => "${bahmni_user}",
   }
 
+  exec { "change_group_rights_for_document_images_content" :
+    provider => "shell",
+    command => "chown -R ${bahmni_user}:${bahmni_user} ${documentBaseDirectory}; chmod -R 774 ${documentBaseDirectory}; ",
+    path => "${os_path}",
+    require => File["${documentBaseDirectory}"]
+  }
+
   file { "${uploadedFilesDirectory}" :
     ensure => directory,
     mode   => 774,
