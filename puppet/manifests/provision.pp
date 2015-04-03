@@ -9,6 +9,7 @@ node default {
 
   class { 'yum_repo': stage => 'first_stage' }
   class { 'selinux': stage => 'first_stage' }
+  class { 'python_setuptools': stage => 'first_stage' }
   include host
   include tools
   include java
@@ -26,7 +27,7 @@ node default {
     include python
     class { 'openerp': require => Class["python", "postgresql"] }
   }
-#	include nagios
-#	include bahmni_nagios
+# include nagios
+# include bahmni_nagios
   include cron_tab
 }
