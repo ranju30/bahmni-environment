@@ -28,13 +28,21 @@ class bahmni_jasperreports {
 	    require   => Exec["download_reports_zip"]
 	  }
 
-	exec { "bahmni-jasperserver-deploy-reports" :
-    	provider => "shell",	
-		command => "scripts/deploy.sh -j $jasperHome -p conf/${properties_file} ${deployment_log_expression}",
-		path    => "${os_path}",
-    	cwd     => "${build_output_dir}/${implementation_name}-reports/${implementation_name}-reports-master",
+	exec { "change-reports-name":
+    	command => "mv *-master ${implementation_name}-reports-master",
+    	path      => "${os_path}",
+    	provider  => shell,
+    	cwd     => "${build_output_dir}/${implementation_name}-reports",
     	require => Exec["unzip_report"]
-	}
+    }
+
+    exec { "bahmni-jasperserver-deploy-reports" :
+        provider => "shell",
+    	command => "scripts/deploy.sh -j $jasperHome -p conf/${properties_file} ${deployment_log_expression}",
+    	path    => "${os_path}",
+        cwd     => "${build_output_dir}/${implementation_name}-reports/${implementation_name}-reports-master",
+        require => Exec["change-reports-name"]
+    }
 
 	exec { "bahmni-jasperserver-deploy-customserver" :
     	provider => "shell",
