@@ -3,12 +3,13 @@
 RCol='\x1B[0m'; Red='\x1B[0;31m'; Gre='\x1B[0;32m'; Yel='\x1B[0;33m'; Blu='\x1B[0;34m';
 
 usage() {
-	echo "Usage: branch.sh <old-version> <new-version>"
+	echo "Usage: branch.sh <old-version> <new-version> <revision-properties-file>"
 	echo "<old-version> is the current bahmni version"
 	echo "<new-version> is the next version"
+	echo "<revision-properties-file> is repo revision file. Provide full path of the file"
 }
 
-if [  $# -le 1 ] 
+if [  $# -le 2 ]
 then
 	usage
 	exit 1
