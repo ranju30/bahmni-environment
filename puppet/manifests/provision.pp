@@ -21,7 +21,7 @@ node default {
   class { 'users' : userName => "${bahmni_user}", password_hash => "${bahmni_user_password_hash}" }
   include tomcat
   class { 'tomcat_conf': require => Class["tomcat"] }
-  include httpd
+  class { 'httpd' : require => Class['users'] }
   class { 'jasperserver': require => Class["tomcat"] }
   if $bahmni_openerp_required == "true" {
     include python
