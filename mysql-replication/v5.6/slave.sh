@@ -11,8 +11,12 @@ cp /etc/my.cnf /tmp/my.cnf
 findAndReplace "log_bin" "\/var\/log\/mysql\/mysql-bin.log"
 findAndReplace "server-id" "$slaveServerId"
 
-mv /etc/my.cnf /etc/my.cnf.repl.bak
-mv /tmp/my.cnf /etc/my.cnf
+#moving the file changes the SELinux file context. Hence copying and removing
+cp /etc/my.cnf /etc/my.cnf.repl.bak
+rm -rf /etc/my.cnf
+cp /tmp/my.cnf /etc/my.cnf
+rm -rf /tmp/my.cnf
+chown mysql:mysql /etc/my.cnf
 
 echo "Creating mysql-bin file"
 mkdir -p /var/log/mysql/

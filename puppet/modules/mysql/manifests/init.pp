@@ -54,8 +54,6 @@ class mysqlserver {
 		require => File["/etc/my.cnf"],
 	}
 
-	
-
 	exec {"changepassword" : 
 		command		=> "sh /root/initdb.sh ${mysqlRootPassword} ${deployment_log_expression}",
 	    provider  	=> shell,
