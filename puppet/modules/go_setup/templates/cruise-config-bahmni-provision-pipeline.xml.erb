@@ -8,7 +8,7 @@
           <value>bahmni</value>
         </variable>
         <variable name="FACTER_implementation_name">
-          <value>$implementation_name</value>
+          <value>default</value>
         </variable>
         <variable name="FACTER_deploy_bahmni_openerp">
           <value>$boolean_value</value>
@@ -17,10 +17,10 @@
           <value>$boolean_value</value>
         </variable>
         <variable name="FACTER_go_bahmni_yum_repo_url">
-          <value>$go_repo_url</value>
+          <value>$yum_repo_url</value>
         </variable>
         <variable name="FACTER_bahmni_server_type">
-          <value>$active_or_passive</value>
+          <value>passive</value>
         </variable>
       </environmentvariables>
       <materials>
@@ -36,7 +36,7 @@
           <value>bahmni</value>
         </variable>
         <variable name="FACTER_implementation_name">
-          <value>$implementation_name</value>
+          <value>default</value>
         </variable>
         <variable name="FACTER_deploy_bahmni_openerp">
           <value>$boolean_value</value>
@@ -45,10 +45,10 @@
           <value>$boolean_value</value>
         </variable>
         <variable name="FACTER_go_bahmni_yum_repo_url">
-          <value>$go_repo_url</value>
+          <value>$yum_repo_url</value>
         </variable>
         <variable name="FACTER_bahmni_server_type">
-          <value>$active_or_passive</value>
+          <value>active</value>
         </variable>
       </environmentvariables>
       <materials>
@@ -92,9 +92,6 @@
                 <runif status="passed" />
               </exec>
             </tasks>
-            <resources>
-              <resource>passive</resource>
-            </resources>
             <artifacts>
               <artifact src="logs" />
             </artifacts>
@@ -103,3 +100,16 @@
       </stage>
     </pipeline>
   </templates>
+  <environments>
+    <environment name="Active">
+      <pipelines>
+        <pipeline name="provision_active" />
+      </pipelines>
+    </environment>
+    <environment name="Passive">
+      <pipelines>
+        <pipeline name="provision_passive" />
+      </pipelines>
+    </environment>
+  </environments>
+
