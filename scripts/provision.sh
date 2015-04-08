@@ -19,3 +19,5 @@ else
 fi
 sudo chmod -R 777 /packages
 sudo sed -i '/^127\.0\.0\.1/ s/$/'" $HOSTNAME"'/' /etc/hosts
+
+sh run-puppet-manifest.sh provision
