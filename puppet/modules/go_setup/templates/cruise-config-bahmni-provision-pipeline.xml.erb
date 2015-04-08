@@ -1,51 +1,105 @@
-<pipeline name="provision">
-  <params>
-    <param name="branch">master</param>
-  </params>
-  <environmentvariables>
-    <variable name="FACTER_bahmni_user_name">
-      <value>bahmni</value>
-    </variable>
-    <variable name="FACTER_implementation_name">
-      <value>jss</value>
-    </variable>
-    <variable name="FACTER_deploy_bahmni_openerp">
-      <value>true</value>
-    </variable>
-    <variable name="FACTER_deploy_bahmni_openelis">
-      <value>true</value>
-    </variable>
-    <variable name="FACTER_go_bahmni_yum_repo_url">
-      <value />
-    </variable>
-  </environmentvariables>
-  <materials>
-    <git url="https://github.com/Bhamni/bahmni-environment.git" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" />
-  </materials>
-  <stage name="mainStage">
-    <approval type="manual" />
-    <jobs>
-      <job name="defaultJob">
-        <environmentvariables>
-          <variable name="FACTER_implementation_name">
-            <value>jss</value>
-          </variable>
-        </environmentvariables>
-        <tasks>
-          <exec command="sh" workingdir="bahmni-environment">
-            <arg>scripts/prepare-for-provision.sh</arg>
-            <runif status="passed" />
-          </exec>
-          <exec command="sh" workingdir="bahmni-environment">
-            <arg>scripts/run-puppet-manifest.sh</arg>
-            <arg>provision</arg>
-            <runif status="passed" />
-          </exec>
-        </tasks>
-        <resources>
-          <resource>PROVISION</resource>
-        </resources>
-      </job>
-    </jobs>
-  </stage>
-</pipeline>
+  <pipelines group="Bahmni_provision">
+    <pipeline name="provision_passive" template="provision">
+      <params>
+        <param name="branch">master</param>
+      </params>
+      <environmentvariables>
+        <variable name="FACTER_bahmni_user_name">
+          <value>bahmni</value>
+        </variable>
+        <variable name="FACTER_implementation_name">
+          <value>$implementation_name</value>
+        </variable>
+        <variable name="FACTER_deploy_bahmni_openerp">
+          <value>$boolean_value</value>
+        </variable>
+        <variable name="FACTER_deploy_bahmni_openelis">
+          <value>$boolean_value</value>
+        </variable>
+        <variable name="FACTER_go_bahmni_yum_repo_url">
+          <value>$go_repo_url</value>
+        </variable>
+        <variable name="FACTER_bahmni_server_type">
+          <value>$active_or_passive</value>
+        </variable>
+      </environmentvariables>
+      <materials>
+        <git url="https://github.com/Bhamni/bahmni-environment.git" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" />
+      </materials>
+    </pipeline>
+    <pipeline name="provision_active" template="provision">
+      <params>
+        <param name="branch">master</param>
+      </params>
+      <environmentvariables>
+        <variable name="FACTER_bahmni_user_name">
+          <value>bahmni</value>
+        </variable>
+        <variable name="FACTER_implementation_name">
+          <value>$implementation_name</value>
+        </variable>
+        <variable name="FACTER_deploy_bahmni_openerp">
+          <value>$boolean_value</value>
+        </variable>
+        <variable name="FACTER_deploy_bahmni_openelis">
+          <value>$boolean_value</value>
+        </variable>
+        <variable name="FACTER_go_bahmni_yum_repo_url">
+          <value>$go_repo_url</value>
+        </variable>
+        <variable name="FACTER_bahmni_server_type">
+          <value>$active_or_passive</value>
+        </variable>
+      </environmentvariables>
+      <materials>
+        <git url="https://github.com/Bhamni/bahmni-environment.git" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" />
+      </materials>
+    </pipeline>
+  </pipelines>
+  <templates>
+    <pipeline name="provision">
+      <stage name="mainStage" cleanWorkingDir="true">
+        <approval type="manual" />
+        <jobs>
+          <job name="defaultJob">
+            <environmentvariables>
+              <variable name="FACTER_implementation_name">
+                <value>default</value>
+              </variable>
+            </environmentvariables>
+            <tasks>
+              <exec command="sh" workingdir="bahmni-environment">
+                <arg>scripts/prepare-for-provision.sh</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="sh" workingdir="bahmni-environment">
+                <arg>scripts/run-puppet-manifest.sh</arg>
+                <arg>provision</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="sudo">
+                <arg>cp</arg>
+                <arg>-R</arg>
+                <arg>/bahmni_temp/logs</arg>
+                <arg>.</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="sudo">
+                <arg>chown</arg>
+                <arg>-R</arg>
+                <arg>go:go</arg>
+                <arg>logs</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+            <resources>
+              <resource>passive</resource>
+            </resources>
+            <artifacts>
+              <artifact src="logs" />
+            </artifacts>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </templates>
