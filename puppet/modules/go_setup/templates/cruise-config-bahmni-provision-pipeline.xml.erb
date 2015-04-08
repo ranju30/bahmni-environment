@@ -3,26 +3,6 @@
       <params>
         <param name="branch">master</param>
       </params>
-      <environmentvariables>
-        <variable name="FACTER_bahmni_user_name">
-          <value>bahmni</value>
-        </variable>
-        <variable name="FACTER_implementation_name">
-          <value>default</value>
-        </variable>
-        <variable name="FACTER_deploy_bahmni_openerp">
-          <value>$boolean_value</value>
-        </variable>
-        <variable name="FACTER_deploy_bahmni_openelis">
-          <value>$boolean_value</value>
-        </variable>
-        <variable name="FACTER_go_bahmni_yum_repo_url">
-          <value>$yum_repo_url</value>
-        </variable>
-        <variable name="FACTER_bahmni_server_type">
-          <value>passive</value>
-        </variable>
-      </environmentvariables>
       <materials>
         <git url="https://github.com/Bhamni/bahmni-environment.git" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" />
       </materials>
@@ -31,26 +11,6 @@
       <params>
         <param name="branch">master</param>
       </params>
-      <environmentvariables>
-        <variable name="FACTER_bahmni_user_name">
-          <value>bahmni</value>
-        </variable>
-        <variable name="FACTER_implementation_name">
-          <value>default</value>
-        </variable>
-        <variable name="FACTER_deploy_bahmni_openerp">
-          <value>$boolean_value</value>
-        </variable>
-        <variable name="FACTER_deploy_bahmni_openelis">
-          <value>$boolean_value</value>
-        </variable>
-        <variable name="FACTER_go_bahmni_yum_repo_url">
-          <value>$yum_repo_url</value>
-        </variable>
-        <variable name="FACTER_bahmni_server_type">
-          <value>active</value>
-        </variable>
-      </environmentvariables>
       <materials>
         <git url="https://github.com/Bhamni/bahmni-environment.git" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" />
       </materials>
@@ -102,11 +62,57 @@
   </templates>
   <environments>
     <environment name="Active">
+      <environmentvariables>
+        <variable name="FACTER_bahmni_user_name">
+          <value>bahmni</value>
+        </variable>
+        <variable name="FACTER_implementation_name">
+          <value>default</value>
+        </variable>
+        <variable name="FACTER_deploy_bahmni_openerp">
+          <value>$boolean_value</value>
+        </variable>
+        <variable name="FACTER_deploy_bahmni_openelis">
+          <value>$boolean_value</value>
+        </variable>
+        <variable name="FACTER_go_bahmni_yum_repo_url">
+          <value>$yum_repo_url</value>
+        </variable>
+        <variable name="FACTER_bahmni_server_type">
+          <value>active</value>
+        </variable>
+      </environmentvariables>
+      <agents>
+        <physical uuid="a5b057d0-188c-4429-ad36-8092565ae559" />
+      </agents>
       <pipelines>
         <pipeline name="provision_active" />
       </pipelines>
     </environment>
     <environment name="Passive">
+      <environmentvariables>
+        <variable name="FACTER_bahmni_user_name">
+          <value>bahmni</value>
+        </variable>
+        <variable name="FACTER_implementation_name">
+          <value>default</value>
+        </variable>
+        <variable name="FACTER_deploy_bahmni_openerp">
+          <value>$boolean_value</value>
+        </variable>
+        <variable name="FACTER_deploy_bahmni_openelis">
+          <value>$boolean_value</value>
+        </variable>
+        <variable name="FACTER_go_bahmni_yum_repo_url">
+          <value>$yum_repo_url</value>
+        </variable>
+        <variable name="FACTER_bahmni_server_type">
+          <value>passive</value>
+        </variable>
+      </environmentvariables>
+      <agents>
+        <physical uuid="7b18a558-bb6b-4c62-afb9-dbdcd0f8dca4" />
+      </agents>
       <pipelines>
         <pipeline name="provision_passive" />
       </pipelines>
