@@ -1,15 +1,18 @@
 #!/bin/bash
 
+## Prerequisites
+## ----------------
+## (remove in /etc/sudoers) Defaults requiretty
+## add go to sudoer's list (/etc/sudoers)
+## go  ALL=(ALL)       NOPASSWD: ALL
+
+## install git
+## install httpd
+
 set -e
 
 echo "Preparing Bahmni go server"
 echo "----------------"
-
-## ----------------
-## (remove in /etc/sudoers) Defaults requiretty
-## add go to sudoer's list
-## install git
-## install httpd
 
 ## Setup bahmni packages
 ## ---------------------
