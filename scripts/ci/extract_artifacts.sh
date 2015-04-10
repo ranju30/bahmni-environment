@@ -1,3 +1,5 @@
+#!/bin/bash
+
 IMPLEMENTATION_NAME=$1
 
 if [ Z${IMPLEMENTATION_NAME} = "Z" ] 
@@ -8,6 +10,8 @@ fi
 
 rm -rf /packages/build
 mkdir -p /packages/build
+chown root:root /package/build
+chmod 755 /packages/build
 mv -f deployables/mrs/* /packages/build/
 mv -f deployables/erp/* /packages/build/
 mv -f deployables/elis/* /packages/build/
