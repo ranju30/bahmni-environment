@@ -1,10 +1,19 @@
+#!/bin/bash
 rootPassword=$1
 souceIP=$2
+
+set -e -x
 
 SCRIPT_DIR=`dirname $0`
 cd $SCRIPT_DIR
 
-BACKUP_DIR=${3:-/backup}
+TIME=`date +%Y%m%d_%H%M%S`
+BACKUP_DIR=${3:-/backup/anonymised_backup_$TIME}
+mkdir -pv $BACKUP_DIR
+
+OPENMRS_NEW_DB=anonymised_openmrs_$TIME
+OPENELIS_NEW_DB=anonymised_clinlims_$TIME
+OPENERP_NEW_DB=anonymised_openerp_$TIME
 
 if [ -z $rootPassword ]; then
     echo "Please provide a password for mysql root"
@@ -17,12 +26,6 @@ if [ -z $souceIP ]; then
     souceIP=127.0.0.1
     echo "[USAGE] $0 <mysqlRootPassword> [sourceHostIP] [BACKUP_DIR]"
 fi
-
-
-TIME=`date +%Y%m%d_%H%M%S`
-OPENMRS_NEW_DB=anonymised_openmrs_$TIME
-OPENELIS_NEW_DB=anonymised_clinlims_$TIME
-OPENERP_NEW_DB=anonymised_openerp_$TIME
 
 # Take dump & restore on a different temp database.
 mysql -uroot -p$rootPassword -e "create database $OPENMRS_NEW_DB"
