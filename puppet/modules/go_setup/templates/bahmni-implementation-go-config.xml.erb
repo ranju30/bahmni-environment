@@ -98,6 +98,8 @@
         <git url="https://github.com/Bhamni/bahmni-environment" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
         <git url="https://github.com/bhamni/client_side_logging" dest="client_side_logging_source" autoUpdate="false" />
         <git url="https://github.com/Bhamni/bahmni-reports.git" branch="#{branch}" dest="bahmni-reports" autoUpdate="false" />
+        <git url="https://github.com/Bhamni/openerp-atomfeed-service.git" branch="#{branch}" dest="openerp-atomfeed-service" autoUpdate="false" />
+        <git url="https://github.com/Bhamni/openerp-modules.git" branch="#{branch}" dest="openerp-modules" autoUpdate="false" />
       </materials>
       <stage name="defaultStage">
         <approval type="manual" />
@@ -238,6 +240,29 @@
               <artifact src="bahmni-reports/target/bahmnireports.war" dest="deployables" />
             </artifacts>
           </job>
+          <job name="OpenERP">
+            <tasks>
+              <exec command="mvn" workingdir="openerp-atomfeed-service">
+                <arg>clean</arg>
+                <arg>install</arg>
+                <arg>-DskipTests</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="zip">
+                <arg>-r</arg>
+                <arg>openerp-modules.zip</arg>
+                <arg>openerp-modules</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+            <resources>
+              <resource>BuildBhamni</resource>
+            </resources>
+            <artifacts>
+              <artifact src="openerp-modules.zip" dest="deployables" />
+              <artifact src="openerp-atomfeed-service/openerp-atomfeed-service/target/openerp-atomfeed-service.war" dest="deployables" />
+            </artifacts>
+          </job>
         </jobs>
       </stage>
       <stage name="package">
@@ -263,6 +288,9 @@
                 <runif status="passed" />
               </fetchartifact>
               <fetchartifact pipeline="" stage="defaultStage" job="BahmniReports" srcfile="deployables/bahmnireports.war" dest="deployables-reports/">
+                <runif status="passed" />
+              </fetchartifact>
+              <fetchartifact pipeline="" stage="defaultStage" job="OpenERP" srcdir="deployables" dest="erp">
                 <runif status="passed" />
               </fetchartifact>
               <exec command="cp">
