@@ -24,6 +24,13 @@ class host {
 		recurse   => true
 	}
 
+  file { "${build_dir}" :
+    ensure    => directory,
+    mode      => 777,
+    recurse   => true,
+    require   => File["${package_dir}"]
+  }
+
 	class { "timezone" :
     timezone => "Asia/Kolkata"
   }
