@@ -1,7 +1,7 @@
 class java {
   require yum_repo
 
-  $java_home = "/usr/java/jdk1.7.0_21"
+  $java_home = "/usr/java/default"
 
   package { "jdk" :
     ensure => installed
