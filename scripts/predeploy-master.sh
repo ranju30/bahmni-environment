@@ -28,7 +28,7 @@ fi
 sh $SCRIPTS_DIR/backup-mysql.sh $mysqlRootPassword $BACKUP_DIR
 sh $SCRIPTS_DIR/backup-pgsql.sh $BACKUP_DIR
 
-cp -r /home/bahmni/.OpenMRS $BACKUP_DIR/
+if [ -d "/home/bahmni/.OpenMRS" ]; then cp -r /home/bahmni/.OpenMRS $BACKUP_DIR; fi
 cp -r /packages $BACKUP_DIR/
 cp -r /home/bahmni/apache-tomcat-8.0.12/webapps $BACKUP_DIR/
 cp -r /etc/httpd $BACKUP_DIR/
