@@ -41,7 +41,7 @@ begin
 			person_name
 		set
 			given_name = (select
-									name
+									substring(name, 1, 20)
 								from
 									(select
 										rid
