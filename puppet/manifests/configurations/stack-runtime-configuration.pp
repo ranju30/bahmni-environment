@@ -33,14 +33,13 @@ $reports_environment = $bahmni_reports_environment ? {
 }
 
 # Machines
-$primary_machine_ip = "192.168.0.152"
-$secondary_machine_ip = "192.168.0.115"
+$active_machine_ip = "192.168.0.152"
+$active_machine_host_name = "jssemr01"
+$active_machine_alias = "emr01.gan.jssbilaspur.org"
 
-$primary_machine_host_name = "jssemr01"
-$primary_machine_alias = "emr01.gan.jssbilaspur.org"
-
-$secondary_machine_host_name = "jssemr02"
-$secondary_machine_alias = "emr02.gan.jssbilaspur.org"
+$passive_machine_ip = "192.168.0.115"
+$passive_machine_host_name = "jssemr02"
+$passive_machine_alias = "emr02.gan.jssbilaspur.org"
 
 # mysql
 $mysqlRootPassword = "password"
@@ -56,8 +55,8 @@ $postgresMachine = $install_server_type ? {
   "passive" => "slave"
 }
 
-$postgresMaster = $primary_machine_ip
-$postgresSlave = $secondary_machine_ip
+$postgresMaster = $active_machine_ip
+$postgresSlave = $passive_machine_ip
 
 $postgresFirstTimeSetup=true # Use this for first time setup of master and slave
 $postgresMasterDbFileBackup="/tmp/pg_master_db_file_backup.tar" # The path of master db backup tar file on slave
@@ -145,7 +144,7 @@ $httpsCacheUrls = [{path => "${patientImagesDirectory}", type => 'Directory', ex
 ######################## HTTPD CONFIG END################################################
 
 # Nagios
-$nagios_server_ip = $secondary_machine_ip
+$nagios_server_ip = $passive_machine_ip
 $nagios_user = "nagios"
 $nagios_machine_type = "server" # server | client
 $support_email="bahmni-jss-support@googlegroups.com" # configured to allow devs to test using their own email id
