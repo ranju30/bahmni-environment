@@ -37,10 +37,7 @@ function run-snapshot-migrations {
     run-liquibase-migration $SNAPSHOTS_DIR/$1/bahmni-core/bahmnicore-omod liquibase.xml
     run-liquibase-migration $SNAPSHOTS_DIR/$1/openmrs-module-bahmniapps/resources liquibase.xml
     run-liquibase-migration $SNAPSHOTS_DIR/$1 liquibase.xml
-
-    <% if @bahmni_openelis_required == "true" || @bahmni_openerp_required == "true" %>
-        run-liquibase-migration $SNAPSHOTS_DIR/$1/atomfeed sql/db_migrations.xml -DschemaName=openmrs
-    <% end %>
+    run-liquibase-migration $SNAPSHOTS_DIR/$1/atomfeed sql/db_migrations.xml -DschemaName=openmrs
     <% if @bahmni_openelis_required == "true" %>
         run-liquibase-migration $SNAPSHOTS_DIR/$1/bahmni-core/openmrs-elis-atomfeed-client-omod liquibase.xml
     <% end %>
