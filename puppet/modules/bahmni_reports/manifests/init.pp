@@ -28,7 +28,7 @@ class bahmni_reports {
         mode        => 554
       }
 
-    if $install_server_type == "active" {
+    if $is_passive_setup == "false" {
       exec { "run_bahmni_reports_liquibase" :
         command     => "${temp_dir}/run-bahmni-reports-liquibase.sh ${deployment_log_expression}",
         path        => "${os_path}",

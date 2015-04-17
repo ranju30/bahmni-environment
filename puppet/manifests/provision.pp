@@ -27,7 +27,7 @@ node default {
     include python
     class { 'openerp': require => Class["python", "postgresql"] }
   }
-  if ($install_server_type == "passive") {
+  if ($is_passive_setup == "true") {
     include nagios
     include bahmni_nagios
   }

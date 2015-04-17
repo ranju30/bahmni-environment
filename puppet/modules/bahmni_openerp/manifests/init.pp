@@ -90,7 +90,7 @@ class bahmni_openerp_internal {
   	mode        => 664,
   }
 
-  if ($install_server_type == "active") {
+  if ($is_passive_setup == "false") {
     exec { "restart_openerp" :
       command   => "service openerp restart",
       provider  => shell,

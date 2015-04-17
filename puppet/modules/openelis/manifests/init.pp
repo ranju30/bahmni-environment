@@ -44,7 +44,7 @@ class openelis {
     require => File["${uploadedFilesDirectory}"],
   }
 
-  if $install_server_type == "active" {
+  if $is_passive_setup == "false" {
     include openelis::database
   }
 }

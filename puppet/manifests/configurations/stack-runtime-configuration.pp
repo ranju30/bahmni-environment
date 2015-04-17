@@ -27,6 +27,11 @@ $install_server_type = $bahmni_server_type ? {
       default       => $bahmni_server_type
 }
 
+$is_passive_setup = $is_passive_setup ? {
+      undef     => "false",
+      default       => $is_passive_setup
+}
+
 $reports_environment = $bahmni_reports_environment ? {
   undef     => "default",
   default       => $bahmni_reports_environment
@@ -49,10 +54,10 @@ $postgresMajorVersion ="9"
 $postgresMinorVersion = "2"
 $postgresUser="postgres"
 
-$postgresMachine = $install_server_type ? {
-  "active"  => "master",
+$postgresMachine = $is_passive_setup ? {
+  "false"  => "master",
   undef     => "master",
-  "passive" => "slave"
+  "true" => "slave"
 }
 
 $postgresMaster = $active_machine_ip

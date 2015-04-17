@@ -25,7 +25,7 @@ class implementation_config::openelis {
     require   => [File["${build_output_dir}/OpenElis.zip"]]
   }
 
-  if $install_server_type == "active" {
+  if $is_passive_setup == "false" {
     implementation_config::migrations { "implementation_config_migrations_openelis":
     implementation_name => "${implementation_name}",
     app_name            => "openelis"
