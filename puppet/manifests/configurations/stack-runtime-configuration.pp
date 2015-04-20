@@ -51,6 +51,7 @@ $db_server = $db_server_ip ? {
   undef     => "localhost",
   default       => $db_server_ip
 }
+
 $app_server = $app_server_ip ? {
   undef     => "localhost",
   default       => $app_server_ip

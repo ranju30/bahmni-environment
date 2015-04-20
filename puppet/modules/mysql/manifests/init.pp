@@ -43,6 +43,11 @@ class mysqlserver {
 		content     => template("mysql/changepassword.sql.erb"),
 	}
 
+	file { "/tmp/grantAccess.sql" :
+		ensure      => present,
+		content     => template("mysql/grantAccess.sql.erb"),
+	}
+
 	file { "/root/initdb.sh" :
 		ensure      => present,
 		content     => template("mysql/initdb.sh.erb"),
@@ -58,6 +63,6 @@ class mysqlserver {
 		command		=> "sh /root/initdb.sh ${mysqlRootPassword} ${deployment_log_expression}",
 	    provider  	=> shell,
     	user      	=> "root",
-    	require 	=> [File["/tmp/changepassword.sql"], File["/root/initdb.sh"], Service["mysql"]],
+    	require 	=> [File["/tmp/changepassword.sql"], File["/tmp/grantAccess.sql"], File["/root/initdb.sh"], Service["mysql"]],
 	}
 }

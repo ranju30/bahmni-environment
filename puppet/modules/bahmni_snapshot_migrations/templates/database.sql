@@ -18,4 +18,5 @@ CREATE TABLE IF NOT EXISTS `liquibasechangelog` (
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'localhost' identified by 'password';
+GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'<%= $app_server %>' identified by 'password';
 FLUSH PRIVILEGES;
