@@ -47,13 +47,13 @@ $passive_machine_ip = "192.168.0.115"
 $passive_machine_host_name = "jssemr02"
 $passive_machine_alias = "emr02.gan.jssbilaspur.org"
 
-$db_server = $db_server ? {
+$db_server = $db_server_ip ? {
   undef     => "localhost",
-  default       => $db_server
+  default       => $db_server_ip
 }
-$app_server = $app_server ? {
+$app_server = $app_server_ip ? {
   undef     => "localhost",
-  default       => $app_server
+  default       => $app_server_ip
 }
 
 # mysql
