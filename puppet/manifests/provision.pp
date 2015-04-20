@@ -9,27 +9,36 @@ node default {
 
   class { 'yum_repo': stage => 'first_stage' }
   class { 'selinux': stage => 'first_stage' }
-  class { 'python_setuptools': stage => 'first_stage' }
   include host
   include tools
   include java
   include mysql
-  include mysqlserver
-  if ($bahmni_openerp_required == "true") or ($bahmni_openelis_required == "true") {
-    include postgresql
-  }
+
   class { 'users' : userName => "${bahmni_user}", password_hash => "${bahmni_user_password_hash}" }
-  include tomcat
-  class { 'tomcat_conf': require => Class["tomcat"] }
-  class { 'httpd' : require => Class['users'] }
-  class { 'jasperserver': require => Class["tomcat"] }
-  if $bahmni_openerp_required == "true" {
-    include python
-    class { 'openerp': require => Class["python", "postgresql"] }
+
+  include cron_tab
+
+  if ($install_server_type == "app-server" or $install_server_type == "single-server") {
+    class { 'python_setuptools': stage => 'first_stage' }
+    include tomcat
+    class { 'tomcat_conf': require => Class["tomcat"] }
+    class { 'httpd' : require => Class['users'] }
+    class { 'jasperserver': require => Class["tomcat"] }
+    if $bahmni_openerp_required == "true" {
+      include python
+      class { 'openerp': require => Class["python", "postgresql"] }
+    }
   }
+
+  if ($install_server_type == "db-server" or $install_server_type == "single-server") {
+    include mysqlserver
+    if ($bahmni_openerp_required == "true") or ($bahmni_openelis_required == "true") {
+      include postgresql
+    }
+  }
+
   if ($is_passive_setup == "true") {
     include nagios
     include bahmni_nagios
   }
-  include cron_tab
 }

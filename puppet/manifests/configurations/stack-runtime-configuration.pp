@@ -8,28 +8,29 @@ $ssh_port=22
 
 # Default values for expected FACTER variables
 $bahmni_user = $bahmni_user_name ? {
-      undef     => "bahmni",
-      default       => $bahmni_user_name
+  undef     => "bahmni",
+  default       => $bahmni_user_name
 }
 
 $bahmni_openerp_required = $deploy_bahmni_openerp ? {
-      undef     => "true",
-      default       => $deploy_bahmni_openerp
+  undef     => "true",
+  default       => $deploy_bahmni_openerp
 }
 
 $bahmni_openelis_required = $deploy_bahmni_openelis ? {
-      undef     => "true",
-      default       => $deploy_bahmni_openelis
+  undef     => "true",
+  default       => $deploy_bahmni_openelis
 }
 
+# bahmni_server_type can be one of these: app-server, db-server, single-server
 $install_server_type = $bahmni_server_type ? {
-      undef     => "active",
-      default       => $bahmni_server_type
+  undef     => "single-server",
+  default       => $bahmni_server_type
 }
 
-$is_passive_setup = $is_passive_setup ? {
-      undef     => "false",
-      default       => $is_passive_setup
+$is_passive_setup = $deploy_passive ? {
+  undef     => "false",
+  default       => $deploy_passive
 }
 
 $reports_environment = $bahmni_reports_environment ? {
@@ -45,6 +46,16 @@ $active_machine_alias = "emr01.gan.jssbilaspur.org"
 $passive_machine_ip = "192.168.0.115"
 $passive_machine_host_name = "jssemr02"
 $passive_machine_alias = "emr02.gan.jssbilaspur.org"
+
+$db_server = $db_server_ip ? {
+  undef     => "localhost",
+  default       => $db_server_ip
+}
+
+$app_server = $app_server_ip ? {
+  undef     => "localhost",
+  default       => $app_server_ip
+}
 
 # mysql
 $mysqlRootPassword = "password"
@@ -72,8 +83,8 @@ $postgresDataFolder = "/var/lib/pgsql/${postgresMajorVersion}.${postgresMinorVer
 
 #Go Server for Downloading Builds
 $build_source = $build_source_dir ? {
-      undef			=> "http://172.18.2.11:8153",
-      default       => $build_source_dir
+  undef      => "http://172.18.2.11:8153",
+  default       => $build_source_dir
 }
 
 $go_server_user = "guest"
@@ -121,31 +132,31 @@ import "httpd-default-configuration"
 ## The following redirects can contain either a string or an array;
 ## If it is a string, the same is used for both ProxyPass and ProxyPassReverse rules;
 ## In case of array, 1st element of the array specifies ProxyPass rule and 2nd element specifies ProxyPassReverse rule.
-$httpsRedirects = [{path => "/home", redirectPath => "/bahmni/home/"}]
-$httpProxyRedirects = [{path => "/jasperserver", redirectPath => "http://localhost:8080/jasperserver"}]
-$httpsProxyRedirects = [{path => "/openmrs", redirectPath => "http://localhost:8080/openmrs"},
-                   {path => "/openelis", redirectPath => "http://localhost:8080/openelis"},
-                   {path => "/bahmnireports", redirectPath => "http://localhost:8080/bahmnireports"},
-                   {path => "/reference-data", redirectPath => "http://localhost:8080/reference-data"},
-                  {path => "/go", redirectPath => "http://localhost:8153/go"}]
+$httpsRedirects = [{ path => "/home", redirectPath => "/bahmni/home/" }]
+$httpProxyRedirects = [{ path => "/jasperserver", redirectPath => "http://localhost:8080/jasperserver" }]
+$httpsProxyRedirects = [{ path => "/openmrs", redirectPath => "http://localhost:8080/openmrs" },
+  { path => "/openelis", redirectPath => "http://localhost:8080/openelis" },
+  { path => "/bahmnireports", redirectPath => "http://localhost:8080/bahmnireports" },
+  { path => "/reference-data", redirectPath => "http://localhost:8080/reference-data" },
+  { path => "/go", redirectPath => "http://localhost:8153/go" }]
 #Static webapps
 $httpsStaticWebapps = [
-					   {path => "/bahmni", directory => "${bahmniAppsDirectory}"},
-					   {path => "${patientImagesUrl}", directory => "${patientImagesDirectory}"},
-					   {path => "/document_images", directory => "${documentBaseDirectory}"},
-                       {path => "/bahmni_config", directory => "${bahmniConfigDirectory}"},
-                       {path => "/bahmni_revisions", directory => "${bahmniRevisionsDirectory}"},
-                       {path => "/uploaded_results", directory => "${uploadedResultsDirectory}"},
-                       {path => "/uploaded-files", directory => "${uploadedFilesDirectory}"}]
+  { path => "/bahmni", directory => "${bahmniAppsDirectory}" },
+  { path => "${patientImagesUrl}", directory => "${patientImagesDirectory}" },
+  { path => "/document_images", directory => "${documentBaseDirectory}" },
+  { path => "/bahmni_config", directory => "${bahmniConfigDirectory}" },
+  { path => "/bahmni_revisions", directory => "${bahmniRevisionsDirectory}" },
+  { path => "/uploaded_results", directory => "${uploadedResultsDirectory}" },
+  { path => "/uploaded-files", directory => "${uploadedFilesDirectory}" }]
 $httpsCachedDirectories = []
 $httpsAggressiveCacheDisabledDirectories = []
-$httpsSubdomains = [{subdomain => "openerp", url => "http://localhost:8069"}]
+$httpsSubdomains = [{ subdomain => "openerp", url => "http://localhost:8069" }]
 
 $httpdCacheDirectory = "/var/cache/mod_proxy"
-$httpsCacheUrls = [{path => "${patientImagesDirectory}", type => 'Directory', expireTime => "86400"}, #86400s => 1day
-				   {path => "${documentBaseDirectory}", type => 'Directory', expireTime => "86400"},
-				   {path => "${bahmniAppsDirectory}", type => 'Directory', expireTime => "1"}, #1s
- 				   {path => "/openmrs/ws/rest/v1/concept"}]
+$httpsCacheUrls = [{ path => "${patientImagesDirectory}", type => 'Directory', expireTime => "86400" }, #86400s => 1day
+  { path => "${documentBaseDirectory}", type => 'Directory', expireTime => "86400" },
+  { path => "${bahmniAppsDirectory}", type => 'Directory', expireTime => "1" }, #1s
+  { path => "/openmrs/ws/rest/v1/concept" }]
 ######################## HTTPD CONFIG END################################################
 
 # Nagios
@@ -188,19 +199,22 @@ $jasperHome = $bahmni_jasper_home ? {
 }
 
 $jasperDbType = "mysql"
-$jasperDbHost = "localhost"
+$jasperDbHost = $passive_db_server_ip ? {
+  undef => $db_server,
+  default => $passive_db_server_ip
+}
 $jasperDbUsername = "root"
 $jasperDbPassword = "password"
 $jasperDbName = "jasperserver"
 
 # Set the Jasper Reports URL to download from:
 $report_zip_source_url = $implementation_name ? {
-	  undef			 => "https://github.com/jss-emr/jss-reports/archive/master.zip",
-      "jss"			 => "https://github.com/jss-emr/jss-reports/archive/master.zip",
-      default        => "https://github.com/jss-emr/jss-reports/archive/master.zip",
-      "search"       => "https://github.com/Bhamni/search-reports/archive/master.zip",
-      "lokbiradari"  => "https://github.com/Bhamni/lokbiradari-reports/archive/master.zip",
-      "possible"  => "https://github.com/Bhamni/possible-reports/archive/master.zip"
+  undef       => "https://github.com/jss-emr/jss-reports/archive/master.zip",
+  "jss"       => "https://github.com/jss-emr/jss-reports/archive/master.zip",
+  default        => "https://github.com/jss-emr/jss-reports/archive/master.zip",
+  "search"       => "https://github.com/Bhamni/search-reports/archive/master.zip",
+  "lokbiradari"  => "https://github.com/Bhamni/lokbiradari-reports/archive/master.zip",
+  "possible"  => "https://github.com/Bhamni/possible-reports/archive/master.zip"
 }
 
 ######################## JASPER CONFIG END##############################################
