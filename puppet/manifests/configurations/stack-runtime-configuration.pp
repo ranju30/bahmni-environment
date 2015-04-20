@@ -198,7 +198,10 @@ $jasperHome = $bahmni_jasper_home ? {
 }
 
 $jasperDbType = "mysql"
-$jasperDbHost = "localhost"
+$jasperDbHost = $passive_db_server_ip ? {
+  undef => $db_server,
+  default => $passive_db_server_ip
+}
 $jasperDbUsername = "root"
 $jasperDbPassword = "password"
 $jasperDbName = "jasperserver"
