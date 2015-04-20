@@ -22,7 +22,7 @@ class yum_repo {
       command => "touch /etc/yum.repos.d/${local_repo_name}.repo",
       path    => "${os_path}",
       require => Exec["update"]
-    }    
+    }
   } else {
 
     file { "bahmni-tw-repo" :
