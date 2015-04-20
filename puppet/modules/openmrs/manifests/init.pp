@@ -62,7 +62,7 @@ class openmrs {
   }
 
   exec { "openmrs_predeploy" :
-    command     => "mysql -uroot -p${mysqlRootPassword} < ${temp_dir}/openmrs-predeploy.sql ${deployment_log_expression}",
+    command     => "mysql -h${db_server} -uroot -p${mysqlRootPassword} < ${temp_dir}/openmrs-predeploy.sql ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
     require     => [Exec["openmrs_database"],File["${temp_dir}/openmrs-predeploy.sql"]]

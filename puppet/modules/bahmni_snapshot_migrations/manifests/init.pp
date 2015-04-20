@@ -9,7 +9,7 @@ class bahmni_snapshot_migrations() {
   }
   
   exec { "openmrs_database" :
-    command     => "mysql -uroot -p${mysqlRootPassword} < ${temp_dir}/create-openmrs-db-and-user.sql ${deployment_log_expression}",
+    command     => "mysql -h${db_server} -uroot -p${mysqlRootPassword} < ${temp_dir}/create-openmrs-db-and-user.sql ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
     require     => File["${temp_dir}/create-openmrs-db-and-user.sql"]
