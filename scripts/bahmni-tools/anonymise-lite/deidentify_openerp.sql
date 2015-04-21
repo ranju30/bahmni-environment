@@ -31,5 +31,27 @@ FROM res_users
 WHERE res_users.partner_id = res_partner.id;
 
 UPDATE res_partner
-SET image_medium = NULL, image_small = NULL
-where image_medium IS NOT NULL OR image_small IS NOT NULL;
+SET image_medium = NULL, image_small = NULL, image = NULL
+where image_medium IS NOT NULL OR image_small IS NOT NULL OR image IS NOT NULL;
+
+update res_partner
+set name=concat('Partner-',id)
+where ref is null;
+
+update res_partner
+set name=concat('Supplier-',id)
+where supplier = true;
+
+UPDATE res_partner
+SET city = concat('city-', id),
+	zip = concat('zip-', id),
+	email = concat('email-', id),
+	website = concat('website-', id),
+	phone = concat('phone-', id);
+
+UPDATE res_company
+set logo_web = null,
+name = 'Bahmni';
+
+UPDATE sales_shop
+SET name = concat('shop-', id);

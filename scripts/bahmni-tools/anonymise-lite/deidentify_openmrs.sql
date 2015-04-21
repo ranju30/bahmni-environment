@@ -70,6 +70,7 @@ end;
 delimiter ;
 call randomize_names();
 drop procedure if exists randomize_names;
+drop table random_names;
 
 --
 -- Randomize the birth dates and months (leave years the same)
@@ -176,7 +177,7 @@ SELECT p.uuid, pui.uuid old_uuid, pio.identifier old_identifier, pi.identifier, 
 FROM person p 
 JOIN patient_identifier pi on p.person_id = pi.patient_id and pi.preferred = 1 and pi.voided = 0 
 JOIN person_name pn on p.person_id = pn.person_id and pn.voided = 0 and pn.preferred = 1 
-JOIN person_address pad ON pad.person_id = p.person_id 
+JOIN person_address pad ON pad.person_id = p.person_id and pad.preferred = 1
 JOIN temp_patient_identifier_old pio on pio.patient_id = pi.patient_id
 JOIN temp_person_uuid_old pui ON pui.person_id = p.person_id
 INTO OUTFILE '/tmp/openmrs_patient.csv' 
