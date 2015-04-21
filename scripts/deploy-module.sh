@@ -32,6 +32,7 @@ then
 	exit 1
 fi
 
+rvm use `rvm list versions | grep 1.8.7 | head -1`
 FACTER_module_to_run=$MODULE_NAME puppet apply $BASE_DIR/puppet/manifests/run.pp  --modulepath=$BASE_DIR/puppet/modules/  --detailed-exitcodes
 RETURN_CODE=$?
 if [ $RETURN_CODE -ne 0 ] && [ $RETURN_CODE -ne 2 ]
