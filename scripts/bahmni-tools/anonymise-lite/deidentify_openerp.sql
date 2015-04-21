@@ -53,5 +53,5 @@ UPDATE res_company
 set logo_web = null,
 name = 'Bahmni';
 
-UPDATE sales_shop
+UPDATE sale_shop
 SET name = concat('shop-', id);
