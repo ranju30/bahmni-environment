@@ -1,12 +1,13 @@
 #!/bin/bash -x
+
 CURR_DIR=`dirname $0`
 SCRIPTS_DIR="${CURR_DIR}"
-DUMP_DIR="/tmp/anonymised_dump/"
+DUMP_DIR="/tmp/anonymised_dump"
 mkdir -p $DUMP_DIR
 rm -rf $DUMP_DIR/*
 
 if [ -z ${FACTER_deploy_bahmni_openelis} ] || [ -z ${FACTER_deploy_bahmni_openerp} ] || [ -z ${anonymised_dump_url} ]; then
-    echo "Please set all the required environment variables before executing the script"
+    echo "Please set all the required environment variables (FACTER_deploy_bahmni_openelis, FACTER_deploy_bahmni_openerp, anonymised_dump_url) before executing the script"
     exit 1;
 fi
 
@@ -52,3 +53,4 @@ if [ ${FACTER_deploy_bahmni_openerp} == "true" ]; then
 fi
 
 sudo service tomcat start
+exit 0;
