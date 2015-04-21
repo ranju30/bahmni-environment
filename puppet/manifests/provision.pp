@@ -36,9 +36,4 @@ node default {
       include postgresql
     }
   }
-
-  if ($is_passive_setup == "true") {
-    include nagios
-    include bahmni_nagios
-  }
 }
