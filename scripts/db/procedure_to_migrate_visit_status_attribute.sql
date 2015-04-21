@@ -1,5 +1,6 @@
 DROP PROCEDURE IF EXISTS setVisitStatusAttribute;
 
+delimiter //
 CREATE PROCEDURE setVisitStatusAttribute()
   BEGIN
     DECLARE visit_id, visit_attribute_type_id INT;
@@ -66,6 +67,6 @@ CREATE PROCEDURE setVisitStatusAttribute()
     COMMIT;
     CLOSE visit_details;
 
-  END
+  END //
 
-    call setVisitStatusAttribute();
+call setVisitStatusAttribute();
