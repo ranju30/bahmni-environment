@@ -23,7 +23,6 @@ node default {
     include tomcat
     class { 'tomcat_conf': require => Class["tomcat"] }
     class { 'httpd' : require => Class['users'] }
-    class { 'jasperserver': require => Class["tomcat"] }
     if $bahmni_openerp_required == "true" {
       include python
       class { 'openerp': require => Class["python", "postgresql"] }
@@ -36,4 +35,14 @@ node default {
       include postgresql
     }
   }
+
+  if ($install_server_type == "monitoring-server") {
+    include nagios
+    include bahmni_nagios
+  }
+
+  if ($install_server_type == "jasper-server") {
+    class { 'jasperserver': require => Class["tomcat"] }
+  }
+
 }
