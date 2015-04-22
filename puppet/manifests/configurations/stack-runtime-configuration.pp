@@ -178,7 +178,10 @@ $nagios_server_ip = $bahmni_nagios_server_ip ? {
   default       => $bahmni_nagios_server_ip
 }
 $nagios_user = "nagios"
-$nagios_machine_type = "server" # server | client
+$nagios_machine_type = $bahmni_nagios_machine_type ? {
+  undef     => "client",
+  default       => $bahmni_nagios_machine_type
+}
 $support_email = $bahmni_support_email ? {
   undef     => "bahmni-jss-support@googlegroups.com",
   default       => $bahmni_support_email
