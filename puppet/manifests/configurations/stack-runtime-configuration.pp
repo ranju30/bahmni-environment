@@ -39,13 +39,26 @@ $reports_environment = $bahmni_reports_environment ? {
 }
 
 # Machines
-$active_machine_ip = "192.168.0.152"
-$active_machine_host_name = "jssemr01"
-$active_machine_alias = "emr01.gan.jssbilaspur.org"
+if $bahmni_active_machine_ip == undef { fail("Active machine ip cannot be empty.") }
+$active_machine_ip = $bahmni_active_machine_ip 
+$active_machine_host_name = $bahmni_active_machine_host_name ? {
+  undef     => "emr01",
+  default       => $bahmni_active_machine_host_name
+}
+$active_machine_alias = $bahmni_active_machine_alias ? {
+  undef     => "emr01alias",
+  default       => $bahmni_active_machine_alias
+}
 
-$passive_machine_ip = "192.168.0.115"
-$passive_machine_host_name = "jssemr02"
-$passive_machine_alias = "emr02.gan.jssbilaspur.org"
+$passive_machine_ip = $bahmni_passive_machine_ip 
+$passive_machine_host_name = $bahmni_passive_machine_host_name ? {
+  undef     => "passivehost",
+  default       => $bahmni_passive_machine_host_name
+}
+$passive_machine_alias = $bahmni_passive_machine_alias ? {
+  undef     => "passivealias",
+  default       => $bahmni_passive_machine_alias
+}
 
 $db_server = $db_server_ip ? {
   undef     => "localhost",
@@ -160,15 +173,24 @@ $httpsCacheUrls = [{ path => "${patientImagesDirectory}", type => 'Directory', e
 ######################## HTTPD CONFIG END################################################
 
 # Nagios
-$nagios_server_ip = $passive_machine_ip
+$nagios_server_ip = $bahmni_nagios_server_ip ? {
+  undef     => "localhost",
+  default       => $bahmni_nagios_server_ip
+}
 $nagios_user = "nagios"
 $nagios_machine_type = "server" # server | client
-$support_email="bahmni-jss-support@googlegroups.com" # configured to allow devs to test using their own email id
+$support_email = $bahmni_support_email ? {
+  undef     => "bahmni-jss-support@googlegroups.com",
+  default       => $bahmni_support_email
+}
 $nagios_openmrs_user=admin
 $nagios_openmrs_user_password=test
 
 $smtp_host="gmail-smtp-in.l.google.com"
-$from_email = "jss.bahmni@gmail.com"
+$from_email = $bahmni_from_email ? {
+  undef     => "jss.bahmni@gmail.com",
+  default       => $bahmni_from_email
+}
 
 $openelis_username="admin"
 $openelis_password="adminADMIN\!"
