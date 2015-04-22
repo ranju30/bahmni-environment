@@ -15,12 +15,14 @@ wget -r -nd -nH --no-parent --reject="index.html*" --no-check-certificate ${anon
 gunzip ${DUMP_DIR}/*.gz
 if [ ! -f $DUMP_DIR/anonymised_openmrs*.sql ]; then
    echo "No openmrs dump found"
+   rm -rf $DUMP_DIR/*
    exit 1
 fi
 
 if  [ ${FACTER_deploy_bahmni_openelis} == "true" ]; then
   if [ ! -f ${DUMP_DIR}/anonymised_clinlims*.sql ]; then
     echo "No openelis dump found"
+    rm -rf $DUMP_DIR/*
     exit 1
   fi
 fi
@@ -28,6 +30,7 @@ fi
 if [ ${FACTER_deploy_bahmni_openerp} == "true" ]; then
   if [ ! -f ${DUMP_DIR}/anonymised_openerp*.sql ]; then
     echo "No openerp dump found"
+    rm -rf $DUMP_DIR/*
     exit 1
   fi
   sudo service openerp stop
@@ -53,4 +56,5 @@ if [ ${FACTER_deploy_bahmni_openerp} == "true" ]; then
 fi
 
 sudo service tomcat start
+rm -rf $DUMP_DIR/*
 exit 0;
