@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `liquibasechangelog` (
 			  PRIMARY KEY (`ID`,`AUTHOR`,`FILENAME`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'localhost' identified by 'password';
-GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'<%= @app_server %>' identified by 'password';
-GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'<%= @passive_app_server %>' identified by 'password';
+GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'localhost' identified by 'password'  WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'<%= @app_server %>' identified by 'password'  WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'<%= @passive_app_server %>' identified by 'password'  WITH GRANT OPTION;
 FLUSH PRIVILEGES;
