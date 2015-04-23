@@ -104,4 +104,6 @@ class bahmni_nagios {
             require bahmni_nagios-client 
         }
     }
+
+    if $bahmni_active_machine_ip == undef { fail("Active machine ip cannot be empty.") }
 }

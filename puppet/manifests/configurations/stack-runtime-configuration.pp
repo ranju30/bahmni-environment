@@ -39,7 +39,6 @@ $reports_environment = $bahmni_reports_environment ? {
 }
 
 # Machines
-if $bahmni_active_machine_ip == undef { fail("Active machine ip cannot be empty.") }
 $active_machine_ip = $bahmni_active_machine_ip 
 $active_machine_host_name = $bahmni_active_machine_host_name ? {
   undef     => "emr01",
