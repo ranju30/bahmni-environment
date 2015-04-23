@@ -58,4 +58,14 @@ class httpd {
     require => Exec["clean_${httpdCacheDirectory}"]
   }
 
+  file { "${temp_dir}/iptables.sh" :
+    content => template("httpd/iptables.sh.erb"),
+    require => Service["httpd"]
+  }
+
+  exec { "iptables" :
+    command     => "sh ${temp_dir}/iptables.sh",
+    path        => "${os_path}",
+    require     => File["${temp_dir}/iptables.sh"],
+  }
 }
