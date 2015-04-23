@@ -69,6 +69,11 @@ $app_server = $app_server_ip ? {
   default       => $app_server_ip
 }
 
+$passive_app_server = $passive_app_server_ip ? {
+  undef     => "localhost",
+  default       => $passive_app_server_ip
+}
+
 # mysql
 $mysqlRootPassword = "password"
 

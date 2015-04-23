@@ -19,4 +19,5 @@ CREATE TABLE IF NOT EXISTS `liquibasechangelog` (
 
 GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'localhost' identified by 'password';
 GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'<%= $app_server %>' identified by 'password';
+GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'<%= $passive_app_server %>' identified by 'password';
 FLUSH PRIVILEGES;
