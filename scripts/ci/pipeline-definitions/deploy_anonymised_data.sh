@@ -1,21 +1,32 @@
-#!/bin/bash -x
+#!/bin/bash
 
-CURR_DIR=`dirname $0`
+pushd `dirname $0` > /dev/null
+CURR_DIR=`pwd -P`
+popd > /dev/null
+
 SCRIPTS_DIR="${CURR_DIR}"/../../
 DUMP_DIR="/tmp/anonymised_dump"
 IMPLEMENTATION_NAME=$1
-mkdir -p $DUMP_DIR
-rm -rf $DUMP_DIR/*
+AWS_ACCESS_KEY=$2
+AWS_SECRET_KEY=$3
+
+if [ "$#" -ne 3 ]; then
+    echo "Please provide all required arguments"
+    echo "[USAGE] $0 <IMPLEMENTATION_NAME> <AWS_KEY> <AWS_SECRET>"
+    exit 1
+fi
 
 if [ -z ${FACTER_deploy_bahmni_openelis} ] || [ -z ${FACTER_deploy_bahmni_openerp} ]; then
     echo "Please set all the required environment variables (FACTER_deploy_bahmni_openelis, FACTER_deploy_bahmni_openerp) before executing the script"
     exit 1;
 fi
 
-bash -x $SCRIPTS_DIR/ci/pipeline-definitions/get_file_from_aws.sh $IMPLEMENTATION_NAME anonymised_openmrs.sql.gz ${DUMP_DIR}
-bash -x $SCRIPTS_DIR/ci/pipeline-definitions/get_file_from_aws.sh $IMPLEMENTATION_NAME anonymised_clinlims.sql.gz ${DUMP_DIR}
-bash -x $SCRIPTS_DIR/ci/pipeline-definitions/get_file_from_aws.sh $IMPLEMENTATION_NAME anonymised_openerp.sql.gz ${DUMP_DIR}
+mkdir -p $DUMP_DIR
+rm -rf $DUMP_DIR/*
 
+bash -x $SCRIPTS_DIR/ci/pipeline-definitions/get_file_from_aws.sh $IMPLEMENTATION_NAME anonymised_openmrs.sql.gz ${DUMP_DIR} $AWS_ACCESS_KEY $AWS_SECRET_KEY
+bash -x $SCRIPTS_DIR/ci/pipeline-definitions/get_file_from_aws.sh $IMPLEMENTATION_NAME anonymised_clinlims.sql.gz ${DUMP_DIR} $AWS_ACCESS_KEY $AWS_SECRET_KEY
+bash -x $SCRIPTS_DIR/ci/pipeline-definitions/get_file_from_aws.sh $IMPLEMENTATION_NAME anonymised_openerp.sql.gz ${DUMP_DIR} $AWS_ACCESS_KEY $AWS_SECRET_KEY
 
 gunzip ${DUMP_DIR}/*.gz
 if [ ! -f $DUMP_DIR/anonymised_openmrs*.sql ]; then

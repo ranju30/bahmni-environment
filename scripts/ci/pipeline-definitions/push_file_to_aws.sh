@@ -1,4 +1,9 @@
 #!/bin/bash
+FILE_TO_UPLOAD=$1
+CONFIG_NAME=$2
+TARGET_FNAME=$3
+AWS_SECRET_KEY=$5
+AWS_ACCESS_KEY=$4
 
 HMAC-SHA256s(){
  KEY="$1"
@@ -15,19 +20,12 @@ HMAC-SHA256h(){
 }
 
 
-#TODO: Secret keys need to be secured by some means later, request region depends on buck setup
-AWS_SECRET_KEY="pLyq6nhZ7fJQvK4r6gvVBjLBEyfwNqshSJttXU3/"
-AWS_ACCESS_KEY="AKIAIHLRAGR2LCL6BSAQ"
-REQUEST_REGION="ap-southeast-1"
+#TODO: Secret keys need to be secured by some means later, request region depends on bucket setup
 
-FILE_TO_UPLOAD=$1
-CONFIG_NAME=$2
-TARGET_FNAME=$3
 BUCKET="bahmni-backup"
 STARTS_WITH="backups/$CONFIG_NAME/$TARGET_FNAME"
-
+REQUEST_REGION="ap-southeast-1"
 REQUEST_TIME=$(date +"%Y%m%dT%H%M%SZ")
-
 REQUEST_SERVICE="s3"
 REQUEST_DATE=$(printf "${REQUEST_TIME}" | cut -c 1-8)
 AWS4SECRET="AWS4"$AWS_SECRET_KEY

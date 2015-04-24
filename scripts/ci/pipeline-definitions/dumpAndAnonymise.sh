@@ -1,15 +1,21 @@
 #!/bin/bash
 rootPassword=$1
 IMPLEMENTATION_NAME=$2
-souceIP=$3
+AWS_ACCESS_KEY=$3
+AWS_SECRET_KEY=$4
+souceIP=$5
 
 set -e -x
 
-SCRIPT_DIR=`dirname $0`/../../
+pushd `dirname $0` > /dev/null
+CURR_DIR=`pwd -P`
+popd > /dev/null
+
+SCRIPT_DIR=${CURR_DIR}/../../
 cd $SCRIPT_DIR
 
 TIME=`date +%Y%m%d_%H%M%S`
-BACKUP_DIR=${4:-/tmp/backup/anonymised_backup_$TIME}
+BACKUP_DIR=${6:-/tmp/backup/anonymised_backup_$TIME}
 mkdir -pv $BACKUP_DIR
 
 OPENMRS_NEW_DB=anonymised_openmrs_$TIME
@@ -18,20 +24,20 @@ OPENERP_NEW_DB=anonymised_openerp_$TIME
 
 if [ -z $rootPassword ]; then
     echo "Please provide a password for mysql root"
-    echo "[USAGE] $0 <mysqlRootPassword> <IMPLEMENTATION_NAME> [sourceHostIP] [BACKUP_DIR]"
+    echo "[USAGE] $0 <mysqlRootPassword> <IMPLEMENTATION_NAME> <AWS_KEY> <AWS_SECRET> [sourceHostIP] [BACKUP_DIR]"
     exit 1
 fi
 
 if [ -z config ]; then
     echo "Please provide a config name.. Config name will be used to create storage path in the upload location"
-    echo "[USAGE] $0 <mysqlRootPassword> <IMPLEMENTATION_NAME> [sourceHostIP] [BACKUP_DIR]"
+    echo "[USAGE] $0 <mysqlRootPassword> <IMPLEMENTATION_NAME> <AWS_KEY> <AWS_SECRET> [sourceHostIP] [BACKUP_DIR]"
     exit 1
 fi
 
 if [ -z $souceIP ]; then
     echo "No source Host IP provided. Using 127.0.0.1"
     souceIP=127.0.0.1
-    echo "[USAGE] $0 <mysqlRootPassword> <IMPLEMENTATION_NAME> [sourceHostIP] [BACKUP_DIR]"
+    echo "[USAGE] $0 <mysqlRootPassword> <IMPLEMENTATION_NAME> <AWS_KEY> <AWS_SECRET> [sourceHostIP] [BACKUP_DIR]"
 fi
 
 # Take dump & restore on a different temp database.
@@ -53,9 +59,9 @@ mysqldump --routines --no-create-db $OPENMRS_NEW_DB --single-transaction --compr
 /usr/pgsql-9.2/bin/pg_dump -Upostgres $OPENELIS_NEW_DB | gzip -c > $BACKUP_DIR/$OPENELIS_NEW_DB.sql.gz
 /usr/pgsql-9.2/bin/pg_dump -Upostgres $OPENERP_NEW_DB | gzip -c > $BACKUP_DIR/$OPENERP_NEW_DB.sql.gz
 
-bash $SCRIPT_DIR/ci/pipeline-definitions/push_file_to_aws.sh $BACKUP_DIR/$OPENMRS_NEW_DB.sql.gz $IMPLEMENTATION_NAME anonymised_openmrs.sql.gz
-bash $SCRIPT_DIR/ci/pipeline-definitions/push_file_to_aws.sh $BACKUP_DIR/$OPENELIS_NEW_DB.sql.gz $IMPLEMENTATION_NAME anonymised_clinlims.sql.gz
-bash $SCRIPT_DIR/ci/pipeline-definitions/push_file_to_aws.sh $BACKUP_DIR/$OPENERP_NEW_DB.sql.gz $IMPLEMENTATION_NAME anonymised_openerp.sql.gz
+bash $SCRIPT_DIR/ci/pipeline-definitions/push_file_to_aws.sh $BACKUP_DIR/$OPENMRS_NEW_DB.sql.gz $IMPLEMENTATION_NAME anonymised_openmrs.sql.gz $AWS_ACCESS_KEY $AWS_SECRET_KEY
+bash $SCRIPT_DIR/ci/pipeline-definitions/push_file_to_aws.sh $BACKUP_DIR/$OPENELIS_NEW_DB.sql.gz $IMPLEMENTATION_NAME anonymised_clinlims.sql.gz $AWS_ACCESS_KEY $AWS_SECRET_KEY
+bash $SCRIPT_DIR/ci/pipeline-definitions/push_file_to_aws.sh $BACKUP_DIR/$OPENERP_NEW_DB.sql.gz $IMPLEMENTATION_NAME anonymised_openerp.sql.gz $AWS_ACCESS_KEY $AWS_SECRET_KEY
 
 #upload to aws
 
