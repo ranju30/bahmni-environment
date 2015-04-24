@@ -1,17 +1,22 @@
 #!/bin/bash -x
 
 CURR_DIR=`dirname $0`
-SCRIPTS_DIR="${CURR_DIR}"
+SCRIPTS_DIR="${CURR_DIR}"/../../
 DUMP_DIR="/tmp/anonymised_dump"
+IMPLEMENTATION_NAME=$1
 mkdir -p $DUMP_DIR
 rm -rf $DUMP_DIR/*
 
-if [ -z ${FACTER_deploy_bahmni_openelis} ] || [ -z ${FACTER_deploy_bahmni_openerp} ] || [ -z ${anonymised_dump_url} ]; then
-    echo "Please set all the required environment variables (FACTER_deploy_bahmni_openelis, FACTER_deploy_bahmni_openerp, anonymised_dump_url) before executing the script"
+if [ -z ${FACTER_deploy_bahmni_openelis} ] || [ -z ${FACTER_deploy_bahmni_openerp} ]; then
+    echo "Please set all the required environment variables (FACTER_deploy_bahmni_openelis, FACTER_deploy_bahmni_openerp) before executing the script"
     exit 1;
 fi
 
-wget -r -nd -nH --no-parent --reject="index.html*" --no-check-certificate ${anonymised_dump_url}/ -P ${DUMP_DIR}
+bash -x $SCRIPTS_DIR/ci/pipeline-definitions/get_file_from_aws.sh $IMPLEMENTATION_NAME anonymised_openmrs.sql.gz ${DUMP_DIR}
+bash -x $SCRIPTS_DIR/ci/pipeline-definitions/get_file_from_aws.sh $IMPLEMENTATION_NAME anonymised_clinlims.sql.gz ${DUMP_DIR}
+bash -x $SCRIPTS_DIR/ci/pipeline-definitions/get_file_from_aws.sh $IMPLEMENTATION_NAME anonymised_openerp.sql.gz ${DUMP_DIR}
+
+
 gunzip ${DUMP_DIR}/*.gz
 if [ ! -f $DUMP_DIR/anonymised_openmrs*.sql ]; then
    echo "No openmrs dump found"
@@ -40,6 +45,7 @@ fi
 sudo service tomcat stop
 mysql -uroot -ppassword -e "drop database if exists openmrs"
 mysql -uroot -ppassword -e "create database openmrs"
+mysql -uroot -ppassword -e "GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'%'";
 mysql -uroot -ppassword openmrs < $DUMP_DIR/anonymised_openmrs*.sql
 
 if [ ${FACTER_deploy_bahmni_openelis} == "true" ]; then
