@@ -37,8 +37,7 @@ node default {
   }
 
   if ($install_server_type == "monitoring-server") {
-    include nagios
-    include bahmni_nagios
+    include bahmni_nagios_server
   }
 
   if ($install_server_type == "jasper-server") {

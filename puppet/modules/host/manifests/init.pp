@@ -1,8 +1,9 @@
 class host {
-	$host_log_file = "${logs_dir}/bahmni_host.log"
-	$host_log_expression = ">> ${host_log_file} 2>> ${host_log_file}"
+  $host_log_file = "${logs_dir}/bahmni_host.log"
+  $host_log_expression = ">> ${host_log_file} 2>> ${host_log_file}"
 
   require yum_repo
+  require nagios_remote_host
 
   file { "${temp_dir}" :
     ensure    => directory,
