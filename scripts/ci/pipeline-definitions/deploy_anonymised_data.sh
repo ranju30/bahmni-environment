@@ -73,5 +73,6 @@ if [ ${FACTER_deploy_bahmni_openerp} == "true" ]; then
 fi
 
 sudo service tomcat start
+echo "Started Tomcat"
 rm -rf $DUMP_DIR/*
 exit 0;

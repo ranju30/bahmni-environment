@@ -1,4 +1,5 @@
 #!/bin/bash
+
 rootPassword=$1
 IMPLEMENTATION_NAME=$2
 AWS_ACCESS_KEY=$3
@@ -70,3 +71,4 @@ bash $SCRIPT_DIR/ci/pipeline-definitions/push_file_to_aws.sh $BACKUP_DIR/$OPENER
 mysql -uroot -p$rootPassword -e "drop database $OPENMRS_NEW_DB"
 psql -Upostgres -c "drop database $OPENELIS_NEW_DB"
 psql -Upostgres -c "drop database $OPENERP_NEW_DB"
+rm -rf $BACKUP_DIR
