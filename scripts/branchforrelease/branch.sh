@@ -17,7 +17,7 @@ fi
 
 declare -a allrepos=("openmrs-module-bahmniapps" "jss-config" "openerp-atomfeed-service" "OpenElis"
  "bahmni-core" "bahmni-java-utils" "openerp-modules" "openerp-functional-tests" "openmrs-distro-bahmni"
- "bahmni-environment" "emr-functional-tests" "default-config", "bahmni-reports")
+ "bahmni-environment" "emr-functional-tests" "default-config" "bahmni-reports" "possible-config" "search-config")
 
 rm -rf ~/allrepos
 mkdir ~/allrepos
