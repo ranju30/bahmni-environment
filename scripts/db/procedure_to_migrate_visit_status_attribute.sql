@@ -10,7 +10,7 @@ CREATE PROCEDURE setVisitStatusAttribute()
     DECLARE visit_details CURSOR FOR
       (SELECT
          visit_details.visit_id,
-         if(admit_encounter.name = 'ADMISSION', 'IPD', IF(visit_details.visit_type = 'Emergency', 'Emergency', 'OPD'))
+         if(admit_encounter.name = 'ADMISSION', 'IPD', 'OPD')
            AS visit_status
        FROM (
               SELECT
