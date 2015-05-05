@@ -6,4 +6,6 @@
 
 echo "Attempting to run puppet MODULE: $@ "
 SCRIPTS_DIR=`dirname $0`
+
+sudo -E $SCRIPTS_DIR/deploy-module.sh bahmni_facter
 sudo -E $SCRIPTS_DIR/deploy-module.sh "$@" 

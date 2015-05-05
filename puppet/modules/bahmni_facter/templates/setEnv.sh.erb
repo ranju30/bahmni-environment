@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e -x
+
+if [ -f /etc/facter/facts.d/bahmni.txt ]; then
+    sudo rm /etc/facter/facts.d/bahmni.txt
+fi
+
+sudo ln -s <%=@bahmni_config_dir%>/bahmni.properties /etc/facter/facts.d/bahmni.txt
