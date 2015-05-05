@@ -7,7 +7,7 @@ class implementation_config {
   if $bahmni_openelis_required == "true" {
 	  contain 'implementation_config::openelis'
   }
-  
+
   if $bahmni_openerp_required == "true" {
 	  contain 'implementation_config::openerp'
   }
