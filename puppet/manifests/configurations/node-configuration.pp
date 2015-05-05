@@ -1,3 +1,4 @@
+$bahmni_config_dir="/etc/bahmni"
 $temp_dir = "/bahmni_temp"
 $logs_dir = "${temp_dir}/logs"
 $package_dir = "/packages"
