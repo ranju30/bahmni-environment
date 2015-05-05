@@ -7,11 +7,11 @@
   
   require implementation_config::setup
 
-  exec { "copyObsCalculatorToOpenMRSFolder" :
-    command   => "cp -rf ${obscalculator_dir} ${openmrs_dir}",
-    provider  => shell,
-    path      => "${os_path}",
-    onlyif    => "test -d ${obscalculator_dir}"
+  file { "/tmp/mysql-connector-java-5.1.28.jar" :
+      ensure  => "directory",
+      source  => "puppet:///modules/implementation_config/mysql-connector-java-5.1.28.jar",
+      owner   => "${bahmni_user}",
+      recurse => "true",
   }
 
   exec { "copyPatientMatchingAlgorithmToOpenMRSFolder" :
@@ -27,7 +27,7 @@
     path      => "${os_path}",
     onlyif    => "test -d ${encounter_modifier_scripts_dir}"
   }
- 
+
   exec { "copyordertemplatesToOpenMRSFolder" :
     command   => "cp -rf ${ordertemplates_dir} ${openmrs_dir}",
     provider  => shell,
