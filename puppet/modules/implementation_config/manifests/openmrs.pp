@@ -14,6 +14,13 @@
       recurse => "true",
   }
 
+  exec { "copyObsCalculatorToOpenMRSFolder" :
+    command   => "cp -rf ${obscalculator_dir} ${openmrs_dir}",
+    provider  => shell,
+    path      => "${os_path}",
+    onlyif    => "test -d ${obscalculator_dir}"
+  }
+
   exec { "copyPatientMatchingAlgorithmToOpenMRSFolder" :
     command   => "cp -rf ${patient_matching_algorithm_dir} ${openmrs_dir}",
     provider  => shell,
