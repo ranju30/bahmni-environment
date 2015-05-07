@@ -53,7 +53,7 @@ $active_machine_alias = $bahmni_active_machine_alias ? {
 }
 $passive_machine_ip = $bahmni_passive_machine_ip ? {
   undef     => "127.0.0.1",
-  default       => $bahmni_passive_machine_host_name
+  default       => $bahmni_passive_machine_ip
 }
 $passive_machine_host_name = $bahmni_passive_machine_host_name ? {
   undef     => "passivehost",
