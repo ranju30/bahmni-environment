@@ -21,4 +21,28 @@ class nagios_remote_host {
     notify      => Service["nrpe"]
   }
 
+
+  file { "/usr/lib64/nagios/plugins/check_postgres.pl":
+    source      => "puppet:///modules/nagios_remote_host/nagios-plugins/check_postgres.pl",
+    owner       => "${nagios_user}",
+    group       => "${nagios_user}",
+    mode        =>  555,
+    require    => Package["nagios-plugins-all"]
+  }
+  
+  file { "/usr/lib64/nagios/plugins/check_exit_status.pl":
+    source      => "puppet:///modules/nagios_remote_host/nagios-plugins/check_exit_status.pl",
+    owner       => "${nagios_user}",
+    group       => "${nagios_user}",
+    mode        =>  555,
+    require    => Package["nagios-plugins-all"]
+  }
+  
+  file { "/usr/lib64/nagios/plugins/check_scheduled_tasks.py":
+    source      => "puppet:///modules/nagios_remote_host/nagios-plugins/check_scheduled_tasks.py",
+    owner       => "${nagios_user}",
+    group       => "${nagios_user}",
+    mode        =>  555,
+    require    => Package["nagios-plugins-all"]
+}
 }
