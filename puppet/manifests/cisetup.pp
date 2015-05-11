@@ -25,8 +25,8 @@ node default {
 
   include tools
   include java    
-  include mysql
-  include mysqlserver
+  include mysql_client
+  include mysql_server
   include tomcat
   class { 'tomcat_conf': require => Class["tomcat"] }
   include httpd

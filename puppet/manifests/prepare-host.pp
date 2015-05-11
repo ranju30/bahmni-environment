@@ -12,7 +12,7 @@ node default {
   include host
   include tools
   include java
-  include mysql
+  include mysql_client
 
   class { 'users' : userName => "${bahmni_user}", password_hash => "${bahmni_user_password_hash}" }
 
