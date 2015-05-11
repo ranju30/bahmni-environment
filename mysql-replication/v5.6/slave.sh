@@ -38,7 +38,7 @@ dumpFileExists=`ls -l $master_dump_file`
 if [ "$?" != "0" ]; then echo "Dump file not found. Expected file : $master_dump_file"; exit 1; fi
 
 echo "Restoring dump from file."
-mysql -uroot -p$spassword < $master_dump_file
+mysql -u$susername -p$spassword < $master_dump_file
 echo "Restore complete."
 
 stopMySQL
