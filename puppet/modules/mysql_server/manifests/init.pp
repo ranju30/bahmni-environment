@@ -7,23 +7,23 @@ class mysql_server {
     
     file { "/etc/my.cnf" :
       ensure      => present,
-      content     => template("mysql/my.cnf"),
+      content     => template("mysql_server/my.cnf"),
       require     => Package["MySQL-server"],
     }
     
     file { "/tmp/changepassword.sql" :
       ensure      => present,
-      content     => template("mysql/changepassword.sql.erb"),
+      content     => template("mysql_server/changepassword.sql.erb"),
     }
     
     file { "/tmp/grantAccess.sql" :
       ensure      => present,
-      content     => template("mysql/grantAccess.sql.erb"),
+      content     => template("mysql_server/grantAccess.sql.erb"),
     }
     
     file { "/tmp/initdb.sh" :
       ensure      => present,
-      content     => template("mysql/initdb.sh.erb"),
+      content     => template("mysql_server/initdb.sh.erb"),
     }
     
     service { "mysql" :
