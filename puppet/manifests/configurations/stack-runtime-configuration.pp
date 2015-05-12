@@ -26,11 +26,11 @@ $support_email = $bahmni_support_email ? {
   default       => $bahmni_support_email
 }
 
-import "runtime/app-server-configuration"
-import "runtime/db-server-configuration"
+
+import "runtime/all-servers-config"
 import "runtime/nagios-remote-host-config"
-import "runtime/nagios-server-configuration"
-import "runtime/reports-configuration"
+import "runtime/nagios-server-config"
+import "runtime/reports-config"
 
 # Should be included after runtime variables
 import "constants"

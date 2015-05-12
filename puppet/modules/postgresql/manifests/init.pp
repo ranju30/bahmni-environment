@@ -5,8 +5,8 @@ class postgresql {
   $postgresLibsPackageName = "${postgresPackageName}-libs"
   $postgresServerPackageName = "${postgresPackageName}-server"
   $postgresContribPackageName = "${postgresPackageName}-contrib"
-  $postgresMaster = $active_machine_ip
-  $postgresSlave = $passive_machine_ip
+  $postgresMaster = $db_server
+  $postgresSlave = $passive_db_server
 
   package { "${postgresLibsPackageName}" : ensure => installed}
 	package { "${postgresServerPackageName}" : ensure => installed, require => Package["${postgresLibsPackageName}"]}
