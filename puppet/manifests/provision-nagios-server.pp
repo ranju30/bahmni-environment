@@ -4,5 +4,5 @@ import "configurations/stack-runtime-configuration"
 import "configurations/deployment-configuration"
 
 node default {
-  include bahmni_nagios_server
+  include nagios_server
 }
