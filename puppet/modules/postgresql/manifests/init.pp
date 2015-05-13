@@ -1,6 +1,4 @@
 class postgresql {
-  require host
-
   $postgresPackageName = "postgresql${postgresMajorVersion}${postgresMinorVersion}"
   $postgresLibsPackageName = "${postgresPackageName}-libs"
   $postgresServerPackageName = "${postgresPackageName}-server"

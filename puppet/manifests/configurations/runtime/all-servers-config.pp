@@ -1,19 +1,19 @@
 $db_server = $db_server_ip ? {
-  undef     => "localhost",
+  undef     => "127.0.0.1",
   default       => $db_server_ip
 }
 
 $passive_db_server = $passive_db_server_ip ? {
-  undef     => "localhost",
+  undef     => "127.0.0.1",
   default       => $passive_db_server_ip
 }
 
 $app_server = $app_server_ip ? {
-  undef     => "localhost",
+  undef     => "127.0.0.1",
   default       => $app_server_ip
 }
 
 $passive_app_server = $passive_app_server_ip ? {
-  undef     => "localhost",
+  undef     => "127.0.0.1",
   default       => $passive_app_server_ip
 }
