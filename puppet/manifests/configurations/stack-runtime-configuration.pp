@@ -1,6 +1,11 @@
 # Configuration of underlying software stack which are applicable at runtime
 
 # Default values for expected FACTER variables
+$implementation_name = $implementation_name ? {
+  undef => "default",
+  default => $implementation_name
+}
+
 $bahmni_user = $bahmni_user_name ? {
   undef     => "bahmni",
   default       => $bahmni_user_name
