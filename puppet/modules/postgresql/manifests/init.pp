@@ -49,7 +49,7 @@ class postgresql {
       require     => Exec["chkconfig-postgres-server"],
   }
 
-  if($is_passive_setup){
+  if($is_passive_setup == true){
     if $postgresFirstTimeSetup == true {
       exec { "backup_pg_data_folder":
         command     => "service ${postgresServiceName} stop && rm -rf ${postgresDataFolder}-backup && mv -f ${postgresDataFolder} ${postgresDataFolder}-backup",
