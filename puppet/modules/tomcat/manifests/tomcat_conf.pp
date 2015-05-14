@@ -5,14 +5,14 @@ class tomcat::tomcat_conf {
   file { "CATALINA_OPTS" :
     path    => "${tomcatInstallationDirectory}/bin/setenv.sh",
     ensure  => present,
-    content => template ("tomcat_conf/setenv.sh"),
+    content => template ("tomcat/setenv.sh"),
     owner   => "${bahmni_user}",
     mode    => 664,
   }
   
   file { "/etc/init.d/tomcat" :
     ensure      => present,
-    content     => template("tomcat_conf/tomcat.initd.erb"),
+    content     => template("tomcat/tomcat.initd.erb"),
     mode        => 777,
     group       => "root",
     owner       => "root",
@@ -21,7 +21,7 @@ class tomcat::tomcat_conf {
   file { "catalina.sh_with_log4j_properties_path_info" :
     path        => "${tomcatInstallationDirectory}/bin/catalina.sh",
     ensure      => present,
-    content     => template("tomcat_conf/catalina.sh.erb"),
+    content     => template("tomcat/catalina.sh.erb"),
     owner       => "${bahmni_user}",
     replace     => true,
     mode        => 774,
@@ -30,7 +30,7 @@ class tomcat::tomcat_conf {
   
   file { "${tomcatInstallationDirectory}/conf/server.xml" :
     ensure    => present,
-    content   => template("tomcat_conf/server.xml.erb"),
+    content   => template("tomcat/server.xml.erb"),
     owner     => "${bahmni_user}",
     replace   => true,
     mode      => 664,
@@ -38,7 +38,7 @@ class tomcat::tomcat_conf {
   
   file { "${tomcatInstallationDirectory}/conf/context.xml" :
     ensure    => present,
-    content   => template("tomcat_conf/context.xml.erb"),
+    content   => template("tomcat/context.xml.erb"),
     owner     => "${bahmni_user}",
     replace   => true,
     mode      => 664,
@@ -47,7 +47,7 @@ class tomcat::tomcat_conf {
   file { "log4j_properties_file_for_tomcat" :
     path      => "${tomcatInstallationDirectory}/lib/log4j.properties",
     ensure    => present,
-    content   => template("tomcat_conf/log4j.properties.erb"),
+    content   => template("tomcat/log4j.properties.erb"),
     owner     => "${bahmni_user}",
     replace   => true,
     mode      => 664,
@@ -60,7 +60,7 @@ class tomcat::tomcat_conf {
   
   file { "${tomcatInstallationDirectory}/conf/web.xml" :
     ensure      => present,
-    content     => template("tomcat_conf/web.xml.erb"),
+    content     => template("tomcat/web.xml.erb"),
     group       => "${bahmni_user}",
     owner       => "${bahmni_user}",
     replace     => true,
@@ -68,7 +68,7 @@ class tomcat::tomcat_conf {
   
   file { "${tomcatInstallationDirectory}/conf/tomcat-users.xml" :
     ensure    => present,
-    content   => template("tomcat_conf/tomcat-users.xml.erb"),
+    content   => template("tomcat/tomcat-users.xml.erb"),
     owner     => "${bahmni_user}",
     mode      => 664,
   }
