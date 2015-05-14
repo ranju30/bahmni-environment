@@ -7,6 +7,8 @@ class openerp {
   file { "${openerp_temp}" : ensure => directory, mode => 744}
 
   notify { "Creating file ${openerp_temp}/install_openerp.sh" :}
+  
+  require python
 
   file { "${openerp_temp}/install_openerp.sh" :
     ensure      => present,

@@ -26,7 +26,6 @@ $support_email = $bahmni_support_email ? {
   default       => $bahmni_support_email
 }
 
-
 import "runtime/all-servers-config"
 import "runtime/nagios-remote-host-config"
 import "runtime/nagios-server-config"

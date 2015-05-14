@@ -9,7 +9,6 @@ node default {
 
     class { 'python_setuptools': stage => 'first_stage' }
     include tomcat
-    class { 'tomcat_conf': require => Class["tomcat"] }
     include httpd 
     if $bahmni_openerp_required == "true" {
       include python

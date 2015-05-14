@@ -13,7 +13,7 @@ then
         echo $FACTER_go_bahmni_yum_repo_url
 		sudo wget -r -nH --no-parent --reject="index.html*" http://$FACTER_go_bahmni_yum_repo_url/packages/ -P /./
 else
-        sudo wget -r -nH --no-parent --reject="index.html*" https://bahmni-repo.twhosted.com/packages/ -P /./
+        sudo wget -r -nH --no-parent --reject="index.html*" http://172.18.2.14/packages/ -P /./
 fi
 sudo chmod -R 777 /packages
 sudo sed -i '/^127\.0\.0\.1/ s/$/'" $HOSTNAME"'/' /etc/hosts
