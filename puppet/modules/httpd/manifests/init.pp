@@ -1,7 +1,10 @@
 # This class as of now ensures httpd installed and running
 # Project specific rules need to be inserted manually into httpd.conf and ssl.conf
 
+
 class httpd {
+  require httpd::config
+
   $apache_user = "apache"
   require yum_repo
   include client_side_logging
@@ -46,16 +49,16 @@ class httpd {
     notify       => Service["httpd"],
   }
 
-  exec { "clean_${httpdCacheDirectory}" :
-    command => "rm -rf ${httpdCacheDirectory}",
-    path    => "${os_path}"
+  exec { "clean_${httpd::config::httpdCacheDirectory}" :
+    command => "rm -rf ${httpd::config::httpdCacheDirectory}",
+    path    => "${httpd::config::os_path}"
   }
 
-  file { "${httpdCacheDirectory}" :
+  file { "${httpd::config::httpdCacheDirectory}" :
     ensure  => directory,
     owner   => "${apache_user}",
     group   => "${apache_user}",
-    require => Exec["clean_${httpdCacheDirectory}"]
+    require => Exec["clean_${httpd::config::httpdCacheDirectory}"]
   }
 
   file { "${temp_dir}/iptables.sh" :

@@ -78,39 +78,6 @@ $openERPReadTimeout=20000
 
 $ant_home="/home/${bahmni_user}/apache-ant-${ant_version}"
 
-######################## HTTPD CONFIG START#############################################
-import "httpd-default-configuration"
-
-## The following redirects can contain either a string or an array;
-## If it is a string, the same is used for both ProxyPass and ProxyPassReverse rules;
-## In case of array, 1st element of the array specifies ProxyPass rule and 2nd element specifies ProxyPassReverse rule.
-$httpsRedirects = [{ path => "/home", redirectPath => "/bahmni/home/" }]
-$httpProxyRedirects = [{ path => "/jasperserver", redirectPath => "http://localhost:8080/jasperserver" }]
-$httpsProxyRedirects = [{ path => "/openmrs", redirectPath => "http://localhost:8080/openmrs" },
-  { path => "/openelis", redirectPath => "http://localhost:8080/openelis" },
-  { path => "/bahmnireports", redirectPath => "http://localhost:8080/bahmnireports" },
-  { path => "/reference-data", redirectPath => "http://localhost:8080/reference-data" },
-  { path => "/go", redirectPath => "http://localhost:8153/go" }]
-#Static webapps
-$httpsStaticWebapps = [
-  { path => "/bahmni", directory => "${bahmniAppsDirectory}" },
-  { path => "${patientImagesUrl}", directory => "${patientImagesDirectory}" },
-  { path => "/document_images", directory => "${documentBaseDirectory}" },
-  { path => "/bahmni_config", directory => "${bahmniConfigDirectory}" },
-  { path => "/bahmni_revisions", directory => "${bahmniRevisionsDirectory}" },
-  { path => "/uploaded_results", directory => "${uploadedResultsDirectory}" },
-  { path => "/uploaded-files", directory => "${uploadedFilesDirectory}" }]
-$httpsCachedDirectories = []
-$httpsAggressiveCacheDisabledDirectories = []
-$httpsSubdomains = [{ subdomain => "openerp", url => "http://localhost:8069" }]
-
-$httpdCacheDirectory = "/var/cache/mod_proxy"
-$httpsCacheUrls = [{ path => "${patientImagesDirectory}", type => 'Directory', expireTime => "86400" }, #86400s => 1day
-  { path => "${documentBaseDirectory}", type => 'Directory', expireTime => "86400" },
-  { path => "${bahmniAppsDirectory}", type => 'Directory', expireTime => "1" }, #1s
-  { path => "/openmrs/ws/rest/v1/concept" }]
-######################## HTTPD CONFIG END################################################
-
 ######################## JASPER CONFIG START##############################################
 $jasperTomcatHome = $tomcatInstallationDirectory
 $jasperHome = $bahmni_jasper_home ? {

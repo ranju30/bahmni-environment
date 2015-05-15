@@ -1,28 +1,28 @@
 # Virtual host for default port 80 to tomcat(8080)
 <VirtualHost *:80>
-<% if @sslEnabled == true -%>
+<% if scope['httpd::config::sslEnabled'] == true -%>
 	RewriteEngine On
   RewriteCond %{HTTPS} off
-	<% if @sslExcludeList!=nil and @sslExcludeList.length > 0 -%>
-		RewriteCond %{REMOTE_HOST} !(<%= @sslExcludeList.join("|") %>)
+	<% if scope['httpd::config::sslExcludeList']!=nil and scope['httpd::config::sslExcludeList'].length > 0 -%>
+		RewriteCond %{REMOTE_HOST} !(<%= scope['httpd::config::sslExcludeList'].join("|") %>)
 	<% end -%>
-	<% if @httpProxyRedirects!=nil and @httpProxyRedirects.length > 0 -%>
-		<%- @httpProxyRedirects.each do |redirectionRule| -%>
+	<% if scope['httpd::config::httpProxyRedirects']!=nil and scope['httpd::config::httpProxyRedirects'].length > 0 -%>
+		<%- scope['httpd::config::httpProxyRedirects'].each do |redirectionRule| -%>
 				<%- pathToIgonre =  redirectionRule.is_a?(Array) ? redirectionRule[0]["path"] : redirectionRule["path"]  -%>
 				RewriteCond %{REQUEST_URI} !(^<%=pathToIgonre%>)
 		<% end -%>
 	<% end -%>
 
 	
-  <% if @dropPacketsIfIPNotInSslExcludeList == true -%>
+  <% if scope['httpd::config::dropPacketsIfIPNotInSslExcludeList'] == true -%>
    	RewriteRule (.*) [F]
   <% else -%>
     RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
   <% end -%>
 <% end -%>
 
-<% if @httpProxyRedirects!=nil and @httpProxyRedirects.length > 0 -%>
-	<%- @httpProxyRedirects.each do |redirectionRule| -%>
+<% if scope['httpd::config::httpProxyRedirects']!=nil and scope['httpd::config::httpProxyRedirects'].length > 0 -%>
+	<%- scope['httpd::config::httpProxyRedirects'].each do |redirectionRule| -%>
 			<%- if redirectionRule.is_a?(Array) -%>
 	        ProxyPass <%=redirectionRule[0]["path"]%> <%=redirectionRule[0]["redirectPath"]%>
 	        ProxyPassReverse <%=redirectionRule[1]["path"]%> <%=redirectionRule[1]["redirectPath"]%>

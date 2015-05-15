@@ -72,9 +72,9 @@ SSLCryptoDevice builtin
 <IfModule mod_cache.c>
 	LoadModule disk_cache_module modules/mod_disk_cache.so
 	<IfModule mod_disk_cache.c>
-		CacheRoot <%=@httpdCacheDirectory%>
+		CacheRoot <%= scope['httpd::config::httpdCacheDirectory'] %>
 
-		<%- @httpsCacheUrls.each do |httpsCacheUrl| -%>
+		<%- scope['httpd::config::httpsCacheUrls'].each do |httpsCacheUrl| -%>
 			CacheEnable disk <%=httpsCacheUrl["path"]%>
 
 			<% if(httpsCacheUrl["type"] == "Directory") -%>
@@ -106,8 +106,8 @@ SSLCryptoDevice builtin
 # General setup for the virtual host, inherited from global configuration
 #DocumentRoot "/var/www/html"
 #ServerName www.example.com:443
-<% if !@serverName.nil? &&  !@serverName.empty? %>
-ServerName <%= @serverName %>
+<% if !scope['httpd::config::serverName'].nil? &&  !scope['httpd::config::serverName'].empty? %>
+ServerName <%= scope['httpd::config::serverName'] %>
 <% end %>
 
 ProxyPreserveHost On
@@ -137,14 +137,14 @@ SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
 # the certificate is encrypted, then you will be prompted for a
 # pass phrase.  Note that a kill -HUP will prompt again.  A new
 # certificate can be generated using the genkey(1) command.
-SSLCertificateFile <%= @sslCertificateFile %>
+SSLCertificateFile <%= scope['httpd::config::sslCertificateFile'] %>
 
 #   Server Private Key:
 #   If the key is not combined with the certificate, use this
 #   directive to point at the key file.  Keep in mind that if
 #   you've both a RSA and a DSA private key you can configure
 #   both in parallel (to also allow the use of DSA ciphers, etc.)
-SSLCertificateKeyFile <%= @sslCertificateKeyFile %>
+SSLCertificateKeyFile <%= scope['httpd::config::sslCertificateKeyFile'] %>
 
 #   Server Certificate Chain:
 #   Point SSLCertificateChainFile at a file containing the
@@ -153,8 +153,8 @@ SSLCertificateKeyFile <%= @sslCertificateKeyFile %>
 #   the referenced file can be the same as SSLCertificateFile
 #   when the CA certificates are directly appended to the server
 #   certificate for convinience.
-<% if !@sslCertificateChainFile.nil? &&  !@sslCertificateChainFile.empty? %>
-SSLCertificateChainFile <%= @sslCertificateChainFile %>
+<% if !scope['httpd::config::sslCertificateChainFile'].nil? &&  !scope['httpd::config::sslCertificateChainFile'].empty? %>
+SSLCertificateChainFile <%= scope['httpd::config::sslCertificateChainFile'] %>
 <% else %>
 #SSLCertificateChainFile /etc/pki/tls/certs/server-chain.crt
 <% end %>
@@ -163,8 +163,8 @@ SSLCertificateChainFile <%= @sslCertificateChainFile %>
 #   Set the CA certificate verification path where to find CA
 #   certificates for client authentication or alternatively one
 #   huge file containing all of them (file must be PEM encoded)
-<% if !@sslCACertificateFile.nil? &&  !@sslCACertificateFile.empty? %>
-SSLCACertificateFile <%= @sslCACertificateFile %>
+<% if !scope['httpd::config::sslCACertificateFile'].nil? &&  !scope['httpd::config::sslCACertificateFile'].empty? %>
+SSLCACertificateFile <%= scope['httpd::config::sslCACertificateFile'] %>
 <% else %>
 #SSLCACertificateFile /etc/pki/tls/certs/ca-bundle.crt
 <% end %>
@@ -263,20 +263,20 @@ CustomLog logs/ssl_request_log \
 
 SSLProxyEngine on
 
-<% if @authenticationRequired == true or (@httpsSubdomains != nil and  @httpsSubdomains.length > 0)-%>
+<% if scope['httpd::config::authenticationRequired'] == true or (scope['httpd::config::httpsSubdomains'] != nil and  scope['httpd::config::httpsSubdomains'].length > 0)-%>
 	RewriteEngine on
 <% end -%>
 
 RequestHeader set "X-Forwarded-Proto" "https"
 
 #https rules for authentication
-<% if @authenticationRequired == true -%>
-  SetEnvIf <%= @authenticationKey %> ^(<%= @authenticationValues.join("|") %>)$ validAuthenticationKey=1
-  <% if @authenticationExcludeHosts!=nil and @authenticationExcludeHosts.length > 0 -%>
-  	SetEnvIf Remote_Addr <%= @authenticationExcludeHosts.join("|") %> validAuthenticationKey=1
+<% if scope['httpd::config::authenticationRequired'] == true -%>
+  SetEnvIf <%= scope['httpd::config::authenticationKey'] %> ^(<%= scope['httpd::config::authenticationValues'].join("|") %>)$ validAuthenticationKey=1
+  <% if scope['httpd::config::authenticationExcludeHosts']!=nil and scope['httpd::config::authenticationExcludeHosts'].length > 0 -%>
+  	SetEnvIf Remote_Addr <%= scope['httpd::config::authenticationExcludeHosts'].join("|") %> validAuthenticationKey=1
   <% end -%>
-  <% if @authenticationExcludeUrlPatterns!=nil -%>
-      <% for @authenticationExcludeUrlPattern in @authenticationExcludeUrlPatterns %>
+  <% if scope['httpd::config::authenticationExcludeUrlPatterns']!=nil -%>
+      <% for @authenticationExcludeUrlPattern in scope['httpd::config::authenticationExcludeUrlPatterns'] %>
   			SetEnvIf Request_URI <%= @authenticationExcludeUrlPattern %> validAuthenticationKey=1
       <% end %>
   <% end %>
@@ -284,16 +284,16 @@ RequestHeader set "X-Forwarded-Proto" "https"
   RewriteRule (.*) /$1 [R=401]
 <% end -%>
 
-<% if @httpsSubdomains!=nil and  @httpsSubdomains.length > 0 -%>
-	<%- @httpsSubdomains.each do |httpsSubdomain| -%>
+<% if scope['httpd::config::httpsSubdomains']!=nil and  scope['httpd::config::httpsSubdomains'].length > 0 -%>
+	<%- scope['httpd::config::httpsSubdomains'].each do |httpsSubdomain| -%>
 	  RewriteCond %{HTTP_HOST} ^<%=httpsSubdomain["subdomain"]%>\.(.*)
     RewriteRule (.*) <%=httpsSubdomain["url"]%>$1 [P]
 	<% end -%>
 <% end -%>
 
 
-<% if @httpsProxyRedirects!=nil and  @httpsProxyRedirects.length > 0 -%>
-	<%- @httpsProxyRedirects.each do |redirectionRule| -%>
+<% if scope['httpd::config::httpsProxyRedirects']!=nil and  scope['httpd::config::httpsProxyRedirects'].length > 0 -%>
+	<%- scope['httpd::config::httpsProxyRedirects'].each do |redirectionRule| -%>
 		<%- if redirectionRule.is_a?(Array) -%>
 	      ProxyPass <%=redirectionRule[0]["path"]%> <%=redirectionRule[0]["redirectPath"]%>
 	      ProxyPassReverse <%=redirectionRule[1]["path"]%> <%=redirectionRule[1]["redirectPath"]%>
@@ -304,14 +304,14 @@ RequestHeader set "X-Forwarded-Proto" "https"
 	<% end -%>
 <% end -%>
 
-<% if @httpsStaticWebapps!=nil and  @httpsStaticWebapps.length > 0 -%>
-	<%- @httpsStaticWebapps.each do |httpsStaticWebapp| -%>
+<% if scope['httpd::config::httpsStaticWebapps']!=nil and  scope['httpd::config::httpsStaticWebapps'].length > 0 -%>
+	<%- scope['httpd::config::httpsStaticWebapps'].each do |httpsStaticWebapp| -%>
 			Alias <%=httpsStaticWebapp["path"]%> <%=httpsStaticWebapp["directory"]%>
 	<% end -%>
 <% end -%>
 
-<% if @httpsRedirects!=nil and  @httpsRedirects.length > 0 -%>
-	<%- @httpsRedirects.each do |redirectionRule| -%>
+<% if scope['httpd::config::httpsRedirects']!=nil and  scope['httpd::config::httpsRedirects'].length > 0 -%>
+	<%- scope['httpd::config::httpsRedirects'].each do |redirectionRule| -%>
 			Redirect permanent <%=redirectionRule["path"]%> <%=redirectionRule["redirectPath"]%>
 	<% end -%>
 <% end -%>
@@ -325,8 +325,8 @@ RequestHeader set "X-Forwarded-Proto" "https"
             Allow from all
             </Directory>
 
-<% if @httpsCachedDirectories!=nil and  @httpsCachedDirectories.length > 0 -%>
-	<%- @httpsCachedDirectories.each do |httpsCachedDirectory| -%>
+<% if scope['httpd::config::httpsCachedDirectories']!=nil and  scope['httpd::config::httpsCachedDirectories'].length > 0 -%>
+	<%- scope['httpd::config::httpsCachedDirectories'].each do |httpsCachedDirectory| -%>
 			<Directory "<%=httpsCachedDirectory%>">
 			        ExpiresActive On
 			        ExpiresDefault "access plus 1 year"
@@ -334,11 +334,11 @@ RequestHeader set "X-Forwarded-Proto" "https"
 	<% end -%>
 <% end -%>
 
-# This makes sure chrome doesn't cache aggressively but makes call with If-Modified-Match : "ETAG_VALUE" and get 304 if not modified		
-<% if @httpsAggressiveCacheDisabledDirectories!=nil and  @httpsAggressiveCacheDisabledDirectories.length > 0 -%>
-	<%- @httpsAggressiveCacheDisabledDirectories.each do |httpsAggressiveCacheDisabledDirectory| -%>
+# This makes sure chrome doesn't cache aggressively but makes call with If-Modified-Match : "ETAG_VALUE" and get 304 if not modified
+<% if scope['httpd::config::httpsAggressiveCacheDisabledDirectories']!=nil and  scope['httpd::config::httpsAggressiveCacheDisabledDirectories'].length > 0 -%>
+	<%- scope['httpd::config::httpsAggressiveCacheDisabledDirectories'].each do |httpsAggressiveCacheDisabledDirectory| -%>
 		  <Directory "<%=httpsAggressiveCacheDisabledDirectory%>">
-		          Header unset Last-Modified 
+		          Header unset Last-Modified
 		  </Directory>
 	<% end -%>
 <% end -%>

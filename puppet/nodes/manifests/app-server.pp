@@ -5,16 +5,3 @@ class nodes::app-server{
     include openerp
   }
 }
-
-
-puppet
-  nodes
-    config
-    app
-      config
-    db
-      config
-
-  modules
-    provision
-    deploy

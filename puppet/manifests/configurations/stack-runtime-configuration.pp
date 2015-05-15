@@ -30,10 +30,3 @@ $support_email = $bahmni_support_email ? {
   undef     => "bahmni-jss-support@googlegroups.com",
   default       => $bahmni_support_email
 }
-
-import "runtime/all-servers-config"
-import "runtime/nagios-remote-host-config"
-import "runtime/nagios-server-config"
-
-# Should be included after runtime variables
-import "constants"
