@@ -260,7 +260,7 @@ Group apache
 # e-mailed.  This address appears on some server-generated pages, such
 # as error documents.  e.g. admin@your-domain.com
 #
-ServerAdmin roothttpd::config::localhost
+ServerAdmin root@localhost
 
 #
 # ServerName gives the name and port that the server uses to identify itself.
@@ -275,8 +275,8 @@ ServerAdmin roothttpd::config::localhost
 # redirections work in a sensible way.
 #
 #ServerName www.example.com:80
-<% if !scope['httpd::config::serverName'].nil? &&  !scope['httpd::config::serverName'].empty? %>
-ServerName <%= scope['httpd::config::serverName'] %>
+<% if !scope['config::serverName'].nil? &&  !scope['config::serverName'].empty? %>
+ServerName <%= scope['config::serverName'] %>
 <% end %>
 
 #

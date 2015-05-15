@@ -1,5 +1,9 @@
 #HTTPD
-class httpd::config {
+class httpd::config inherits global{
+
+  $bahmni_user = "${::global::bahmni_user}"
+  $os_path = "${::global::os_path}"
+  $apache_user = "apache"
 
   $sslEnabled = true
   $sslExcludeList = ["127.0.0.1"]

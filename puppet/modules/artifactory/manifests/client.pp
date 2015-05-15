@@ -1,9 +1,9 @@
-class artifactory::client {
-    file { "${m2_folder}/settings.xml" :
+class artifactory::client inherits artifactory::config {
+    file { "${config::m2_folder}/settings.xml" :
       ensure      => present,
       content     => template("artifactory/client/settings.xml.erb"),
-      owner       => "${maven_user}",
-      group       => "${maven_user}",
+      owner       => "${config::maven_user}",
+      group       => "${config::maven_user}",
       mode        => 644,
     }
 }

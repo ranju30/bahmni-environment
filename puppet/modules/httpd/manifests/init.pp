@@ -2,10 +2,8 @@
 # Project specific rules need to be inserted manually into httpd.conf and ssl.conf
 
 
-class httpd {
-  require httpd::config
+class httpd inherits httpd::config{
 
-  $apache_user = "apache"
   require yum_repo
   include client_side_logging
 
@@ -14,15 +12,15 @@ class httpd {
     ensure => "present"
   }
 
-  user { $apache_user :
-    groups  => [$apache_user, $bahmni_user],
+  user { "${config::apache_user}" :
+    groups  => ["${config::apache_user}", "${config::bahmni_user}"],
     require => Package["httpd"]
   }
 
   exec { "httpd_conf_backup" :
     cwd         => "/etc/httpd/conf",
     command     => "mv httpd.conf httpd.conf.bkup",
-    path        => "${os_path}",
+    path        => "${config::os_path}",
     require     => Package["httpd"],
   }
 
@@ -49,16 +47,16 @@ class httpd {
     notify       => Service["httpd"],
   }
 
-  exec { "clean_${httpd::config::httpdCacheDirectory}" :
-    command => "rm -rf ${httpd::config::httpdCacheDirectory}",
-    path    => "${httpd::config::os_path}"
+  exec { "clean_${config::httpdCacheDirectory}" :
+    command => "rm -rf ${config::httpdCacheDirectory}",
+    path    => "${config::os_path}"
   }
 
-  file { "${httpd::config::httpdCacheDirectory}" :
+  file { "${config::httpdCacheDirectory}" :
     ensure  => directory,
     owner   => "${apache_user}",
     group   => "${apache_user}",
-    require => Exec["clean_${httpd::config::httpdCacheDirectory}"]
+    require => Exec["clean_${config::httpdCacheDirectory}"]
   }
 
   file { "${temp_dir}/iptables.sh" :

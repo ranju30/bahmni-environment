@@ -40,7 +40,7 @@ appServerType = tomcat7
 # appServerType = skipAppServerCheck
 
 # Tomcat app server root dir
-appServerDir = <%=@jasperTomcatHome%>
+appServerDir = <%=scope['config::jasperTomcatHome']%>
 # appServerDir = /home/devuser/apache-tomcat-7.0.26
 # if linux package managed tomcat instance, set two properties below
 # CATALINA_HOME = /usr/share/tomcat6
@@ -58,13 +58,13 @@ appServerDir = <%=@jasperTomcatHome%>
 # appServerDir = /usr/bin/glassfish
 
 # database type
-dbType=<%=@jasperDbType%>
+dbType=<%=scope['config::jasperDbType']%>
 
 # database location and connection settings
 
-dbHost=<%=@jasperDbHost%>
-dbUsername=<%=@jasperDbUsername%>
-dbPassword=<%=@jasperDbPassword%>
+dbHost=<%=scope['config::jasperDbHost']%>
+dbUsername=<%=scope['config::jasperDbUsername']%>
+dbPassword=<%=scope['config::jasperDbPassword']%>
 
 
 
@@ -74,7 +74,7 @@ dbPassword=<%=@jasperDbPassword%>
 # dbPort=3306
 
 # JasperServer db name, sample db names
-js.dbName=<%=@jasperDbName%>
+js.dbName=<%=scope['config::jasperDbName']%>
 # sugarcrm.dbName=sugarcrm
 # foodmart.dbName=foodmart
 
@@ -97,4 +97,4 @@ js.dbName=<%=@jasperDbName%>
 # deployment process.)
 #
 maven.jdbc.artifactId=mysql-connector-java
-maven.jdbc.version=<%=@mysql_connector_java_version%>
+maven.jdbc.version=<%=scope['config::mysql_connector_java_version']%>

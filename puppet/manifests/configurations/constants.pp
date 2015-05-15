@@ -27,8 +27,6 @@ $tomcatHttpPort="8080"
 $tomcatRedirectPort="8443"
 $tomcatShutdownPort="8005"
 $tomcatAjpPort="8009"
-$tomcatParentDirectory="/home/${bahmni_user}"
-$tomcatInstallationDirectory = "${tomcatParentDirectory}/apache-tomcat-${tomcat_version}"
 $tomcatSessionTimeoutInMinutes = 120
 
 # Set host name or ip address
@@ -77,31 +75,3 @@ $openERPConnectTimeout=10000
 $openERPReadTimeout=20000
 
 $ant_home="/home/${bahmni_user}/apache-ant-${ant_version}"
-
-######################## JASPER CONFIG START##############################################
-$jasperTomcatHome = $tomcatInstallationDirectory
-$jasperHome = $bahmni_jasper_home ? {
-  undef     => "/usr/local/jasperreports-server-cp-5.0.0-bin",
-  default   => $bahmni_jasper_home
-}
-
-$jasperDbType = "mysql"
-$jasperDbHost = $passive_db_server_ip ? {
-  undef => $db_server,
-  default => $passive_db_server_ip
-}
-$jasperDbUsername = "root"
-$jasperDbPassword = "password"
-$jasperDbName = "jasperserver"
-
-# Set the Jasper Reports URL to download from:
-$report_zip_source_url = $implementation_name ? {
-  undef       => "https://github.com/jss-emr/jss-reports/archive/master.zip",
-  "jss"       => "https://github.com/jss-emr/jss-reports/archive/master.zip",
-  default        => "https://github.com/jss-emr/jss-reports/archive/master.zip",
-  "search"       => "https://github.com/Bhamni/search-reports/archive/master.zip",
-  "lokbiradari"  => "https://github.com/Bhamni/lokbiradari-reports/archive/master.zip",
-  "possible"  => "https://github.com/Bhamni/possible-reports/archive/master.zip"
-}
-
-######################## JASPER CONFIG END##############################################

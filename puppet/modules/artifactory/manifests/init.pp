@@ -1,5 +1,3 @@
-import 'config'
-
 class artifactory {
     require yum_repo
     require httpd

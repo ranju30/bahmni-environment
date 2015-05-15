@@ -32,7 +32,7 @@ then
 	exit 1
 fi
 
-FACTER_module_to_run=$MODULE_NAME puppet apply $BASE_DIR/puppet/manifests/run.pp  --modulepath=$BASE_DIR/puppet/modules/  --detailed-exitcodes
+FACTER_module_to_run=$MODULE_NAME puppet apply $BASE_DIR/puppet/manifests/run.pp  --modulepath=$BASE_DIR/puppet/modules/:$BASE_DIR/puppet/  --detailed-exitcodes
 RETURN_CODE=$?
 if [ $RETURN_CODE -ne 0 ] && [ $RETURN_CODE -ne 2 ]
 then

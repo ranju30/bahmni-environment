@@ -1,28 +1,28 @@
 # Virtual host for default port 80 to tomcat(8080)
 <VirtualHost *:80>
-<% if scope['httpd::config::sslEnabled'] == true -%>
+<% if scope['config::sslEnabled'] == true -%>
 	RewriteEngine On
   RewriteCond %{HTTPS} off
-	<% if scope['httpd::config::sslExcludeList']!=nil and scope['httpd::config::sslExcludeList'].length > 0 -%>
-		RewriteCond %{REMOTE_HOST} !(<%= scope['httpd::config::sslExcludeList'].join("|") %>)
+	<% if scope['config::sslExcludeList']!=nil and scope['config::sslExcludeList'].length > 0 -%>
+		RewriteCond %{REMOTE_HOST} !(<%= scope['config::sslExcludeList'].join("|") %>)
 	<% end -%>
-	<% if scope['httpd::config::httpProxyRedirects']!=nil and scope['httpd::config::httpProxyRedirects'].length > 0 -%>
-		<%- scope['httpd::config::httpProxyRedirects'].each do |redirectionRule| -%>
+	<% if scope['config::httpProxyRedirects']!=nil and scope['config::httpProxyRedirects'].length > 0 -%>
+		<%- scope['config::httpProxyRedirects'].each do |redirectionRule| -%>
 				<%- pathToIgonre =  redirectionRule.is_a?(Array) ? redirectionRule[0]["path"] : redirectionRule["path"]  -%>
 				RewriteCond %{REQUEST_URI} !(^<%=pathToIgonre%>)
 		<% end -%>
 	<% end -%>
 
 	
-  <% if scope['httpd::config::dropPacketsIfIPNotInSslExcludeList'] == true -%>
+  <% if scope['config::dropPacketsIfIPNotInSslExcludeList'] == true -%>
    	RewriteRule (.*) [F]
   <% else -%>
     RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
   <% end -%>
 <% end -%>
 
-<% if scope['httpd::config::httpProxyRedirects']!=nil and scope['httpd::config::httpProxyRedirects'].length > 0 -%>
-	<%- scope['httpd::config::httpProxyRedirects'].each do |redirectionRule| -%>
+<% if scope['config::httpProxyRedirects']!=nil and scope['config::httpProxyRedirects'].length > 0 -%>
+	<%- scope['config::httpProxyRedirects'].each do |redirectionRule| -%>
 			<%- if redirectionRule.is_a?(Array) -%>
 	        ProxyPass <%=redirectionRule[0]["path"]%> <%=redirectionRule[0]["redirectPath"]%>
 	        ProxyPassReverse <%=redirectionRule[1]["path"]%> <%=redirectionRule[1]["redirectPath"]%>
