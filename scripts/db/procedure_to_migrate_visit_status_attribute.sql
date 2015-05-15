@@ -35,7 +35,7 @@ CREATE PROCEDURE setVisitStatusAttribute()
     FROM visit_attribute_type vat
     WHERE vat.name = 'Visit Status';
 
-    TRUNCATE TABLE visit_attribute;
+    delete from visit_attribute where attribute_type_id = visit_attribute_type_id;
 
     OPEN visit_details;
 
