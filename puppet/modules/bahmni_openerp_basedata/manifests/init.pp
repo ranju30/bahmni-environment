@@ -3,8 +3,8 @@ class bahmni_openerp_basedata inherits bahmni_openerp_basedata::config {
 	$log_file = "${logs_dir}/bahmni_openerp_basedata.log"
   $log_expression = ">> ${log_file} 2>> ${log_file}"
 
-	file { "${temp_dir}/create-database.sh" :
-    path    		=> "${temp_dir}/create-database.sh",
+	file { "${config::temp_dir}/create-database.sh" :
+    path    		=> "${config::temp_dir}/create-database.sh",
     content     => template("bahmni_openerp_basedata/create-database.sh"),
 	  ensure      => present,
     owner       => "${::config::bahmni_user}",
@@ -16,8 +16,8 @@ class bahmni_openerp_basedata inherits bahmni_openerp_basedata::config {
     provider    => shell,
     command     => "sh create-database.sh ${log_expression}",
     path        => "${config::os_path}",
-    cwd         => "${temp_dir}",
-    require			=> File["${temp_dir}/create-database.sh"]
+    cwd         => "${config::temp_dir}",
+    require			=> File["${config::temp_dir}/create-database.sh"]
 	}
 
   exec { "openerp_base_data_for_ci" :

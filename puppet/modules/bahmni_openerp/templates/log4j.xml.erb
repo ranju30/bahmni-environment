@@ -46,7 +46,7 @@
     <root>
         <priority value="WARN"/>
         <appender-ref ref="fileAppender"/>
-        <% if @add_email_appender == true -%>
+        <% if scope['config::add_email_appender'] == true -%>
           <appender-ref ref="asyncSMTPAppender" />
         <% end -%>
     </root>

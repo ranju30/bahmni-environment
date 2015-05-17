@@ -77,7 +77,7 @@
     <root>
         <level value="WARN" />
         <appender-ref ref="CONSOLE" />
-        <% if @add_email_appender == true -%>
+        <% if scope['config::add_email_appender'] == true -%>
           <appender-ref ref="asyncSMTPAppender" />
         <% end -%>
     </root>

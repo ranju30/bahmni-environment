@@ -8,5 +8,5 @@ function run_omod_liquibase() {
 
 function run_atomfeed_client_liquibase() {
 	run_omod_liquibase $1
-	run_openmrs_dependent_liquibase <%= @temp_dir%>/$1/lib/<%= @atomfeed_client %>.jar sql/db_migrations.xml
+	run_openmrs_dependent_liquibase <%= scope['config::temp_dir']%>/$1/lib/<%= @atomfeed_client %>.jar sql/db_migrations.xml
 }

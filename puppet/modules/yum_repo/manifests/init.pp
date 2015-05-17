@@ -1,4 +1,5 @@
 class yum_repo inherits yum_repo::config {
+  $keep_linux_repos_enabled = "true"
   require bootstrap
 
   notice("yum_repo manifest being executed... ")

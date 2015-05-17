@@ -6,7 +6,7 @@ class jasperserver inherits jasperserver::config {
   }
 
   # Mujir - recursively doing this through file resource eats up time. Hence the exec below.\
-  file { "${config::jasperHome}" :
+  file { "${jasperHome}" :
     mode        => 774,
     ensure      => directory,
     owner       => "${::config::bahmni_user}",
@@ -15,18 +15,18 @@ class jasperserver inherits jasperserver::config {
   }
   exec { "change_group_rights_for_jasperHome" :
     provider => "shell",
-    command => "chown -R ${::config::bahmni_user}:${::config::bahmni_user} ${config::jasperHome}; chmod -R 774 ${config::jasperHome}; ",
+    command => "chown -R ${::config::bahmni_user}:${::config::bahmni_user} ${jasperHome}; chmod -R 774 ${config::jasperHome}; ",
     path => "${config::os_path}",
-    require => File["${config::jasperHome}"],
+    require => File["${jasperHome}"],
   }
 
 
   exec { "extracted_jasperserver" :
-    command     => "unzip -q -n ${packages_servers_dir}/jasperreports-server-cp-5.0.0-bin.zip -d ${config::jasperHome}/.. ${config::log_expression}",
+    command     => "unzip -q -n ${packages_servers_dir}/jasperreports-server-cp-5.0.0-bin.zip -d ${jasperHome}/.. ${config::log_expression}",
     provider    => shell,
     user        => "${::config::bahmni_user}",
     path        => "${config::os_path}",
-    require     => [File["${config::jasperHome}"], File["${config::log_file}"]],
+    require     => [File["${jasperHome}"], File["${config::log_file}"]],
     loglevel    => "warning"
   }
 
@@ -39,7 +39,7 @@ class jasperserver inherits jasperserver::config {
   # }
 
   exec {"jasper_mysql_connector" :
-    command      => "cp ${packages_servers_dir}/mysql-connector-java-${mysql_connector_java_version}.jar ${config::jasperHome}/buildomatic/conf_source/db/mysql/jdbc",
+    command      => "cp ${packages_servers_dir}/mysql-connector-java-${mysql_connector_java_version}.jar ${jasperHome}/buildomatic/conf_source/db/mysql/jdbc",
     path        => "${config::os_path}",
     user        => "${::config::bahmni_user}",
     require     => Exec["extracted_jasperserver"]
@@ -68,7 +68,7 @@ class jasperserver inherits jasperserver::config {
 
   exec { "make_jasperserver" :
     command     => "echo y | sh js-install-ce.sh minimal > ${logs_dir}/jasper-install.log ${config::jasper_installation_log_expression}",
-    cwd         => "${config::jasperHome}/buildomatic",
+    cwd         => "${jasperHome}/buildomatic",
     user        => "${::config::bahmni_user}",
     path        => "${config::os_path}",
     provider    => "shell",
@@ -92,7 +92,7 @@ class jasperserver inherits jasperserver::config {
   }
 
   exec { "config_jasper_home" :
-    command     => "sh ${temp_dir}/configure_jasper_home.sh ${config::jasperHome} ${::config::bahmni_user} > ${logs_dir}/configure-jasper-home.log 2>&1",
+    command     => "sh ${temp_dir}/configure_jasper_home.sh ${jasperHome} ${::config::bahmni_user} > ${logs_dir}/configure-jasper-home.log 2>&1",
     user        => "${::config::bahmni_user}",
     path        => "${config::os_path}",
     require     => File["${temp_dir}/configure_jasper_home.sh"],

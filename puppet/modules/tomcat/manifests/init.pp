@@ -8,7 +8,7 @@ class tomcat_base {
   require java
   
   exec { "tomcat_untar" :
-    command   => "tar -zxf ${packages_servers_dir}/apache-tomcat-${::config::tomcat_version}.tar.gz -C ${::config::tomcatParentDirectory} ${::config::deployment_log_expression}",
+    command   => "tar -zxf ${packages_servers_dir}/apache-tomcat-${::config::tomcat_version}.tar.gz -C ${::config::bahmni_home} ${::config::deployment_log_expression}",
     user      => "${::config::bahmni_user}",
     creates   => "${::config::tomcatInstallationDirectory}",
     provider  => shell

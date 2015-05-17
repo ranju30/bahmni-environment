@@ -32,19 +32,19 @@ class bahmni_configuration inherits bahmni_configuration::config {
     require => File["${documentBaseDirectory}"]
   }
 
-  file { "${uploadedFilesDirectory}" :
+  file { "${::config::uploadedFilesDirectory}" :
     ensure => directory,
     mode   => 774,
     owner  => "${::config::bahmni_user}",
     group  => "${::config::bahmni_user}",
   }
 
-  file { ["${uploadedFilesDirectory}/mrs"] :
+  file { ["${::config::uploadedFilesDirectory}/mrs"] :
     ensure => directory,
     mode   => 774,
     owner  => "${::config::bahmni_user}",
     group  => "${::config::bahmni_user}",
-    require => File["${uploadedFilesDirectory}"],
+    require => File["${::config::uploadedFilesDirectory}"],
   }
 
   file { "${httpd_deploy_dir}/patient_images" :

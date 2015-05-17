@@ -2,6 +2,8 @@ class jss_migration {
 	$jss_data_temp = "${temp_dir}/jss-data"
 	$jss_data_log_file = "${logs_dir}/jss-data.log"
 	$jss_data_log_file_expression = ">> ${jss_data_log_file} 2>> ${jss_data_log_file}"
+	$jss_registration_csv = "RegistrationMaster.csv"
+	$number_of_migrator_threads = 1
 
   file { "${jss_data_log_file}" :
       ensure      => present,

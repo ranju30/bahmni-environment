@@ -1,7 +1,6 @@
 class jasperserver::config inherits global {
   $os_path="${::global::os_path}"
   $bahmni_user="${::global::bahmni_user}"
-  $jasperHome = "${::global::jasperHome}"
   $jasperTomcatHome = $tomcatInstallationDirectory
   $jasperDbType = "mysql"
   $jasperDbHost = "${::global::passive_db_server_ip}" ? {

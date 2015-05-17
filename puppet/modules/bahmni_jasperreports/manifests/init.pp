@@ -38,7 +38,7 @@ class bahmni_jasperreports inherits bahmni_jasperreports::config {
 
   exec { "bahmni-jasperserver-deploy-reports" :
     provider => "shell",
-    command  => "scripts/deploy.sh -j ${config::jasperHome} -p conf/${properties_file}   ${::config::deployment_log_expression}",
+    command  => "scripts/deploy.sh -j ${jasperHome} -p conf/${properties_file}   ${::config::deployment_log_expression}",
     path     => "${config::os_path}",
     cwd      => "${::config::build_output_dir}/${::config::implementation_name}-reports/${::config::implementation_name}-reports-master",
     require  => Exec["change-reports-name"]
@@ -46,7 +46,7 @@ class bahmni_jasperreports inherits bahmni_jasperreports::config {
 
   exec { "bahmni-jasperserver-deploy-customserver" :
     provider => "shell",
-    command  => "scripts/deployCustomJasperServer.sh ${config::jasperHome}   ${::config::deployment_log_expression}",
+    command  => "scripts/deployCustomJasperServer.sh ${jasperHome}   ${::config::deployment_log_expression}",
     path     => "${config::os_path}",
     cwd      => "${::config::build_output_dir}/${::config::implementation_name}-reports/${::config::implementation_name}-reports-master",
     onlyif   => "test -f scripts/deployCustomJasperServer.sh",

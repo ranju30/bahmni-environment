@@ -87,7 +87,7 @@ class openmrs inherits openmrs::config {
   }
 
    exec { "bahmni_java_utils_jars" :
-    command => "cp ${::config::build_output_dir}/${::config::openmrs_distro_file_name_prefix}/mail-appender-${::config::bahmni_release_version}.jar ${::config::webapps_dir}/openmrs/WEB-INF/lib ${::config::deployment_log_expression}",
+    command => "cp ${::config::build_output_dir}/${::config::openmrs_distro_file_name_prefix}/mail-appender-${bahmni_release_version}.jar ${::config::webapps_dir}/openmrs/WEB-INF/lib ${::config::deployment_log_expression}",
     user    => "${::config::bahmni_user}",
     require => Exec["latest_openmrs_webapp"],
     path => "${config::os_path}"

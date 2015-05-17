@@ -8,7 +8,7 @@ TEMP_DIR="<%= @temp_dir %>"
 LIQUIBASE_JAR="${TEMP_DIR}/liquibase-core-2.0.5.jar"
 DRIVER="com.mysql.jdbc.Driver"
 CREDS="--url=jdbc:mysql://<%= @db_server %>:3306/openmrs --username=root --password=password "
-COMMON_CLASSPATH="<%= @build_output_dir %>/<%= @openmrs_distro_file_name_prefix %>/<%= @openmrs_war_file_name %>.war"
+COMMON_CLASSPATH="<%= scope['config::build_output_dir'] %>/<%= @openmrs_distro_file_name_prefix %>/<%= @openmrs_war_file_name %>.war"
 SNAPSHOTS_DIR=${TEMP_DIR}/snapshots
 
 

@@ -4,6 +4,9 @@ class global::runtime {
   $bahmni_openelis_required = $deploy_bahmni_openelis ? { undef => "true", default => $deploy_bahmni_openelis }
 
   $implementation_name = $implementation_name ? { undef => "default", default => $implementation_name }
-  $is_passive_setup = $deploy_passive ? { undef     => "false", default => $deploy_passive }
-  $support_email = $bahmni_support_email ? { undef     => "bahmni-jss-support@googlegroups.com", default => $bahmni_support_email }
+  $is_passive_setup = $deploy_passive ? { undef => "false", default => $deploy_passive }
+  $support_email = $bahmni_support_email ? { undef => "bahmni-jss-support@googlegroups.com", default => $bahmni_support_email }
+  
+  $add_email_appender = $bahmni_add_email_appender ? { undef => "false", default => $bahmni_add_email_appender }
+  
 }

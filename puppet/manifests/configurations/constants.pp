@@ -1,6 +1,8 @@
 # user
 # to generate password hash use 'echo "password" | openssl passwd -1 -stdin'
 
+$bahmni_release_version="5.6-SNAPSHOT"
+
 $bahmni_user_password_hash = '$1$IW4OvlrH$Kui/55oif8W3VZIrnX6jL1' #p@ssw0rd
 $ssh_port=22
 
@@ -37,14 +39,6 @@ $bahmniAppsDirectory="${httpd_deploy_dir}/bahmniapps"
 $bahmniConfigDirectory="${httpd_deploy_dir}/bahmni_config"
 $bahmniRevisionsDirectory="${httpd_deploy_dir}/bahmni_revisions"
 
-$uploadedFilesDirectory="${tomcatParentDirectory}/uploaded-files"
-
-# Bahmni core properties
-$patientImagesDirectory="/home/${bahmni_user}/patient_images"
-$patientImagesUrl="/patient_images"
-$documentBaseDirectory="/home/${bahmni_user}/document_images"
-$uploadedResultsDirectory="/home/${bahmni_user}/uploaded_results"
-
 $nagios_user = "nagios"
 $nagios_openmrs_user=admin
 $nagios_openmrs_user_password=test
@@ -74,4 +68,6 @@ $openerpGroup = "openerp"
 $openERPConnectTimeout=10000
 $openERPReadTimeout=20000
 
-$ant_home="/home/${bahmni_user}/apache-ant-${ant_version}"
+$client_side_logging = "client_side_logging"
+
+$jasperHome = "/usr/local/jasperreports-server-cp-5.0.0-bin"

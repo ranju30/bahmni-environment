@@ -39,21 +39,21 @@ class httpd::config inherits global{
     { path => "/go", redirectPath => "http://localhost:8153/go" }]
 #Static webapps
   $httpsStaticWebapps = [
-    { path => "/bahmni", directory => "${bahmniAppsDirectory}" },
-    { path => "${patientImagesUrl}", directory => "${patientImagesDirectory}" },
-    { path => "/document_images", directory => "${documentBaseDirectory}" },
-    { path => "/bahmni_config", directory => "${bahmniConfigDirectory}" },
-    { path => "/bahmni_revisions", directory => "${bahmniRevisionsDirectory}" },
-    { path => "/uploaded_results", directory => "${uploadedResultsDirectory}" },
-    { path => "/uploaded-files", directory => "${uploadedFilesDirectory}" }]
+    { path => "/bahmni", directory => "${::global::bahmniAppsDirectory}" },
+    { path => "${patientImagesUrl}", directory => "${::global::patientImagesDirectory}" },
+    { path => "/document_images", directory => "${::global::documentBaseDirectory}" },
+    { path => "/bahmni_config", directory => "${::global::bahmniConfigDirectory}" },
+    { path => "/bahmni_revisions", directory => "${::global::bahmniRevisionsDirectory}" },
+    { path => "/uploaded_results", directory => "${::global::uploadedResultsDirectory}" },
+    { path => "/uploaded-files", directory => "${::global::uploadedFilesDirectory}" }]
   $httpsCachedDirectories = []
   $httpsAggressiveCacheDisabledDirectories = []
   $httpsSubdomains = [{ subdomain => "openerp", url => "http://localhost:8069" }]
 
   $httpdCacheDirectory = "/var/cache/mod_proxy"
-  $httpsCacheUrls = [{ path => "${patientImagesDirectory}", type => 'Directory', expireTime => "86400" }, #86400s => 1day
-    { path => "${documentBaseDirectory}", type => 'Directory', expireTime => "86400" },
-    { path => "${bahmniAppsDirectory}", type => 'Directory', expireTime => "1" }, #1s
+  $httpsCacheUrls = [{ path => "${::global::patientImagesDirectory}", type => 'Directory', expireTime => "86400" }, #86400s => 1day
+    { path => "${::global::documentBaseDirectory}", type => 'Directory', expireTime => "86400" },
+    { path => "${::global::bahmniAppsDirectory}", type => 'Directory', expireTime => "1" }, #1s
     { path => "/openmrs/ws/rest/v1/concept" }]
 ######################## HTTPD CONFIG END################################################
 }

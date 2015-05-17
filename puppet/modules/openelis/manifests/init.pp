@@ -36,12 +36,12 @@ class openelis inherits openelis::config {
     mode        => 664,
   }
 
-  file { "${uploadedFilesDirectory}/elis" :
+  file { "${::config::uploadedFilesDirectory}/elis" :
     ensure => directory,
     mode => 774,
     owner => "${::config::bahmni_user}",
     group => "${::config::bahmni_user}",
-    require => File["${uploadedFilesDirectory}"],
+    require => File["${::config::uploadedFilesDirectory}"],
   }
 
   if "${::config::is_passive_setup}" == "false" {
