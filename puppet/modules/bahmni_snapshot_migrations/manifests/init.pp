@@ -8,7 +8,7 @@ class bahmni_snapshot_migrations inherits bahmni_snapshot_migrations::config {
   }
   
   exec { "openmrs_database" :
-    command     => "mysql -h${db_server} -uroot -p${mysqlRootPassword} < ${temp_dir}/create-openmrs-db-and-user.sql   ${::config::deployment_log_expression}",
+    command     => "mysql -h${config::db_server} -uroot -p${mysqlRootPassword} < ${temp_dir}/create-openmrs-db-and-user.sql   ${::config::deployment_log_expression}",
     path        => "${config::os_path}",
     provider    => shell,
     require     => File["${temp_dir}/create-openmrs-db-and-user.sql"]

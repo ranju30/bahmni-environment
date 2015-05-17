@@ -1,5 +1,5 @@
 function run_openmrs_dependent_liquibase() {
-	java -Dliquibase.databaseChangeLogTableName=liquibasechangelog -Dliquibase.databaseChangeLogLockTableName=liquibasechangeloglock -DschemaName=openmrs -jar <%= @liquibase_jar %> --driver=com.mysql.jdbc.Driver --url=jdbc:mysql://<%= @db_server %>:3306/openmrs --username=root --password=password --classpath=$1:<%= @openmrs_war_path %> --changeLogFile=$2 update
+	java -Dliquibase.databaseChangeLogTableName=liquibasechangelog -Dliquibase.databaseChangeLogLockTableName=liquibasechangeloglock -DschemaName=openmrs -jar <%= @liquibase_jar %> --driver=com.mysql.jdbc.Driver --url=jdbc:mysql://<%=scope['config::db_server']%>:3306/openmrs --username=root --password=password --classpath=$1:<%= @openmrs_war_path %> --changeLogFile=$2 update
 }
 
 function run_omod_liquibase() {

@@ -3,7 +3,7 @@ set -e -x
 
 CHANGE_LOG_TABLE="-Dliquibase.databaseChangeLogTableName=databasechangelog -Dliquibase.databaseChangeLogLockTableName=databasechangeloglock"
 LIQUIBASE_JAR="<%= @temp_dir %>/OpenElis/liquibase/lib/liquibase-1.9.5.jar"
-CREDS="--url=jdbc:postgresql://<%= @db_server %>:5432/clinlims --username=clinlims --password=clinlims"
+CREDS="--url=jdbc:postgresql://<%= ['config::db_server'] %>:5432/clinlims --username=clinlims --password=clinlims"
 CLASSPATH="<%= scope['config::build_output_dir'] %>/<%= @openelis_war_file_name %>.war"
 WORKING_DIR="<%= @migrations_directory %>"
 DRIVER="org.postgresql.Driver"

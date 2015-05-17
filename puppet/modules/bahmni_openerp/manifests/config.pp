@@ -6,4 +6,5 @@ class bahmni_openerp::config inherits global {
   $deployment_log_expression="${::global::deployment_log_expression}"
   $tomcatInstallationDirectory="${::global::tomcatInstallationDirectory}"
   $add_email_appender = "${::global::add_email_appender}"
+  $db_server="${::global::db_server}"
 }

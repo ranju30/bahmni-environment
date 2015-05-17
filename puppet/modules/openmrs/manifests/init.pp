@@ -62,7 +62,7 @@ class openmrs inherits openmrs::config {
   }
 
   exec { "openmrs_predeploy" :
-    command     => "mysql -h${db_server} -uroot -p${mysqlRootPassword} < ${temp_dir}/openmrs-predeploy.sql   ${::config::deployment_log_expression}",
+    command     => "mysql -h${config::db_server} -uroot -p${mysqlRootPassword} < ${temp_dir}/openmrs-predeploy.sql   ${::config::deployment_log_expression}",
     path        => "${config::os_path}",
     provider    => shell,
     require     => [Exec["openmrs_database"],File["${temp_dir}/openmrs-predeploy.sql"]]

@@ -3,8 +3,8 @@ class postgresql inherits postgresql::config {
   $postgresLibsPackageName = "${postgresPackageName}-libs"
   $postgresServerPackageName = "${postgresPackageName}-server"
   $postgresContribPackageName = "${postgresPackageName}-contrib"
-  $postgresMaster = $db_server
-  $postgresSlave = $passive_db_server
+  $postgresMaster = "${::global::db_server}"
+  $postgresSlave = "${::global::passive_db_server}"
 
   package { "${postgresLibsPackageName}" : ensure => installed}
 	package { "${postgresServerPackageName}" : ensure => installed, require => Package["${postgresLibsPackageName}"]}

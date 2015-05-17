@@ -12,4 +12,6 @@ class bahmni_omods::config inherits global {
   $ui_modules_dir = "${build_output_dir}/ui-modules"
   $liquibase_jar="${webapps_dir}/openmrs/WEB-INF/lib/liquibase-core-2.0.5.jar"
   $openmrs_war_path="${build_output_dir}/${openmrs_distro_file_name_prefix}/${openmrs_war_file_name}.war"
+
+  $db_server="${::global::db_server}"
 }

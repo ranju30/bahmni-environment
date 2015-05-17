@@ -1,7 +1,7 @@
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'<%= @app_server %>' identified by 'password' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'<%= @passive_app_server %>' identified by 'password' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'<%= scope['global::app_server'] %>' identified by 'password' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'<%= scope['global::passive_app_server'] %>' identified by 'password' WITH GRANT OPTION;
 
 GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'localhost' identified by 'password'  WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'<%= @app_server %>' identified by 'password'  WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'<%= @passive_app_server %>' identified by 'password'  WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'<%= scope['global::app_server'] %>' identified by 'password'  WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON openmrs.* TO 'openmrs-user'@'<%= scope['global::passive_app_server'] %>' identified by 'password'  WITH GRANT OPTION;
 FLUSH PRIVILEGES;

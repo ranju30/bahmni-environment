@@ -6,6 +6,11 @@ class global inherits global::runtime {
   $implementation_name="${::global::runtime::implementation_name}"
   $is_passive_setup="${::global::runtime::is_passive_setup}"
   $support_email="${::global::runtime::support_email}"
+  $db_server="${::global::runtime::db_server}"
+  $passive_db_server="${::global::runtime::passive_db_server}"
+  $app_server="${::global::runtime::app_server}"
+  $passive_app_server="${::global::runtime::passive_app_server}"
+
 
 ## Bahmni Global Config##
   $bahmni_home="/home/${bahmni_user}"

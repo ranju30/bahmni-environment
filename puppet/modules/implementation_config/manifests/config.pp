@@ -4,4 +4,5 @@ class implementation_config::config inherits global {
   $implementation_name="${::global::implementation_name}"
   $build_output_dir = "${::global::build_output_dir}"
   $deployment_log_expression="${::global::deployment_log_expression}"
+  $db_server="${::global::db_server}"
 }
