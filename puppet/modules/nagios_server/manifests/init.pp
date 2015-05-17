@@ -29,7 +29,9 @@ class bahmni_nagios_cfg inherits nagios_server::config {
   }
 
   file { "/etc/nagios/objects/localhost.cfg":
-    content     => template("bahmni_nagios_server/localhost-${::config::implementation_name}.cfg"),
+    content     => template("nagios_server/localhost_hosts.cfg", "nagios_server/localhost_active_app.cfg", 
+      "nagios_server/localhost_active_db.cfg", "nagios_server/localhost_passive_app.cfg", 
+      "nagios_server/localhost_passive_db.cfg"),
     ensure      => present,
     owner       => "${nagios_user}",
     notify      => Service["nagios"],
@@ -37,7 +39,7 @@ class bahmni_nagios_cfg inherits nagios_server::config {
   }
 
   file { "/etc/nagios/objects/commands.cfg":
-    content     => template("bahmni_nagios_server/commands.cfg"),
+    content     => template("nagios_server/commands.cfg"),
     ensure      => present,
     owner       => "${nagios_user}",
     notify      => Service["nagios"],
@@ -45,7 +47,7 @@ class bahmni_nagios_cfg inherits nagios_server::config {
   }
 
   file { "/etc/nagios/objects/contacts.cfg":
-    content     => template("bahmni_nagios_server/contacts.cfg"),
+    content     => template("nagios_server/contacts.cfg"),
     ensure      => present,
     owner       => "${nagios_user}",
     notify      => Service["nagios"],
@@ -53,7 +55,7 @@ class bahmni_nagios_cfg inherits nagios_server::config {
   }
 
   file { "/etc/nagios/objects/templates.cfg":
-    content     => template("bahmni_nagios_server/templates.cfg"),
+    content     => template("nagios_server/templates.cfg"),
     ensure      => present,
     owner       => "${nagios_user}",
     notify      => Service["nagios"],
@@ -61,7 +63,7 @@ class bahmni_nagios_cfg inherits nagios_server::config {
   }
 
   file { "/etc/nagios/objects/timeperiods.cfg":
-    content     => template("bahmni_nagios_server/timeperiods.cfg"),
+    content     => template("nagios_server/timeperiods.cfg"),
     ensure      => present,
     owner       => "${nagios_user}",
     notify      => Service["nagios"],
@@ -69,9 +71,18 @@ class bahmni_nagios_cfg inherits nagios_server::config {
   }
 }
 
-
 class nagios_server {
 
+  if $active_app_ip == undef { fail("Active App ip cannot be empty.") }
+  if $active_db_ip == undef { fail("Active DB ip cannot be empty.") }
+  if $passive_app_ip == undef { fail("Passive App ip cannot be empty.") }
+  if $passive_db_ip == undef { fail("Passive DB ip cannot be empty.") }
+
+  $active_app_host_name = "active_app"
+  $active_db_host_name = "active_db"
+  $passive_app_host_name = "passive_app"
+  $passive_db_host_name = "passive_db"
+  
   require yum_repo
 
   package { "nagios" :
@@ -86,8 +97,6 @@ class nagios_server {
     ensure  =>  "present"
   }
   require bahmni_nagios_cfg
-
-  if $active_machine_ip == undef { fail("Active machine ip cannot be empty.") }
 
   service { "nagios":
     enable => true,
