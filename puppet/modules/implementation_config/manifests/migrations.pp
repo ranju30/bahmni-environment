@@ -2,7 +2,7 @@ define implementation_config::migrations($implementation_name, $app_name) {
   
   require implementation_config::config 
   
-  $migrations_directory = "${::config::build_output_dir}/${implementation_name}_config/${app_name}/migrations"
+  $migrations_directory = "${::config::build_output_dir}/${::config::implementation_name}_config/${app_name}/migrations"
 
   file { "${temp_dir}/run-implementation-${app_name}-liquibase.sh" :
     ensure      => present,

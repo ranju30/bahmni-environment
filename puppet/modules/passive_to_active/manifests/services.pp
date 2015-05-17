@@ -16,7 +16,7 @@ class passive_to_active::services inherits passive_to_active::config {
     provider => "shell"
   }
 
-  if $bahmni_openerp_required == "true" {
+  if "${::config::bahmni_openerp_required}" == "true" {
     notice("starting openerp...")
     exec{ "start-openerp":
       command  => "service openerp start",

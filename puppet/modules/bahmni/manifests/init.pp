@@ -1,13 +1,13 @@
-class bahmni {
+class bahmni inherits bahmni::config {
 
   require bahmni_openmrs
   require bahmni_client_side_logging
   
-  if $bahmni_openelis_required == "true" {
+  if "${::config::bahmni_openelis_required}" == "true" {
     require bahmni_openelis
   }
   
-  if $bahmni_openerp_required == "true" {
+  if "${::config::bahmni_openerp_required}" == "true" {
     require bahmni_openerp
   }
   

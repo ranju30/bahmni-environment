@@ -27,7 +27,7 @@ class bahmni_reports inherits bahmni_reports::config {
         mode        => 554
       }
 
-    if $is_passive_setup == "false" {
+    if "${::config::is_passive_setup}" == "false" {
       exec { "run_bahmni_reports_liquibase" :
         command     => "${temp_dir}/run-bahmni-reports-liquibase.sh   ${::config::deployment_log_expression}",
         path        => "${config::os_path}",

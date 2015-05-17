@@ -1,4 +1,5 @@
 class bahmni_omods inherits bahmni_omods::config {
+  
   require openmrs
   require bahmni_configuration
   require bahmni_distro
@@ -42,14 +43,14 @@ class bahmni_omods inherits bahmni_omods::config {
     require     => [File["${temp_dir}/run-core-bahmni-modules-liquibase.sh"], File["${temp_dir}/openmrs-liquibase-functions.sh"]]
   }
 
-  if $bahmni_openelis_required == "true" {
+  if "${::config::bahmni_openelis_required}" == "true" {
     bahmni_omods::bahmni_atomfeed_client { "deploy_openelis_atomfeed_client":
       atomfeed_client_name => "openelis",
       require => Exec["run_core_bahmni_modules_liquibase"]
     }
   }  
 
-  if $bahmni_openerp_required == "true" {
+  if "${::config::bahmni_openerp_required}" == "true" {
     bahmni_omods::bahmni_atomfeed_client { "deploy_openerp_atomfeed_client": 
       atomfeed_client_name => "openerp",
       require => Exec["run_core_bahmni_modules_liquibase"]

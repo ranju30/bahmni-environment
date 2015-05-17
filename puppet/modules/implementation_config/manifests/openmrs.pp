@@ -1,10 +1,10 @@
   class implementation_config::openmrs inherits implementation_config::config {
     
   $openmrs_dir = "/home/${::config::bahmni_user}/.OpenMRS"
-  $obscalculator_dir = "${::config::build_output_dir}/${implementation_name}_config/openmrs/obscalculator"
-  $patient_matching_algorithm_dir = "${::config::build_output_dir}/${implementation_name}_config/openmrs/patientMatchingAlgorithm"
-  $ordertemplates_dir = "${::config::build_output_dir}/${implementation_name}_config/openmrs/ordertemplates"
-  $encounter_modifier_scripts_dir = "${::config::build_output_dir}/${implementation_name}_config/openmrs/encounterModifier"
+  $obscalculator_dir = "${::config::build_output_dir}/${::config::implementation_name}_config/openmrs/obscalculator"
+  $patient_matching_algorithm_dir = "${::config::build_output_dir}/${::config::implementation_name}_config/openmrs/patientMatchingAlgorithm"
+  $ordertemplates_dir = "${::config::build_output_dir}/${::config::implementation_name}_config/openmrs/ordertemplates"
+  $encounter_modifier_scripts_dir = "${::config::build_output_dir}/${::config::implementation_name}_config/openmrs/encounterModifier"
   
   require implementation_config::setup
 
@@ -51,7 +51,7 @@
   }
 
   implementation_config::migrations { "implementation_config_migrations_openmrs":
-    implementation_name => "${implementation_name}",
+    implementation_name => "${::config::implementation_name}",
     app_name            => "openmrs"
   }
 

@@ -44,7 +44,7 @@ class openelis inherits openelis::config {
     require => File["${uploadedFilesDirectory}"],
   }
 
-  if $is_passive_setup == "false" {
+  if "${::config::is_passive_setup}" == "false" {
     include openelis::database
   }
 }

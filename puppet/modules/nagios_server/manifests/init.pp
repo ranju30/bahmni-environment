@@ -23,7 +23,7 @@ class bahmni_nagios_cfg inherits nagios_server::config {
   }
 
   file { "/etc/nagios/objects/localhost.cfg":
-    content     => template("bahmni_nagios_server/localhost-${implementation_name}.cfg"),
+    content     => template("bahmni_nagios_server/localhost-${::config::implementation_name}.cfg"),
     ensure      => present,
     owner       => "${nagios_user}",
     notify      => Service["nagios"],

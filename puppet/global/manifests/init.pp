@@ -1,7 +1,12 @@
 class global inherits global::runtime {
   
   $bahmni_user="${::global::runtime::bahmni_user}"
-  
+  $bahmni_openerp_required="${::global::runtime::bahmni_openerp_required}"
+  $bahmni_openelis_required="${::global::runtime::bahmni_openelis_required}"
+  $implementation_name="${::global::runtime::implementation_name}"
+  $is_passive_setup="${::global::runtime::is_passive_setup}"
+  $support_email="${::global::runtime::support_email}"
+
 ## Bahmni Global Config##
   $os_path = "/sbin:/bin:/usr/sbin/:/usr/bin:/usr/local/bin:/usr/local/sbin"
   $package_dir = "/packages"

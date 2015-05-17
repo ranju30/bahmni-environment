@@ -25,7 +25,7 @@
         <param name="BufferSize" value="512" />
         <param name="SMTPHost" value="gmail-smtp-in.l.google.com" />
         <param name="From" value="<%= @from_email %>" />
-        <param name="To" value="<%= @support_email %>" />
+        <param name="To" value="<%= scope['config::support_email'] %>" />
         <param name="Subject" value="OpenERP Atom Feed Error : " />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"

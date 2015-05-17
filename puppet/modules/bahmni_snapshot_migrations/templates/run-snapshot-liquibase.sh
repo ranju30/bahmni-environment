@@ -38,10 +38,10 @@ function run-snapshot-migrations {
     run-liquibase-migration $SNAPSHOTS_DIR/$1/openmrs-module-bahmniapps/resources liquibase.xml
     run-liquibase-migration $SNAPSHOTS_DIR/$1 liquibase.xml
     run-liquibase-migration $SNAPSHOTS_DIR/$1/atomfeed sql/db_migrations.xml -DschemaName=openmrs
-    <% if @bahmni_openelis_required == "true" %>
+    <% if scope['config::bahmni_openelis_required'] == "true" %>
         run-liquibase-migration $SNAPSHOTS_DIR/$1/bahmni-core/openmrs-elis-atomfeed-client-omod liquibase.xml
     <% end %>
-    <% if @bahmni_openerp_required == "true" %>
+    <% if scope['config::artifactory_server_base_url'] == "true" %>
         run-liquibase-migration $SNAPSHOTS_DIR/$1/bahmni-core/openerp-atomfeed-client-omod liquibase.xml
     <% end %>
 }

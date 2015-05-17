@@ -1,5 +1,5 @@
 class bahmni_openerp inherits bahmni_openerp::config {
-	if ($bahmni_openerp_required == "true") {
+	if (${::config::bahmni_openerp_required} == "true") {
 		include bahmni_openerp_internal
 	} else {
 		notice ("Not installing OpenERP. ")
@@ -90,7 +90,7 @@ class bahmni_openerp_internal {
   	mode        => 664,
   }
 
-  if ($is_passive_setup == "false") {
+  if ("${::config::is_passive_setup}" == "false") {
     exec { "restart_openerp" :
       command   => "service openerp restart",
       provider  => shell,

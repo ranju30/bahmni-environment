@@ -1,7 +1,7 @@
-class nodes::app-server{
+class nodes::app-server inherits global {
   include tomcat
   include httpd
-  if $bahmni_openerp_required == "true" {
+  if "${::global::bahmni_openerp_required}" == "true" {
     include openerp
   }
 }
