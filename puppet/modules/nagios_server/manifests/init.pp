@@ -1,5 +1,11 @@
 class bahmni_nagios_cfg inherits nagios_server::config {
 
+  $openelis_username="admin"
+  $openelis_password="adminADMIN\!"
+  $nagios_user = "nagios"
+  $nagios_openmrs_user=admin
+  $nagios_openmrs_user_password=test
+
   file { "/etc/nagios/objects":
     ensure      => directory,
     recurse     => true,

@@ -2,6 +2,7 @@ class bahmni_openerp inherits bahmni_openerp::config {
 
   $bahmni_openerp_temp_dir = "${config::temp_dir}/bahmni-openerp"
   $add_email_appender = "${config::add_email_appender}"
+  $openerpShellUser = "openerp"
 
   if (${ ::config::bahmni_openerp_required } == "true") {
     include bahmni_openerp_internal

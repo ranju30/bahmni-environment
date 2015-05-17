@@ -1,6 +1,6 @@
 class bahmni_jasperreports inherits bahmni_jasperreports::config {
 
-  $properties_file = "reports_${reports_environment}.properties"
+  $properties_file = "reports_${config::reports_environment}.properties"
 
   exec { "delete_reports_dir" :
     command => "rm -rf ${::config::build_output_dir}/${::config::implementation_name}-reports",

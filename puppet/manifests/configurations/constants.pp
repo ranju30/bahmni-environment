@@ -39,35 +39,9 @@ $bahmniAppsDirectory="${httpd_deploy_dir}/bahmniapps"
 $bahmniConfigDirectory="${httpd_deploy_dir}/bahmni_config"
 $bahmniRevisionsDirectory="${httpd_deploy_dir}/bahmni_revisions"
 
-$nagios_user = "nagios"
-$nagios_openmrs_user=admin
-$nagios_openmrs_user_password=test
-
 $smtp_host="gmail-smtp-in.l.google.com"
 $from_email="bahmni@gmail.com"
 
-$openelis_username="admin"
-$openelis_password="adminADMIN\!"
-
-# OpenMRS
-$openmrs_database_user = "openmrs-user"
-$openmrs_database_password = "password"
-$openmrs_password = "test"
-
-# OpenERP properties used by OpenMRS
-$openERPPort=8069
-$openERPHost=localhost
-$openERPDatabase=openerp
-$openERPUser=admin
-$openERPPassword=password
-
-
-$openerpShellUser = "openerp"
 $openerpGroup = "openerp"
-
-$openERPConnectTimeout=10000
-$openERPReadTimeout=20000
-
 $client_side_logging = "client_side_logging"
-
 $jasperHome = "/usr/local/jasperreports-server-cp-5.0.0-bin"

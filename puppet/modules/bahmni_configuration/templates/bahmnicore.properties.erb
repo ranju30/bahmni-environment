@@ -1,7 +1,7 @@
 #Make sure this directory exists
-bahmnicore.images.directory=<%=@patientImagesDirectory%>
-bahmnicore.urls.patientimages=<%=@patientImagesUrl%>
-bahmnicore.documents.baseDirectory=<%=@documentBaseDirectory%>
+bahmnicore.images.directory=<%=scope['config::patientImagesDirectory']%>
+bahmnicore.urls.patientimages=<%=scope['config::patientImagesUrl']%>
+bahmnicore.documents.baseDirectory=<%=scope['config::documentBaseDirectory']%>
 
 <% if scope['config::bahmni_openerp_required'] == "true" -%>
 openerp.port=<%=@openERPPort%>

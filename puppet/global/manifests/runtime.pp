@@ -1,4 +1,5 @@
 class global::runtime {
+  
   $bahmni_user = $bahmni_user_name ? { undef => "bahmni", default => $bahmni_user_name }
   $bahmni_openerp_required = $deploy_bahmni_openerp ? { undef => "true", default => $deploy_bahmni_openerp }
   $bahmni_openelis_required = $deploy_bahmni_openelis ? { undef => "true", default => $deploy_bahmni_openelis }
@@ -14,5 +15,8 @@ class global::runtime {
   $app_server = $app_server_ip ? { undef => "127.0.0.1", default => $app_server_ip }
   $passive_app_server = $passive_app_server_ip ? { undef => "127.0.0.1", default => $passive_app_server_ip }
 
+  $reports_environment = $bahmni_reports_environment ? { undef => "default", default => $bahmni_reports_environment }
 
+  $nagios_server_ip = $bahmni_nagios_server_ip ? { undef => "localhost", default => $bahmni_nagios_server_ip }
+  
 }
