@@ -1,4 +1,4 @@
-class implementation_config {
+class implementation_config inherits implementation_config::config {
 
   if $implementation_name == undef { fail("'implementation_name' not defined") }
   

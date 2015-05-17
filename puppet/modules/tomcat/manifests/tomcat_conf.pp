@@ -1,12 +1,12 @@
-class tomcat::tomcat_conf {
+class tomcat::tomcat_conf inherits tomcat::config {
   
   require tomcat_base
   
   file { "CATALINA_OPTS" :
-    path    => "${tomcatInstallationDirectory}/bin/setenv.sh",
+    path    => "${::config::tomcatInstallationDirectory}/bin/setenv.sh",
     ensure  => present,
     content => template ("tomcat/setenv.sh"),
-    owner   => "${bahmni_user}",
+    owner   => "${::config::bahmni_user}",
     mode    => 664,
   }
   
@@ -19,96 +19,96 @@ class tomcat::tomcat_conf {
   }
   
   file { "catalina.sh_with_log4j_properties_path_info" :
-    path        => "${tomcatInstallationDirectory}/bin/catalina.sh",
+    path        => "${::config::tomcatInstallationDirectory}/bin/catalina.sh",
     ensure      => present,
     content     => template("tomcat/catalina.sh.erb"),
-    owner       => "${bahmni_user}",
+    owner       => "${::config::bahmni_user}",
     replace     => true,
     mode        => 774,
   }
   
   
-  file { "${tomcatInstallationDirectory}/conf/server.xml" :
+  file { "${::config::tomcatInstallationDirectory}/conf/server.xml" :
     ensure    => present,
     content   => template("tomcat/server.xml.erb"),
-    owner     => "${bahmni_user}",
+    owner     => "${::config::bahmni_user}",
     replace   => true,
     mode      => 664,
   }
   
-  file { "${tomcatInstallationDirectory}/conf/context.xml" :
+  file { "${::config::tomcatInstallationDirectory}/conf/context.xml" :
     ensure    => present,
     content   => template("tomcat/context.xml.erb"),
-    owner     => "${bahmni_user}",
+    owner     => "${::config::bahmni_user}",
     replace   => true,
     mode      => 664,
   }
   
   file { "log4j_properties_file_for_tomcat" :
-    path      => "${tomcatInstallationDirectory}/lib/log4j.properties",
+    path      => "${::config::tomcatInstallationDirectory}/lib/log4j.properties",
     ensure    => present,
     content   => template("tomcat/log4j.properties.erb"),
-    owner     => "${bahmni_user}",
+    owner     => "${::config::bahmni_user}",
     replace   => true,
     mode      => 664,
   }
   
   file { "delete_original_tomcat_logging_properties_file" :
-    path      => "${tomcatInstallationDirectory}/conf/logging.properties",
+    path      => "${::config::tomcatInstallationDirectory}/conf/logging.properties",
     ensure    => absent,
   }
   
-  file { "${tomcatInstallationDirectory}/conf/web.xml" :
+  file { "${::config::tomcatInstallationDirectory}/conf/web.xml" :
     ensure      => present,
     content     => template("tomcat/web.xml.erb"),
-    group       => "${bahmni_user}",
-    owner       => "${bahmni_user}",
+    group       => "${::config::bahmni_user}",
+    owner       => "${::config::bahmni_user}",
     replace     => true,
   }
   
-  file { "${tomcatInstallationDirectory}/conf/tomcat-users.xml" :
+  file { "${::config::tomcatInstallationDirectory}/conf/tomcat-users.xml" :
     ensure    => present,
     content   => template("tomcat/tomcat-users.xml.erb"),
-    owner     => "${bahmni_user}",
+    owner     => "${::config::bahmni_user}",
     mode      => 664,
   }
   
   # Mujir - recursively doing this through file resource eats up time. Hence the exec below.
-  file { "${tomcatInstallationDirectory}" :
+  file { "${::config::tomcatInstallationDirectory}" :
     ensure => directory,
     mode   => 776,
-    owner  => "${bahmni_user}",
-    group  => "${bahmni_user}",
+    owner  => "${::config::bahmni_user}",
+    group  => "${::config::bahmni_user}",
   }
   
-  file { "${tomcatInstallationDirectory}/docs" :
+  file { "${::config::tomcatInstallationDirectory}/docs" :
     ensure    => absent,
     recurse   => true,
     force     => true,
     purge     => true,
-    require => File["${tomcatInstallationDirectory}"],
+    require => File["${::config::tomcatInstallationDirectory}"],
   }
   
-  file { "${tomcatInstallationDirectory}/examples" :
+  file { "${::config::tomcatInstallationDirectory}/examples" :
     ensure    => absent,
     recurse   => true,
     force     => true,
     purge     => true,
-    require => File["${tomcatInstallationDirectory}"],
+    require => File["${::config::tomcatInstallationDirectory}"],
   }
   
   exec { "change_group_rights_for_tomcatInstallationDirectory" :
     provider => "shell",
-    command => "chown -R ${bahmni_user}:${bahmni_user} ${tomcatInstallationDirectory}; chmod -R 776 ${tomcatInstallationDirectory}; ",
-    path => "${os_path}",
-    require => File["${tomcatInstallationDirectory}"],
+    command => "chown -R ${::config::bahmni_user}:${::config::bahmni_user} ${::config::tomcatInstallationDirectory}; chmod -R 776 ${::config::tomcatInstallationDirectory}; ",
+    path => "${config::os_path}",
+    require => File["${::config::tomcatInstallationDirectory}"],
   }
   
   exec { "register_tomcat_as_a_service" :
     command   => "chkconfig --add /etc/init.d/tomcat",
     user      => "root",
     provider  => shell,
-    require   => [File["${tomcatInstallationDirectory}"], File["/etc/init.d/tomcat"]],
+    require   => [File["${::config::tomcatInstallationDirectory}"], File["/etc/init.d/tomcat"]],
   }
   
   service { "tomcat":

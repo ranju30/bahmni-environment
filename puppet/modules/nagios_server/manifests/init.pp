@@ -1,4 +1,4 @@
-class bahmni_nagios_cfg {
+class bahmni_nagios_cfg inherits nagios_server::config {
 
   file { "/etc/nagios/objects":
     ensure      => directory,
@@ -90,7 +90,7 @@ class nagios_server {
 
   exec { "setup_object_files_in_config" :
     command => "sed -i 's/^cfg_file\s*=.*$//g' /etc/nagios/nagios.cfg && find /etc/nagios/objects -name \\*cfg | sed 's/\\(.*\\)/cfg_file=\\1/g' >> /etc/nagios/nagios.cfg",
-    path    => "${os_path}",
+    path    => "${config::os_path}",
     require => Class["bahmni_nagios_cfg"],
     notify  => Service["nagios"],
   }

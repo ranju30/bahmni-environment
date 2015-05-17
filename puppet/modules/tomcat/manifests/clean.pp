@@ -1,7 +1,7 @@
-class tomcat::clean {
+class tomcat::clean inherits tomcat::config {
     exec { "remove_work_and_temp":
-     	command => "rm -rf ${tomcatInstallationDirectory}/work ${tomcatInstallationDirectory}/temp ${deployment_log_expression}",
-	    path => "${os_path}",
-	    user => "${bahmni_user}"
+     	command => "rm -rf ${::config::tomcatInstallationDirectory}/work ${::config::tomcatInstallationDirectory}/temp ${::config::deployment_log_expression}",
+	    path => "${config::os_path}",
+	    user => "${::config::bahmni_user}"
     } 
 }

@@ -1,8 +1,12 @@
 class bahmni_omods::config inherits global {
+  $os_path="${::global::os_path}"
   $bahmni_user="${::global::bahmni_user}"
   $build_output_dir="${::global::build_output_dir}"
+  $deployment_log_expression="${::global::deployment_log_expression}"
   $tomcatInstallationDirectory="${::global::tomcatInstallationDirectory}"
   $webapps_dir="${::global::webapps_dir}"
+  $bahmni_release_version="${::global::bahmni_release_version}"
+  $openmrs_distro_file_name_prefix="${::global::openmrs_distro_file_name_prefix}"
 
   $openmrs_modules_dir = "/home/${bahmni_user}/.OpenMRS/modules"
   $ui_modules_dir = "${build_output_dir}/ui-modules"

@@ -1,4 +1,4 @@
-class postgresql {
+class postgresql inherits postgresql::config {
   $postgresPackageName = "postgresql${postgresMajorVersion}${postgresMinorVersion}"
   $postgresLibsPackageName = "${postgresPackageName}-libs"
   $postgresServerPackageName = "${postgresPackageName}-server"
@@ -13,13 +13,13 @@ class postgresql {
 
 	exec { "postgresdb" :
 		command => "service ${postgresServiceName} initdb",
-		path => "${os_path}",
+		path => "${config::os_path}",
 		require => Package["${postgresContribPackageName}"]
 	}
 
 	exec { "chkconfig-postgres-server" :
 		command => "chkconfig ${postgresServiceName} on",
-		path => "${os_path}",
+		path => "${config::os_path}",
 		require => Exec["postgresdb"]
 	}
 
@@ -32,7 +32,7 @@ class postgresql {
   exec{ "backup_postgresql_conf" :
       cwd         => "${postgresDataFolder}",
       command     => "mv postgresql.conf postgresql.conf.backup",
-  		path        => "${os_path}",
+  		path        => "${config::os_path}",
       user        => "${postgresUser}",
       onlyif      => "test -f postgresql.conf",
       require     => Exec["chkconfig-postgres-server"],
@@ -41,7 +41,7 @@ class postgresql {
   exec{ "backup_pg_hba_conf" :
       cwd         => "${postgresDataFolder}",
       command     => "mv pg_hba.conf pg_hba.conf.backup",
-  		path        => "${os_path}",
+  		path        => "${config::os_path}",
       user        => "${postgresUser}",
       onlyif      => "test -f pg_hba.conf",
       require     => Exec["chkconfig-postgres-server"],
@@ -51,14 +51,14 @@ class postgresql {
     if $postgresFirstTimeSetup == true {
       exec { "backup_pg_data_folder":
         command     => "service ${postgresServiceName} stop && rm -rf ${postgresDataFolder}-backup && mv -f ${postgresDataFolder} ${postgresDataFolder}-backup",
-        path        =>  "${os_path}",
+        path        =>  "${config::os_path}",
         require     => Exec["backup_postgresql_conf", "backup_pg_hba_conf"],
         onlyif      => "test -d ${postgresDataFolder}",
       }
 
       exec { "untar_pg_data_folder":
         command     => "tar xvfP ${postgresMasterDbFileBackup}",
-        path        =>  "${os_path}",
+        path        =>  "${config::os_path}",
         user        => "${postgresUser}",
         require     => Exec["backup_pg_data_folder"],
       }
@@ -116,21 +116,21 @@ class postgresql {
     if $postgresFirstTimeSetup == true {
       exec { "start_pg_backup_for_replication" :
         command     => "psql -c \"SELECT pg_start_backup('replbackup');\"",
-        path        =>  "${os_path}",
+        path        =>  "${config::os_path}",
         user        => "${postgresUser}",
         require     => [File["${postgresDataFolder}/pg_hba.conf", "${postgresDataFolder}/postgresql.conf"], Service["${postgresServiceName}"]],
       }
 
       exec { "tar_pg_data_folder" :
         command     => "tar cfP /tmp/pg_master_db_file_backup.tar ${postgresDataFolder} --exclude pg_xlog/* --exclude pg_hba.conf --exclude postgresql.conf --exclude postmaster.pid --exclude *.conf.backup",
-        path        =>  "${os_path}",
+        path        =>  "${config::os_path}",
         user        => "${postgresUser}",
         require     => Exec["start_pg_backup_for_replication"],
       }
 
       exec { "stop_pg_backup_for_replication" :
         command     => "psql -c \"SELECT pg_stop_backup();\"",
-        path        =>  "${os_path}",
+        path        =>  "${config::os_path}",
         user        => "${postgresUser}",
         require     => Exec["tar_pg_data_folder"],
       }

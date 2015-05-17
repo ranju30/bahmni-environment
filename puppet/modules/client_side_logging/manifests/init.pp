@@ -1,8 +1,8 @@
-class client_side_logging() {
+class client_side_logging inherits client_side_logging::config {
   package { "mod_wsgi" : ensure => "installed" }
   exec { "flask" :
     command => "easy_install flask",
-    path => "${os_path}",
+    path => "${config::os_path}",
     cwd => "${temp_dir}"
   }
 

@@ -1,4 +1,5 @@
-class go_setup {
+class go_setup inherits go_setup::config{
+  
   require maven
   require ci_tools
 
@@ -15,7 +16,7 @@ class go_setup {
     ensure      => present,
     # add 'go' user to 'jss' and 'openerp' group.
     # adding 'go' to 'rvm' group, otherwise `bundle install` needs password.
-    groups      => ["${bahmni_user}", "${openerpGroup}", "rvm"], 
+    groups      => ["${::config::bahmni_user}", "${openerpGroup}", "rvm"], 
     require     => Package["go-agent"],
   }
 

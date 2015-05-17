@@ -1,4 +1,4 @@
-class openerp {
+class openerp inherits openerp{
   $openerp_temp = "${temp_dir}/openerp"
   $log_file = "${logs_dir}/openerp-module.log"
   $log_expression = ">> ${log_file} 2>> ${log_file}"
@@ -21,7 +21,7 @@ class openerp {
     provider    => shell,
     command     => "sh install_openerp.sh ${packages_servers_dir} ${openerp_installer_file} ${log_expression}",
     timeout     => 300,
-    path        => "${os_path}",
+    path        => "${config::os_path}",
     require     => File["${openerp_temp}/install_openerp.sh"],
     cwd         => "${openerp_temp}",
   }

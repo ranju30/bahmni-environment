@@ -1,4 +1,5 @@
-class host {
+class host inherits host::config {
+  
   $host_log_file = "${logs_dir}/bahmni_host.log"
   $host_log_expression = ">> ${host_log_file} 2>> ${host_log_file}"
 
@@ -19,7 +20,7 @@ class host {
     require		=> File["${temp_dir}"]
 	}
 
-	file { "${package_dir}" :
+	file { "${::config::package_dir}" :
 		ensure 		=> directory,
 		mode      => 777,
 		recurse   => true
@@ -29,7 +30,7 @@ class host {
     ensure    => directory,
     mode      => 777,
     recurse   => true,
-    require   => File["${package_dir}"]
+    require   => File["${::config::package_dir}"]
   }
 
 	class { "timezone" :
@@ -42,7 +43,7 @@ class host {
 
   exec { "ntp_service" :
   	command => "chkconfig ntpd on ${host_log_expression}",
-  	path 		=> "${os_path}",
+  	path 		=> "${config::os_path}",
   	require	=> [Package["ntp"], File["${temp_dir}/logs"]]
   }
 

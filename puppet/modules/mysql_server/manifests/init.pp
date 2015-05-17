@@ -1,4 +1,4 @@
-class mysql_server {
+class mysql_server inherits mysql_server::config {
 	notice("mysqlserver manifest processing...")
 
     package { "MySQL-server" :
@@ -33,7 +33,7 @@ class mysql_server {
     }
     
     exec {"changepassword" :
-      command		=> "sh /tmp/initdb.sh ${mysqlRootPassword} ${deployment_log_expression}",
+      command		=> "sh /tmp/initdb.sh ${mysqlRootPassword}   ${::config::deployment_log_expression}",
       provider  	=> shell,
       user      	=> "root",
       require 	=> [File["/tmp/changepassword.sql"], File["/tmp/grantAccess.sql"], File["/tmp/initdb.sh"], Service["mysql"]],

@@ -66,7 +66,7 @@ class httpd inherits httpd::config{
 
   exec { "iptables" :
     command     => "sh ${temp_dir}/iptables.sh",
-    path        => "${os_path}",
+    path        => "${config::os_path}",
     require     => File["${temp_dir}/iptables.sh"],
   }
 }

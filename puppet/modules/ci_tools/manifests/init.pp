@@ -1,4 +1,4 @@
-class ci_tools {
+class ci_tools inherits ci_tools::config {
   require node_npm
 
 
@@ -24,21 +24,21 @@ class ci_tools {
     command   => "npm install -g phantomjs",
     provider  => "shell",
     require   => File["/usr/bin/npm"],
-    path      => "${os_path}"
+    path      => "${config::os_path}"
   }
   
   exec { "bower":
     command   => "npm install -g bower",
     provider  => "shell", 
     require   => File["/usr/bin/npm"],
-    path      => "${os_path}"
+    path      => "${config::os_path}"
   }
 
   exec { "grunt-cli":
     command   => "npm install -g grunt-cli",
     provider  => "shell",
     require   => File["/usr/bin/npm"],
-    path      => "${os_path}"
+    path      => "${config::os_path}"
   }
 
   package { "makeself" :

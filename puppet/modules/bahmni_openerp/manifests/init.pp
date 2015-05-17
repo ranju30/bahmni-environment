@@ -1,4 +1,4 @@
-class bahmni_openerp {
+class bahmni_openerp inherits bahmni_openerp::config {
 	if ($bahmni_openerp_required == "true") {
 		include bahmni_openerp_internal
 	} else {
@@ -8,7 +8,7 @@ class bahmni_openerp {
 
 class bahmni_openerp_internal {
 	include bahmni_revisions
-    $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openerp_atomfeed_war_file_name}/WEB-INF/classes/log4j.xml"
+    $log4j_xml_file = "${::config::tomcatInstallationDirectory}/webapps/${openerp_atomfeed_war_file_name}/WEB-INF/classes/log4j.xml"
     $openerp_modules_zip_filename = "openerp-modules"
 
 
@@ -19,8 +19,8 @@ class bahmni_openerp_internal {
 
 	exec { "bahmni_openerp_codebase" :
     provider => "shell",	
-		command => "unzip -o -q ${build_output_dir}/${openerp_modules_zip_filename}.zip -d ${bahmni_openerp_temp_dir} ${deployment_log_expression}",
-		path => "${os_path}",
+		command => "unzip -o -q ${::config::build_output_dir}/${openerp_modules_zip_filename}.zip -d ${bahmni_openerp_temp_dir}   ${::config::deployment_log_expression}",
+		path => "${config::os_path}",
 		require => File["${bahmni_openerp_temp_dir}"]
 	}
 
@@ -28,64 +28,64 @@ class bahmni_openerp_internal {
 	exec { "change_group_rights_for_openerp_temp_folders_current_content" :
 	  provider => "shell",
 		command => "chown -R openerp:openerp $bahmni_openerp_temp_dir; chmod -R 775 $bahmni_openerp_temp_dir; ",
-		path => "${os_path}",
+		path => "${config::os_path}",
 		require => Exec["bahmni_openerp_codebase"],
 	}
 	
 	exec { "change_group_rights_for_openerp_folders_current_content" :
 	  provider => "shell",
 		command => "chown -R openerp:openerp $openerp_install_location; chmod -R 775 $openerp_install_location; ",
-		path => "${os_path}",
+		path => "${config::os_path}",
 		require => Exec["change_group_rights_for_openerp_temp_folders_current_content"],
 	}
 	
 	exec { "bahmni_openerp" :
 	  	provider => "shell",
-		command => "cp -r ${bahmni_openerp_temp_dir}/${openerp_modules_zip_filename}/* ${openerp_install_location}/openerp/addons ${deployment_log_expression}",
-		path => "${os_path}",
+		command => "cp -r ${bahmni_openerp_temp_dir}/${openerp_modules_zip_filename}/* ${openerp_install_location}/openerp/addons   ${::config::deployment_log_expression}",
+		path => "${config::os_path}",
 		user => "${openerpShellUser}",
 		group => "${openerpGroup}",
 		require => Exec["change_group_rights_for_openerp_folders_current_content"],
 	}
 
     exec { "clear_openerp_atomfeed_webapp" :
-	    command   => "rm -rf ${tomcatInstallationDirectory}/webapps/openerp-atomfeed-service",
+	    command   => "rm -rf ${::config::tomcatInstallationDirectory}/webapps/openerp-atomfeed-service",
 	    provider  => shell,
-	    path      => "${os_path}",
+	    path      => "${config::os_path}",
 	    require   => [Exec["bahmni_openerp"]],
-	    user      => "${bahmni_user}"
+	    user      => "${::config::bahmni_user}"
 	}
 
     exec { "latest_openerp_atomfeed_webapp" :
-	    command   => "unzip -o -q ${build_output_dir}/${openerp_atomfeed_war_file_name}.war -d ${tomcatInstallationDirectory}/webapps/openerp-atomfeed-service ${deployment_log_expression}",
+	    command   => "unzip -o -q ${::config::build_output_dir}/${openerp_atomfeed_war_file_name}.war -d ${::config::tomcatInstallationDirectory}/webapps/openerp-atomfeed-service   ${::config::deployment_log_expression}",
 	    provider  => shell,
-	    path      => "${os_path}",
+	    path      => "${config::os_path}",
 	    require   => [Exec["clear_openerp_atomfeed_webapp"]],
-	    user      => "${bahmni_user}"
+	    user      => "${::config::bahmni_user}"
 	}
 
 	file { "${temp_dir}/bahmni-openerp/run-liquibase.sh" :
     ensure      => present,
     content     => template("bahmni_openerp/run-liquibase.sh"),
-    owner       => "${bahmni_user}",
-    group       => "${bahmni_user}",
+    owner       => "${::config::bahmni_user}",
+    group       => "${::config::bahmni_user}",
     require   => [Exec["latest_openerp_atomfeed_webapp"]],
     mode        => 554
   }
 
   exec { "bahmni_openerp_data" :
-    command     => "${temp_dir}/bahmni-openerp/run-liquibase.sh ${deployment_log_expression}",
-    path        => "${os_path}",
+    command     => "${temp_dir}/bahmni-openerp/run-liquibase.sh   ${::config::deployment_log_expression}",
+    path        => "${config::os_path}",
     provider    => shell,
-    cwd         => "${tomcatInstallationDirectory}/webapps",
+    cwd         => "${::config::tomcatInstallationDirectory}/webapps",
     require     => [File["${temp_dir}/bahmni-openerp/run-liquibase.sh"]]
   }
 
   file { "${log4j_xml_file}" :
   	ensure      => present,
   	content     => template("bahmni_openerp/log4j.xml.erb"),
-  	owner       => "${bahmni_user}",
-  	group       => "${bahmni_user}",
+  	owner       => "${::config::bahmni_user}",
+  	group       => "${::config::bahmni_user}",
   	require     => Exec["latest_openerp_atomfeed_webapp"],
   	mode        => 664,
   }
@@ -94,7 +94,7 @@ class bahmni_openerp_internal {
     exec { "restart_openerp" :
       command   => "service openerp restart",
       provider  => shell,
-      path      => "${os_path}",
+      path      => "${config::os_path}",
       require   => [File["${log4j_xml_file}"]]
     }
   } else {

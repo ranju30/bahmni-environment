@@ -1,4 +1,4 @@
-class ant::config inherits global{
+class ant::config inherits global {
   $bahmni_user="${::global::bahmni_user}"
   $os_path="${::global::os_path}"
   $package_dir="${::global::package_dir}"

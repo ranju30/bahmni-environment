@@ -1,28 +1,29 @@
-class implementation_config::openelis {
+class implementation_config::openelis inherits implementation_config::config {
+  
   require implementation_config::setup
 
   exec { "copyLogoToOpenelis" :
-    command   => "cp ${build_output_dir}/${implementation_name}_config/openelis/images/labLogo.jpg ${tomcatInstallationDirectory}/webapps/${openelis_war_file_name}/WEB-INF/reports/images",
+    command   => "cp ${::config::build_output_dir}/${implementation_name}_config/openelis/images/labLogo.jpg ${::config::webapps_dir}/${openelis_war_file_name}/WEB-INF/reports/images",
     provider  => shell,
-    path      => "${os_path}",
-    onlyif    => "test -f ${build_output_dir}/${implementation_name}_config/openelis/images/labLogo.jpg"
+    path      => "${config::os_path}",
+    onlyif    => "test -f ${::config::build_output_dir}/${implementation_name}_config/openelis/images/labLogo.jpg"
   }
 
   exec { "copyLogoToOpenelisForReportConfig" :
-    command   => "cp ${build_output_dir}/${implementation_name}_config/openelis/images/labLogo.jpg ${tomcatInstallationDirectory}/webapps/${openelis_war_file_name}/images",
+    command   => "cp ${::config::build_output_dir}/${implementation_name}_config/openelis/images/labLogo.jpg ${::config::webapps_dir}/${openelis_war_file_name}/images",
     provider  => shell,
-    path      => "${os_path}",
-    onlyif    => "test -f ${build_output_dir}/${implementation_name}_config/openelis/images/labLogo.jpg"
+    path      => "${config::os_path}",
+    onlyif    => "test -f ${::config::build_output_dir}/${implementation_name}_config/openelis/images/labLogo.jpg"
   }
   
-  file { "${build_output_dir}/OpenElis.zip" : ensure => absent, purge => true}
+  file { "${::config::build_output_dir}/OpenElis.zip" : ensure => absent, purge => true}
 
   exec { "bahmni_openelis_codebase_for_liquibase_jar" :
     provider => "shell",
-    command  => "unzip -o -q ${build_output_dir}/OpenElis.zip -d ${temp_dir} ${deployment_log_expression}",
-    path     => "${os_path}",
-    onlyif    => "test -f ${build_output_dir}/${implementation_name}_config/migrations/openelis/liquibase.xml",
-    require   => [File["${build_output_dir}/OpenElis.zip"]]
+    command  => "unzip -o -q ${::config::build_output_dir}/OpenElis.zip -d ${temp_dir}   ${::config::deployment_log_expression}",
+    path     => "${config::os_path}",
+    onlyif    => "test -f ${::config::build_output_dir}/${implementation_name}_config/migrations/openelis/liquibase.xml",
+    require   => [File["${::config::build_output_dir}/OpenElis.zip"]]
   }
 
   if $is_passive_setup == "false" {

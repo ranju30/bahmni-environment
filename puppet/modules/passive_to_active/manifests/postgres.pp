@@ -1,4 +1,4 @@
-class passive_to_active::postgres {
+class passive_to_active::postgres inherits passive_to_active::config {
 
   $postgresPackageName = "postgresql${postgresMajorVersion}${postgresMinorVersion}"
   $postgresLibsPackageName = "${postgresPackageName}-libs"
@@ -19,7 +19,7 @@ class passive_to_active::postgres {
 
   exec { "switch-to-master" :
     command => "/usr/pgsql-9.2/bin/pg_ctl promote -D ${postgresDataFolder}",
-    path => "${os_path}",
+    path => "${config::os_path}",
     user => "postgres",
     require     => Service["${postgresServiceName}"]
   }

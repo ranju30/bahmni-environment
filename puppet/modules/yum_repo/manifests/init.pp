@@ -1,4 +1,4 @@
-class yum_repo {
+class yum_repo inherits yum_repo::config {
   require bootstrap
 
   notice("yum_repo manifest being executed... ")
@@ -14,13 +14,13 @@ class yum_repo {
 
     exec { "update" :
       command => "createrepo --update ${local_repo_path}",
-      path    => "${os_path}",
+      path    => "${config::os_path}",
       require => File["local_repo"]
     }
 
     exec { "touch" :
       command => "touch /etc/yum.repos.d/${local_repo_name}.repo",
-      path    => "${os_path}",
+      path    => "${config::os_path}",
       require => Exec["update"]
     }
   } else {

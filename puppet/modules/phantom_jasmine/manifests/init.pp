@@ -1,4 +1,4 @@
-class phantom_jasmine{
+class phantom_jasmine {
     exec {"phantomjs-download-archive" :
                 command     => "/usr/bin/wget -O /usr/local/phantomjs.tar.bz2 http://phantomjs.googlecode.com/files/phantomjs-1.8.1-linux-x86_64.tar.bz2",
                 timeout     => 0,
@@ -8,7 +8,7 @@ class phantom_jasmine{
     exec { "phantomjs-archive-extract":
                 command     => "tar --use-compress-program bzip2 -xvf /usr/local/phantomjs.tar.bz2",
                 path        => ["/usr/local"],
-                user        => "${bahmni_user}",
+                user        => "${::config::bahmni_user}",
                 require     => Exec["phantomjs-download-archive"],
     }
 

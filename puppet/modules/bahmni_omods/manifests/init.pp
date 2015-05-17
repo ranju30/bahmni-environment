@@ -1,43 +1,43 @@
-class bahmni_omods {
+class bahmni_omods inherits bahmni_omods::config {
   require openmrs
   require bahmni_configuration
   require bahmni_distro
 
 
   file { "${openmrs_modules_dir}" :
-   owner  => "${bahmni_user}",
-   group  =>  "${bahmni_user}",   
+   owner  => "${::config::bahmni_user}",
+   group  =>  "${::config::bahmni_user}",   
    mode   => 664,
    ensure => directory
   }
 
   exec { "copy_core_bahmni_omods" :
-    command => "rm -rf ${openmrs_modules_dir}/* && find ${build_output_dir}/${openmrs_distro_file_name_prefix} -type f -not -regex '.*atomfeed.*client.*\.omod' | grep .omod | xargs -I file cp file ${openmrs_modules_dir} ${deployment_log_expression}",
-    user    => "${bahmni_user}",
+    command => "rm -rf ${openmrs_modules_dir}/* && find ${build_output_dir}/${::config::openmrs_distro_file_name_prefix} -type f -not -regex '.*atomfeed.*client.*\.omod' | grep .omod | xargs -I file cp file ${openmrs_modules_dir}   ${::config::deployment_log_expression}",
+    user    => "${::config::bahmni_user}",
     require => File["${openmrs_modules_dir}"],
-    path => "${os_path}"
+    path => "${config::os_path}"
   }
 
   file { "${temp_dir}/openmrs-liquibase-functions.sh" :
     ensure      => present,
     content     => template("bahmni_omods/openmrs-liquibase-functions.sh"),
-    owner       => "${bahmni_user}",
-    group       => "${bahmni_user}",
+    owner       => "${::config::bahmni_user}",
+    group       => "${::config::bahmni_user}",
     mode        => 554
   }
 
   file { "${temp_dir}/run-core-bahmni-modules-liquibase.sh" :
     ensure      => present,
     content     => template("bahmni_omods/run-core-bahmni-modules-liquibase.sh"),
-    owner       => "${bahmni_user}",
-    group       => "${bahmni_user}",
+    owner       => "${::config::bahmni_user}",
+    group       => "${::config::bahmni_user}",
     mode        => 554,
     require     => Exec["copy_core_bahmni_omods"]
   }
 
   exec { "run_core_bahmni_modules_liquibase" :
-    command     => "${temp_dir}/run-core-bahmni-modules-liquibase.sh ${deployment_log_expression}",
-    path        => "${os_path}",
+    command     => "${temp_dir}/run-core-bahmni-modules-liquibase.sh   ${::config::deployment_log_expression}",
+    path        => "${config::os_path}",
     provider    => shell,
     require     => [File["${temp_dir}/run-core-bahmni-modules-liquibase.sh"], File["${temp_dir}/openmrs-liquibase-functions.sh"]]
   }

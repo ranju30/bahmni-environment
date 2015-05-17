@@ -1,4 +1,7 @@
 class bahmni_jasperreports::config inherits global {
+  $os_path="${::global::os_path}"
+  $build_output_dir = "${::global::build_output_dir}"
+  $deployment_log_expression="${::global::deployment_log_expression}"
   $jasperHome = "${::global::jasperHome}"
   $report_zip_source_url = $implementation_name ? {
     undef       => "https://github.com/jss-emr/jss-reports/archive/master.zip",
