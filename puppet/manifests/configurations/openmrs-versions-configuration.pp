@@ -1,4 +1,3 @@
-$bahmni_openmrs_data_version="0.2-SNAPSHOT"
 $openmrs_war_file_name="openmrs-webapp-1.10.2-SNAPSHOT"
 $openmrs_atomfeed="openmrs-atomfeed-2.2"
 $openmrs_appframework="appframework-2.1"

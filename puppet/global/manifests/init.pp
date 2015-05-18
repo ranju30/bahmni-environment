@@ -43,6 +43,7 @@ class global inherits global::runtime {
   $local_repo_name = "local"
   $scripts_dir = "/root/scripts"
   $build_dir = "${package_dir}/build"
+  
   $create_local_repo = $env_create_local_repo ? {
     undef			=> 'true',
     default       => $env_create_local_repo
@@ -53,8 +54,6 @@ class global inherits global::runtime {
   }
   
 ## End Bahmni Global Config ##
-
-  
 
 ##tomcat##
   $tomcat_version="8.0.12"

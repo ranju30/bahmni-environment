@@ -31,10 +31,8 @@ class yum_repo inherits yum_repo::config {
       ensure  => present,
       content => template("yum_repo/tw-bahmni.repo"),
       mode    => 664,
-    }    
-
+    }
   }
-
 
   if ($keep_linux_repos_enabled == "true") {
 
@@ -53,12 +51,7 @@ class yum_repo inherits yum_repo::config {
     }
 
 } else {
-
     notice("keep_linux_repos_enabled = false")
-
-  #  file {'/etc/yum.repos.d/local.repo':
-  #    source => "puppet:///modules/bootstrap/local.repo"
-  #  }
 
     file {["/etc/yum.repos.d/epel.repo", "/etc/yum.repos.d/puppetlabs.repo", "/etc/yum.repos.d/pgdg-92-centos.repo"]:
       ensure => absent,
