@@ -18,10 +18,12 @@ class global::runtime {
     undef => "default",
     default => $implementation_name
   }
+  
   $is_passive_setup = $deploy_passive ? {
     undef => "false",
     default => $deploy_passive
   }
+  
   $support_email = $bahmni_support_email ? {
     undef => "bahmni-jss-support@googlegroups.com",
     default => $bahmni_support_email

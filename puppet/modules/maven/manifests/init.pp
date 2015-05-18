@@ -13,7 +13,7 @@ class maven inherits maven::config {
 	}
 
 	exec { "maven_untar" :
-	  command => "tar zxf ${::config::package_dir}/tools/apache-maven*.tar.gz   ${::config::deployment_log_expression}",
+	  command => "tar zxf ${config::package_dir}/tools/apache-maven*.tar.gz   ${::config::deployment_log_expression}",
 	  user    => "${config::bahmni_user}",
 	  cwd     => "/home/${::config::bahmni_user}",
 	  creates => "${maven_home}",

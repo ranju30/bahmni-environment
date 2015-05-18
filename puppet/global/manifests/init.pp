@@ -10,6 +10,7 @@ class global inherits global::runtime {
   $passive_db_server="${::global::runtime::passive_db_server}"
   $app_server="${::global::runtime::app_server}"
   $passive_app_server="${::global::runtime::passive_app_server}"
+  $nagios_server_ip="${::global::runtime::nagios_server_ip}"
 
 
 ## Bahmni Global Config##
@@ -31,10 +32,8 @@ class global inherits global::runtime {
     content     => "",
   }
 
-  $bahmni_config_dir="/etc/bahmni"
   $temp_dir = "/bahmni_temp"
   $logs_dir = "${temp_dir}/logs"
-  $package_dir = "/packages"
   $backup_dir = "/backup"
 
   $local_repo_path = "${package_dir}/localrepo"

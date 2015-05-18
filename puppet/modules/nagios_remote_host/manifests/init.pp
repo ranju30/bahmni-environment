@@ -1,5 +1,7 @@
-class nagios_remote_host {
-  
+class nagios_remote_host inherits nagios_remote_host::config {
+
+  $nagios_user = "nagios"
+
   package { "nagios-plugins-all" :
     ensure  => "present"
   }

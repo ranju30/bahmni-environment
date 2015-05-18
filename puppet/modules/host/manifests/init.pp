@@ -20,7 +20,7 @@ class host inherits host::config {
     require		=> File["${temp_dir}"]
 	}
 
-	file { "${::config::package_dir}" :
+	file { "${config::package_dir}" :
 		ensure 		=> directory,
 		mode      => 777,
 		recurse   => true
@@ -30,7 +30,7 @@ class host inherits host::config {
     ensure    => directory,
     mode      => 777,
     recurse   => true,
-    require   => File["${::config::package_dir}"]
+    require   => File["${config::package_dir}"]
   }
 
 	class { "timezone" :

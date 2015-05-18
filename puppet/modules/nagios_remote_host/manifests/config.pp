@@ -1,3 +1,3 @@
-class nagios_remote_host inherits global {
-  $nagios_server_ip="${::global::nagios_server_ip}"
+class nagios_remote_host::config inherits global {
+  $nagios_server_ip="${::global::runtime::nagios_server_ip}"
 }

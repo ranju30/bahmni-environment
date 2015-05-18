@@ -1,5 +1,4 @@
 import "configurations/stack-installers-configuration"
-import "configurations/runtime/*"
 import "configurations/constants"
 
 node default {

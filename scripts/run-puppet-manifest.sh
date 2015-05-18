@@ -31,7 +31,7 @@ fi
 
 ####################################################################
 
-puppet apply $BASE_DIR/puppet/manifests/$1.pp --modulepath=$BASE_DIR/puppet/modules/ --detailed-exitcodes
+puppet apply $BASE_DIR/puppet/manifests/$1.pp --modulepath=$BASE_DIR/puppet/modules/:$BASE_DIR/puppet/ --detailed-exitcodes
 RETURN_CODE=$?
 if [ $RETURN_CODE -ne 0 ] && [ $RETURN_CODE -ne 2 ]
 then

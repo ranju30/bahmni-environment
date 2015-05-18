@@ -45,3 +45,5 @@ $from_email="bahmni@gmail.com"
 $openerpGroup = "openerp"
 $client_side_logging = "client_side_logging"
 $jasperHome = "/usr/local/jasperreports-server-cp-5.0.0-bin"
+
+$bahmni_config_dir="/etc/bahmni"
