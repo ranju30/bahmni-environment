@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS setAdmissionStatusAttribute;
 
 delimiter //
-CREATE PROCEDURE setVisitStatusAttribute()
+CREATE PROCEDURE setAdmissionStatusAttribute()
   BEGIN
     DECLARE visit_id, visit_attribute_type_id INT;
     DECLARE v_counter INT DEFAULT 0;
