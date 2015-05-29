@@ -52,6 +52,3 @@ SET city = concat('city-', id),
 UPDATE res_company
 set logo_web = null,
 name = 'Bahmni';
-
-UPDATE sale_shop
-SET name = concat('shop-', id);
