@@ -1,3 +1,4 @@
+mysql -uroot -ppassword openmrs -e "delete from bahmni_config;"
 OUTPUT=$(python -c 'import MySQLdb')
 RESULT="$?"
 if [ "$RESULT" -eq 0 ]; then
