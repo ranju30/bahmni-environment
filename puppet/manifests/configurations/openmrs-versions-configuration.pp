@@ -1,6 +1,6 @@
 $bahmni_openmrs_data_version="0.2-SNAPSHOT"
 $openmrs_war_file_name="openmrs-webapp-1.10.2"
-$bahmni_release_version="5.6-SNAPSHOT"
+$bahmni_release_version="0.73-SNAPSHOT"
 $openmrs_distro_file_name_prefix="distro-${bahmni_release_version}"
 $openmrs_atomfeed="openmrs-atomfeed-2.2"
 $openmrs_appframework="appframework-2.1"
