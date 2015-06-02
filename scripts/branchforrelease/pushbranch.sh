@@ -22,6 +22,6 @@ for repo in "${allrepos[@]}"
 do
    cd $repo
    echo -e "${Gre}Pushing branch $1 for $repo ${RCol}"
-   git push origin $1
+   git push origin "release-$1"
    cd ..
 done
