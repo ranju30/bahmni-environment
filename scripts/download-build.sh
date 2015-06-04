@@ -10,7 +10,7 @@ if [ $LOCAL_SERVER -ne 0 ]
 	BASE_URL="https://ci-bahmni.thoughtworks.com"
 fi
 
-BRANCH=release-0.73
+BRANCH=released
 ARTIFACTS_PIPELINE_VERSION="Latest"
 CONFIG_PIPELINE_VERSION="Latest"
 
