@@ -55,7 +55,7 @@
   }
 
   exec { "copy_implementation_config" :
-    command     => "rm -rf ${bahmniConfigDirectory}&& unzip -q -o ${implementation_config::setup::implementation_zip_file} 'openmrs/*' -d ${bahmniConfigDirectory} ${deployment_log_expression}",
+    command     => "rm -rf ${bahmniConfigDirectory} && unzip -q -o ${implementation_config::setup::implementation_zip_file} 'openmrs/*' -d ${bahmniConfigDirectory} ${deployment_log_expression}",
     provider    => "shell",
     path        => "${os_path}"
   }

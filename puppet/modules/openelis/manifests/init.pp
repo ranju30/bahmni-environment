@@ -11,7 +11,7 @@ class openelis {
   file { "${openelis_webapp_location}" : ensure => absent, purge => true}
 
   exec { "latest_openelis_webapp" :
-    command   => "unzip -o -q ${build_output_dir}/${openelis_war_file_name}.war -d ${openelis_webapp_location} ${deployment_log_expression}",
+    command   => "rm -rf ${openelis_webapp_location} && unzip -o -q ${build_output_dir}/${openelis_war_file_name}.war -d ${openelis_webapp_location} ${deployment_log_expression}",
     provider  => shell,
     path      => "${os_path}",
     require   => [File["${deployment_log_file}"], File["${openelis_webapp_location}"]],
