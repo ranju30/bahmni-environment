@@ -12,3 +12,4 @@ psql -Upostgres -c "drop database if exists lab;";
 psql -Upostgres -c "drop database if exists clinlims;";
 psql -Upostgres -c "drop database if exists reference_data;";
 psql -Upostgres < $1 >/dev/null
+psql -Upostgres -c "truncate replication_test;";

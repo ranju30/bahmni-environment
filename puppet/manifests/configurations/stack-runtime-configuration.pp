@@ -93,6 +93,11 @@ $postgresMachine = $is_passive_setup ? {
   "true" => "slave"
 }
 
+$replicationEnabled = $replicationEnabled ? {
+  default => $replicationEnabled,
+  undef => "false"
+}
+
 $postgresMaster = $active_machine_ip
 $postgresSlave = $passive_machine_ip
 
