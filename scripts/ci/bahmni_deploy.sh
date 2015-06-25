@@ -16,7 +16,7 @@ sh $SCRIPT_DIR/$elis_installer_file
 sh $SCRIPT_DIR/$bahmni_reports_installer_file
 
 if [ -f $SCRIPT_DIR/$erp_installer_file ]; then
-    sh $SCRIPT_DIR/$erp_installer_file --target /packages/build
+    sh $SCRIPT_DIR/$erp_installer_file
 fi
 
 echo "Installation Complete"
