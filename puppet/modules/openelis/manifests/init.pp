@@ -2,12 +2,12 @@ class openelis {
   require tomcat::clean
   include bahmni_revisions
   include bahmni_configuration
-  
+
   $openelis_webapp_location =  "${tomcatInstallationDirectory}/webapps/openelis"
   $bahmni_openelis_temp_dir = "${temp_dir}/OpenElis"
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${openelis_war_file_name}/WEB-INF/classes/log4j.xml"
-  
-  
+
+
   file { "${openelis_webapp_location}" : ensure => absent, purge => true}
 
   exec { "latest_openelis_webapp" :
@@ -52,11 +52,31 @@ class openelis {
 class openelis::database {
     $bahmni_openelis_temp_dir = "${temp_dir}/OpenElis"
 
-    exec { "openelis_setupdb" :
-    provider => "shell",
-    cwd => "${bahmni_openelis_temp_dir}",
-    command => "ant setupDB  ${deployment_log_expression}",
-    path => "${os_path}:${ant_home}/bin",
-    require => Exec["bahmni_openelis_codebase"]
+  file { "${bahmni_openelis_temp_dir}/scripts/initDB.sh":
+    ensure => present,
+    mode   => 777,
+    require => [Exec["bahmni_openelis_codebase"]]
+  }
+
+  file { "${bahmni_openelis_temp_dir}/scripts/migrate_db.sh" :
+    ensure      => present,
+    content     => template("openelis/migrate_db.sh"),
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+    require   => [Exec["bahmni_openelis_codebase"]],
+    mode        => 554
+  }
+  exec { "openelis_initdb" :
+    provider    => "shell",
+    cwd         => "${bahmni_openelis_temp_dir}",
+    command     => "scripts/initDB.sh bahmni-base.dump",
+    require     => [File["${bahmni_openelis_temp_dir}/scripts/initDB.sh"]]
+  }
+
+  exec { "openelis_updatedb" :
+    provider    => "shell",
+    cwd         => "${bahmni_openelis_temp_dir}/liquibase",
+    command     => "${bahmni_openelis_temp_dir}/scripts/migrate_db.sh",
+    require     => [Exec["openelis_initdb"]]
   }
 }
