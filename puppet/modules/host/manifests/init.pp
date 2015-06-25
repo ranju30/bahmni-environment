@@ -32,10 +32,6 @@ class host {
     require   => File["${package_dir}"]
   }
 
-	class { "timezone" :
-    timezone => "Asia/Kolkata"
-  }
-
   package { "ntp" :
   	ensure => installed
   }
