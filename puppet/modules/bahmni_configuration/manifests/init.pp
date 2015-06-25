@@ -1,6 +1,8 @@
 # This class only has the configuration setup for bahmni core and registration
 # The module installation is in /deploy folder
 class bahmni_configuration {
+  require openmrs
+  
   $bahmnicore_properties = "/home/${bahmni_user}/.OpenMRS/bahmnicore.properties"
 
   file { "${patientImagesDirectory}" :
