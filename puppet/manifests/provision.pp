@@ -31,7 +31,7 @@ node default {
 
   if ($install_server_type == "db-server" or $install_server_type == "single-server") {
     include mysqlserver
-    if ($bahmni_openerp_required == "true") or ($bahmni_openelis_required == "true") {
+    if ($bahmni_openerp_required == "true") or ($bahmni_openelis_required == "true") or ($bahmni_pacs_required == "true") {
       include postgresql
     }
   }

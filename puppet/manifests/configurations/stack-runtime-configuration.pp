@@ -17,6 +17,11 @@ $bahmni_openerp_required = $deploy_bahmni_openerp ? {
   default       => $deploy_bahmni_openerp
 }
 
+$bahmni_pacs_required = $deploy_bahmni_pacs ? {
+  undef     => "false",
+  default       => $deploy_bahmni_pacs
+}
+
 $bahmni_openelis_required = $deploy_bahmni_openelis ? {
   undef     => "true",
   default       => $deploy_bahmni_openelis
