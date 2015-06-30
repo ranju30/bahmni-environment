@@ -11,5 +11,8 @@ class bahmni {
   if $bahmni_openerp_required == "true" {
     require bahmni_openerp
   }
-  
+
+  if $bahmni_pacs_required == "true" {
+    require bahmni_pacs
+  }
 }
