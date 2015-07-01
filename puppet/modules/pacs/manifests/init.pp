@@ -1,17 +1,24 @@
 class pacs {
   require tomcat::clean
 
-  $pacs_webapp_location =  "${tomcatInstallationDirectory}/webapps/pacs-integration"
+  $tomcat_webapp_location = "${tomcatInstallationDirectory}/webapps"
+  $pacs_webapp_location =  "${$tomcat_webapp_location}/pacs-integration"
+
   $bahmni_pacs_temp_dir = "${temp_dir}/PACS"
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/${$pacs_war_file_name}/WEB-INF/classes/log4j.xml"
 
-  file { "${pacs_webapp_location}" : ensure => absent, purge => true}
-
-  exec { "latest_pacs_webapp" :
-    command   => "rm -rf ${pacs_webapp_location} && unzip -o -q ${build_output_dir}/${$pacs_war_file_name}.war -d ${pacs_webapp_location} ${deployment_log_expression}",
+  exec { "clear_bahmni_pacs_webapp" :
+    command   => "rm -rf ${tomcatInstallationDirectory}/webapps/${pacs_war_file_name}",
     provider  => shell,
     path      => "${os_path}",
-    require   => [File["${deployment_log_file}"], File["${pacs_webapp_location}"]],
+    user      => "${bahmni_user}"
+  }
+
+  exec { "latest_pacs_webapp" :
+    command   => "unzip -o -q ${build_output_dir}/${pacs_war_file_name}.war -d ${tomcat_webapp_location}/${pacs_war_file_name} ${deployment_log_expression}",
+    provider  => shell,
+    path      => "${os_path}",
+    require   => [Exec["clear_bahmni_pacs_webapp"]],
     user      => "${bahmni_user}",
   }
 
