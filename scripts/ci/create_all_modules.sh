@@ -19,6 +19,7 @@ mkdir -p final
 mv mrs_installer.sh final/
 mv elis_installer.sh final/
 mv bahmni_reports_installer.sh final/
+mv bahmni_pacs_installer.sh final/
 
 if [  -z "$FACTER_package_bahmni_openerp" ] || [ "$FACTER_package_bahmni_openerp" != false ]; then
     cp bahmni-environment.zip erp/deployables
