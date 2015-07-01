@@ -17,7 +17,7 @@ sh $SCRIPT_DIR/$mrs_installer_file
 
 sh $SCRIPT_DIR/$bahmni_reports_installer_file
 
-sh $SCRIPT_DIR/bahmni_pacs_installer_file
+sh $SCRIPT_DIR/$bahmni_pacs_installer_file
 
 if [ -f $SCRIPT_DIR/$erp_installer_file ]; then
     sh $SCRIPT_DIR/$erp_installer_file --target /packages/build
