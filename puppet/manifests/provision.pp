@@ -44,4 +44,8 @@ node default {
     class { 'jasperserver': require => Class["tomcat"] }
   }
 
+  if($bahmni_pacs_required == "true"){
+    include pacs
+  }
+
 }
