@@ -12,7 +12,7 @@ class bahmni_reports {
 	    user      => "${bahmni_user}"
 	}
 
-    exec { "latest_bahmni_reports_webapp" :
+  exec { "latest_bahmni_reports_webapp" :
 	    command   => "unzip -o -q ${build_output_dir}/${bahmni_reports_war_file_name}.war -d ${webapps_dir}/${bahmni_reports_war_file_name} ${deployment_log_expression}",
 	    provider  => shell,
 	    path      => "${os_path}",
