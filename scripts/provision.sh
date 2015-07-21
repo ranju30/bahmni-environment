@@ -6,7 +6,7 @@ SCRIPTS_DIR=`dirname $0`
 sudo yum -y install ruby
 sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
 sudo yum -y install puppet
-sudo mkdir /packages
+sudo mkdir -p /packages/localrepo
 if [[ $FACTER_go_bahmni_yum_repo_url != '' ]]
 then
         echo $FACTER_go_bahmni_yum_repo_url

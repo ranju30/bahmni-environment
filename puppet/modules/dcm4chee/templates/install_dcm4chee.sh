@@ -2,8 +2,7 @@
 
 sudo rm -rf "<%= dcm4chee_location %>"
 sudo unzip -o -q "<%= build_output_dir %>/<%= dcm4chee_zip_filename %>.zip" -d "<%= bahmni_location %>"
-mkdir "<%= bahmni_location %>"
-mkdir "<%= dcm4chee_location %>"
+sudo mkdir -p "<%= dcm4chee_location %>"
 if test "<%= is_passive_setup %>" == false;
 then
     echo "Creating tables for dcm4chee."

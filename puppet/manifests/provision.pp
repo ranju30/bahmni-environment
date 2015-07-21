@@ -27,7 +27,8 @@ node default {
       include python
       class { 'openerp': require => Class["python", "postgresql"] }
     }
-    if $bahmni_pacs_required == "true" {
+
+    if ($bahmni_pacs_required == "true") {
       include oviyam2
       include dcm4chee
     }
@@ -37,6 +38,9 @@ node default {
     include mysqlserver
     if ($bahmni_openerp_required == "true") or ($bahmni_openelis_required == "true") or ($bahmni_pacs_required == "true") {
       include postgresql
+    }
+    if $bahmni_pacs_required == "true" and $is_passive_setup == "false"{
+      include dcm4chee::database
     }
   }
 

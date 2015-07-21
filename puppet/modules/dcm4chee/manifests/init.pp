@@ -4,6 +4,7 @@ class dcm4chee{
   $dcm4chee_zip_filename = "dcm4chee-2.18.1-psql"
   $dcm4chee_server_xml_location = "${dcm4chee_location}/server/default/deploy/jboss-web.deployer"
   $dcm4chee_conf_location = "${dcm4chee_location}/server/default/conf"
+  $dcm4chee_archive_directory = "${dcm4chee_location}/server/archive"
 
   $share_location = "/usr/share"
   $jboss_filename = "jboss-4.2.3.GA"
@@ -13,10 +14,6 @@ class dcm4chee{
 
 
   if ($bahmni_pacs_required == "true") {
-    if $is_passive_setup == "false" {
-      require dcm4chee::database
-    }
-
     file { "copy_install_script" :
       path      => "${temp_dir}/install_dcm4chee.sh",
       ensure    => present,
@@ -69,6 +66,12 @@ class dcm4chee{
     }
 
     if $is_passive_setup == "false" {
+      cron { "sync_dcm4chee_image_cron" :
+        command => "rsync -rh --progress -i --itemize-changes --update --chmod=Du=r,Dg=rwx,Do=rwx,Fu=rwx,Fg=rwx,Fo=rwx -p ${dcm4chee_archive_directory}/ -e root@${passive_machine_ip}:${dcm4chee_archive_directory}",
+        user    => "root",
+        minute  => "*/1"
+      }
+
       exec { "start_dcm4chee" :
         command     => "sh ${temp_dir}/start_dcm4chee.sh ${deployment_log_expression}",
         provider    => shell,
