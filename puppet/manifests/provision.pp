@@ -27,6 +27,10 @@ node default {
       include python
       class { 'openerp': require => Class["python", "postgresql"] }
     }
+    if $bahmni_pacs_required == "true" {
+      include oviyam2
+      include dcm4chee
+    }
   }
 
   if ($install_server_type == "db-server" or $install_server_type == "single-server") {
@@ -43,9 +47,4 @@ node default {
   if ($install_server_type == "jasper-server") {
     class { 'jasperserver': require => Class["tomcat"] }
   }
-
-  if($bahmni_pacs_required == "true"){
-    include pacs
-  }
-
 }
