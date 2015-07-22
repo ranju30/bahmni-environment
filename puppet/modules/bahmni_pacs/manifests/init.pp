@@ -50,7 +50,7 @@ class bahmni_pacs::database {
   }
 
   exec { "${$bahmni_pacs_temp_dir}/datasetup/initDB.sh" :
-    command     => "sh ${$bahmni_pacs_temp_dir}/datasetup/initDB.sh ${deployment_log_expression}",
+    command     => "sudo sh ${$bahmni_pacs_temp_dir}/datasetup/initDB.sh ${deployment_log_expression}",
     provider    => shell,
     path        => "${os_path}",
     user        => "${bahmni_user}",
