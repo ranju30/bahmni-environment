@@ -4,7 +4,7 @@ class dcm4chee{
   $dcm4chee_zip_filename = "dcm4chee-2.18.1-psql"
   $dcm4chee_server_xml_location = "${dcm4chee_location}/server/default/deploy/jboss-web.deployer"
   $dcm4chee_conf_location = "${dcm4chee_location}/server/default/conf"
-  $dcm4chee_archive_directory = "${dcm4chee_location}/server/archive"
+  $dcm4chee_archive_directory = "${dcm4chee_location}/server/default/archive"
 
   $share_location = "/usr/share"
   $jboss_filename = "jboss-4.2.3.GA"
