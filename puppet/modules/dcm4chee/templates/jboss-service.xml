@@ -500,12 +500,8 @@
                 <!-- Other than transport type and handler, none of these configurations are required (will just use defaults). -->
                 <invoker transport="socket">
                     <attribute name="dataType" isParam="true">invocation</attribute>
-                    <attribute name="marshaller" isParam="true">
-                        org.jboss.invocation.unified.marshall.InvocationMarshaller
-                    </attribute>
-                    <attribute name="unmarshaller" isParam="true">
-                        org.jboss.invocation.unified.marshall.InvocationUnMarshaller
-                    </attribute>
+                    <attribute name="marshaller" isParam="true">org.jboss.invocation.unified.marshall.InvocationMarshaller</attribute>
+                    <attribute name="unmarshaller" isParam="true">org.jboss.invocation.unified.marshall.InvocationUnMarshaller</attribute>
                     <!-- This will be port on which the marshall loader port runs on.  -->
                     <!-- <attribute name="loaderport" isParam="true">4447</attribute> -->
                     <!-- The following are specific to socket invoker -->
