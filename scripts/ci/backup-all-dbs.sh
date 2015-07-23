@@ -6,7 +6,7 @@ echo "Attempting to create backup folder: $BACKUP_PATH"
 mkdir -pv $ALL_BACKUP_PATH
 
 # Perform backup of MYSQL DB
-TIME=`date +%Y%m%d_%H%M%S`
+TIME=`date +%a`
 BACKUP_PATH="$ALL_BACKUP_PATH/backup_$TIME"
 mkdir -pv $BACKUP_PATH
 sudo chmod 777 -R $BACKUP_PATH
