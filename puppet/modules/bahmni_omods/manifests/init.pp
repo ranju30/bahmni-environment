@@ -16,11 +16,20 @@ class bahmni_omods {
    ensure => directory
   }
 
+  file { "copy_install_bahmni_omods" :
+    path    => "${temp_dir}/install_bahmni_omods.sh",
+    ensure  => present,
+    content => template ("bahmni_omods/install_bahmni_omods.sh"),
+    owner   => "${bahmni_user}",
+    mode    => 664,
+  }
+
   exec { "copy_core_bahmni_omods" :
-    command => "rm -rf ${openmrs_modules_dir}/* && find ${build_output_dir}/${openmrs_distro_file_name_prefix} -type f -not -regex '.*atomfeed.*client.*\.omod' | grep .omod | xargs -I file cp file ${openmrs_modules_dir} ${deployment_log_expression}",
-    user    => "${bahmni_user}",
-    require => File["${openmrs_modules_dir}"],
-    path => "${os_path}"
+    command     => "sh ${temp_dir}/install_bahmni_omods.sh ${deployment_log_expression}",
+    provider    => shell,
+    path        => "${os_path}",
+    user        => "${bahmni_user}",
+    require     => File["copy_install_bahmni_omods"],
   }
 
   file { "${temp_dir}/openmrs-liquibase-functions.sh" :

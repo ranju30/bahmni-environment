@@ -27,6 +27,11 @@ $bahmni_openelis_required = $deploy_bahmni_openelis ? {
   default       => $deploy_bahmni_openelis
 }
 
+$bahmni_appointments_required = $deploy_bahmni_appointments ? {
+  undef     => "false",
+  default       => $deploy_bahmni_appointments
+}
+
 # bahmni_server_type can be one of these: app-server, db-server, single-server, monitoring-server, jasper-server
 $install_server_type = $bahmni_server_type ? {
   undef     => "single-server",
