@@ -308,6 +308,10 @@ DocumentRoot "/var/www/html"
     AllowOverride None
 </Directory>
 
+<Directory /var/www/bahmniapps>
+    Options -Indexes Includes FollowSymLinks MultiViews
+</Directory>
+
 #
 # Note that from this point forward you must specifically allow
 # particular features to be enabled - so if something's not working as
