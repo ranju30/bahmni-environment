@@ -12,9 +12,11 @@ then
 	usage
 	exit 1
 fi
-declare -a allrepos=("openmrs-module-bahmniapps" "jss-config" "openerp-atomfeed-service" "OpenElis"
+
+declare -a allrepos=("openmrs-module-bahmniapps" "openerp-atomfeed-service" "OpenElis"
  "bahmni-core" "bahmni-java-utils" "openerp-modules" "openerp-functional-tests" "openmrs-distro-bahmni"
- "bahmni-environment" "emr-functional-tests" "default-config" "bahmni-reports" "possible-config" "search-config")
+ "bahmni-environment" "emr-functional-tests" "default-config" "jss-config" "lokbiradari-config" "possible-config"
+  "banyan-config" "search-config" "ashwini-gudalur-config" "bahmni-reports")
 
 cd ~/allrepos
 
