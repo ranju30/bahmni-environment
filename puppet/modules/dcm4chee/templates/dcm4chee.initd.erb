@@ -89,6 +89,14 @@ stop() {
   return 0
 }
 
+user_exists(){
+        if id -u $1 >/dev/null 2>&1; then
+        echo "1"
+        else
+                echo "0"
+        fi
+}
+
 case $1 in
 
         start)
