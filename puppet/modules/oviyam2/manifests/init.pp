@@ -18,7 +18,7 @@ class oviyam2{
       command   => "sh ${temp_dir}/oviyam2.sh ${deployment_log_expression}",
       provider  => shell,
       path      => "${os_path}",
-      require   => [Class["tomcat"], File["copy_oviyam2"]],
+      require   => File["copy_oviyam2"],
       user      => "${bahmni_user}",
     }
 
