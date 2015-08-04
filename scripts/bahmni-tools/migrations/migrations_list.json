@@ -89,7 +89,7 @@
     },
     {
         "create": "openmrs",
-        "download": "https://github.com/openmrs/openmrs-core/archive/1.9.x.zip",
+        "download": "https://github.com/openmrs/openmrs-core/archive/1.10.2.zip",
         "then": [
             {
                 "copy": "api/src/main/resources",
