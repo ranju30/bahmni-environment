@@ -19,7 +19,9 @@ class bahmni_snapshot_migrations() {
     ensure => "directory",
     source => "puppet:///modules/bahmni_snapshot_migrations/snapshots",
     owner => "${bahmni_user}",
-    recurse => "true",
+    force => "true",
+    purge => "true",
+    recurse => "true"
   }
 
   file { "${temp_dir}/liquibase-core-2.0.5.jar" :
