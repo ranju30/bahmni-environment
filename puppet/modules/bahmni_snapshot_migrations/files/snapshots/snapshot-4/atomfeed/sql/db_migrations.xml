@@ -33,6 +33,7 @@
         </addColumn>
     </changeSet>
     <changeSet id="102" author="Sudhakar, Abishek">
+        <validCheckSum>3:361aac028f908bb02b744f0401b2b2ee</validCheckSum>
         <addColumn tableName="failed_events" schemaName="${schemaName}" >
             <column name="retries" type="int"
                     defaultValueNumeric="0">
