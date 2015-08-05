@@ -44,12 +44,7 @@ start() {
     echo -e "\e[00;31mDCM4CHEE is already running (pid: $pid)\e[00m"
   else
     echo -e "\e[00;32mStarting DCM4CHEE\e[00m"
-    if [ `user_exists $DCM4CHEE_USER` = "1" ]
-    then
-            su - $DCM4CHEE_USER -c "$DCM4CHEE_HOME/bin/run.sh > /dev/null &"
-    else
-            sh $DCM4CHEE_HOME/bin/run.sh > /dev/null &
-    fi
+    sh $DCM4CHEE_HOME/bin/run.sh > /dev/null &
     status
   fi
   return 0

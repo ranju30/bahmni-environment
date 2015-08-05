@@ -29,7 +29,6 @@ node default {
     }
 
     if ($bahmni_pacs_required == "true") {
-      include oviyam2
       include dcm4chee
     }
   }
