@@ -100,6 +100,7 @@ class dcm4chee{
 
       file { [ "${dcm4chee_server_default_location}/work", "${dcm4chee_server_default_location}/work/jboss.web", "${dcm4chee_server_default_location}/work/jboss.web/localhost" ]:
         ensure => "directory",
+        require   => Exec["start_dcm4chee"],
       }
 
       file { "copy_oviyam2_config_xml" :
