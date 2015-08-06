@@ -20,24 +20,24 @@ rm -rf sale_stock
 rm -rf search_customizations
 rm -rf search_seed_data
 
-ln -s /Project/openerp-modules/auth_crypt auth_crypt
-ln -s /Project/openerp-modules/bahmni_atom_feed bahmni_atom_feed
-ln -s /Project/openerp-modules/bahmni_customer_payment bahmni_customer_payment
-ln -s /Project/openerp-modules/bahmni_dhis2_export bahmni_dhis2_export
-ln -s /Project/openerp-modules/bahmni_internal_stock_move bahmni_internal_stock_move
-ln -s /Project/openerp-modules/bahmni_lab_seed_setup bahmni_lab_seed_setup
-ln -s /Project/openerp-modules/bahmni_logger bahmni_logger
-ln -s /Project/openerp-modules/bahmni_module_install bahmni_module_install
-ln -s /Project/openerp-modules/bahmni_pharmacy_product bahmni_pharmacy_product
-ln -s /Project/openerp-modules/bahmni_print_bill bahmni_print_bill
-ln -s /Project/openerp-modules/bahmni_purchase_extension bahmni_purchase_extension
-ln -s /Project/openerp-modules/bahmni_sale_discount bahmni_sale_discount
-ln -s /Project/openerp-modules/bahmni_seed_setup bahmni_seed_setup
-ln -s /Project/openerp-modules/bahmni_stock_batch_sale_price bahmni_stock_batch_sale_price
-ln -s /Project/openerp-modules/bahmni_web_extensions bahmni_web_extensions
-ln -s /Project/openerp-modules/print_receipt print_receipt
-ln -s /Project/openerp-modules/sale_stock sale_stock
-ln -s /Project/openerp-modules/search_customizations search_customizations
-ln -s /Project/openerp-modules/search_seed_data search_seed_data
+ln -s /bahmni/openerp-modules/auth_crypt auth_crypt
+ln -s /bahmni/openerp-modules/bahmni_atom_feed bahmni_atom_feed
+ln -s /bahmni/openerp-modules/bahmni_customer_payment bahmni_customer_payment
+ln -s /bahmni/openerp-modules/bahmni_dhis2_export bahmni_dhis2_export
+ln -s /bahmni/openerp-modules/bahmni_internal_stock_move bahmni_internal_stock_move
+ln -s /bahmni/openerp-modules/bahmni_lab_seed_setup bahmni_lab_seed_setup
+ln -s /bahmni/openerp-modules/bahmni_logger bahmni_logger
+ln -s /bahmni/openerp-modules/bahmni_module_install bahmni_module_install
+ln -s /bahmni/openerp-modules/bahmni_pharmacy_product bahmni_pharmacy_product
+ln -s /bahmni/openerp-modules/bahmni_print_bill bahmni_print_bill
+ln -s /bahmni/openerp-modules/bahmni_purchase_extension bahmni_purchase_extension
+ln -s /bahmni/openerp-modules/bahmni_sale_discount bahmni_sale_discount
+ln -s /bahmni/openerp-modules/bahmni_seed_setup bahmni_seed_setup
+ln -s /bahmni/openerp-modules/bahmni_stock_batch_sale_price bahmni_stock_batch_sale_price
+ln -s /bahmni/openerp-modules/bahmni_web_extensions bahmni_web_extensions
+ln -s /bahmni/openerp-modules/print_receipt print_receipt
+ln -s /bahmni/openerp-modules/sale_stock sale_stock
+ln -s /bahmni/openerp-modules/search_customizations search_customizations
+ln -s /bahmni/openerp-modules/search_seed_data search_seed_data
 
 chown -R openerp:openerp .
