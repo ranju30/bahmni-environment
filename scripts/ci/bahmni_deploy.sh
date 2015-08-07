@@ -10,7 +10,7 @@ TEMP_SCRIPT_DIR=`dirname -- "$0"`
 SCRIPT_DIR=`cd $TEMP_SCRIPT_DIR; pwd`
 export SCRIPT_DIR
 
-sudo rm -rf /packages/build/*
+find /packages/build/* -not -name '*.sh' | xargs rm -rf
 
 sh $SCRIPT_DIR/$elis_installer_file
 
