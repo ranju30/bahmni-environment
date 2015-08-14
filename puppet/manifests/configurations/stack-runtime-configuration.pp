@@ -103,8 +103,8 @@ $postgresMachine = $is_passive_setup ? {
   "true" => "slave"
 }
 
-$replicationEnabled = $replicationEnabled ? {
-  default => $replicationEnabled,
+$replicationEnabled = $replication_enabled ? {
+  default => $replication_enabled,
   undef => "false"
 }
 

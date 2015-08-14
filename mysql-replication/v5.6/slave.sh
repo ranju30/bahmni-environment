@@ -62,6 +62,7 @@ mysql -uroot -p$spassword -e "CHANGE MASTER TO MASTER_HOST='$mhost', MASTER_USER
 stopMySQL
 
 service mysql start
+mysql -uroot -p$spassword -e "SET GLOBAL read_only=ON"
 
 mysql -uroot -p$spassword -e "show processlist"
 mysql -uroot -p$spassword -e "show slave status"

@@ -12,11 +12,18 @@ class passive_to_active::mysql{
     require => Package["MySQL-server"],
   }
 
+  exec { "mysql-ro-off" :
+    command     => "mysql -uroot -ppassword -e \"SET GLOBAL read_only=OFF\"",
+    provider    => shell,
+    user        => "root",
+    require     => Service["mysql"],
+  }
+
   exec { "stop-slave" :
     command     => "mysql -uroot -ppassword -e \"STOP SLAVE\"",
     provider    => shell,
     user        => "root",
-    require     => Service["mysql"],
+    require     => Service["mysql-ro-off"],
   }
 
   exec {"reset-master":
