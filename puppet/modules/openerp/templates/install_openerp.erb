@@ -1,4 +1,5 @@
 su - postgres -c "createuser --superuser openerp"
+su - postgres -c "createdb openerp --owner=openerp"
 
 cd /usr/local
 adduser openerp
