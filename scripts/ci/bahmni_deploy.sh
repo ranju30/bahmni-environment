@@ -12,9 +12,9 @@ export SCRIPT_DIR
 
 find /packages/build/* -not -name '*.sh' | xargs rm -rf
 
-sh $SCRIPT_DIR/$elis_installer_file
-
 sh $SCRIPT_DIR/$mrs_installer_file
+
+sh $SCRIPT_DIR/$elis_installer_file
 
 sh $SCRIPT_DIR/$bahmni_reports_installer_file
 
