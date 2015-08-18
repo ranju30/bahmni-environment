@@ -91,12 +91,12 @@ def updateMarkers
 
 	elis_patient_uuid = ''
 
-	erp_sale_order_uuid = ''
+#	erp_sale_order_uuid = ''
 
 	begin
 		mrs_conn = Mysql.new(@machine_ip, 'openmrs-user', 'password', 'openmrs',nil,'/var/lib/mysql/mysql.sock') 
 		elis_conn = PGconn.new({:host=>@machine_ip,:user=>'clinlims',:password=>'clinlims',:dbname=>'clinlims'})
-		erp_conn = PGconn.new({:host=>@machine_ip,:user=>'openerp',:password=>'password',:dbname=>'openerp'})
+#		erp_conn = PGconn.new({:host=>@machine_ip,:user=>'openerp',:password=>'password',:dbname=>'openerp'})
 
 		rs = mrs_conn.query("select uuid as uuid from event_records where category='patient';")
 		rs.each_hash { |h| mrs_patient_uuid = h['uuid']}
@@ -106,8 +106,8 @@ def updateMarkers
 		rs = elis_conn.query("select min(uuid) as uuid from event_records where category='patient';")
 		elis_patient_uuid = rs[0]["uuid"]
 
-		rs = erp_conn.query("select min(uuid) as uuid from event_records where category='sale_order'")
-		erp_sale_order_uuid = rs[0]["uuid"]
+#		rs = erp_conn.query("select min(uuid) as uuid from event_records where category='sale_order'")
+#		erp_sale_order_uuid = rs[0]["uuid"]
 
 		mrs_conn.query("update markers set last_read_entry_id='tag:atomfeed.ict4h.org:#{erp_sale_order_uuid}', feed_uri_for_last_read_entry='http://localhost:8080/openerp-atomfeed-service/feed/sale_order/1' where feed_uri='http://localhost:8080/openerp-atomfeed-service/feed/sale_order/recent';")
 		mrs_conn.query("update markers set last_read_entry_id='tag:atomfeed.ict4h.org:#{elis_patient_uuid}', feed_uri_for_last_read_entry='http://localhost:8080/openelis/ws/feed/patient/1' where feed_uri='http://localhost:8080/openelis/ws/feed/patient/recent';")
@@ -115,23 +115,23 @@ def updateMarkers
 		elis_conn.query("update markers set last_read_entry_id='tag:atomfeed.ict4h.org:#{mrs_patient_uuid}', feed_uri_for_last_read_entry='http://localhost:8080/openmrs/ws/atomfeed/patient/1' where feed_uri='http://localhost:8080/openmrs/ws/atomfeed/patient/recent';")
 		elis_conn.query("update markers set last_read_entry_id='tag:atomfeed.ict4h.org:#{mrs_encounter_uuid}', feed_uri_for_last_read_entry='http://localhost:8080/openmrs/ws/atomfeed/encounter/1' where feed_uri='http://localhost:8080/openmrs/ws/atomfeed/encounter/recent';")
 
-		erp_conn.query("update markers set last_read_entry_id='tag:atomfeed.ict4h.org:#{mrs_patient_uuid}', feed_uri_for_last_read_entry='http://localhost:8080/openmrs/ws/atomfeed/patient/1' where feed_uri='http://localhost:8080/openmrs/ws/atomfeed/patient/recent';")
-		erp_conn.query("update markers set last_read_entry_id='tag:atomfeed.ict4h.org:#{mrs_encounter_uuid}', feed_uri_for_last_read_entry='http://localhost:8080/openmrs/ws/atomfeed/encounter/1' where feed_uri='http://localhost:8080/openmrs/ws/atomfeed/encounter/recent';")
-		erp_conn.query("update markers set last_read_entry_id='tag:atomfeed.ict4h.org:#{elis_patient_uuid}', feed_uri_for_last_read_entry='http://localhost:8080/openelis/ws/feed/patient/1' where feed_uri='http://localhost:8080/openelis/ws/feed/patient/recent';")
+#		erp_conn.query("update markers set last_read_entry_id='tag:atomfeed.ict4h.org:#{mrs_patient_uuid}', feed_uri_for_last_read_entry='http://localhost:8080/openmrs/ws/atomfeed/patient/1' where feed_uri='http://localhost:8080/openmrs/ws/atomfeed/patient/recent';")
+#		erp_conn.query("update markers set last_read_entry_id='tag:atomfeed.ict4h.org:#{mrs_encounter_uuid}', feed_uri_for_last_read_entry='http://localhost:8080/openmrs/ws/atomfeed/encounter/1' where feed_uri='http://localhost:8080/openmrs/ws/atomfeed/encounter/recent';")
+#		erp_conn.query("update markers set last_read_entry_id='tag:atomfeed.ict4h.org:#{elis_patient_uuid}', feed_uri_for_last_read_entry='http://localhost:8080/openelis/ws/feed/patient/1' where feed_uri='http://localhost:8080/openelis/ws/feed/patient/recent';")
 
 		puts "updated markers"
 
 	ensure
 		mrs_conn.close if mrs_conn
 		elis_conn.close if elis_conn
-		erp_conn.close if erp_conn
+#		erp_conn.close if erp_conn
 	end
 end
 
 def stripPatientData
 	stopServices
 	deletePatientDataFromOpenMRS
-	deletePatientDataFromOpenERP
+#	deletePatientDataFromOpenERP
 	deletePatientDataFromOpenELIS
 	updateMarkers
 end

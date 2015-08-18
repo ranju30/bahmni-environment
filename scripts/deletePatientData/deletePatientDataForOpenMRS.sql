@@ -4,6 +4,8 @@ truncate table test_order;
 truncate table drug_order;
 truncate table obs;
 truncate table orders;
+truncate table relationship;
+truncate table visit_attribute;
 truncate table bed_patient_assignment_map;
 truncate table encounter_provider;
 truncate table encounter;
