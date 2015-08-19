@@ -11,7 +11,6 @@ COMMON_CLASSPATH="<%= @build_output_dir %>/<%= @openmrs_distro_file_name_prefix 
 WORKING_DIR="<%= @tomcatInstallationDirectory %>/webapps"
 
 cd $WORKING_DIR
-java $CHANGE_LOG_TABLE -jar $LIQUIBASE_JAR --driver=$DRIVER --classpath=$COMMON_CLASSPATH --changeLogFile=liquibase-schema-only.xml $CREDS update
 java $CHANGE_LOG_TABLE -jar $LIQUIBASE_JAR --driver=$DRIVER --classpath=$COMMON_CLASSPATH --changeLogFile=liquibase-core-data.xml $CREDS update
 java $CHANGE_LOG_TABLE -jar $LIQUIBASE_JAR --driver=$DRIVER --classpath=$COMMON_CLASSPATH --changeLogFile=liquibase-update-to-latest.xml $CREDS update
 cd -
