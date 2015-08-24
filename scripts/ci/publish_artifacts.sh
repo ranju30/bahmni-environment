@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
-version=$1
+ARTIFACTS_PATH=$1
 
-TIME=`date +%Y%m%d_%H%M%S`
-
-ARTIFACTS_PATH="/root/Dropbox/"
+VERSION=$2
 
 sudo mkdir -p $ARTIFACTS_PATH
 sudo chmod 777 -R $ARTIFACTS_PATH
 
-cp -rf release_${version}/ $ARTIFACTS_PATH
+cp -rf release_${VERSION}/ $ARTIFACTS_PATH
+
+cd $ARTIFACTS_PATH
+
+rm -rf `ls -t | awk 'NR>5'`
