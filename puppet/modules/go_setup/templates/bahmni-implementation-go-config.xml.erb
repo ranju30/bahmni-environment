@@ -308,7 +308,7 @@
               <resource>BuildBhamni</resource>
             </resources>
             <artifacts>
-              <artifact src="all_installer.sh" />
+              <artifact src="bahmni_installer.sh" />
               <artifact src="#{implementationName}_config_installer.sh" />
             </artifacts>
           </job>
@@ -319,7 +319,7 @@
         <jobs>
           <job name="deploy">
             <tasks>
-              <fetchartifact pipeline="Build_Deploy_Bahmni" stage="package" job="Fetch" srcfile="all_installer.sh" dest="preprod_deploy_artefacts">
+              <fetchartifact pipeline="Build_Deploy_Bahmni" stage="package" job="Fetch" srcfile="bahmni_installer.sh" dest="preprod_deploy_artefacts">
                 <runif status="passed" />
               </fetchartifact>
               <fetchartifact pipeline="Build_Deploy_Bahmni" stage="package" job="Fetch" srcfile="#{implementationName}_config_installer.sh" dest="preprod_deploy_artefacts">
@@ -328,7 +328,7 @@
               <exec command="sudo" workingdir="preprod_deploy_artefacts">
                 <arg>-E</arg>
                 <arg>sh</arg>
-                <arg>all_installer.sh</arg>
+                <arg>bahmni_installer.sh</arg>
                 <runif status="passed" />
               </exec>
               <exec command="sudo" workingdir="preprod_deploy_artefacts">
@@ -398,7 +398,7 @@
         <jobs>
           <job name="deploy">
             <tasks>
-              <fetchartifact pipeline="Build_Deploy_Bahmni" stage="package" job="Fetch" srcfile="all_installer.sh" dest="prod_deploy_artefacts">
+              <fetchartifact pipeline="Build_Deploy_Bahmni" stage="package" job="Fetch" srcfile="bahmni_installer.sh" dest="prod_deploy_artefacts">
                 <runif status="passed" />
               </fetchartifact>
               <fetchartifact pipeline="Build_Deploy_Bahmni" stage="package" job="Fetch" srcfile="#{implementationName}_config_installer.sh" dest="prod_deploy_artefacts">
@@ -407,7 +407,7 @@
               <exec command="sudo" workingdir="prod_deploy_artefacts">
                 <arg>-E</arg>
                 <arg>sh</arg>
-                <arg>all_installer.sh</arg>
+                <arg>bahmni_installer.sh</arg>
                 <runif status="passed" />
               </exec>
               <exec command="sudo" workingdir="prod_deploy_artefacts">
@@ -432,7 +432,7 @@
         <jobs>
           <job name="deploy">
             <tasks>
-              <fetchartifact pipeline="Build_Deploy_Bahmni" stage="package" job="Fetch" srcfile="all_installer.sh" dest="prod_deploy_artefacts">
+              <fetchartifact pipeline="Build_Deploy_Bahmni" stage="package" job="Fetch" srcfile="bahmni_installer.sh" dest="prod_deploy_artefacts">
                 <runif status="passed" />
               </fetchartifact>
               <fetchartifact pipeline="Build_Deploy_Bahmni" stage="package" job="Fetch" srcfile="#{implementationName}_config_installer.sh" dest="prod_deploy_artefacts">
@@ -441,7 +441,7 @@
               <exec command="sudo" workingdir="prod_deploy_artefacts">
                 <arg>-E</arg>
                 <arg>sh</arg>
-                <arg>all_installer.sh</arg>
+                <arg>bahmni_installer.sh</arg>
                 <runif status="passed" />
               </exec>
               <exec command="sudo" workingdir="prod_deploy_artefacts">

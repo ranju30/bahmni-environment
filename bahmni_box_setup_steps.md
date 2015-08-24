@@ -96,7 +96,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     (ALTER DATABASE OPENERP OWNER TO OPENERP)
 
 
-12. Download & install latest BAHMNI build from CI. This will download 2 installers: all_installer.sh (MRS, ELIS & ERP), [implementation_name]_config_installer.sh (the implementation config setup in the environment variable, eg: default)
+12. Download & install latest BAHMNI build from CI. This will download 2 installers: bahmni_installer.sh (MRS, ELIS & ERP), [implementation_name]_config_installer.sh (the implementation config setup in the environment variable, eg: default)
   ```
   mkdir -p /packages/build
   ./scripts/download-build.sh
@@ -105,7 +105,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 
 13. Deploy the Implementation Specific Builds (will read your implementation_name variable to decide which one to install)
   ```
-  ./packages/build/all_installer.sh
+  ./packages/build/bahmni_installer.sh
   ./packages/build/[implementation_config_installer.sh]
   ```
   Note: If on deploy you get an error for JDK or tools.jar, ensure your default java is latest 1.7, and not old java1.5. If it is, then rename old java and create new sym link: 'ln -s /usr/java/default/bin/java /usr/bin/java'.       

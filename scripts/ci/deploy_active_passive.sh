@@ -16,7 +16,7 @@ then
 fi
 
 sudo fuser -k 8080/tcp || :
-sudo -E sh all_installer.sh --target /packages/build
+sudo -E sh bahmni_installer.sh --target /packages/build
 sudo -E sh ${implementation_name}_config_installer.sh --target /packages/build
 cp /bahmni_temp/logs/bahmni_deploy.log .
 

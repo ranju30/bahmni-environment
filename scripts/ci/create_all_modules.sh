@@ -30,4 +30,4 @@ fi
 
 cp $SCRIPT_DIR/bahmni_deploy.sh final
 
-sh $SCRIPT_DIR/create_bahmni_installer.sh final all_installer.sh "Bahmni Installer"
+sh $SCRIPT_DIR/create_bahmni_installer.sh final bahmni_installer.sh "Bahmni Installer"

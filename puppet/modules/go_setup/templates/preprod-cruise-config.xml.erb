@@ -275,7 +275,7 @@
               </exec>
             </tasks>
             <artifacts>
-              <artifact src="all_installer.sh" />
+              <artifact src="bahmni_installer.sh" />
               <artifact src="#{implementationName}_config_installer.sh" />
             </artifacts>
           </job>
@@ -294,7 +294,7 @@
         <jobs>
           <job name="defaultJob">
             <tasks>
-              <fetchartifact pipeline="Build" stage="package" job="Fetch" srcfile="all_installer.sh">
+              <fetchartifact pipeline="Build" stage="package" job="Fetch" srcfile="bahmni_installer.sh">
                 <runif status="passed" />
               </fetchartifact>
               <fetchartifact pipeline="Build" stage="package" job="Fetch" srcdir="#{implementationName}_config_installer.sh">
