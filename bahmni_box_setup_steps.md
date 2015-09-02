@@ -148,10 +148,6 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
 
 17. Misc Configuration Steps:
     -------------------------
-    - OpenELIS needs an Organization to be defined. Right now its JSS, but will need to be different per implementation. Do this in "Administration" screen.
-    - The ATOM Feed properties file for elis needs organization entry. Set this to appropriate value:
-    reference.data.default.organization=JSS (or set environment variable ELIS_DEFAULT_ORGANIZATION_NAME to appropriate value to override this.)
-    (openelis/WEB-INF/classes/atomfeed.properties)
     - There is an issue with Address Hierarchy, so if you don't see the Registration Screen, then in OpenMRS, navigate to Address Hierarchy Screen. This will fix the issue.
     - You may also need to add "Health Centers" in ELIS, with appropriate ID prefixes. 
 
