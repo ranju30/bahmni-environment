@@ -117,6 +117,9 @@ class dcm4chee{
 }
 
 class dcm4chee::database {
+  $bahmni_location = "/var/lib/bahmni"
+  $dcm4chee_zip_filename = "dcm4chee-2.18.1-psql"
+  $dcm4chee_location =  "${bahmni_location}/${dcm4chee_zip_filename}"
   file { "init_DB" :
     path    => "${temp_dir}/initDB.sh",
     ensure  => present,
