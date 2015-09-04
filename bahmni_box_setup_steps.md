@@ -74,6 +74,7 @@ Guide To INSTALL Bahmni Software on a CentOS Minimal System
     export FACTER_implementation_name=default (default is default)
     export FACTER_deploy_bahmni_openerp=true (default is false)
     export FACTER_deploy_bahmni_openelis=true (default is false)
+    export FACTER_deploy_bahmni_pacs=true (default is false)
     ```
     Also set the $support_email and $from_email variables in stack-runtime.properties file to appropriate value if you don't like the defaults.
     Run the command 
