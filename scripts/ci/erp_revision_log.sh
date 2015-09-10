@@ -13,5 +13,5 @@ modulesSha=`env | egrep "GO_REVISION_OPENERP_MODULES=" | sed "s/GO_REVISION_OPEN
 functionaTestsSha=`env | egrep "GO_REVISION_OPENERP_FUNCTIONAL_TESTS=" | sed "s/GO_REVISION_OPENERP_FUNCTIONAL_TESTS=//g"`
 atomFeedSha=`env | egrep "GO_REVISION_OPENERP_ATOMFEED_SERVICE=" | sed "s/GO_REVISION_OPENERP_ATOMFEED_SERVICE=//g"`
 
-echo $revision | sed "s/_pipelineCount_/$pipelineCounter/g" | sed "s/_jobname_/$jobName/g" | sed "s/_moduleSha_/$modulesSha/g" | sed "s/_functionaTestsSha_/$functionaTestsSha/g" | sed "s/_atomFeedSha_/$atomFeedSha/g"
+echo $revision | sed "s/_pipelineCount_/$pipelineCounter/g" | sed "s/_jobname_/$jobName/g" | sed "s/_modulesSha_/$modulesSha/g" | sed "s/_functionalTestsSha_/$functionaTestsSha/g" | sed "s/_atomFeedSha_/$atomFeedSha/g"
 
