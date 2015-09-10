@@ -1,6 +1,8 @@
 revision='{
     "go" : "https://ci-bahmni.thoughtworks.com/go/pipelines/value_stream_map/_jobname_/_pipelineCount_",
-    "github": "https://github.com/Bhamni/OpenElis/commit/_sha_"
+    "github": {
+        "elis" : "https://github.com/Bhamni/OpenElis/commit/_sha_"
+    }
 }'
 
 jobName=`env | egrep "GO_PIPELINE_NAME=" | sed "s/GO_PIPELINE_NAME=//g"`
