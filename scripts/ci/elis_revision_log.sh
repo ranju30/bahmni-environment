@@ -5,9 +5,10 @@ revision='{
     }
 }'
 
-jobName=`env | egrep "GO_PIPELINE_NAME=" | sed "s/GO_PIPELINE_NAME=//g"`
-pipelineCounter=`env | egrep "GO_PIPELINE_COUNTER=" | sed "s/GO_PIPELINE_COUNTER=//g"`
-sha=`env | egrep "GO_REVISION_OPENELIS_GITHUB=" | sed "s/GO_REVISION_OPENELIS_GITHUB=//g"`
+replace() {
+    envValue=`env | egrep "$2=" | sed "s/$2=//g"`
+    sed "s/$1/$envValue/g"
+}
 
-echo $revision | sed "s/_pipelineCount_/$pipelineCounter/g" | sed "s/_jobname_/$jobName/g" | sed "s/_sha_/$sha/g"
+echo $revision | replace "_jobname_" "GO_PIPELINE_NAME" | replace "_pipelineCount_" "GO_PIPELINE_COUNTER" | replace "_sha_" "GO_REVISION_OPENELIS_GITHUB"
 

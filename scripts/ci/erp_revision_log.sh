@@ -7,11 +7,9 @@ revision='{
     }
 }'
 
-jobName=`env | egrep "GO_PIPELINE_NAME=" | sed "s/GO_PIPELINE_NAME=//g"`
-pipelineCounter=`env | egrep "GO_PIPELINE_COUNTER=" | sed "s/GO_PIPELINE_COUNTER=//g"`
-modulesSha=`env | egrep "GO_REVISION_OPENERP_MODULES=" | sed "s/GO_REVISION_OPENERP_MODULES=//g"`
-functionaTestsSha=`env | egrep "GO_REVISION_OPENERP_FUNCTIONAL_TESTS=" | sed "s/GO_REVISION_OPENERP_FUNCTIONAL_TESTS=//g"`
-atomFeedSha=`env | egrep "GO_REVISION_OPENERP_ATOMFEED_SERVICE=" | sed "s/GO_REVISION_OPENERP_ATOMFEED_SERVICE=//g"`
+replace() {
+    envValue=`env | egrep "$2=" | sed "s/$2=//g"`
+    sed "s/$1/$envValue/g"
+}
 
-echo $revision | sed "s/_pipelineCount_/$pipelineCounter/g" | sed "s/_jobname_/$jobName/g" | sed "s/_modulesSha_/$modulesSha/g" | sed "s/_functionalTestsSha_/$functionaTestsSha/g" | sed "s/_atomFeedSha_/$atomFeedSha/g"
-
+echo $revision | replace "_jobname_" "GO_PIPELINE_NAME" | replace "_pipelineCount_" "GO_PIPELINE_COUNTER" | replace "_modulesSha_" "GO_REVISION_OPENERP_MODULES" | replace "_functionalTestsSha_" "GO_REVISION_OPENERP_FUNCTIONAL_TESTS" | replace "_atomFeedSha_" "GO_REVISION_OPENERP_ATOMFEED_SERVICE"
