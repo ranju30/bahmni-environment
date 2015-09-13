@@ -1,11 +1,11 @@
 revision='{
     "go" : "https://ci-bahmni.thoughtworks.com/go/pipelines/value_stream_map/_jobname_/_pipelineCount_",
     "github": {
-        "default_config" : "https://github.com/Bhamni/default-config/commit/_defaultConfigSha_",
         "bahmni_core" : "https://github.com/Bhamni/bahmni-core/commit/_bahmniCoreSha_",
         "openmrs" : "https://github.com/Bhamni/openmrs-distro-bahmni/commit/_openmrsSha_",
         "openmrs_modules" : "https://github.com/Bhamni/openmrs-module-bahmniapps/commit/_openmrsModulesSha_",
-        "functional_tests" : "https://github.com/Bhamni/emr-functional-tests/commit/_functionalTestsSha_"
+        "functional_tests" : "https://github.com/Bhamni/emr-functional-tests/commit/_functionalTestsSha_",
+        "config" : "https://github.com/Bhamni/default-config/commit/_defaultConfigSha_"
     }
 }'
 
