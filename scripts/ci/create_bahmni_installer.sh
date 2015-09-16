@@ -22,3 +22,5 @@ then
 fi
 
 create_installer
+mkdir -p installer
+mv $INSTALLER_FILE_NAME installer/

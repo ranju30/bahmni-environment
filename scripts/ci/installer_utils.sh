@@ -5,7 +5,6 @@ function replace_installer_template {
 
 function create_installer {
 	chmod +x $INSTALLER_FILE
-	mkdir ./installer
-	makeself.sh $ARTIFACTS_DIRECTORY $INSTALLER_FILE_NAME "$INSTALLER_LABEL" $BAHMNI_INSTALLER_FILE
+	makeself.sh $ARTIFACTS_DIRECTORY $INSTALLER_FILE_NAME "$INSTALLER_LABEL" ./$BAHMNI_INSTALLER_FILE
 }
 
