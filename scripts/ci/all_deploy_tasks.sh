@@ -16,6 +16,6 @@ fi
 
 sudo fuser -k 8080/tcp || :
 sudo -E sh installer/bahmni_installer_*.sh --target /packages/build
-sudo -E sh installer/${implementation_name}_config_installer.sh --target /packages/build
+sudo -E sh ${implementation_name}_config_installer.sh --target /packages/build
 cp /bahmni_temp/logs/bahmni_deploy.log .
 sudo service tomcat start
