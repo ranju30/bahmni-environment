@@ -95,7 +95,7 @@
     </style>
 
     <script>
-        function toggleInfo() {
+        function toggleInfo(event) {
             var infoDetails = event.target.parentNode.getElementsByClassName("info-details")[0];
             infoDetails.style.display = (infoDetails.style.display == "block") ? "none" : "block";
         }
@@ -175,7 +175,7 @@
             </a>
         </div>
         <div class="info bahmni">
-            <button class="info-icon" onclick="toggleInfo()">i</button>
+            <button class="info-icon" onclick="toggleInfo(event)">i</button>
             <div class="info-details" style="display: none">
             </div>
         </div>
@@ -188,7 +188,7 @@
             </a>
         </div>
         <div class="info elis">
-            <button class="info-icon" onclick="toggleInfo()">i</button>
+            <button class="info-icon" onclick="toggleInfo(event)">i</button>
             <div class="info-details" style="display: none">
             </div>
         </div>
@@ -201,7 +201,7 @@
             </a>
         </div>
         <div class="info erp">
-            <button class="info-icon" onclick="toggleInfo()">i</button>
+            <button class="info-icon" onclick="toggleInfo(event)">i</button>
             <div class="info-details" style="display: none">
             </div>
         </div>
