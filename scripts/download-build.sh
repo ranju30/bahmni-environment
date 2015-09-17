@@ -14,5 +14,5 @@ BRANCH=master
 ARTIFACTS_PIPELINE_VERSION="Latest"
 CONFIG_PIPELINE_VERSION="Latest"
 
-wget --timeout=3600 --no-check-certificate --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_artifacts_$BRANCH/$ARTIFACTS_PIPELINE_VERSION/CollectArtefactsStage/Latest/defaultJob/bahmni_installer.sh -O /packages/build/bahmni_installer.sh
+wget --timeout=3600 --no-check-certificate --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Bahmni_artifacts_$BRANCH/$ARTIFACTS_PIPELINE_VERSION/CollectArtefactsStage/Latest/defaultJob/installer -O /packages/build/bahmni_installer.sh
 wget --timeout=3600 --no-check-certificate --user=$GO_USER --password=$GO_PWD --auth-no-challenge  $BASE_URL/go/files/Build_${FACTER_implementation_name}_config_$BRANCH/$CONFIG_PIPELINE_VERSION/Package/Latest/package/${FACTER_implementation_name}_config_installer.sh -O /packages/build/${FACTER_implementation_name}_config_installer.sh
