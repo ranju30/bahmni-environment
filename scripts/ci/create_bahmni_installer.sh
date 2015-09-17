@@ -4,7 +4,7 @@ SCRIPT_DIR=`cd $TEMP_SCRIPT_DIR; pwd`
 export SCRIPT_DIR
 
 export ARTIFACTS_DIRECTORY=$1
-export INSTALLER_FILE_NAME=$2
+export INSTALLER_FILE_NAME=$2"_"$GO_PIPELINE_COUNTER".sh"
 export INSTALLER_LABEL=$3
 export BAHMNI_INSTALLER_FILE=bahmni_deploy.sh
 export INSTALLER_FILE=$ARTIFACTS_DIRECTORY/bahmni_deploy.sh
@@ -22,3 +22,5 @@ then
 fi
 
 create_installer
+mkdir -p installer
+mv $INSTALLER_FILE_NAME installer/
