@@ -84,10 +84,13 @@ class dcm4chee{
     }
 
     if $is_passive_setup == "false" {
+      if $install_server_type != "single-server" {
       cron { "sync_dcm4chee_image_cron" :
         command => "rsync -rh --progress -i --itemize-changes --update --chmod=Du=r,Dg=rwx,Do=rwx,Fu=rwx,Fg=rwx,Fo=rwx -p ${dcm4chee_archive_directory}/ -e root@${passive_machine_ip}:${dcm4chee_archive_directory}",
         user    => "root",
         minute  => "*/1"
+      }
+
       }
 
       exec { "start_dcm4chee" :
