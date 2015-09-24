@@ -38,9 +38,6 @@ node default {
     if ($bahmni_openerp_required == "true") or ($bahmni_openelis_required == "true") or ($bahmni_pacs_required == "true") {
       include postgresql
     }
-    if $bahmni_pacs_required == "true" and $is_passive_setup == "false"{
-      include dcm4chee::database
-    }
   }
 
   if ($install_server_type == "monitoring-server") {

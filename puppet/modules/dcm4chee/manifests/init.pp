@@ -83,14 +83,37 @@ class dcm4chee{
       mode      => 664,
     }
 
+    file { "init_DB" :
+      path    => "${temp_dir}/initDB.sh",
+      ensure  => present,
+      content => template ("dcm4chee/initDB.sh"),
+      owner   => "${bahmni_user}",
+      mode    => 664,
+    }
+
+    file { "setup_DB" :
+      path    => "${temp_dir}/setupDB.sql",
+      ensure  => present,
+      content => template ("dcm4chee/setupDB.sql"),
+      owner   => "${bahmni_user}",
+      mode    => 664,
+    }
+
+    exec { "${temp_dir}/initDB.sh" :
+      command     => "sh ${temp_dir}/initDB.sh ${deployment_log_expression}",
+      provider    => shell,
+      path        => "${os_path}",
+      user        => "${bahmni_user}",
+      require     => [File["setup_DB"], File["init_DB"]],
+    }
+
     if $is_passive_setup == "false" {
       if $install_server_type != "single-server" {
-      cron { "sync_dcm4chee_image_cron" :
-        command => "rsync -rh --progress -i --itemize-changes --update --chmod=Du=r,Dg=rwx,Do=rwx,Fu=rwx,Fg=rwx,Fo=rwx -p ${dcm4chee_archive_directory}/ -e root@${passive_machine_ip}:${dcm4chee_archive_directory}",
-        user    => "root",
-        minute  => "*/1"
-      }
-
+        cron { "sync_dcm4chee_image_cron" :
+          command => "rsync -rh --progress -i --itemize-changes --update --chmod=Du=r,Dg=rwx,Do=rwx,Fu=rwx,Fg=rwx,Fo=rwx -p ${dcm4chee_archive_directory}/ -e root@${passive_machine_ip}:${dcm4chee_archive_directory}",
+          user    => "root",
+          minute  => "*/1"
+        }
       }
 
       exec { "start_dcm4chee" :
@@ -116,34 +139,5 @@ class dcm4chee{
       }
 
     }
-  }
-}
-
-class dcm4chee::database {
-  $bahmni_location = "/var/lib/bahmni"
-  $dcm4chee_zip_filename = "dcm4chee-2.18.1-psql"
-  $dcm4chee_location =  "${bahmni_location}/${dcm4chee_zip_filename}"
-  file { "init_DB" :
-    path    => "${temp_dir}/initDB.sh",
-    ensure  => present,
-    content => template ("dcm4chee/initDB.sh"),
-    owner   => "${bahmni_user}",
-    mode    => 664,
-  }
-
-  file { "setup_DB" :
-    path    => "${temp_dir}/setupDB.sql",
-    ensure  => present,
-    content => template ("dcm4chee/setupDB.sql"),
-    owner   => "${bahmni_user}",
-    mode    => 664,
-  }
-
-  exec { "${temp_dir}/initDB.sh" :
-    command     => "sh ${temp_dir}/initDB.sh ${deployment_log_expression}",
-    provider    => shell,
-    path        => "${os_path}",
-    user        => "${bahmni_user}",
-    require     => [File["setup_DB"], File["init_DB"]],
   }
 }
