@@ -16,6 +16,15 @@ class dcm4chee{
   $oviyam2_bin_foldername = "Oviyam-2.1-bin"
 
   if ($bahmni_pacs_required == "true") {
+
+    file { "copy_setup_DB" :
+      path    => "${temp_dir}/setupDB.sql",
+      ensure  => present,
+      content => template ("dcm4chee/setupDB.sql"),
+      owner   => "${bahmni_user}",
+      mode    => 664,
+    }
+
     file { "copy_install_script" :
       path      => "${temp_dir}/install_dcm4chee.sh",
       ensure    => present,
@@ -24,12 +33,20 @@ class dcm4chee{
       mode      => 664,
     }
 
+    file { "copy_oviyam2" :
+      path    => "${temp_dir}/oviyam2.sh",
+      ensure  => present,
+      content => template ("dcm4chee/oviyam2.sh"),
+      owner   => "root",
+      mode    => 664,
+    }
+
     exec { "install_dcm4chee" :
       command     => "sh ${temp_dir}/install_dcm4chee.sh ${deployment_log_expression}",
       provider    => shell,
       path        => "${os_path}",
       user        => "root",
-      require     => File["copy_install_script"],
+      require     => [File["copy_setup_DB"], File["copy_install_script"]],
     }
 
     file { "copy_server_xml" :
@@ -48,14 +65,6 @@ class dcm4chee{
       owner     => "root",
       mode      => 664,
       require   => Exec["install_dcm4chee"],
-    }
-
-    file { "copy_oviyam2" :
-      path    => "${temp_dir}/oviyam2.sh",
-      ensure  => present,
-      content => template ("dcm4chee/oviyam2.sh"),
-      owner   => "root",
-      mode    => 664,
     }
 
     exec { "exec_oviyam2" :
@@ -81,30 +90,7 @@ class dcm4chee{
       content   => template ("dcm4chee/start_dcm4chee.sh"),
       owner     => "root",
       mode      => 664,
-    }
-
-    file { "init_DB" :
-      path    => "${temp_dir}/initDB.sh",
-      ensure  => present,
-      content => template ("dcm4chee/initDB.sh"),
-      owner   => "${bahmni_user}",
-      mode    => 664,
-    }
-
-    file { "setup_DB" :
-      path    => "${temp_dir}/setupDB.sql",
-      ensure  => present,
-      content => template ("dcm4chee/setupDB.sql"),
-      owner   => "${bahmni_user}",
-      mode    => 664,
-    }
-
-    exec { "${temp_dir}/initDB.sh" :
-      command     => "sh ${temp_dir}/initDB.sh ${deployment_log_expression}",
-      provider    => shell,
-      path        => "${os_path}",
-      user        => "${bahmni_user}",
-      require     => [File["setup_DB"], File["init_DB"]],
+      require   => Exec["install_dcm4chee"],
     }
 
     if $is_passive_setup == "false" {

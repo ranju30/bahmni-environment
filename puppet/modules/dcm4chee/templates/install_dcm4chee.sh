@@ -5,19 +5,33 @@ then
     sudo mv "<%= @dcm4chee_server_default_location %>/archive" "<%= @bahmni_location %>"
 fi
 
-sudo rm -rf "<%= @dcm4chee_location %>"
+if test -d "<%= @bahmni_location %>";
+then
+    sudo rm -rf "<%= @dcm4chee_location %>"
+else
+    sudo mkdir -p "<%= @bahmni_location %>"
+fi
+
 sudo unzip -o -q "<%= @build_output_dir %>/<%= @dcm4chee_zip_filename %>.zip" -d "<%= @bahmni_location %>"
-sudo mkdir -p "<%= dcm4chee_location %>"
-if test "<%= is_passive_setup %>" == false;
+
+if test "<%= @is_passive_setup %>" == "false";
 then
     echo "Creating tables for dcm4chee."
-    psql -Upostgres pacsdb -f "<%= @dcm4chee_location %>/sql/create.psql"
+    if [ "$(psql -Upostgres -lqt | cut -d \| -f 1 | grep -w pacsdb | wc -l)" -eq 0 ];
+    then
+        echo "Creating database : pacsdb"
+        export PGUSER=postgres
+        psql -U postgres -f "<%= @temp_dir %>/setupDB.sql"
+        psql -U postgres pacsdb -f "<%= @dcm4chee_location %>/sql/create.psql"
+    else
+        echo "The database pacsdb already exits"
+    fi
 fi
-sudo rm -rf "<%= jboss_location %>"
-sudo unzip -o -q "<%= @packages_servers_dir %>/<%= jboss_zip_filename.zip %>" -d "<%= @share_location %>"
-sudo sh "<%= dcm4chee_location %>"/bin/install_jboss.sh "<%= jboss_location %>"
+sudo rm -rf "<%= @jboss_location %>"
+sudo unzip -o -q "<%= @packages_servers_dir %>/<%= @jboss_zip_filename.zip %>" -d "<%= @share_location %>"
+sudo sh "<%= @dcm4chee_location %>"/bin/install_jboss.sh "<%= @jboss_location %>"
 
 if test -d "<%= @bahmni_location %>/archive";
 then
-    sudo mv "<%= bahmni_location %>/archive" "<%= @dcm4chee_server_default_location %>"
+    sudo mv "<%= @bahmni_location %>/archive" "<%= @dcm4chee_server_default_location %>"
 fi

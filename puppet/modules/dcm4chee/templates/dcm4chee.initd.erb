@@ -45,6 +45,7 @@ start() {
   else
     echo -e "\e[00;32mStarting DCM4CHEE\e[00m"
     sh $DCM4CHEE_HOME/bin/run.sh > /dev/null &
+    sleep 30
     status
   fi
   return 0
@@ -62,7 +63,7 @@ stop() {
   if [ -n "$pid" ]
   then
     echo -e "\e[00;31mStoping DCM4CHEE\e[00m"
-    sh $DCM4CHEE_HOME/bin/shutdown.sh
+    sh $DCM4CHEE_HOME/bin/shutdown.sh -S
 
     let kwait=$SHUTDOWN_WAIT
     count=0;
