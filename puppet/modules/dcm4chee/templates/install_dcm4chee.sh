@@ -2,6 +2,7 @@
 
 if test -d "<%= @dcm4chee_server_default_location %>/archive";
 then
+    sudo service dcm4chee stop
     sudo mv "<%= @dcm4chee_server_default_location %>/archive" "<%= @bahmni_location %>"
 fi
 

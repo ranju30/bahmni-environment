@@ -58,7 +58,7 @@ class dcm4chee{
       require   => Exec["install_dcm4chee"],
     }
 
-    file { "copy_service_xml" :
+    file { "copy_jboss_service_xml" :
       path      => "${dcm4chee_conf_location}/jboss-service.xml",
       ensure    => present,
       content   => template ("dcm4chee/jboss-service.xml"),
@@ -75,13 +75,22 @@ class dcm4chee{
       user      => "root",
     }
 
+    file { "copy_oviyam2_web_xml" :
+      path      => "${dcm4chee_server_default_location}/deploy/${oviyam2_war_filename}.war/WEB-INF/web.xml",
+      ensure    => present,
+      content   => template ("dcm4chee/oviyam2-web.xml"),
+      owner     => "root",
+      mode      => 664,
+      require   => Exec["exec_oviyam2"],
+    }
+
     file { "/etc/init.d/dcm4chee" :
       ensure      => present,
       content     => template("dcm4chee/dcm4chee.initd.erb"),
       mode        => 777,
       group       => "root",
       owner       => "root",
-      require     => [File["copy_server_xml"], File["copy_service_xml"]],
+      require     => [File["copy_server_xml"], File["copy_jboss_service_xml"]],
     }
 
     file { "copy_start_script" :
@@ -107,7 +116,7 @@ class dcm4chee{
         provider    => shell,
         path        => "${os_path}",
         user        => "root",
-        require     => File["copy_start_script"],
+        require     => [File["copy_start_script"], File["copy_oviyam2_web_xml"]],
       }
 
       file { [ "${dcm4chee_server_default_location}/work", "${dcm4chee_server_default_location}/work/jboss.web", "${dcm4chee_server_default_location}/work/jboss.web/localhost" ]:
