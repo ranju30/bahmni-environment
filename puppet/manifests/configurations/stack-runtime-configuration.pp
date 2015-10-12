@@ -32,6 +32,11 @@ $bahmni_appointments_required = $deploy_bahmni_appointments ? {
   default       => $deploy_bahmni_appointments
 }
 
+$bahmni_bacteriology_required = $deploy_bahmni_bacteriology ? {
+  undef     => "false",
+  default       => $deploy_bahmni_bacteriology
+}
+
 # bahmni_server_type can be one of these: app-server, db-server, single-server, monitoring-server, jasper-server
 $install_server_type = $bahmni_server_type ? {
   undef     => "single-server",
