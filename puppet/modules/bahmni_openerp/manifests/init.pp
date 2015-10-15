@@ -64,23 +64,6 @@ class bahmni_openerp_internal {
 	    user      => "${bahmni_user}"
 	}
 
-	file { "${temp_dir}/bahmni-openerp/run-liquibase.sh" :
-    ensure      => present,
-    content     => template("bahmni_openerp/run-liquibase.sh"),
-    owner       => "${bahmni_user}",
-    group       => "${bahmni_user}",
-    require   => [Exec["latest_openerp_atomfeed_webapp"]],
-    mode        => 554
-  }
-
-  exec { "bahmni_openerp_data" :
-    command     => "${temp_dir}/bahmni-openerp/run-liquibase.sh ${deployment_log_expression}",
-    path        => "${os_path}",
-    provider    => shell,
-    cwd         => "${tomcatInstallationDirectory}/webapps",
-    require     => [File["${temp_dir}/bahmni-openerp/run-liquibase.sh"]]
-  }
-
   file { "${log4j_xml_file}" :
   	ensure      => present,
   	content     => template("bahmni_openerp/log4j.xml.erb"),
@@ -97,7 +80,25 @@ class bahmni_openerp_internal {
       path      => "${os_path}",
       require   => [File["${log4j_xml_file}"]]
     }
+
+	file { "${temp_dir}/bahmni-openerp/run-liquibase.sh" :
+	    ensure      => present,
+	    content     => template("bahmni_openerp/run-liquibase.sh"),
+	    owner       => "${bahmni_user}",
+	    group       => "${bahmni_user}",
+	    require   => [Exec["latest_openerp_atomfeed_webapp"]],
+	    mode        => 554
+	  }
+
+	  exec { "bahmni_openerp_data" :
+	    command     => "${temp_dir}/bahmni-openerp/run-liquibase.sh ${deployment_log_expression}",
+	    path        => "${os_path}",
+	    provider    => shell,
+	    cwd         => "${tomcatInstallationDirectory}/webapps",
+	    require     => [File["${temp_dir}/bahmni-openerp/run-liquibase.sh"]]
+	  }
   } else {
-    notice ("Not starting OpenERP. ")
+    notice ("Will not start OpenERP on passive machine. ")
+    notice ("Will not run bahmni_openerp_data on passive machine. ")
   }
 }
