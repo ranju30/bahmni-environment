@@ -21,11 +21,8 @@ source /etc/init.d/functions
 #DCM4CHEE_HOME is the location of the bin files of DCM4CHEE
 DCM4CHEE_HOME=<%= @dcm4chee_location %>
 
-#DCM4CHEE_BASE is the location of the configuration files of this instance of DCM4CHEE
-DCM4CHEE_BASE=<%= @dcm4chee_location %>
-
 #DCM4CHEE_USER is the default user of DCM4CHEE
-DCM4CHEE_USER=<%= @bahmni_user %>
+DCM4CHEE_USER=<%= @dcm4chee_user %>
 
 #DCM4CHEE_USAGE is the message if this script is called without any options
 DCM4CHEE_USAGE="Usage: $0 {\e[00;32mstart\e[00m|\e[00;31mstop\e[00m|\e[00;32mstatus\e[00m|\e[00;31mrestart\e[00m}"
@@ -42,19 +39,22 @@ start() {
   if [ -n "$pid" ]
   then
     echo -e "\e[00;31mDCM4CHEE is already running (pid: $pid)\e[00m"
+    exit 0
   else
     echo -e "\e[00;32mStarting DCM4CHEE\e[00m"
-    sh $DCM4CHEE_HOME/bin/run.sh > /dev/null &
-    sleep 30
-    status
+    su -c "/bin/bash $DCM4CHEE_HOME/bin/run.sh" $DCM4CHEE_USER > /dev/null &
   fi
   return 0
 }
 
 status(){
   pid=$(dcm4chee_pid)
-  if [ -n "$pid" ]; then echo -e "\e[00;32mDCM4CHEE is running with pid: $pid\e[00m"
-  else echo -e "\e[00;31mDCM4CHEE is not running\e[00m"
+  if [ -n "$pid" ]; then
+    echo -e "\e[00;32mDCM4CHEE is running with pid: $pid\e[00m"
+    exit 0
+  else
+    echo -e "\e[00;31mDCM4CHEE is not running\e[00m"
+    exit 3
   fi
 }
 

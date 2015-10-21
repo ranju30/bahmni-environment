@@ -13,7 +13,13 @@ else
     sudo mkdir -p "<%= @bahmni_location %>"
 fi
 
+chown bahmni:bahmni "<%= @bahmni_location %>"
+chmod 555 "<%= @bahmni_location %>"
+
 sudo unzip -o -q "<%= @build_output_dir %>/<%= @dcm4chee_zip_filename %>.zip" -d "<%= @bahmni_location %>"
+
+sudo chown -R "<%= @dcm4chee_user %>":"<%= @dcm4chee_group %>" "<%= @bahmni_location %>/<%= @dcm4chee_zip_filename %>"
+sudo chmod 755 -R "<%= @bahmni_location %>/<%= @dcm4chee_zip_filename %>"
 
 if test "<%= @is_passive_setup %>" == "false";
 then

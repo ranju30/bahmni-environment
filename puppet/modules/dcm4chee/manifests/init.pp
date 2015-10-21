@@ -1,4 +1,6 @@
 class dcm4chee{
+  $dcm4chee_user="dcm4chee"
+  $dcm4chee_group="bahmni"
   $bahmni_location = "/var/lib/bahmni"
   $dcm4chee_zip_filename = "dcm4chee-2.18.1-psql"
   $dcm4chee_location =  "${bahmni_location}/${dcm4chee_zip_filename}"
@@ -15,13 +17,16 @@ class dcm4chee{
   $oviyam2_war_filename = "oviyam2"
   $oviyam2_bin_foldername = "Oviyam-2.1-bin"
 
-  if ($bahmni_pacs_required == "true") {
+    user { "$dcm4chee_user":
+      ensure => present,
+      gid    => 'bahmni',
+    }
 
     file { "copy_setup_DB" :
       path    => "${temp_dir}/setupDB.sql",
       ensure  => present,
       content => template ("dcm4chee/setupDB.sql"),
-      owner   => "${bahmni_user}",
+      owner   => "root",
       mode    => 664,
     }
 
@@ -46,7 +51,14 @@ class dcm4chee{
       provider    => shell,
       path        => "${os_path}",
       user        => "root",
-      require     => [File["copy_setup_DB"], File["copy_install_script"]],
+      require     => [File["copy_setup_DB"], File["copy_install_script"], User["$dcm4chee_user"]],
+    }
+
+    file {["${dcm4chee_server_default_location}/work", "${dcm4chee_server_default_location}/work/jboss.web", "${dcm4chee_server_default_location}/work/jboss.web/localhost" ]:
+      ensure    => "directory",
+      owner     => "$dcm4chee_user",
+      group     => "$dcm4chee_group",
+      require   => Exec["install_dcm4chee"],
     }
 
     file { "copy_server_xml" :
@@ -93,46 +105,21 @@ class dcm4chee{
       require     => [File["copy_server_xml"], File["copy_jboss_service_xml"]],
     }
 
-    file { "copy_start_script" :
-      path      => "${temp_dir}/start_dcm4chee.sh",
+    file { "copy_oviyam2_config_xml" :
+      path      => "${dcm4chee_server_default_location}/work/jboss.web/localhost/oviyam2-1-config.xml",
       ensure    => present,
-      content   => template ("dcm4chee/start_dcm4chee.sh"),
+      content   => template ("dcm4chee/oviyam2-1-config.xml"),
       owner     => "root",
       mode      => 664,
-      require   => Exec["install_dcm4chee"],
+      require   => [File["${dcm4chee_server_default_location}/work", "${dcm4chee_server_default_location}/work/jboss.web", "${dcm4chee_server_default_location}/work/jboss.web/localhost" ]],
     }
 
     if $is_passive_setup == "false" {
-      if $install_server_type != "single-server" {
-        cron { "sync_dcm4chee_image_cron" :
-          command => "rsync -rh --progress -i --itemize-changes --update --chmod=Du=r,Dg=rwx,Do=rwx,Fu=rwx,Fg=rwx,Fo=rwx -p ${dcm4chee_archive_directory}/ -e root@${passive_machine_ip}:${dcm4chee_archive_directory}",
-          user    => "root",
-          minute  => "*/1"
-        }
+      service { 'dcm4chee_service':
+          name    => dcm4chee,
+          enable  => true,
+          ensure  => running,
+          require => [File["/etc/init.d/dcm4chee"], File['copy_oviyam2_config_xml']]
       }
-
-      exec { "start_dcm4chee" :
-        command     => "sh ${temp_dir}/start_dcm4chee.sh ${deployment_log_expression}",
-        provider    => shell,
-        path        => "${os_path}",
-        user        => "root",
-        require     => [File["copy_start_script"], File["copy_oviyam2_web_xml"]],
-      }
-
-      file { [ "${dcm4chee_server_default_location}/work", "${dcm4chee_server_default_location}/work/jboss.web", "${dcm4chee_server_default_location}/work/jboss.web/localhost" ]:
-        ensure => "directory",
-        require   => Exec["start_dcm4chee"],
-      }
-
-      file { "copy_oviyam2_config_xml" :
-        path      => "${dcm4chee_server_default_location}/work/jboss.web/localhost/oviyam2-1-config.xml",
-        ensure    => present,
-        content   => template ("dcm4chee/oviyam2-1-config.xml"),
-        owner     => "root",
-        mode      => 664,
-        require   => Exec["start_dcm4chee"],
-      }
-
     }
-  }
 }
