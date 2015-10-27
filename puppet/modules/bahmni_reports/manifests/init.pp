@@ -20,6 +20,14 @@ class bahmni_reports {
 	    user      => "${bahmni_user}"
 	}
 
+  file { "/home/${bahmni_user}/.bahmni-reports/bahmni-reports.properties" :
+        ensure  => present,
+        content => template("bahmni_reports/bahmni-reports.properties.erb"),
+        owner   => "${bahmni_user}",
+        group   => "${bahmni_user}",
+        mode    => 554
+  }
+
 	file { "${temp_dir}/run-bahmni-reports-liquibase.sh" :
         ensure      => present,
         content     => template("bahmni_reports/run-bahmni-reports-liquibase.sh"),
