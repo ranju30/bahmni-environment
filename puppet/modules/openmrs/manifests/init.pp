@@ -54,7 +54,21 @@ class openmrs {
     mode        => 664
   }
 
-  file { "${temp_dir}/openmrs-predeploy.sql" :
+  if $is_passive_setup == "false" {
+    include openmrs::database
+  }
+
+ exec { "bahmni_java_utils_jars" :
+    command => "cp ${build_output_dir}/${openmrs_distro_file_name_prefix}/mail-appender-${bahmni_release_version}.jar ${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/lib ${deployment_log_expression}",
+    user    => "${bahmni_user}",
+    require => Exec["latest_openmrs_webapp"],
+    path => "${os_path}"
+  }
+
+}
+
+class openmrs::database {
+    file { "${temp_dir}/openmrs-predeploy.sql" :
     ensure      => present,
     content     => template("openmrs/predeploy.sql"),
     owner       => "${bahmni_user}",
@@ -85,12 +99,4 @@ class openmrs {
     cwd         => "${tomcatInstallationDirectory}/webapps",
     require     => [Exec["openmrs_predeploy"], File["${temp_dir}/run-liquibase-openmrs.sh"], Exec["latest_openmrs_webapp"]]
   }
-
-   exec { "bahmni_java_utils_jars" :
-    command => "cp ${build_output_dir}/${openmrs_distro_file_name_prefix}/mail-appender-${bahmni_release_version}.jar ${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/lib ${deployment_log_expression}",
-    user    => "${bahmni_user}",
-    require => Exec["latest_openmrs_webapp"],
-    path => "${os_path}"
-  }
-
 }

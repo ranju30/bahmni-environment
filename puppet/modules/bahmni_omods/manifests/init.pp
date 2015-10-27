@@ -67,7 +67,25 @@ class bahmni_omods {
       require     => File["copy_install_bacteriology_omods"],
     }
   }
+  
+  include bahmni_omods::liquibase
 
+  if $bahmni_openelis_required == "true" {
+    bahmni_omods::bahmni_atomfeed_client { "deploy_openelis_atomfeed_client":
+      atomfeed_client_name => "openelis",
+      require => Class["bahmni_omods::liquibase"]
+    }
+  }
+
+  if $bahmni_openerp_required == "true" {
+    bahmni_omods::bahmni_atomfeed_client { "deploy_openerp_atomfeed_client":
+      atomfeed_client_name => "openerp",
+      require => Class["bahmni_omods::liquibase"]
+    }
+  }
+}
+
+class bahmni_omods::liquibase {
   file { "${temp_dir}/openmrs-liquibase-functions.sh" :
     ensure      => present,
     content     => template("bahmni_omods/openmrs-liquibase-functions.sh"),
@@ -90,19 +108,5 @@ class bahmni_omods {
     path        => "${os_path}",
     provider    => shell,
     require     => [File["${temp_dir}/run-core-bahmni-modules-liquibase.sh"], File["${temp_dir}/openmrs-liquibase-functions.sh"]]
-  }
-
-  if $bahmni_openelis_required == "true" {
-    bahmni_omods::bahmni_atomfeed_client { "deploy_openelis_atomfeed_client":
-      atomfeed_client_name => "openelis",
-      require => Exec["run_core_bahmni_modules_liquibase"]
-    }
-  }
-
-  if $bahmni_openerp_required == "true" {
-    bahmni_omods::bahmni_atomfeed_client { "deploy_openerp_atomfeed_client":
-      atomfeed_client_name => "openerp",
-      require => Exec["run_core_bahmni_modules_liquibase"]
-    }
   }
 }
