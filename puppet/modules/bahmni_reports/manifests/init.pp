@@ -20,11 +20,11 @@ class bahmni_reports {
 	    user      => "${bahmni_user}"
 	}
 
-  exec { "create_directory_for_bahmni_reports" :
-    command   => "mkdir /home/${bahmni_user}/.bahmni-reports",
-    provider  => shell,
-    path      => "${os_path}",
-    user      => "${bahmni_user}"
+  file { "/home/${bahmni_user}/.bahmni-reports" :
+        ensure  => directory,
+        owner   => "${bahmni_user}",
+        group   => "${bahmni_user}",
+        mode    => 554
   }
 
   file { "/home/${bahmni_user}/.bahmni-reports/bahmni-reports.properties" :
