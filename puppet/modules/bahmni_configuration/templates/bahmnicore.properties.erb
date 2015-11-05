@@ -12,3 +12,12 @@ openerp.password=<%=@openERPPassword%>
 openerp.connectionTimeoutInMilliseconds=<%=@openERPConnectTimeout%>
 openerp.replyTimeoutInMilliseconds=<%=@openERPReadTimeout%>
 <% end -%>
+
+
+<% if @bahmni_openelis_required == "true" -%>
+openelis.uri=<%=@openelisUri%>
+patient.feed.uri=<%=@patientFeedUri%>
+feed.maxFailedEvents=<%=@feedMaxFailedEvents%>
+feed.connectionTimeoutInMilliseconds=<%=@feedConnectionTimeoutInMilliseconds%>
+feed.replyTimeoutInMilliseconds=<%=@feedReplyTimeoutInMilliseconds%>
+<% end -%>

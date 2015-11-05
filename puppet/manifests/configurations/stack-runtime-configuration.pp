@@ -243,6 +243,13 @@ $openerpGroup = "openerp"
 $openERPConnectTimeout=10000
 $openERPReadTimeout=20000
 
+# OpenELIS properties used by OpenMRS in atomfeed client
+$openelisUri="http://localhost:8080/"
+$patientFeedUri="http://localhost:8080/openelis/ws/feed/patient/recent"
+$feedMaxFailedEvents=10000
+$feedConnectionTimeoutInMilliseconds=10000
+$feedReplyTimeoutInMilliseconds=20000
+
 ######################## JASPER CONFIG START##############################################
 $jasperTomcatHome = $tomcatInstallationDirectory
 $jasperHome = $bahmni_jasper_home ? {
