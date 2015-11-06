@@ -13,4 +13,3 @@ run_omod_liquibase <%= @openmrs_metadatamapping %>
 run_omod_liquibase <%= @openmrs_providermanagement %>
 run_omod_liquibase <%= @openmrs_uiframework %>
 run_omod_liquibase <%= @bahmni_core %>
-run_openmrs_dependent_liquibase <%= @ui_modules_dir %>/<%= @bahmni_apps %>.omod liquibase.xml
