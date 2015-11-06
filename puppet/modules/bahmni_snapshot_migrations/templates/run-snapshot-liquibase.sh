@@ -41,9 +41,6 @@ function run-snapshot-migrations {
     <% if @bahmni_openelis_required == "true" %>
         run-liquibase-migration $SNAPSHOTS_DIR/$1/bahmni-core/openmrs-elis-atomfeed-client-omod liquibase.xml
     <% end %>
-    <% if @bahmni_openerp_required == "true" %>
-        run-liquibase-migration $SNAPSHOTS_DIR/$1/bahmni-core/openerp-atomfeed-client-omod liquibase.xml
-    <% end %>
 }
 
 for dir in  `ls $SNAPSHOTS_DIR | sort -t- -n`

@@ -77,12 +77,6 @@ class bahmni_omods {
     }
   }
 
-  if $bahmni_openerp_required == "true" {
-    bahmni_omods::bahmni_atomfeed_client { "deploy_openerp_atomfeed_client":
-      atomfeed_client_name => "openerp",
-      require => Class["bahmni_omods::liquibase"]
-    }
-  }
 }
 
 class bahmni_omods::liquibase {

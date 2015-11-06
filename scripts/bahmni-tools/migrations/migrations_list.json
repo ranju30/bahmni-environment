@@ -8,10 +8,6 @@
                 "to": "bahmnicore-omod"
             },
             {
-                "copy": "openerp-atomfeed-client-omod/src/main/resources",
-                "to": "openerp-atomfeed-client-omod"
-            },
-            {
                 "copy": "openmrs-elis-atomfeed-client-omod/src/main/resources",
                 "to": "openmrs-elis-atomfeed-client-omod"
             }
