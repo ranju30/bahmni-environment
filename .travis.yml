@@ -1,6 +1,8 @@
 language: ruby
 rvm: 1.8.7
-before_install: sudo apt-get install puppet
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y puppet
 script: ./scripts/validate-manifests.sh
 notifications:
   email:
