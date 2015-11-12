@@ -181,7 +181,8 @@ $httpsProxyRedirects = [{ path => "/openmrs", redirectPath => "http://localhost:
   { path => "/openelis", redirectPath => "http://localhost:8080/openelis" },
   { path => "/bahmnireports", redirectPath => "http://localhost:8080/bahmnireports" },
   { path => "/reference-data", redirectPath => "http://localhost:8080/reference-data" },
-  { path => "/go", redirectPath => "http://localhost:8153/go" }]
+  { path => "/go", redirectPath => "http://localhost:8153/go" },
+  { path => "/oviyam2", redirectPath => "http://localhost:8085/oviyam2" }]
 #Static webapps
 $httpsStaticWebapps = [
   { path => "/bahmni", directory => "${bahmniAppsDirectory}" },
