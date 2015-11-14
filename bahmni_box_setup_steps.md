@@ -1,5 +1,19 @@
-Guide To INSTALL Bahmni Software on a CentOS Minimal System
-===============================================================
+Installing Bahmni for Evaluation
+================================
+
+If you want to evaulate Bahmni, then an easier way would be to
+follow steps mentioned on the WIKI here: 
+https://bahmni.atlassian.net/wiki/display/BAH/Bahmni+Virtual+Box
+
+We are moving towards an RPM based solution by end Nov/2016, and this document will be updated
+to reflect the new & simpler process (yay!).
+
+
+
+Guide To INSTALL Bahmni Software on a CentOS Minimal System for Production Deployment
+=======================================================================================
+
+
 1. Install CentosOS (Minimal) 
   http://wiki.centos.org/Manuals/ReleaseNotes/CentOSMinimalCD6.5
   For example:
