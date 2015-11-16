@@ -27,6 +27,7 @@ class implementation_config::openelis {
 
   implementation_config::migrations { "implementation_config_migrations_openelis":
     implementation_name => "${implementation_name}",
-    app_name            => "openelis"
+    app_name            => "openelis",
+    "require" => [Exec["bahmni_openelis_codebase_for_liquibase_jar"]]
   }
 }
