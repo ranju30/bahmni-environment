@@ -1,7 +1,7 @@
-class integration_tests {
+class bahmni_reports::integration_tests {
   $go_agent_home = "/var/go"
   $go_user = "go"
-  
+
   file { "${go_agent_home}/.bahmni-reports" :
     ensure  => directory,
     owner   => "${go_user}",
