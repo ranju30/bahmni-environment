@@ -9,9 +9,9 @@ class bahmni_reports::integration_tests {
     mode    => 554
   }
 
-  file { "${go_agent_home}/.bahmni-reports/bahmni-reports.properties" :
+  file { "${go_agent_home}/.bahmni-reports/bahmni-reports-test.properties" :
     ensure  => present,
-    content => template("bahmni_reports/bahmni-reports.properties.erb"),
+    content => template("bahmni_reports/bahmni-reports-test.properties.erb"),
     owner   => "${go_user}",
     group   => "${go_user}",
     mode    => 554
