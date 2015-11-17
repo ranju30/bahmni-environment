@@ -5,12 +5,13 @@ If you want to evaulate Bahmni, then an easier way would be to
 follow steps mentioned on the WIKI here: 
 https://bahmni.atlassian.net/wiki/display/BAH/Bahmni+Virtual+Box
 
-We are moving towards an RPM based solution by end Nov/2016, and this document will be updated
-to reflect the new & simpler process (yay!).
+Installing Bahmni via RPMs
+===========================
+This is the new process for installing Bahmni on CentOS system.
+https://bahmni.atlassian.net/wiki/display/BAH/Install+Bahmni+on+CentOS
 
 
-
-Guide To INSTALL Bahmni Software on a CentOS Minimal System for Production Deployment
+OLD STEPS (Deprecated) for installing Bahmni on a Minimal CentOS
 =======================================================================================
 
 
