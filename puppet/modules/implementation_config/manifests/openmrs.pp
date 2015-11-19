@@ -6,7 +6,6 @@ class implementation_config::openmrs {
   $encounter_modifier_scripts_dir = "${build_output_dir}/${implementation_name}_config/openmrs/encounterModifier"
   $elis_interceptor_scripts_dir = "${build_output_dir}/${implementation_name}_config/openmrs/elisFeedInterceptor"
 
-
   require implementation_config::setup
 
   file { "/tmp/mysql-connector-java-5.1.28.jar" :
@@ -80,6 +79,13 @@ class implementation_config::openmrs {
     provider => "shell",
     command  => "chmod -R  777 ${bahmniConfigDirectory}",
     path     => "${os_path}",
+    require  => Exec["copy_implementation_config"]
+  }
+
+  exec { "linkImplementationDirToOpenMRSFolder" :
+    command   => "ln -s ${implementation_config_dir} ${openmrs_dir}/bahmni_config",
+    provider  => shell,
+    path      => "${os_path}",
     require  => Exec["copy_implementation_config"]
   }
 }
