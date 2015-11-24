@@ -6,3 +6,4 @@ rm -rf /var/go/.m2/repository/org/openmrs/module/bedmanagement-omod
 rm -rf /var/go/.m2/repository/org/openmrs/module/bahmnicore
 rm -rf /var/go/.m2/repository/org/openmrs/module/bahmnicoreui
 rm -rf /var/go/.m2/repository/org/openmrs/module/emrapi
+rm -rf /var/go/.m2/repository/org/openmrs/module/bacteriology
