@@ -1,11 +1,26 @@
 class openmrs {
   require bahmni_distro
   require tomcat::clean
-  require bahmni_snapshot_migrations
 
   $log4j_xml_file = "${tomcatInstallationDirectory}/webapps/openmrs/WEB-INF/classes/log4j.xml"
   $openmrs_webapp_location =  "${tomcatInstallationDirectory}/webapps/openmrs"
   $web_xml_file = "${openmrs_webapp_location}/WEB-INF/web.xml"
+
+  if $is_passive_setup == "false" {
+    file { "${temp_dir}/create-openmrs-db-and-user.sql" :
+      ensure      => present,
+      content     => template("openmrs/database.sql"),
+      owner       => "${bahmni_user}",
+      group       => "${bahmni_user}"
+    }
+
+    exec { "openmrs_database" :
+      command     => "mysql -h${db_server} -uroot -p${mysqlRootPassword} < ${temp_dir}/create-openmrs-db-and-user.sql ${deployment_log_expression}",
+      path        => "${os_path}",
+      provider    => shell,
+      require     => File["${temp_dir}/create-openmrs-db-and-user.sql"]
+    }
+  }
 
   exec { "delete_${openmrs_webapp_location}" :
     command     => "rm -rf ${openmrs_webapp_location}",
@@ -87,8 +102,7 @@ class openmrs::database {
     content     => template("openmrs/run-liquibase.sh"),
     owner       => "${bahmni_user}",
     group       => "${bahmni_user}",
-    mode        => 554,
-    require     => [Class['bahmni_snapshot_migrations'], Exec['run-snapshot-migrations']]
+    mode        => 554
  }
 
   exec { "openmrs_data" :
