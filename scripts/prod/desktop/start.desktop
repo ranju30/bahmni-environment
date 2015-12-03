@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Name=Start Bahmni
+Comment=Starts all services necessary for Bahmni
+Exec=sudo /usr/local/bahmni/bin/bahmni.sh start
+Terminal=true
+Type=Application

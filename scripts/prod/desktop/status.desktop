@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Name=Bahmni Status
+Comment=Checks the status of each Bahmni services
+Exec=sudo /usr/local/bahmni/bin/bahmni.sh status
+Terminal=true
+Type=Application

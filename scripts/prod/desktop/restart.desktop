@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Name=Restart Bahmni
+Comment=Restarts all services necessary for Bahmni
+Exec=sudo /usr/local/bahmni/bin/bahmni.sh restart
+Terminal=true
+Type=Application

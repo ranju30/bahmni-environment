@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Name=Stop Bahmni
+Comment=Stops all services necessary for Bahmni
+Exec=sudo /usr/local/bahmni/bin/bahmni.sh stop
+Terminal=true
+Type=Application

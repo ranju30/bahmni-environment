@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Name=Database Backup
+Comment=Takes a Database Backup
+Exec=sudo /usr/local/bahmni/bin/bahmni.sh backup-all-dbs
+Terminal=true
+Type=Application
