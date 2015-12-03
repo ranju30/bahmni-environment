@@ -44,6 +44,7 @@ function start_internet() {
             sudo wvdial &
         else
             echo -e "$red No modem found. Please manually start Network. $original"
+        fi
     else
         echo -e "Already connected to Internet"
     fi
@@ -71,7 +72,7 @@ function stop_service() {
 function get_logs() {
     DAY=`date | cut -f1 -d' '`
     LOGS_DIR=/tmp/logs_$DAY
-    rm -f $LOGS_DIR
+    rm -rf $LOGS_DIR
     mkdir -p $LOGS_DIR
     get_failed_events_log
     

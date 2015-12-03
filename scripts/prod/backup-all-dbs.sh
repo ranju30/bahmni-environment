@@ -3,7 +3,8 @@ set -e
 
 # This script performs backup of all the databases (OpenMRS, ERP, ELIS, Reference Data)
 
-source ./db_backup_function.sh
+BAHMNI_SCRIPTS=/usr/local/bahmni/bin
+source $BAHMNI_SCRIPTS/db_functions.sh
 
 # checks if service is running
 function is_service_running() {
