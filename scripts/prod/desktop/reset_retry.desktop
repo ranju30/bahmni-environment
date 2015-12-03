@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Name=Debug
+Comment=Creates a zip file with info necessary for debugging.
+Exec=sudo /usr/local/bahmni/bin/bahmni.sh reset-retry-count
+Terminal=true
+Type=Application

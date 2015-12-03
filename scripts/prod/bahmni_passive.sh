@@ -1,8 +1,9 @@
 #!/bin/bash
 
 BAHMNI_SCRIPTS=/usr/local/bahmni/bin
+# source ~/.bashrc
 source $BAHMNI_SCRIPTS/bahmni_functions.sh
-source $BAHMNI_SCRIPTS/db_backup_function.sh
+source $BAHMNI_SCRIPTS/db_functions.sh
 
 if [[ $EUID -ne 0 ]]; then
    echo -e "$red[Error]$original This script must be run as root or with sudo!" 1>&2
@@ -96,6 +97,13 @@ backup() {
     all_dbs_backup /backup
 }
 
+reset_failed_events_retry() {
+    echo -e "=================================================================="
+    echo -e "$red Please reset only on Primary Server $original"
+    echo -e "$yellow Not doing anything here $original"
+    echo -e "=================================================================="
+}
+
 printUsage() {
     echo -e "-----------------------------------------"
     echo -e "Command line tool for managing bahmni"
@@ -105,6 +113,7 @@ printUsage() {
     echo -e "\tbahmni restart"
     echo -e "\tbahmni logs [ tomcat | access | openerp ]"
     echo -e "\tbahmni backup-all-dbs"
+    echo -e "\tbahmni reset-retry-count"
     echo -e "\tbahmni status"
     echo -e "\n-----------------------------------------"
 }
@@ -128,6 +137,9 @@ case "$1" in
     "logs" )
         get_logs
         ;;
+    "reset-retry-count" )
+        reset_failed_events_retry
+        ;;
     "status" )
         status
         ;;
@@ -140,4 +152,3 @@ esac
 tput sgr0
 
 echo ""
-read -p "Please press any key to exit ..." -s -n1

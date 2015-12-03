@@ -36,10 +36,14 @@ function start_service_openerp() {
 
 function start_internet() {
     echo -e "Connecting to $green Internet $original ..."
-    ping -q -c2 google.com > /dev/null
+    ping -i 0.2 -q -c2 google.com > /dev/null
     if([ $? -ne 0 ]) then
-    	sudo pkill -9 -f wvdial
-        sudo wvdial &
+        sudo pkill -9 -f wvdial
+        which wvial
+        if([ $? -eq 0 ]) then
+            sudo wvdial &
+        else
+            echo -e "$red No modem found. Please manually start Network. $original"
     else
         echo -e "Already connected to Internet"
     fi
@@ -65,9 +69,11 @@ function stop_service() {
 }
 
 function get_logs() {
-    TIME=`date +%Y%m%d_%H%M%S`
-    LOGS_DIR=/tmp/logs$TIME
+    DAY=`date | cut -f1 -d' '`
+    LOGS_DIR=/tmp/logs_$DAY
+    rm -f $LOGS_DIR
     mkdir -p $LOGS_DIR
+    get_failed_events_log
     
     cp /var/log/httpd/access_log $LOGS_DIR
     cp /home/bahmni/apache-tomcat-8.0.12/logs/catalina.out $LOGS_DIR
@@ -75,5 +81,10 @@ function get_logs() {
     cp /home/bahmni/apache-tomcat-8.0.12/logs/openelis.log $LOGS_DIR
     cp /var/log/openerp/openerp-server.log $LOGS_DIR
 
+    cp /tmp/failed_events_openmrs.csv $LOGS_DIR
+    cp /tmp/failed_events_openelis.csv $LOGS_DIR
+    cp /tmp/failed_events_openerp.csv $LOGS_DIR
+
     zip -r $LOGS_DIR.zip $LOGS_DIR
+    cp $LOGS_DIR.zip /home/bahmni/Desktop/bahmni_latest_logs.zip
 }
