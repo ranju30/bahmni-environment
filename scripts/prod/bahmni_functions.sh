@@ -15,6 +15,15 @@ function is_service_running() {
     fi
 }
 
+function confirm_password() {
+    read -p "Password:" -s PASSWORD
+    if([ "$PASSWORD" != "p@ssw0rd" ]) then
+        echo -e "$red Incorrect password. Please try again. $original"
+        exit 1
+    fi
+    echo
+}
+
 function start_service() {
     echo -e "Starting up $green $1 $original service..."
     if(!(is_service_running $1)) then
@@ -36,10 +45,10 @@ function start_service_openerp() {
 
 function start_internet() {
     echo -e "Connecting to $green Internet $original ..."
-    ping -i 0.2 -q -c2 google.com > /dev/null
+    ps aux | grep pppd | grep -v grep    
     if([ $? -ne 0 ]) then
         sudo pkill -9 -f wvdial
-        which wvial
+        which wvdial
         if([ $? -eq 0 ]) then
             sudo wvdial &
         else

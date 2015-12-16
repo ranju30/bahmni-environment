@@ -18,6 +18,8 @@ stop() {
     echo -e "Make sure you run [bahmni start] before you use Bahmni"
     echo -e "=================================================================="
 
+    confirm_password
+
     echo -e "Checking $yellow openerp-server $original service..."
     if(is_service_running openerp-server) then
         stop_service openerp
@@ -40,7 +42,7 @@ stop() {
 status() {
     up_count=0
     down_count=0
-    for service in httpd nagios mysql pgsql-9.2 wvdial
+    for service in httpd nagios mysql pgsql-9.2
     do
         if(is_service_running $service) then
             echo -e "$service...... $green[Running] $original"
@@ -50,7 +52,7 @@ status() {
             let down_count=$down_count+1
         fi
     done
-    services_count="5"
+    services_count="4"
     if (("$services_count" != "$up_count")); then
         echo -e "=================================================================="
         echo -e "$red[ERROR]$original $down_count out of $services_count services are not running"

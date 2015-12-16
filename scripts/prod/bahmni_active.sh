@@ -18,6 +18,8 @@ stop() {
     echo -e "Make sure you run [bahmni start] before you use Bahmni"
     echo -e "=================================================================="
 
+    confirm_password
+
     echo -e "Checking $yellow openerp-server $original service..."
     if(is_service_running openerp-server) then
         stop_service openerp
@@ -66,11 +68,12 @@ start() {
     echo -e "=================================================================="
     start_service mysql
     start_pgsql
-    start_service httpd
     sleep 3
     start_service_openerp
     start_service tomcat
-    start_internet
+    sleep 300
+    start_service httpd
+    # start_internet
     echo -e "=================================================================="
     echo -e "$green Bahmni services started... $original"
     echo -e "$yellow Tomcat will take upto 5 mins to fully come up.... $original"
@@ -90,6 +93,8 @@ restart() {
 
 backup() {
     # Ensure DBs are running if they are down
+    confirm_password
+
     start_service mysql
     start_pgsql
     sleep 3
@@ -99,6 +104,9 @@ backup() {
 reset_failed_events_retry() {
     echo -e "=================================================================="
     echo -e "Resetting retry count for failed events"
+
+    confirm_password
+
     reset_retry_count
     echo -e "$green Done $original"
     echo -e "=================================================================="
