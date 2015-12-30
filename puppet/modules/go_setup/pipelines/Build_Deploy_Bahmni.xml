@@ -5,13 +5,13 @@
         <param name="bahmni_version">5.5-SNAPSHOT</param>
     </params>
     <materials>
-        <git url="https://github.com/Bhamni/OpenELIS.git" branch="#{branch}" dest="OpenElis" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/OpenELIS.git" branch="#{branch}" dest="OpenElis" autoUpdate="false" />
         <git url="https://github.com/SharedHealth/bdshr-config" branch="#{branch}" dest="#{implementationName}-config" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/openmrs-module-bahmniapps.git" branch="#{branch}" dest="openmrs-module-bahmniapps" autoUpdate="false" materialName="openmrs-module-bahmniapps" />
-        <git url="https://github.com/Bhamni/openmrs-distro-bahmni.git" branch="#{branch}" dest="openmrs-distro-bahmni" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/bahmni-environment" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
-        <git url="https://github.com/bhamni/client_side_logging" dest="client_side_logging_source" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/bahmni-reports.git" branch="#{branch}" dest="bahmni-reports" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/openmrs-module-bahmniapps.git" branch="#{branch}" dest="openmrs-module-bahmniapps" autoUpdate="false" materialName="openmrs-module-bahmniapps" />
+        <git url="https://github.com/Bahmni/openmrs-distro-bahmni.git" branch="#{branch}" dest="openmrs-distro-bahmni" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-environment" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
+        <git url="https://github.com/Bahmni/client_side_logging" dest="client_side_logging_source" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-reports.git" branch="#{branch}" dest="bahmni-reports" autoUpdate="false" />
     </materials>
     <stage name="defaultStage" artifactCleanupProhibited="true">
         <approval type="manual" />
@@ -52,7 +52,7 @@
                     <exec command="curl">
                         <arg>-o</arg>
                         <arg>go_revisions.sh</arg>
-                        <arg>https://raw.githubusercontent.com/Bhamni/bahmni-environment/master/scripts/ci/go_revisions.sh</arg>
+                        <arg>https://raw.githubusercontent.com/Bahmni/bahmni-environment/master/scripts/ci/go_revisions.sh</arg>
                         <runif status="passed" />
                     </exec>
                     <exec command="chmod">

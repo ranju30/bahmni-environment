@@ -1,7 +1,7 @@
 [
     {
         "create": "bahmni-core",
-        "download": "https://github.com/Bhamni/bahmni-core/archive/master.zip",
+        "download": "https://github.com/Bahmni/bahmni-core/archive/master.zip",
         "then": [
             {
                 "copy": "bahmnicore-omod/src/main/resources",
@@ -75,7 +75,7 @@
     },
     {
         "create": "openmrs-module-bahmniapps",
-        "download": "https://github.com/Bhamni/openmrs-module-bahmniapps/archive/master.zip",
+        "download": "https://github.com/Bahmni/openmrs-module-bahmniapps/archive/master.zip",
         "then": [
             {
                 "copy": "omod/src/main/resources",

@@ -65,6 +65,6 @@ def controller():
     install_package("wget")
     install_package("ruby")
     install_package("puppet")
-    clone_package("https://github.com/bhamni/bahmni-environment")
+    clone_package("https://github.com/Bahmni/bahmni-environment")
 
 controller()

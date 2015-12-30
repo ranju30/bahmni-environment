@@ -5,7 +5,7 @@
     </params>
     <materials>
         <git url="https://github.com/SharedHealth/bdshr-config" branch="#{branch}" dest="#{implementationName}-config" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/bahmni-environment" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
+        <git url="https://github.com/Bahmni/bahmni-environment" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
     </materials>
     <stage name="defaultStage" artifactCleanupProhibited="true">
         <approval type="manual" />

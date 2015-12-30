@@ -32,7 +32,7 @@ do
 #   echo ${!shaKey}
 
    echo -e "${Blu}Cloning $repo ${RCol}"
-   git clone git@github.com:Bhamni/$repo.git
+   git clone git@github.com:Bahmni/$repo.git
    cd $repo
    echo -e "${Gre}Creating a branch for $repo - release-"${1/-SNAPSHOT/}"... ${RCol}"
    git branch release-"${1/-SNAPSHOT/}" ${!shaKey}

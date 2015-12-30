@@ -2,7 +2,7 @@
   <pipelines group="build">
     <pipeline name="bahmni-core">
       <materials>
-        <git url="https://github.com/Bhamni/bahmni-core.git" dest="bahmni-core" autoUpdate="false" materialName="BahmniCore" />
+        <git url="https://github.com/Bahmni/bahmni-core.git" dest="bahmni-core" autoUpdate="false" materialName="BahmniCore" />
       </materials>
       <stage name="build">
         <jobs>
@@ -23,7 +23,7 @@
     </pipeline>
     <pipeline name="bahmniJavaUtils" isLocked="false">
       <materials>
-        <git url="https://github.com/bhamni/bahmni-java-utils" dest="bahmni-java-utils" autoUpdate="false" materialName="BahmniJavaUtils" />
+        <git url="https://github.com/Bahmni/bahmni-java-utils" dest="bahmni-java-utils" autoUpdate="false" materialName="BahmniJavaUtils" />
       </materials>
       <stage name="build">
         <jobs>
@@ -52,13 +52,13 @@
         </variable>
       </environmentvariables>
       <materials>
-        <git url="https://github.com/Bhamni/OpenELIS.git" branch="#{branch}" dest="OpenElis" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/#{implementationName}-config.git" branch="#{branch}" dest="#{implementationName}-config" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/openmrs-module-bahmniapps.git" branch="#{branch}" dest="openmrs-module-bahmniapps" autoUpdate="false" materialName="openmrs-module-bahmniapps" />
-        <git url="https://github.com/Bhamni/openmrs-distro-bahmni.git" branch="#{branch}" dest="openmrs-distro-bahmni" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/bahmni-environment" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
-        <git url="https://github.com/bhamni/client_side_logging" dest="client_side_logging_source" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/bahmni-reports.git" branch="#{branch}" dest="bahmni-reports" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/OpenELIS.git" branch="#{branch}" dest="OpenElis" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/#{implementationName}-config.git" branch="#{branch}" dest="#{implementationName}-config" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/openmrs-module-bahmniapps.git" branch="#{branch}" dest="openmrs-module-bahmniapps" autoUpdate="false" materialName="openmrs-module-bahmniapps" />
+        <git url="https://github.com/Bahmni/openmrs-distro-bahmni.git" branch="#{branch}" dest="openmrs-distro-bahmni" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-environment" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
+        <git url="https://github.com/Bahmni/client_side_logging" dest="client_side_logging_source" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-reports.git" branch="#{branch}" dest="bahmni-reports" autoUpdate="false" />
       </materials>
       <stage name="defaultStage">
         <jobs>
@@ -112,7 +112,7 @@
               <exec command="curl">
                 <arg>-o</arg>
                 <arg>go_revisions.sh</arg>
-                <arg>https://raw.githubusercontent.com/Bhamni/bahmni-environment/master/scripts/ci/go_revisions.sh</arg>
+                <arg>https://raw.githubusercontent.com/Bahmni/bahmni-environment/master/scripts/ci/go_revisions.sh</arg>
                 <runif status="passed" />
               </exec>
               <exec command="chmod">
@@ -261,8 +261,8 @@
     </pipeline>
     <pipeline name="Build_config">
       <materials>
-        <git url="https://github.com/Bhamni/possible-config.git" dest="possible-config" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/bahmni-environment" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
+        <git url="https://github.com/Bahmni/possible-config.git" dest="possible-config" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-environment" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
       </materials>
       <stage name="defaultStage">
         <jobs>
@@ -328,8 +328,8 @@
     </pipeline>
     <pipeline name="Build_bahmni_reports" template="Build_bahmni">
       <materials>
-        <git url="https://github.com/Bhamni/bahmni-reports.git" dest="bahmni-reports" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/bahmni-environment" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
+        <git url="https://github.com/Bahmni/bahmni-reports.git" dest="bahmni-reports" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-environment" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
       </materials>
     </pipeline>
   </pipelines>
@@ -337,12 +337,12 @@
     <pipeline name="backupAllDBs" isLocked="false" template="backup-all-dbs">
       <timer>0 0 23 1/1 * ? *</timer>
       <materials>
-        <git url="https://github.com/Bhamni/bahmni-environment.git" dest="bahmni-environment" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-environment.git" dest="bahmni-environment" autoUpdate="false" />
       </materials>
     </pipeline>
     <pipeline name="SwitchToPassive">
       <materials>
-        <git url="https://github.com/bhamni/bahmni-environment" dest="bahmni-environment" autoUpdate="false" materialName="Bahmni-Environment" />
+        <git url="https://github.com/Bahmni/bahmni-environment" dest="bahmni-environment" autoUpdate="false" materialName="Bahmni-Environment" />
       </materials>
       <stage name="switch">
         <jobs>
@@ -367,7 +367,7 @@
         <param name="fromEmail">logsaggregator@gmail.com</param>
       </params>
       <materials>
-        <git url="https://github.com/Bhamni/log_aggregator" dest="log_aggregator" autoUpdate="false" materialName="LogAggregator" />
+        <git url="https://github.com/Bahmni/log_aggregator" dest="log_aggregator" autoUpdate="false" materialName="LogAggregator" />
       </materials>
     </pipeline>
   </pipelines>
@@ -380,14 +380,14 @@
         <param name="fromEmail">logsaggregator@gmail.com</param>
       </params>
       <materials>
-        <git url="https://github.com/Bhamni/log_aggregator" dest="log_aggregator" autoUpdate="false" materialName="LogAggregator" />
+        <git url="https://github.com/Bahmni/log_aggregator" dest="log_aggregator" autoUpdate="false" materialName="LogAggregator" />
       </materials>
     </pipeline>
   </pipelines>
   <pipelines group="preprod">
     <pipeline name="tomcat-restart">
       <materials>
-        <git url="https://github.com/bhamni/bahmni-environment" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-environment" autoUpdate="false" />
       </materials>
       <stage name="restart">
         <jobs>
@@ -411,7 +411,7 @@
         <param name="fromEmail">logsaggregator@gmail.com</param>
       </params>
       <materials>
-        <git url="https://github.com/Bhamni/log_aggregator" dest="log_aggregator" autoUpdate="false" materialName="LogAggregator" />
+        <git url="https://github.com/Bahmni/log_aggregator" dest="log_aggregator" autoUpdate="false" materialName="LogAggregator" />
       </materials>
     </pipeline>
   </pipelines>
@@ -428,13 +428,13 @@
         </variable>
       </environmentvariables>
       <materials>
-        <git url="https://github.com/Bhamni/OpenELIS.git" branch="#{branch}" dest="OpenElis" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/#{implementationName}-config.git" branch="#{branch}" dest="#{implementationName}-config" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/openmrs-module-bahmniapps.git" branch="#{branch}" dest="openmrs-module-bahmniapps" autoUpdate="false" materialName="openmrs-module-bahmniapps" />
-        <git url="https://github.com/Bhamni/openmrs-distro-bahmni.git" branch="#{branch}" dest="openmrs-distro-bahmni" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/bahmni-environment" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
-        <git url="https://github.com/bhamni/client_side_logging" dest="client_side_logging_source" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/bahmni-reports.git" branch="#{branch}" dest="bahmni-reports" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/OpenELIS.git" branch="#{branch}" dest="OpenElis" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/#{implementationName}-config.git" branch="#{branch}" dest="#{implementationName}-config" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/openmrs-module-bahmniapps.git" branch="#{branch}" dest="openmrs-module-bahmniapps" autoUpdate="false" materialName="openmrs-module-bahmniapps" />
+        <git url="https://github.com/Bahmni/openmrs-distro-bahmni.git" branch="#{branch}" dest="openmrs-distro-bahmni" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-environment" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
+        <git url="https://github.com/Bahmni/client_side_logging" dest="client_side_logging_source" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-reports.git" branch="#{branch}" dest="bahmni-reports" autoUpdate="false" />
       </materials>
       <stage name="defaultStage" artifactCleanupProhibited="true">
         <jobs>

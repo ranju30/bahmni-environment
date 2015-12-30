@@ -56,7 +56,7 @@ OLD STEPS (Deprecated) for installing Bahmni on a Minimal CentOS
       ```
       mkdir -p /root/bahmni
       cd /root/bahmni
-      git clone https://github.com/Bhamni/bahmni-environment.git
+      git clone https://github.com/Bahmni/bahmni-environment.git
       cd bahmni-environment
       ```
 
@@ -229,8 +229,8 @@ BACKUP/REPLICATION
 ====================
 NOTE: 
 If you want to set up a Replication Backup for Databases, read these documents: 
-https://github.com/Bhamni/bahmni-environment/blob/master/mysql-replication/README.md
-https://github.com/Bhamni/bahmni-environment/blob/master/puppet/modules/postgresql/README.md
+https://github.com/Bahmni/bahmni-environment/blob/master/mysql-replication/README.md
+https://github.com/Bahmni/bahmni-environment/blob/master/puppet/modules/postgresql/README.md
 
 ===================================================================================================
 Some todos we identified

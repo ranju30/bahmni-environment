@@ -44,7 +44,7 @@ GO SETUP ON ACTUAL VM
 * (in user)
 
 `
-	git checkout bahmni-environment (git clone git://github.com/Bhamni/bahmni-environment.git)
+	git checkout bahmni-environment (git clone git://github.com/Bahmni/bahmni-environment.git)
 	git submodule init
 	git submodule update
 `

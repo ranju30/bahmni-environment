@@ -8,17 +8,17 @@
         <param name="bahmni_version">5.3-SNAPSHOT</param>
       </params>
       <materials>
-        <git url="https://github.com/Bhamni/bahmni-core.git" dest="bahmnicore" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/OpenELIS.git" dest="OpenElis" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/#{implementationName}-config.git" dest="#{implementationName}-config" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/openmrs-module-bahmniapps.git" dest="openmrs-module-bahmniapps" autoUpdate="false" materialName="openmrs-module-bahmniapps" />
-        <git url="https://github.com/Bhamni/openmrs-distro-bahmni.git" dest="openmrs-distro-bahmni" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/bahmni-java-utils.git" dest="bahmni-java-utils" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/dhis.git" dest="dhis" />
-        <git url="https://github.com/bhamni/client_side_logging" dest="client_side_logging_source" autoUpdate="false" />
-        <git url="https://github.com/Bhamni/bahmni-environment" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
-        <git url="https://github.com/Bhamni/openerp-atomfeed-service.git" dest="openerp-atomfeed-service" />
-        <git url="https://github.com/Bhamni/openerp-modules.git" dest="openerp-modules" />
+        <git url="https://github.com/Bahmni/bahmni-core.git" dest="bahmnicore" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/OpenELIS.git" dest="OpenElis" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/#{implementationName}-config.git" dest="#{implementationName}-config" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/openmrs-module-bahmniapps.git" dest="openmrs-module-bahmniapps" autoUpdate="false" materialName="openmrs-module-bahmniapps" />
+        <git url="https://github.com/Bahmni/openmrs-distro-bahmni.git" dest="openmrs-distro-bahmni" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-java-utils.git" dest="bahmni-java-utils" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/dhis.git" dest="dhis" />
+        <git url="https://github.com/Bahmni/client_side_logging" dest="client_side_logging_source" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-environment" dest="bahmni-environment" autoUpdate="false" materialName="bahmni-environment" />
+        <git url="https://github.com/Bahmni/openerp-atomfeed-service.git" dest="openerp-atomfeed-service" />
+        <git url="https://github.com/Bahmni/openerp-modules.git" dest="openerp-modules" />
       </materials>
       <stage name="defaultStage">
         <jobs>
@@ -72,7 +72,7 @@
               <exec command="curl">
                 <arg>-o</arg>
                 <arg>go_revisions.sh</arg>
-                <arg>https://raw.githubusercontent.com/Bhamni/bahmni-environment/master/scripts/ci/go_revisions.sh</arg>
+                <arg>https://raw.githubusercontent.com/Bahmni/bahmni-environment/master/scripts/ci/go_revisions.sh</arg>
                 <runif status="passed" />
               </exec>
               <exec command="chmod">
@@ -207,7 +207,7 @@
               <exec command="curl">
                 <arg>-o</arg>
                 <arg>go_revisions.sh</arg>
-                <arg>https://raw.githubusercontent.com/Bhamni/bahmni-environment/master/scripts/ci/go_revisions.sh</arg>
+                <arg>https://raw.githubusercontent.com/Bahmni/bahmni-environment/master/scripts/ci/go_revisions.sh</arg>
                 <runif status="passed" />
               </exec>
               <exec command="chmod">
@@ -301,7 +301,7 @@
                 <runif status="passed" />
               </fetchartifact>
               <exec command="wget">
-                <arg>https://raw.githubusercontent.com/Bhamni/bahmni-environment/master/scripts/ci/all_deploy_tasks.sh</arg>
+                <arg>https://raw.githubusercontent.com/Bahmni/bahmni-environment/master/scripts/ci/all_deploy_tasks.sh</arg>
                 <arg>--no-check-certificate</arg>
                 <arg>-O</arg>
                 <arg>all_deploy_tasks.sh</arg>

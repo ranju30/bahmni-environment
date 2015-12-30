@@ -33,6 +33,6 @@
         <param name="aws_secret_key">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</param>
     </params>
     <materials>
-        <git url="https://github.com/Bhamni/bahmni-environment" branch="#{branch}" dest="bahmni-environment" materialName="bahmni-environment" />
+        <git url="https://github.com/Bahmni/bahmni-environment" branch="#{branch}" dest="bahmni-environment" materialName="bahmni-environment" />
     </materials>
 </pipeline>

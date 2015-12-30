@@ -4,10 +4,10 @@
   <pipelines group="Bahmni_Pipeline_Group">
     <pipeline name="Bahmni_MRS_Pipeline">
       <materials>
-        <git url="https://github.com/Bhamni/openmrs-data.git" dest="openmrsdata" materialName="OpenMRSData" />
-        <git url="https://github.com/Bhamni/bahmni-core.git" dest="bahmnicore" materialName="Bahmni_Core" />
-        <git url="https://github.com/Bhamni/registration.git" dest="registration" materialName="Registration" />
-        <git url="https://github.com/Bhamni/opd.git" dest="opd" materialName="OPD" />
+        <git url="https://github.com/Bahmni/openmrs-data.git" dest="openmrsdata" materialName="OpenMRSData" />
+        <git url="https://github.com/Bahmni/bahmni-core.git" dest="bahmnicore" materialName="Bahmni_Core" />
+        <git url="https://github.com/Bahmni/registration.git" dest="registration" materialName="Registration" />
+        <git url="https://github.com/Bahmni/opd.git" dest="opd" materialName="OPD" />
         <pipeline pipelineName="MRS_Pipeline" stageName="BuildStage" />
         <git url="https://github.com/jss-emr/jss-scm.git" dest="jss-scm" materialName="JSS_SCM" />
         <git url="https://github.com/jss-emr/jss-reports.git" dest="jss-reports" materialName="Custom_Jasperserver" />
@@ -275,8 +275,8 @@
         </variable>
       </environmentvariables>
       <materials>
-        <git url="https://github.com/Bhamni/openerp-modules.git" dest="openerp-modules" />
-        <git url="https://github.com/Bhamni/openerp-functional-tests.git" dest="openerp-functional-tests" />
+        <git url="https://github.com/Bahmni/openerp-modules.git" dest="openerp-modules" />
+        <git url="https://github.com/Bahmni/openerp-functional-tests.git" dest="openerp-functional-tests" />
       </materials>
       <stage name="runFunctionalTestsStage">
         <jobs>
@@ -302,7 +302,7 @@
     </pipeline>
     <pipeline name="Reports_Pipeline">
       <materials>
-        <git url="https://github.com/Bhamni/bahmni-reports-data.git" />
+        <git url="https://github.com/Bahmni/bahmni-reports-data.git" />
       </materials>
       <stage name="defaultStage">
         <jobs>
@@ -337,7 +337,7 @@
     </pipeline>
     <pipeline name="OpenElis">
       <materials>
-        <git url="https://github.com/Bhamni/OpenElis.git" dest="OpenElis" />
+        <git url="https://github.com/Bahmni/OpenElis.git" dest="OpenElis" />
       </materials>
       <stage name="Build">
         <jobs>
@@ -372,10 +372,10 @@
   <pipelines group="MRS_Pipeline">
     <pipeline name="MRS_Pipeline">
       <materials>
-        <git url="https://github.com/Bhamni/openmrs-module-addresshierarchy.git" dest="address_hierarchy" materialName="Address_Hierarchy" />
-        <git url="https://github.com/Bhamni/openmrs-core.git" branch="1.9.x" dest="openmrs_core" materialName="OpenMRS_Core" />
-        <git url="https://github.com/Bhamni/openmrs-module-idgen.git" dest="idgen" materialName="IdGen" />
-        <git url="https://github.com/Bhamni/openmrs-module-webservices.rest.git" dest="mrs_rest_services" materialName="mrs_rest_services" />
+        <git url="https://github.com/Bahmni/openmrs-module-addresshierarchy.git" dest="address_hierarchy" materialName="Address_Hierarchy" />
+        <git url="https://github.com/Bahmni/openmrs-core.git" branch="1.9.x" dest="openmrs_core" materialName="OpenMRS_Core" />
+        <git url="https://github.com/Bahmni/openmrs-module-idgen.git" dest="idgen" materialName="IdGen" />
+        <git url="https://github.com/Bahmni/openmrs-module-webservices.rest.git" dest="mrs_rest_services" materialName="mrs_rest_services" />
       </materials>
       <stage name="BuildStage">
         <jobs>

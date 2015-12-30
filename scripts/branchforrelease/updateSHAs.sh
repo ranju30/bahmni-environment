@@ -11,7 +11,7 @@ rm repo_revisions.properties
   for repo in "${allrepos[@]}"
 do
    echo -e "${Gre}Getting latest commit SHA for $repo ${RCol}"
-   echo  -e "https://api.github.com/repos/Bhamni/$repo/commits/master"
+   echo  -e "https://api.github.com/repos/Bahmni/$repo/commits/master"
    printf "$repo=" | tr "-" "_" >> repo_revisions.properties
-   curl "https://api.github.com/repos/Bhamni/$repo/commits/master"| jq '.sha'| tr -d  "\"">> repo_revisions.properties
+   curl "https://api.github.com/repos/Bahmni/$repo/commits/master"| jq '.sha'| tr -d  "\"">> repo_revisions.properties
 done

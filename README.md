@@ -10,7 +10,7 @@ See this file: [Box Setup Steps](bahmni_box_setup_steps.md)
 
 ## Using vagrant box which already has bahmni
 * Install [virtual box](https://www.virtualbox.org/wiki/Downloads) and [vagrant](https://www.vagrantup.com/downloads.html)
-* Run `git clone git@github.com:Bhamni/bahmni-environment.git && cd bahmni-environment`
+* Run `git clone git@github.com:Bahmni/bahmni-environment.git && cd bahmni-environment`
 * Copy the .box file to `bahmni-environment` folder and rename it as `bahmni.box`
 * Run `vagrant up`
 * If you will get error related to eth2, Run `scripts/dev/vagrant-network-fix.sh && vagrant reload`

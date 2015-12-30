@@ -3,7 +3,7 @@
         <param name="branch">release-5.5</param>
     </params>
     <materials>
-        <git url="https://github.com/Bhamni/bahmni-environment.git" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" />
+        <git url="https://github.com/Bahmni/bahmni-environment.git" branch="#{branch}" dest="bahmni-environment" autoUpdate="false" />
     </materials>
     <stage name="provision" cleanWorkingDir="true">
         <approval type="manual" />

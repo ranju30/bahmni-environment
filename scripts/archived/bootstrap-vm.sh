@@ -12,4 +12,4 @@ createrepo --update /packages/localrepo
 touch /etc/yum.repos.d/local.repo
 
 yum install puppet git
-# git clone https://github.com/Bhamni/bahmni-environment.git
+# git clone https://github.com/Bahmni/bahmni-environment.git
