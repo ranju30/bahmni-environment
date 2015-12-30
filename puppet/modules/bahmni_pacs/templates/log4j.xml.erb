@@ -4,7 +4,7 @@
 
     <appender name="file" class="org.apache.log4j.RollingFileAppender">
         <param name="File" value="/home/<%= @bahmni_user %>/apache-tomcat-<%= @tomcat_version %>/logs/pacs.log" />
-        <param name="MaxFileSize" value="5000KB" />
+        <param name="MaxFileSize" value="10MB" />
         <param name="MaxBackupIndex" value="10" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %-5p [PACS][%c{1}] %m%n" />
