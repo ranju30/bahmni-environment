@@ -6,7 +6,7 @@ sudo sh mysqld_safe --init-file=/tmp/changepassword.sql &
 sudo sh mysqld_safe --init-file=/tmp/grantAccess.sql &
 
 # Assuming that mysql will start within the given time. Possible failure point
-sleep 10
+sleep 25
 
 sudo mysqladmin -uroot -p$1 shutdown
 sudo service mysql start
