@@ -113,7 +113,7 @@ class openmrs::database {
     mode        => 554
   }
 
-  exec { "liquibase-schema-only-openmrs_data" :
+  exec { "${temp_dir}/run-liquibase-schema-only-openmrs.sh" :
     command     => "${temp_dir}/run-liquibase-schema-only-openmrs.sh  ${deployment_log_expression}",
     path        => "${os_path}",
     provider    => shell,
@@ -137,6 +137,6 @@ class openmrs::database {
     provider    => shell,
     timeout     => 0,
     cwd         => "${tomcatInstallationDirectory}/webapps",
-    require     => [Exec["liquibase-schema-only-openmrs_data"]]
+    require     => [Exec["${temp_dir}/run-liquibase-schema-only-openmrs.sh"]]
   }
 }
