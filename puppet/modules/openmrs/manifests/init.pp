@@ -97,6 +97,32 @@ class openmrs::database {
     require     => [Exec["openmrs_database"],File["${temp_dir}/openmrs-predeploy.sql"]]
   }
 
+  file { "${temp_dir}/patient-data.sh" :
+    ensure      => present,
+    content     => template("openmrs/patient-data.sh"),
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+    mode        => 554
+  }
+
+  file { "${temp_dir}/run-liquibase-schema-only-openmrs.sh" :
+    ensure      => present,
+    content     => template("openmrs/run-liquibase-schema-only-openmrs.sh"),
+    owner       => "${bahmni_user}",
+    group       => "${bahmni_user}",
+    mode        => 554
+  }
+
+  exec { "liquibase-schema-only-openmrs_data" :
+    command     => "${temp_dir}/run-liquibase-schema-only-openmrs.sh  ${deployment_log_expression}",
+    path        => "${os_path}",
+    provider    => shell,
+    timeout     => 0,
+    cwd         => "${tomcatInstallationDirectory}/webapps",
+    unless      => "${temp_dir}/patient-data.sh",
+    require     => [Exec["openmrs_predeploy"], File["${temp_dir}/run-liquibase-schema-only-openmrs.sh"], File["${temp_dir}/patient-data.sh"], Exec["latest_openmrs_webapp"]]
+  }
+
   file { "${temp_dir}/run-liquibase-openmrs.sh" :
     ensure      => present,
     content     => template("openmrs/run-liquibase.sh"),
@@ -111,6 +137,6 @@ class openmrs::database {
     provider    => shell,
     timeout     => 0,
     cwd         => "${tomcatInstallationDirectory}/webapps",
-    require     => [Exec["openmrs_predeploy"], File["${temp_dir}/run-liquibase-openmrs.sh"], Exec["latest_openmrs_webapp"]]
+    require     => [Exec["liquibase-schema-only-openmrs_data"]]
   }
 }
