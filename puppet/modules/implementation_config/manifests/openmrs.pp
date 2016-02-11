@@ -82,10 +82,9 @@ class implementation_config::openmrs {
     require  => Exec["copy_implementation_config"]
   }
 
-  exec { "linkImplementationDirToOpenMRSFolder" :
-    command   => "ln -s ${implementation_config_dir} ${openmrs_dir}/bahmni_config",
-    provider  => shell,
-    path      => "${os_path}",
+  file { "${bahmniConfigDirectory}" :
+    ensure => 'link',
+    target => ${openmrs_dir}/bahmni_config
     require  => Exec["copy_implementation_config"]
   }
 }
