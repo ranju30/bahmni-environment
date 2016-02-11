@@ -84,7 +84,7 @@ class implementation_config::openmrs {
 
   file { "${bahmniConfigDirectory}" :
     ensure => 'link',
-    target => ${openmrs_dir}/bahmni_config
+    target => "${openmrs_dir}/bahmni_config",
     require  => Exec["copy_implementation_config"]
   }
 }
