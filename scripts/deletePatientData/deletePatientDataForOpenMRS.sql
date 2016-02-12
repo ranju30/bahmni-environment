@@ -13,6 +13,9 @@ truncate table patient;
 truncate table obs_relationship;
 truncate table patient_state;
 truncate table patient_program;
+truncate table episode;
+truncate table episode_patient_program;
+truncate table episode_encounter;
 
 delete from person_address where person_id <> 1;
 delete from person_attribute where person_id <> 1;
