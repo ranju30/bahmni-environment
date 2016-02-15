@@ -35,3 +35,4 @@ Vagrant.configure("2") do |config|
     # puppet apply --graph --graphdir /vagrant/graphs -v -l /tmp/manifest.log --modulepath modules manifests/cisetup.pp
   end
 end
+
