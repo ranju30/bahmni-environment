@@ -15,6 +15,7 @@ truncate table patient;
 truncate table obs_relationship;
 truncate table patient_state;
 truncate table patient_program;
+truncate table patient_program_attribute;
 truncate table episode;
 truncate table episode_patient_program;
 truncate table episode_encounter;
