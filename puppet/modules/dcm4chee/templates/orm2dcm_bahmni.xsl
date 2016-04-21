@@ -24,6 +24,8 @@
             <xsl:with-param name="istag" select="'00100021'"/>
             <xsl:with-param name="cx" select="field[3]"/>
         </xsl:call-template>
+        <!-- hardcoding issuer as bahmni ORM message is not having it part of PID:3/3. Without this dcm4chee creates duplicate patients -->
+        <attr tag="00100021" vr="LO">BahmniEMR</attr>
         <!-- Patient Birth Date -->
         <xsl:call-template name="attrDA">
           <xsl:with-param name="tag" select="'00100030'"/>
