@@ -9,3 +9,6 @@ rm -rf /var/go/.m2/repository/org/openmrs/module/emrapi
 rm -rf /var/go/.m2/repository/org/openmrs/module/bacteriology
 rm -rf /var/go/.m2/repository/org/openmrs/module/bacteriology-api
 rm -rf /var/go/.m2/repository/org/openmrs/module/bacteriology-omod
+rm -rf /var/go/.m2/repository/org/openmrs/module/rulesengine
+rm -rf /var/go/.m2/repository/org/openmrs/module/rulesengine-api
+rm -rf /var/go/.m2/repository/org/openmrs/module/rulesengine-omod
